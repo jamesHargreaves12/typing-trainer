@@ -1,0 +1,343 @@
+/* Add theme variables */
+:root {
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --card-bg: #fff;
+  --border-color: #ddd;
+  --progress-bg: #ddd;
+  --progress-fill: #4caf50;
+  --button-bg: #87CEEB;
+  --button-hover: #5F9EA0;
+  --correct-color: #4caf50;
+  --error-color: #f44336;
+  --text-muted: #666;
+  --text-secondary: #555;
+}
+
+[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --card-bg: #2d2d2d;
+  --border-color: #404040;
+  --progress-bg: #404040;
+  --progress-fill: #66bb6a;
+  --button-bg: #4a768a;
+  --button-hover: #5f8fa0;
+  --correct-color: #66bb6a;
+  --error-color: #ef5350;
+  --text-muted: #888;
+  --text-secondary: #999;
+}
+
+/* Add theme toggle styles */
+.header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+  background-color: var(--border-color);
+}
+
+/* Update the theme toggle icon visibility rules */
+.light-icon, .dark-icon {
+  display: none;
+}
+
+[data-theme="dark"] .dark-icon,
+[data-theme="light"] .light-icon {
+  display: block;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+#app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Progress Bar Styles */
+.progress-and-next {
+  display: flex;
+  gap: 1rem;
+  /* margin-bottom: 1rem; */
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.progress-bar-background {
+  background-color: var(--progress-bg);
+  height: 6px;
+  border-radius: 3px;
+  flex: 1;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--progress-fill);
+  width: 0;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Text Display Area */
+.text-display {
+  font-size: 1.4rem;
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  line-height: 1;
+  margin-bottom: 1rem;
+  user-select: none;
+  white-space: normal;
+  word-wrap: normal;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 4px;
+  /* gap: 0.2rem; Adjust spacing if needed */
+}
+
+.text-display .word {
+  display: inline-flex;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.text-display .letter {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.text-display .space {
+  display: inline-block;
+  width: 0.3rem; /* Ensure spacing is preserved */
+}
+
+.text-display .correct {
+  color: var(--correct-color);
+}
+
+.text-display .letter.error {
+  color: var(--error-color);
+}
+
+.text-display .space.error {
+  color: var(--error-color);
+  border-bottom: 4px solid var(--error-color);
+}
+
+.next-button {
+  background-color: var(--button-bg);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.next-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  margin-bottom: 5px;
+}
+
+.next-button:hover {
+  background-color: var(--button-hover);
+}
+
+.next-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Typing Input Styles */
+textarea#inputArea {
+  width: 100%;
+  height: 230px;
+  font-size: 1.4rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-color);
+}
+
+.error-list {
+  padding: 0.8rem 1.2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-top: 1rem;
+  width: fit-content; /* Make container only as wide as needed */
+}
+
+.error-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.error-item {
+  color: var(--text-secondary);
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  display: grid;
+  grid-template-columns: 30px 40px 50px;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.error-item .error-char {
+  color: var(--error-color);
+  font-weight: bold;
+}
+
+/* Add these new styles */
+#metrics {
+  display: flex;
+  gap: 2rem;
+  /* margin: 1rem 0; */
+  font-size: 1.2rem;
+}
+
+#metrics span {
+  padding: 0.5rem 1rem;
+  background: var(--card-bg);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+}
+
+.stats-container {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.history-list {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.8rem 1.2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  width: fit-content;
+  margin-top: 1rem;
+}
+
+.history-title {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  margin-bottom: 0.8rem;
+}
+
+.history-sub-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 60px 70px;
+  gap: 0.5rem;
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Add these styles for SVG tooltips */
+circle, rect {
+  cursor: pointer;
+}
+
+circle:hover, rect:hover {
+  fill: #333333;
+}
+
+/* Add these styles for custom tooltips */
+.tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  white-space: nowrap;
+}
+
+@keyframes flash-good {
+  0% { background-color: var(--card-bg); }
+  50% { background-color: rgba(76, 175, 80, 0.5); }
+  100% { background-color: var(--card-bg); }
+}
+
+@keyframes flash-bad {
+  0% { background-color: var(--card-bg); }
+  50% { background-color: rgba(244, 67, 54, 0.5); }
+  100% { background-color: var(--card-bg); }
+}
+
+.flash-good {
+  animation: flash-good 2s ease;
+}
+
+.flash-bad {
+  animation: flash-bad 2s ease;
+}
