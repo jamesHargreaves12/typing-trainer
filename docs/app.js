@@ -1,10 +1,11 @@
-// Sample passages – in production, you could load more or fetch them externally
-let passages = [
-  "The quick brown fox jumps over the lazy dog. It's a classic sentence used for typing.",
-  "Practice makes perfect. Typing natural sentences can help you learn the rhythm of language.", 
-  "Touch typing is an essential skill in today's digital world. The more you practice, the better you get."
+let DEFAULT_PASSAGES = [
+  "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
+  "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
+  "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate."
 ];
-
+let finishedDefaultPassages = false;
+let passages = DEFAULT_PASSAGES;
+let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = passages;
 
 let errorLog = {
@@ -93,6 +94,9 @@ function topErrorsToHtmlTable() {
   
   for (const error of topErrors) {
     const errorRate = (error.errorRate * 100).toFixed(0);
+    if (errorRate == "NaN") {
+      continue;
+    }
     html += `<div class="${errorItemClass}">
       <span class="error-char">${error.letter}</span>
       <span>${errorRate}%</span>
@@ -124,47 +128,81 @@ function updateHistoryDisplay() {
   const minYaxisWPM = minWPM*0.9;
   const minYaxisAccuracy = Math.max(minAccuracy*0.95, 0);
   
-  const svg = `<svg width="${width}" height="${height}">
-    <g transform="translate(${margin.left},${margin.top})">
-      <!-- Y axes -->
-      <g class="y-axes">
-        <line x1="0" y1="0" x2="0" y2="${height - margin.top - margin.bottom}" stroke="black"/>
-        <line x1="0" y1="${height - margin.top - margin.bottom}" x2="${width - margin.left - margin.right}" y2="${height - margin.top - margin.bottom}" stroke="black"/>
-      </g>
+  let content;
+  if (runHistory.length < 5) {
+    // Show table for less than 5 runs
+    content = `
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>WPM</th>
+            <th>Accuracy</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${runHistory.map(run => `
+            <tr>
+              <td>${run.wpm}</td>
+              <td>${run.accuracy}%</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  } else {
+    // Show SVG graph for 5+ runs
+    content = `<svg width="${width}" height="${height}">
+      <g transform="translate(${margin.left},${margin.top})">
+        <!-- Y axes -->
+        <g class="y-axes">
+          <line x1="0" y1="0" x2="0" y2="${height - margin.top - margin.bottom}" stroke="black"/>
+          <line x1="0" y1="${height - margin.top - margin.bottom}" x2="${width - margin.left - margin.right}" y2="${height - margin.top - margin.bottom}" stroke="black"/>
+        </g>
 
-      <!-- Data points -->
-      ${runHistory.map((run, i) => {
-        const x = (width - margin.left - margin.right) * (i / (runHistory.length - 1));
-        const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM)/(maxYaxisWPM - minYaxisWPM));
-        const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy)/(maxYaxisAccuracy - minYaxisAccuracy));
-        return `
-          <g>
-            <circle cx="${x}" cy="${yWPM}" r="3" fill="#666666" 
-              onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
-              onmouseout="hideTooltip()"
-            />
-            <rect x="${x-3}" y="${yAcc-3}" width="6" height="6" fill="#666666"
-              onmouseover="showTooltip(event, 'Accuracy: ${run.accuracy}%')"
-              onmouseout="hideTooltip()"
-            />
-          </g>
-        `;
-      }).join('')}
-    </g>
-  </svg>`;
+        <!-- Data points -->
+        ${runHistory.map((run, i) => {
+          const x = (width - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1) );
+          const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM)/(maxYaxisWPM - minYaxisWPM));
+          const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy)/(maxYaxisAccuracy - minYaxisAccuracy));
+          return `
+            <g>
+              <circle cx="${x}" cy="${yWPM}" r="3" fill="#666666" 
+                onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
+                onmouseout="hideTooltip()"
+              />
+              <rect x="${x-3}" y="${yAcc-3}" width="6" height="6" fill="#666666"
+                onmouseover="showTooltip(event, 'Accuracy: ${run.accuracy}%')"
+                onmouseout="hideTooltip()"
+              />
+            </g>
+          `;
+        }).join('')}
+      </g>
+    </svg>`;
+  }
 
   historyDiv.innerHTML = `
     <div class="history-title">Recent Runs</div>
-    <div class="history-sub-title">WPM ● Accuracy ■</div>
-
-    ${svg}
+    ${runHistory.length >= 5 ? '<div class="history-sub-title">WPM ● Accuracy ■</div>' : ''}
+    ${content}
   `;
 }
 
 
 function getPassage() {
+  if (!finishedDefaultPassages) {
+    const nextPassage = upcomingDefaultPassages.shift();
+    if (nextPassage == null) {
+      finishedDefaultPassages = true;
+    }
+    else {
+      return nextPassage;
+    }
+  }
+  
   const nextPassage = upcomingPassages.shift();
   return nextPassage;
+  
 }
 
 function getDesireForPassage(passage) {
@@ -277,12 +315,11 @@ window.onload = function() {
     'trigram': {},
     'quadgram': {}
   };
-  
-  upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || [
-    "The quick brown fox jumps over the lazy dog. It's a classic sentence used for typing.",
-    "Practice makes perfect. Typing natural sentences can help you learn the rhythm of language.",
-    "Touch typing is an essential skill in today's digital world. The more you practice, the better you get."
-  ];
+  if (localStorage.getItem('upcomingPassages') != null) {
+    finishedDefaultPassages = true;
+  }
+
+  upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
   targetText = getPassage();
   renderText();
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
