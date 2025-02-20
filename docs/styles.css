@@ -1,17 +1,17 @@
 /* Add theme variables */
 :root {
-  --bg-color: #f5f5f5;
-  --text-color: #333;
-  --card-bg: #fff;
-  --border-color: #ddd;
-  --progress-bg: #ddd;
-  --progress-fill: #4caf50;
-  --button-bg: #87CEEB;
-  --button-hover: #5F9EA0;
-  --correct-color: #4caf50;
-  --error-color: #f44336;
-  --text-muted: #666;
-  --text-secondary: #555;
+  --bg-color: #ffffff;
+  --text-color: #2c3e50;
+  --card-bg: #ffffff;
+  --border-color: #e1e8ed;
+  --progress-bg: #edf2f7;
+  --progress-fill: #38a169;
+  --button-bg: #3182ce;
+  --button-hover: #2b6cb0;
+  --correct-color: #38a169;
+  --error-color: #e53e3e;
+  --text-muted: #718096;
+  --text-secondary: #4a5568;
 }
 
 [data-theme="dark"] {
@@ -32,8 +32,9 @@
 /* Add theme toggle styles */
 .header {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
 }
 
 .theme-toggle {
@@ -122,8 +123,7 @@ body {
   hyphens: none;
   display: flex;
   flex-wrap: wrap;
-  border-radius: 4px;
-  /* gap: 0.2rem; Adjust spacing if needed */
+  border-radius: 8px;
 }
 
 .text-display .word {
@@ -165,6 +165,8 @@ body {
   transition: background-color 0.3s ease;
   cursor: pointer;
   position: relative;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .next-button::after {
@@ -187,6 +189,8 @@ body {
 
 .next-button:hover {
   background-color: var(--button-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .next-button:hover::after {
@@ -205,8 +209,16 @@ textarea#inputArea {
   margin-top: 1rem;
   background-color: var(--card-bg);
   border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border-radius: 8px;
   color: var(--text-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea#inputArea:focus {
+  border-color: var(--button-bg);
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+  outline: none;
 }
 
 .error-list {
@@ -253,9 +265,11 @@ textarea#inputArea {
 
 #metrics span {
   padding: 0.5rem 1rem;
-  background: var(--card-bg);
-  border-radius: 4px;
+  background-color: var(--card-bg);
+  border-radius: 8px;
   border: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-weight: 500;
 }
 
 .stats-container {
@@ -340,4 +354,35 @@ circle:hover, rect:hover {
 
 .flash-bad {
   animation: flash-bad 2s ease;
+}
+
+/* Update feedback tab styles */
+.feedback-tab {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.feedback-tab:hover {
+  color: var(--text-color);
+  transform: translateY(-1px);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-color);
+  letter-spacing: -0.5px;
+}
+
+.separator {
+  color: var(--border-color);
+  font-weight: 300;
 }
