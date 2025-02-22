@@ -602,7 +602,7 @@ function handleInput(e) {
     
     const charSpan = document.getElementById(`char-${i}`);
     const typedChar = inputText[i];
-    const currentClasses = charSpan.className.replace(' correct', '').replace(' error', '');
+    const currentClasses = charSpan?.className.replace(' correct', '').replace(' error', '') || '';
     
     if (typedChar == null) {
       charSpan.className = currentClasses;
