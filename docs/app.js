@@ -22,6 +22,17 @@ let seenLog = {
   'quadgram': {}
 };
 
+function trackRepetitionCompletion() {
+  let completedTasks = localStorage.getItem('repetition_count') || 0;
+  completedTasks++;
+  localStorage.setItem('repetition_count', completedTasks);
+  gtag('set', {'repetition_count': completedTasks});
+  gtag('event', 'repetition_completed', {
+    'event_category': 'repetition',
+    'event_label': 'Rep ' + completedTasks
+  });
+}
+
 let unigramFrequency = {};
 let bigramFrequency = {};
 let trigramFrequency = {};
@@ -481,7 +492,9 @@ function handleInput(e) {
   if (inputText === targetText) {
     saveErrorData();
     setTimeout(resetSession, 500); // brief pause before resetting
+    trackRepetitionCompletion();
   }
+
 
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
 }
