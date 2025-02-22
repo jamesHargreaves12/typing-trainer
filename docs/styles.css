@@ -386,3 +386,14 @@ circle:hover, rect:hover {
   color: var(--border-color);
   font-weight: 300;
 }
+
+/* Update flash error animation */
+@keyframes flash-error {
+  0% { background-color: var(--bg-color); }
+  15% { background-color: rgba(229, 62, 62, 0.55); }
+  100% { background-color: var(--bg-color); }
+}
+
+body.flash-error {
+  animation: flash-error 0.3s ease;
+}

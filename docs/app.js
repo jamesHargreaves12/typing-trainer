@@ -48,6 +48,7 @@ let charWeight = 1 - bigramWeight - trigramWeight - quadgramWeight;
 let charErrorCount = 0;
 let charTotalCount = 0;
 let prevTargetText = "";
+let bgFlashOnError = true;
 
 let runHistory = [];
 const MAX_HISTORY = 20;
@@ -457,14 +458,18 @@ function handleInput(e) {
     const currentClasses = charSpan.className.replace(' correct', '').replace(' error', '');
     
     if (typedChar == null) {
-      // Reset styling if the character hasn't been typed yet
       charSpan.className = currentClasses;
     } else if (typedChar === targetText[i]) {
-      // Mark as correct
       charSpan.className = currentClasses.replace('letter', 'letter correct');
       correctCount++;
     } else {
       charErrorCount += 1;
+      // Add flash effect to body
+      if (bgFlashOnError) {
+        document.body.classList.add('flash-error');
+        setTimeout(() => document.body.classList.remove('flash-error'), 300);
+      }
+      
       console.log(errorLog);
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
       if (bigram.length > 1) {
@@ -477,7 +482,6 @@ function handleInput(e) {
         errorLog['quadgram'][quadgram] = (errorLog['quadgram'][quadgram] || 0) + 1;
       }
       console.log("unigram: " + unigram, "bigram: " + bigram, "trigram: " + trigram, "quadgram: " + quadgram);
-      // Mark as error and log the mistake (you could enhance error logging here)
       charSpan.className = currentClasses.replace('letter', 'letter error');
     }
   }
