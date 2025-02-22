@@ -13,7 +13,7 @@
 
     gtag('config', 'G-T5BNNGSFNN');
   </script>
-
+  <audio id="errorSound" src="https://cdn.freesound.org/previews/764/764796_2954988-lq.mp3" preload="auto"></audio>
 </head>
 <body>
   <div id="app">
@@ -25,10 +25,45 @@
         <span class="separator">|</span>
         <a href="mailto:typo-dojo@gmail.com" class="feedback-tab">Feedback</a>
       </div>
-      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
-        <span class="light-icon">☀️</span>
-        <span class="dark-icon">🌙</span>
-      </button>
+      <div class="header-right">
+        <button id="resetStats" class="icon-button" title="Resettstatistics">🗑️</button>
+        <div class="settings-dropdown">
+          <button id="settingsButton" class="icon-button" title="Advanced settings">⚙️</button>
+          <div class="settings-content">
+            <div class="settings-title">Error Behavior</div>
+            <label class="settings-item">
+              <input type="checkbox" id="bgFlashToggle">
+              Background flash on error
+            </label>
+            <label class="settings-item">
+              <input type="checkbox" id="soundToggle">
+              Sound on error
+            </label>
+            <div class="settings-divider"></div>
+            <div class="settings-title">Weight of error stats</div>
+            <div class="settings-item">
+              <label>Unigram (${charWeight})</label>
+              <input type="range" id="charWeightSlider" min="0" max="100" value="${charWeight * 100}">
+            </div>
+            <div class="settings-item">
+              <label>Bigram (${bigramWeight})</label>
+              <input type="range" id="bigramWeightSlider" min="0" max="100" value="${bigramWeight * 100}">
+            </div>
+            <div class="settings-item">
+              <label>Trigram (${trigramWeight})</label>
+              <input type="range" id="trigramWeightSlider" min="0" max="100" value="${trigramWeight * 100}">
+            </div>
+            <div class="settings-item">
+              <label>Quadgram (${quadgramWeight})</label>
+              <input type="range" id="quadgramWeightSlider" min="0" max="100" value="${quadgramWeight * 100}">
+            </div>
+          </div>
+        </div>
+        <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+          <span class="light-icon">☀️</span>
+          <span class="dark-icon">🌙</span>
+        </button>
+      </div>
     </div>
     <div class="typing-section">
       <div id="textDisplay" class="text-display"></div>

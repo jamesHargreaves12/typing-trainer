@@ -50,6 +50,7 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s;
+  position: relative;
 }
 
 .theme-toggle:hover {
@@ -396,4 +397,139 @@ circle:hover, rect:hover {
 
 body.flash-error {
   animation: flash-error 0.3s ease;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  color: var(--text-color);
+  position: relative;
+}
+
+.icon-button:hover {
+  background-color: var(--border-color);
+}
+
+.icon-button::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  margin-bottom: 5px;
+}
+
+.icon-button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.theme-toggle::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 5px 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+  margin-bottom: 5px;
+}
+
+.theme-toggle:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+.settings-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.settings-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1rem;
+  min-width: 200px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-top: 0.5rem;
+}
+
+.settings-dropdown.active .settings-content {
+  display: block;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.settings-item input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.settings-divider {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 0.8rem 0;
+}
+
+.settings-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+}
+
+.settings-item input[type="range"] {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+.settings-item label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
 }

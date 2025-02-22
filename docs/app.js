@@ -41,14 +41,14 @@ let alphaChars = 0.95;
 let alphaBigrams = 0.95;
 let alphaTrigrams = 0.95;
 let alphaQuadgrams = 0.95;
+let charWeight = 0.3;
 let bigramWeight = 0.45;
 let trigramWeight = 0.15;
 let quadgramWeight = 0.1;
-let charWeight = 1 - bigramWeight - trigramWeight - quadgramWeight;
 let charErrorCount = 0;
 let charTotalCount = 0;
 let prevTargetText = "";
-let bgFlashOnError = true;
+let bgFlashOnError = false;
 
 let runHistory = [];
 const MAX_HISTORY = 20;
@@ -64,6 +64,11 @@ let tooltip = null;
 
 // Add after other global variables
 let darkMode = localStorage.getItem('darkMode') === 'true';
+let settingsOpen = false;
+let soundOnError = false;
+const errorSound = document.getElementById('errorSound');
+let recentPassages = [];
+const MAX_RECENT_PASSAGES = 30;
 
 function getTopErrors() {
   const topErrorLetters = [];
@@ -129,16 +134,16 @@ function updateHistoryDisplay() {
 
   const historyDiv = document.getElementById('history');
   const width = 250;
-  const height = 100;
+  const height = 112;
   const margin = { top: 20, right: 20, bottom: 20, left: 5 };
   const maxWPM = runHistory.reduce((max, run) => Math.max(max, run.wpm), 0);
   const maxAccuracy = runHistory.reduce((max, run) => Math.max(max, run.accuracy), 0);
   const minWPM = runHistory.reduce((min, run) => Math.min(min, run.wpm), 1000);
   const minAccuracy = runHistory.reduce((min, run) => Math.min(min, run.accuracy), 100);
-  const maxYaxisWPM = maxWPM*1.1;
-  const maxYaxisAccuracy = Math.min(maxAccuracy*1.1, 100);
-  const minYaxisWPM = minWPM*0.9;
-  const minYaxisAccuracy = Math.max(minAccuracy*0.95, 0);
+  const maxYaxisWPM = maxWPM;
+  const maxYaxisAccuracy = Math.min(maxAccuracy, 100);
+  const minYaxisWPM = minWPM;
+  const minYaxisAccuracy = Math.max(minAccuracy, 0);
   
   let content;
   if (runHistory.length < 5) {
@@ -162,40 +167,69 @@ function updateHistoryDisplay() {
       </table>
     `;
   } else {
-    // Show SVG graph for 5+ runs
-    content = `<svg width="${width}" height="${height}">
-      <g transform="translate(${margin.left},${margin.top})">
-        <!-- Y axes -->
-        <g class="y-axes">
-          <line x1="0" y1="0" x2="0" y2="${height - margin.top - margin.bottom}" stroke="black"/>
-          <line x1="0" y1="${height - margin.top - margin.bottom}" x2="${width - margin.left - margin.right}" y2="${height - margin.top - margin.bottom}" stroke="black"/>
-        </g>
+    // Show two SVG graphs for 5+ runs
+    content = `
+      <div style="display: flex; gap: 20px;">
+        <div>
+          <div class="history-sub-title" style="text-align: center; margin-bottom: 5px;">WPM</div>
+          <svg width="${width}" height="${height}">
+            <g transform="translate(${margin.left},${margin.top})">
+              <!-- Y axis -->
+              <g class="y-axes">
+                <line x1="15" y1="0" x2="15" y2="${height - margin.top - margin.bottom}" stroke="#666"/>
+                <line x1="15" y1="${height - margin.top - margin.bottom}" x2="${width - margin.left - margin.right}" y2="${height - margin.top - margin.bottom}" stroke="#666"/>
+                <text x="10" y="0" text-anchor="end" dominant-baseline="hanging" font-size="10" fill="#666">${Math.round(maxYaxisWPM)}</text>
+                <text x="10" y="${height - margin.top - margin.bottom}" text-anchor="end" dominant-baseline="baseline" font-size="10" fill="#666">${Math.round(minYaxisWPM)}</text>
+              </g>
 
-        <!-- Data points -->
-        ${runHistory.map((run, i) => {
-          const x = (width - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1) );
-          const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM)/(maxYaxisWPM - minYaxisWPM));
-          const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy)/(maxYaxisAccuracy - minYaxisAccuracy));
-          return `
-            <g>
-              <circle cx="${x}" cy="${yWPM}" r="3" fill="#666666" 
-                onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
-                onmouseout="hideTooltip()"
-              />
-              <rect x="${x-3}" y="${yAcc-3}" width="6" height="6" fill="#666666"
-                onmouseover="showTooltip(event, 'Accuracy: ${run.accuracy}%')"
-                onmouseout="hideTooltip()"
-              />
+              <!-- WPM data points -->
+              ${[...runHistory].reverse().map((run, i) => {
+                const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+                const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM)/(maxYaxisWPM - minYaxisWPM));
+                return `
+                  <circle cx="${x + 15}" cy="${yWPM}" r="3" fill="#666666" 
+                    onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
+                    onmouseout="hideTooltip()"
+                  />
+                `;
+              }).join('')}
+              }).join('')}
             </g>
-          `;
-        }).join('')}
-      </g>
-    </svg>`;
+          </svg>
+        </div>
+        <div style="width: 1px; background-color: var(--border-color); margin: 0 5px;"></div>
+
+        <div>
+          <div class="history-sub-title" style="text-align: center; margin-bottom: 5px;">Accuracy</div>
+          <svg width="${width}" height="${height}">
+            <g transform="translate(${margin.left},${margin.top})">
+              <!-- Y axis -->
+              <g class="y-axes">
+                <line x1="15" y1="0" x2="15" y2="${height - margin.top - margin.bottom}" stroke="#666"/>
+                <line x1="15" y1="${height - margin.top - margin.bottom}" x2="${width - margin.left - margin.right}" y2="${height - margin.top - margin.bottom}" stroke="#666"/>
+                <text x="10" y="0" text-anchor="end" dominant-baseline="hanging" font-size="10" fill="#666">${Math.round(maxYaxisAccuracy)}</text>
+                <text x="10" y="${height - margin.top - margin.bottom}" text-anchor="end" dominant-baseline="baseline" font-size="10" fill="#666">${Math.round(minYaxisAccuracy)}</text>
+              </g>
+
+              <!-- Accuracy data points -->
+              ${[...runHistory].reverse().map((run, i) => {
+                const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+                const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy)/(maxYaxisAccuracy - minYaxisAccuracy));
+                return `
+                  <rect x="${x-3+15}" y="${yAcc-3}" width="6" height="6" fill="#666666"
+                    onmouseover="showTooltip(event, 'Accuracy: ${run.accuracy}%')"
+                    onmouseout="hideTooltip()"
+                  />
+                `;
+              }).join('')}
+            </g>
+          </svg>
+        </div>
+      </div>`;
   }
 
   historyDiv.innerHTML = `
     <div class="history-title">Recent Runs</div>
-    ${runHistory.length >= 5 ? '<div class="history-sub-title">WPM ● Accuracy ■</div>' : ''}
     ${content}
   `;
 }
@@ -295,7 +329,7 @@ function setUpcomingPassages() {
   
   for (let i = 0; i < 100; i++) {
     const randomPassage = passages[Math.floor(Math.random() * passages.length)];
-    if (!newUpcomingPassages.includes(randomPassage)) {
+    if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
       newUpcomingPassages.push(randomPassage);
     } else {
       i--;
@@ -386,6 +420,119 @@ window.onload = function() {
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
     localStorage.setItem('darkMode', darkMode);
   });
+
+  // Settings button click handler
+  document.getElementById('settingsButton').addEventListener('click', (e) => {
+    e.stopPropagation();
+    settingsOpen = !settingsOpen;
+    document.querySelector('.settings-dropdown').classList.toggle('active');
+  });
+
+  // Close settings when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.settings-dropdown')) {
+      settingsOpen = false;
+      document.querySelector('.settings-dropdown').classList.remove('active');
+    }
+  });
+
+  // Background flash toggle
+  const bgFlashToggle = document.getElementById('bgFlashToggle');
+  bgFlashToggle.checked = localStorage.getItem('bgFlashOnError') === 'true';
+  bgFlashOnError = bgFlashToggle.checked;
+
+  bgFlashToggle.addEventListener('change', (e) => {
+    bgFlashOnError = e.target.checked;
+    localStorage.setItem('bgFlashOnError', bgFlashOnError);
+  });
+
+  // Preload and setup error sound
+  errorSound.load();
+  errorSound.volume = 0.3;
+  
+  // Sound toggle with localStorage
+  const soundToggle = document.getElementById('soundToggle');
+  soundToggle.checked = localStorage.getItem('soundOnError') === 'true';
+  soundOnError = soundToggle.checked;
+
+  soundToggle.addEventListener('change', (e) => {
+    soundOnError = e.target.checked;
+    localStorage.setItem('soundOnError', soundOnError);
+    if (soundOnError) {
+      errorSound.load();
+    }
+  });
+
+  // Setup weight sliders
+  const sliders = {
+    char: document.getElementById('charWeightSlider'),
+    bigram: document.getElementById('bigramWeightSlider'),
+    trigram: document.getElementById('trigramWeightSlider'),
+    quadgram: document.getElementById('quadgramWeightSlider')
+  };
+
+  // Load saved weights
+  charWeight = parseFloat(localStorage.getItem('charWeight')) || 0.3;
+  bigramWeight = parseFloat(localStorage.getItem('bigramWeight')) || 0.45;
+  trigramWeight = parseFloat(localStorage.getItem('trigramWeight')) || 0.15;
+  quadgramWeight = parseFloat(localStorage.getItem('quadgramWeight')) || 0.1;
+
+  // Initialize slider values
+  sliders.char.value = charWeight * 100;
+  sliders.bigram.value = bigramWeight * 100;
+  sliders.trigram.value = trigramWeight * 100;
+  sliders.quadgram.value = quadgramWeight * 100;
+
+  // Update labels
+  function updateWeightLabels() {
+    sliders.char.parentElement.querySelector('label').textContent = `Unigram (${(charWeight * 100).toFixed(0)}%)`;
+    sliders.bigram.parentElement.querySelector('label').textContent = `Bigram (${(bigramWeight * 100).toFixed(0)}%)`;
+    sliders.trigram.parentElement.querySelector('label').textContent = `Trigram (${(trigramWeight * 100).toFixed(0)}%)`;
+    sliders.quadgram.parentElement.querySelector('label').textContent = `Quadgram (${(quadgramWeight * 100).toFixed(0)}%)`;
+  }
+  updateWeightLabels();
+
+  // Handle slider changes
+  function handleSliderChange(e) {
+    const newValue = parseFloat(e.target.value) / 100;
+    const type = Object.keys(sliders).find(key => sliders[key] === e.target);
+    
+    // Update the weight
+    switch(type) {
+      case 'char': charWeight = newValue; break;
+      case 'bigram': bigramWeight = newValue; break;
+      case 'trigram': trigramWeight = newValue; break;
+      case 'quadgram': quadgramWeight = newValue; break;
+    }
+
+    // Normalize weights to sum to 1
+    const total = charWeight + bigramWeight + trigramWeight + quadgramWeight;
+    charWeight /= total;
+    bigramWeight /= total;
+    trigramWeight /= total;
+    quadgramWeight /= total;
+
+    // Update sliders and labels
+    sliders.char.value = charWeight * 100;
+    sliders.bigram.value = bigramWeight * 100;
+    sliders.trigram.value = trigramWeight * 100;
+    sliders.quadgram.value = quadgramWeight * 100;
+    updateWeightLabels();
+
+    // Save to localStorage
+    localStorage.setItem('charWeight', charWeight);
+    localStorage.setItem('bigramWeight', bigramWeight);
+    localStorage.setItem('trigramWeight', trigramWeight);
+    localStorage.setItem('quadgramWeight', quadgramWeight);
+
+    // Trigger recalculation of upcoming passages
+    setUpcomingPassages();
+  }
+
+  // Add event listeners to sliders
+  Object.values(sliders).forEach(slider => {
+    slider.addEventListener('input', handleSliderChange);
+  });
 }
 
 // DOM elements
@@ -464,11 +611,17 @@ function handleInput(e) {
       correctCount++;
     } else {
       charErrorCount += 1;
+      if (soundOnError) {
+        errorSound.currentTime = 0; // Reset sound to start
+        errorSound.play();
+      }
+
       // Add flash effect to body
       if (bgFlashOnError) {
         document.body.classList.add('flash-error');
         setTimeout(() => document.body.classList.remove('flash-error'), 300);
       }
+      
       
       console.log(errorLog);
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
@@ -562,6 +715,14 @@ function resetSession() {
   charErrorCount = 0;
   charTotalCount = 0;
   startTime = null;
+  
+  // Add current passage to recent list
+  if (targetText) {
+    recentPassages.unshift(targetText);
+    recentPassages = recentPassages.slice(0, MAX_RECENT_PASSAGES);
+    localStorage.setItem('recentPassages', JSON.stringify(recentPassages));
+  }
+  
   targetText = getPassage();
   renderText();
   inputArea.value = "";
@@ -579,3 +740,41 @@ function showTooltip(event, text) {
 function hideTooltip() {
   tooltip.style.opacity = '0';
 }
+
+function resetStats() {
+  // Reset error and seen logs
+  errorLog = {
+    'char': {},
+    'bigram': {},
+    'trigram': {},
+    'quadgram': {}
+  };
+  seenLog = {
+    'char': {},
+    'bigram': {},
+    'trigram': {},
+    'quadgram': {}
+  };
+  
+  // Reset run history
+  runHistory = [];
+  
+  // Clear localStorage
+  localStorage.removeItem('errorLog');
+  localStorage.removeItem('seenLog');
+  localStorage.removeItem('runHistory');
+  localStorage.removeItem('repetition_count');
+  
+  // Update UI
+  document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
+  updateHistoryDisplay();
+  
+  // Flash feedback
+  document.getElementById('resetStats').classList.add('flash-good');
+  setTimeout(() => document.getElementById('resetStats').classList.remove('flash-good'), 300);
+}
+
+// Add event listener after window load
+window.addEventListener('load', () => {
+  document.getElementById('resetStats').addEventListener('click', resetStats);
+});
