@@ -74,7 +74,7 @@ function getTopErrors() {
   const topErrorLetters = [];
   for (const ngram in errorLog) {
     const errorScores = Object.entries(errorLog[ngram])
-      .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null)
+      .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null && char != 'undefined' )
       .map(([char,errorCount]) => [char, (errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length)]);
     const sortedErrorScores = errorScores.sort((a, b) => b[1] - a[1]);
     const worstLetters = sortedErrorScores.slice(0, 5);
