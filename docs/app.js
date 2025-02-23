@@ -601,8 +601,13 @@ function handleInput(e) {
     }
     
     const charSpan = document.getElementById(`char-${i}`);
+    if (charSpan == null) {
+      /// of the end
+      return;
+    }
+
     const typedChar = inputText[i];
-    const currentClasses = charSpan?.className.replace(' correct', '').replace(' error', '') || '';
+    const currentClasses = charSpan.className.replace(' correct', '').replace(' error', '') || '';
     
     if (typedChar == null) {
       charSpan.className = currentClasses;
