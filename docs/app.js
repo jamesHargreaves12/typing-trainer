@@ -642,7 +642,6 @@ function handleInput(e) {
   if (e["inputType"] != "deleteContentBackward") {
     charTotalCount += 1;
   }
-  // TODO char Counter and error counter plus this needs to only include the latest letter not allt the text.
   // Start timer on first keystroke
   if (!startTime && inputText.length > 0) {
     startTime = new Date();
