@@ -68,7 +68,7 @@ let settingsOpen = false;
 let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
 let recentPassages = [];
-const MAX_RECENT_PASSAGES = 30;
+const MAX_RECENT_PASSAGES = 70;
 
 function getTopErrors() {
   const topErrorLetters = [];
