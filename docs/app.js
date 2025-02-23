@@ -626,13 +626,18 @@ function colorText(inputText)
 inputArea.addEventListener('input', handleInput);
 
 function handleInput(e) {
+  const inputArea = document.getElementById('inputArea');
+  
+  // Force cursor to end of input
+  const end = inputArea.value.length;
+  inputArea.setSelectionRange(end, end);
+  
   if (e.data == ">") {
     resetSession();
     return;
   }
-  const inputText = document.getElementById('inputArea').value;
+  const inputText = inputArea.value;
   colorText(inputText);
-
 
   if (e["inputType"] != "deleteContentBackward") {
     charTotalCount += 1;
@@ -710,6 +715,28 @@ function handleInput(e) {
 
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
 }
+
+// Add this event listener after the existing input listener
+inputArea.addEventListener('keydown', function(e) {
+  // Prevent left/right arrow keys and mouse clicks from moving cursor
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+  }
+});
+
+inputArea.addEventListener('mousedown', function(e) {
+  // Prevent mouse clicks from moving cursor
+  e.preventDefault();
+  const end = this.value.length;
+  this.setSelectionRange(end, end);
+});
+
+inputArea.addEventListener('select', function(e) {
+  // Prevent text selection
+  const end = this.value.length;
+  this.setSelectionRange(end, end);
+});
+
 function calculateMetrics() {
   const timeElapsed = (new Date() - startTime) / 60000; // minutes
   const charsPerWord = 4.7;
