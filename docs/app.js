@@ -7,6 +7,7 @@ let finishedDefaultPassages = false;
 let passages = DEFAULT_PASSAGES;
 let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = passages;
+let currentPassageErrors = [];
 
 let errorLog = {
   'char': {},
@@ -33,6 +34,35 @@ function trackRepetitionCompletion() {
   });
 }
 
+function generateUserId() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+async function persistTypingState() {
+  const to_save = JSON.stringify({
+    userId: userId,
+    passage: targetText, 
+    errors: currentPassageErrors,
+    timeTakenMs: (new Date() - startTime)
+  });
+  const response = await fetch("https://sfuwlmeqrd.execute-api.eu-west-2.amazonaws.com/default/typo-dojo-write-to-bucket", {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+  });
+  const { uploadUrl } = await response.json();
+  await fetch(uploadUrl, {
+    method: 'PUT',
+    body: to_save,
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+}
+
 let unigramFrequency = {};
 let bigramFrequency = {};
 let trigramFrequency = {};
@@ -47,9 +77,9 @@ let trigramWeight = 0.15;
 let quadgramWeight = 0.1;
 let charErrorCount = 0;
 let charTotalCount = 0;
-let prevTargetText = "";
+let prevInputText = "";
 let bgFlashOnError = false;
-
+let userId = "";
 let runHistory = [];
 const MAX_HISTORY = 20;
 
@@ -348,6 +378,11 @@ function setUpcomingPassages() {
 let startTime = null;
 let targetText = '';
 window.onload = function() {
+  if (!localStorage.getItem('userId')) {
+    localStorage.setItem('userId', generateUserId());
+  }
+  userId = localStorage.getItem('userId');
+
   errorLog = JSON.parse(localStorage.getItem('errorLog')) || {
     'char': {},
     'bigram': {},
@@ -562,15 +597,42 @@ function renderText() {
   textDisplay.innerHTML = html;
 }
 
-// Listen for input events
+
+function colorText(inputText)
+{
+  for (let i = 0; i < targetText.length; i++) {
+    const targetLetter = targetText[i];
+    const charSpan = document.getElementById(`char-${i}`);
+    if (i >= inputText.length) {
+      charSpan.className = 'letter';
+      continue;
+    }
+    const inputLetter = inputText[i];
+    if (charSpan == null) {
+      continue;
+    }
+    let currentClasses = charSpan.className.replace(' correct', '').replace(' error', '') || '';
+    if (inputLetter == null) {
+      charSpan.className = currentClasses.replace('letter', 'letter error');
+    } else if (inputLetter === targetLetter) {
+      charSpan.className = currentClasses.replace('letter', 'letter correct');
+    } else {
+      charSpan.className = currentClasses.replace('letter', 'letter error');
+    }
+  }
+
+}
+
 inputArea.addEventListener('input', handleInput);
 
 function handleInput(e) {
-  const inputText = e.target.value;
-  if (inputText == ">") {
+  if (e.data == ">") {
     resetSession();
     return;
   }
+  const inputText = document.getElementById('inputArea').value;
+  colorText(inputText);
+
 
   if (e["inputType"] != "deleteContentBackward") {
     charTotalCount += 1;
@@ -581,9 +643,8 @@ function handleInput(e) {
     startTime = new Date();
   }
   
-  let correctCount = 0;
-  if (prevTargetText.length == inputText.length - 1) {
-    let i = prevTargetText.length
+  if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1)) {
+    let i = prevInputText.length
     unigram = targetText[i];
     bigram = targetText.slice(i-1, i+1);
     trigram = targetText.slice(i-2, i+1);
@@ -599,22 +660,10 @@ function handleInput(e) {
     if (quadgram.length > 3) {
       seenLog['quadgram'][quadgram] = (seenLog['quadgram'][quadgram] || 0) + 1;
     }
-    
-    const charSpan = document.getElementById(`char-${i}`);
-    if (charSpan == null) {
-      /// of the end
-      return;
-    }
 
     const typedChar = inputText[i];
-    const currentClasses = charSpan.className.replace(' correct', '').replace(' error', '') || '';
-    
-    if (typedChar == null) {
-      charSpan.className = currentClasses;
-    } else if (typedChar === targetText[i]) {
-      charSpan.className = currentClasses.replace('letter', 'letter correct');
-      correctCount++;
-    } else {
+
+    if (typedChar !== null && typedChar !== targetText[i]) {
       charErrorCount += 1;
       if (soundOnError) {
         errorSound.currentTime = 0; // Reset sound to start
@@ -627,6 +676,7 @@ function handleInput(e) {
         setTimeout(() => document.body.classList.remove('flash-error'), 300);
       }
       
+      currentPassageErrors.push(i);
       
       console.log(errorLog);
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
@@ -639,11 +689,10 @@ function handleInput(e) {
       if (quadgram.length > 3) {
         errorLog['quadgram'][quadgram] = (errorLog['quadgram'][quadgram] || 0) + 1;
       }
-      console.log("unigram: " + unigram, "bigram: " + bigram, "trigram: " + trigram, "quadgram: " + quadgram);
-      charSpan.className = currentClasses.replace('letter', 'letter error');
     }
   }
-  prevTargetText = inputText;
+
+  prevInputText = inputText;
   // Update the progress bar width based on completion percentage
   let progress = Math.min((inputText.length / targetText.length) * 100, 100);
   progressBar.style.width = progress + "%";
@@ -651,7 +700,8 @@ function handleInput(e) {
   updateLiveMetrics();
   
   // When the user completes the passage
-  if (inputText === targetText) {
+  if (inputText === targetText || (inputText.length > targetText.length && e.inputType === 'insertLineBreak')) {
+    persistTypingState();
     saveErrorData();
     setTimeout(resetSession, 500); // brief pause before resetting
     trackRepetitionCompletion();
@@ -684,13 +734,12 @@ function saveErrorData() {
 }
 
 function resetSession() {
-  if (startTime) {  // Only save if there was actually a run
+  if (startTime) { 
     const metrics = calculateMetrics();
     const wpm = metrics.wpm;
     const accuracy = metrics.accuracy;
     
     if (wpm > 0 && accuracy > 0 && wpm < 1000 && accuracy < 100) {
-      // Calculate averages from previous runs (up to 10)
       const prevRuns = runHistory.slice(0, 10);
       const avgWPM = prevRuns.length > 0 ? 
         prevRuns.reduce((sum, run) => sum + run.wpm, 0) / prevRuns.length : 0;
@@ -716,11 +765,11 @@ function resetSession() {
   }
   
   // Reset state for a new session
-  prevTargetText = "";
+  prevInputText = "";
   charErrorCount = 0;
   charTotalCount = 0;
   startTime = null;
-  
+  currentPassageErrors = [];
   // Add current passage to recent list
   if (targetText) {
     recentPassages.unshift(targetText);
