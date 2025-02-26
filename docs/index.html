@@ -18,12 +18,11 @@
   <meta name="twitter:title" content="Typo Dojo - Free Personalised Typing Training">
   <meta name="twitter:description" content="Free typing training tool that learns and adapts from your mistakes to improve your typing speed and accuracy.">
 
-  <!-- Existing head content -->
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="canonical" href="https://typo-dojo.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <!-- Existing scripts -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-T5BNNGSFNN"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -37,6 +36,7 @@
   <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
     Typo Dojo - Free Online Typing Training
   </h1>
+  
   <div id="app">
     <div class="header">
       <div class="header-left">
@@ -46,6 +46,7 @@
         <span class="separator">|</span>
         <a href="mailto:typo-dojo@gmail.com" class="feedback-tab">Feedback</a>
       </div>
+      
       <div class="header-right">
         <button id="resetStats" class="icon-button" title="Resettstatistics">🗑️</button>
         <div class="settings-dropdown">
@@ -86,30 +87,34 @@
         </button>
       </div>
     </div>
-    <div class="typing-section">
-      <div id="textDisplay" class="text-display">Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.</div>
-      <div class="progress-and-next">
-        <div class="progress-container">
-          <div class="progress-bar-background">
-            <div class="progress-bar" id="progressBar"></div>
-          </div>
-        </div>
-        <button id="nextPage" onclick="resetSession()" class="next-button" title="shortcut: >">Next →</button>
-      </div>
-      <textarea id="inputArea" placeholder="Start typing here..." style="resize: none;" autofocus></textarea>
-    </div>
 
-    <div class="stats-section">
+    <div class="main-container">
       <div id="metrics">
         <span id="wpm">WPM: 0</span>
         <span id="accuracy">Accuracy: 100%</span>
       </div>
-      <div class="stats-container">
-        <div id="topErrors"></div>
-        <div id="history" class="history-list"></div>
+      <div class="typing-section">
+        <div id="textDisplay" class="text-display">Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.</div>
+        <div class="progress-and-next">
+          <div class="progress-container">
+            <div class="progress-bar-background">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+          </div>
+          <button id="nextPage" onclick="resetSession()" class="next-button" title="shortcut: >">Next →</button>
+        </div>
+        <textarea id="inputArea" placeholder="Start typing here..." style="resize: none; position: absolute; opacity: 0; height: 0; width: 0; z-index: -1;" autofocus></textarea>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-container">
+          <div id="topErrors"></div>
+          <div id="history" class="history-list"></div>
+        </div>
       </div>
     </div>
   </div>
+  
   <script src="app.js"></script>
 </body>
 </html>

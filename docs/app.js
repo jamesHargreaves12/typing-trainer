@@ -43,24 +43,26 @@ function generateUserId() {
 }
 
 async function persistTypingState() {
-  const to_save = JSON.stringify({
-    userId: userId,
-    passage: targetText, 
-    errors: currentPassageErrors,
-    timeTakenMs: (new Date() - startTime)
-  });
-  const response = await fetch("https://sfuwlmeqrd.execute-api.eu-west-2.amazonaws.com/default/typo-dojo-write-to-bucket", {
-    method: 'POST',
-    headers: { "Content-Type": "application/json" },
-  });
-  const { uploadUrl } = await response.json();
-  await fetch(uploadUrl, {
-    method: 'PUT',
-    body: to_save,
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
+    const to_save = JSON.stringify({
+      userId: userId,
+      passage: targetText, 
+      errors: currentPassageErrors,
+      timeTakenMs: (new Date() - startTime)
+    });
+    const response = await fetch("https://sfuwlmeqrd.execute-api.eu-west-2.amazonaws.com/default/typo-dojo-write-to-bucket", {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+    });
+    const { uploadUrl } = await response.json();
+    await fetch(uploadUrl, {
+      method: 'PUT',
+      body: to_save,
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  }
 }
 
 let unigramFrequency = {};
@@ -369,7 +371,6 @@ function setUpcomingPassages() {
   newUpcomingPassages.sort((a, b) => getDesireForPassage(b) - getDesireForPassage(a));
   upcomingPassages = newUpcomingPassages.slice(0, 10);
   localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
-  console.log(upcomingPassages[0]);
   setTimeout(() => {
     setUpcomingPassages();
   }, 5000); 
@@ -403,6 +404,7 @@ window.onload = function() {
   upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
   targetText = getPassage();
   renderText();
+  colorText("");
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
@@ -576,9 +578,8 @@ const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
 
 
-// Render the target text: Wrap each character in a span for individual highlighting.
 function renderText() {
-  let words = targetText.split(" "); // Split by space
+  let words = targetText.split(" ");
   let wordStartIndecies = [];
   
   for (let i = 0; i < words.length; i++) {
@@ -586,10 +587,11 @@ function renderText() {
   }
   
   let html = '';
+  
   for (let i = 0; i < targetText.length; i++) {
     let char = targetText[i];
     if (char === " ") {
-      html += `</span><span id="char-${i}" class="letter space">&nbsp;</span><span class="word">`;
+      html += `<span id="char-${i}" class="letter space">&nbsp;</span></span><span class="word">`;
     } else {
       html += `<span id="char-${i}" class="letter">${char}</span>`;
     }
@@ -603,15 +605,16 @@ function colorText(inputText)
   for (let i = 0; i < targetText.length; i++) {
     const targetLetter = targetText[i];
     const charSpan = document.getElementById(`char-${i}`);
+    let currentClasses = charSpan.className.replace(' correct', '').replace(' error', '').replace(' cursor', '') || '';
+
     if (i >= inputText.length) {
-      charSpan.className = 'letter';
+      charSpan.className = currentClasses;
       continue;
     }
     const inputLetter = inputText[i];
     if (charSpan == null) {
       continue;
     }
-    let currentClasses = charSpan.className.replace(' correct', '').replace(' error', '') || '';
     if (inputLetter == null) {
       charSpan.className = currentClasses.replace('letter', 'letter error');
     } else if (inputLetter === targetLetter) {
@@ -620,10 +623,19 @@ function colorText(inputText)
       charSpan.className = currentClasses.replace('letter', 'letter error');
     }
   }
-
+  const NextChar = document.getElementById(`char-${inputText.length}`);
+  if (NextChar) {
+    NextChar.className = NextChar.className.replace('letter', 'letter cursor');
+  }
 }
 
 inputArea.addEventListener('input', handleInput);
+document.addEventListener('keydown', (e) => {
+  inputArea.focus();
+  if (e.key === 'Tab') {
+    e.preventDefault();
+  }
+});
 
 function handleInput(e) {
   const inputArea = document.getElementById('inputArea');
@@ -682,7 +694,6 @@ function handleInput(e) {
       
       currentPassageErrors.push(i);
       
-      console.log(errorLog);
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
       if (bigram.length > 1) {
         errorLog['bigram'][bigram] = (errorLog['bigram'][bigram] || 0) + 1;
@@ -704,7 +715,7 @@ function handleInput(e) {
   updateLiveMetrics();
   
   // When the user completes the passage
-  if (inputText === targetText || (inputText.length > targetText.length && e.inputType === 'insertLineBreak')) {
+  if (inputText === targetText || (inputText.length >= targetText.length)) {
     persistTypingState();
     saveErrorData();
     setTimeout(resetSession, 500); // brief pause before resetting
@@ -805,6 +816,7 @@ function resetSession() {
   
   targetText = getPassage();
   renderText();
+  colorText("");
   inputArea.value = "";
   progressBar.style.width = "0%";
 }
