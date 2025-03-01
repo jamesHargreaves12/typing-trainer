@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Typo Dojo - FAQ & Troubleshooting | Typing Training Help</title>
+  <meta name="description" content="Frequently asked questions and troubleshooting guide for Typo Dojo - the personalized typing training tool.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="header-left">
+        <a href="index.html" class="app-title">Typo Dojo</a>
+        <span class="separator">|</span>
+        <a href="https://github.com/jamesHargreaves12" class="feedback-tab">Team</a>
+        <span class="separator">|</span>
+        <a href="mailto:typo-dojo@gmail.com" class="feedback-tab">Feedback</a>
+        <span class="separator">|</span>
+        <a href="/faq.html" class="feedback-tab">FAQ</a>
+      </div>
+      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+        <span class="light-icon">☀️</span>
+        <span class="dark-icon">🌙</span>
+      </button>
+    </div>
+
+    <div class="main-container">
+      <div class="faq-section">
+        <h1>Frequently Asked Questions</h1>
+        
+        <div class="faq-item">
+          <h2>What is Typo Dojo?</h2>
+          <p>Typo Dojo is a free, personalized typing training tool that adapts to your mistakes. It analyzes your typing patterns and creates targeted practice sessions to help improve your speed and accuracy.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>How does the personalization work?</h2>
+          <p>Typo Dojo tracks your errors at multiple levels (individual characters, character pairs, trigrams, and quadgrams). It then selects practice texts that contain more of the patterns you struggle with, helping you focus on your weak points.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>What do the statistics mean?</h2>
+          <p><strong>WPM (Words Per Minute):</strong> Measures your typing speed. One word is standardized as just under 5 keystrokes.<br>
+          <strong>Accuracy:</strong> The percentage of characters typed correctly.<br>
+          <strong>Most common typos:</strong> Shows characters and patterns where you make the most mistakes.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>Keyboard Shortcuts</h2>
+          <p>
+            <strong>></strong> - Skip to next passage<br>
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h2>Troubleshooting</h2>
+          <h3>The cursor isn't where I'm typing</h3>
+          <p>This is by design. The cursor is automatically kept at the end of your input to maintain proper typing flow.</p>
+          
+          <h3>I want to reset the error / tracking statistics</h3>
+          <p>Try clicking the reset statistics button (🗑️) in the top right to start fresh.</p>
+
+          <h3>I want to change the error behaviour</h3>
+          <p>Try clicking the settings button (⚙️) in the top right.</p>
+          
+        </div>
+
+        <div class="faq-item">
+          <h2>Privacy</h2>
+          <p>Typo Dojo stores your typing statistics locally in your browser. This data is used to personalize your practice sessions and is not shared with third parties.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode handling
+    let darkMode = localStorage.getItem('darkMode') === 'true';
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+      darkMode = !darkMode;
+      document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+      localStorage.setItem('darkMode', darkMode);
+    });
+  </script>
+</body>
+</html> 
