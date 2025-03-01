@@ -53,6 +53,7 @@ async function persistTypingState() {
     const response = await fetch("https://sfuwlmeqrd.execute-api.eu-west-2.amazonaws.com/default/typo-dojo-write-to-bucket", {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid: userId })
     });
     const { uploadUrl } = await response.json();
     await fetch(uploadUrl, {
