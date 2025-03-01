@@ -659,7 +659,7 @@ function handleInput(e) {
     startTime = new Date();
   }
   
-  if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1)) {
+  if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
     let i = prevInputText.length
     unigram = targetText[i];
     bigram = targetText.slice(i-1, i+1);
