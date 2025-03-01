@@ -777,7 +777,7 @@ function resetSession() {
     const wpm = metrics.wpm;
     const accuracy = metrics.accuracy;
     
-    if (wpm > 0 && accuracy > 0 && wpm < 1000 && accuracy < 100) {
+    if (wpm > 0 && accuracy > 0 && wpm < 1000 && accuracy <= 100) {
       const prevRuns = runHistory.slice(0, 10);
       const avgWPM = prevRuns.length > 0 ? 
         prevRuns.reduce((sum, run) => sum + run.wpm, 0) / prevRuns.length : 0;
