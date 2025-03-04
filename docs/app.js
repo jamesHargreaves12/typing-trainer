@@ -74,10 +74,10 @@ let alphaChars = 0.95;
 let alphaBigrams = 0.95;
 let alphaTrigrams = 0.95;
 let alphaQuadgrams = 0.95;
-let charWeight = 0.3;
-let bigramWeight = 0.45;
-let trigramWeight = 0.15;
-let quadgramWeight = 0.1;
+let charWeight = 0.71;
+let bigramWeight = 0.02;
+let trigramWeight = 0.36;
+let quadgramWeight = 0.01;
 let charErrorCount = 0;
 let charTotalCount = 0;
 let prevInputText = "";
@@ -510,10 +510,10 @@ window.onload = function() {
   };
 
   // Load saved weights
-  charWeight = parseFloat(localStorage.getItem('charWeight')) || 0.3;
-  bigramWeight = parseFloat(localStorage.getItem('bigramWeight')) || 0.45;
-  trigramWeight = parseFloat(localStorage.getItem('trigramWeight')) || 0.15;
-  quadgramWeight = parseFloat(localStorage.getItem('quadgramWeight')) || 0.1;
+  charWeight = parseFloat(localStorage.getItem('charWeight')) || 0.71;
+  bigramWeight = parseFloat(localStorage.getItem('bigramWeight')) || 0.02;
+  trigramWeight = parseFloat(localStorage.getItem('trigramWeight')) || 0.36;
+  quadgramWeight = parseFloat(localStorage.getItem('quadgramWeight')) || 0.01;
 
   // Initialize slider values
   sliders.char.value = charWeight * 100;
@@ -667,6 +667,7 @@ function handleInput(e) {
     trigram = targetText.slice(i-2, i+1);
     quadgram = targetText.slice(i-3, i+1);
 
+    // TODO we should add a suffix to start to capture first letter bigrams etc
     seenLog['char'][unigram] = (seenLog['char'][unigram] || 0) + 1;
     if (bigram.length > 1) {
       seenLog['bigram'][bigram] = (seenLog['bigram'][bigram] || 0) + 1;
