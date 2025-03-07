@@ -15,7 +15,7 @@ let errorLog = {
   'trigram': {},
   'quadgram': {}
 };
-
+let errorCount = 0;
 let seenLog = {
   'char': {},
   'bigram': {},
@@ -66,10 +66,8 @@ async function persistTypingState() {
   }
 }
 
-let unigramFrequency = {};
-let bigramFrequency = {};
-let trigramFrequency = {};
 let quadgramFrequency = {};
+let defaultQuadgramErrorModel = {};
 let alphaChars = 0.95;
 let alphaBigrams = 0.95;
 let alphaTrigrams = 0.95;
@@ -284,77 +282,69 @@ function getPassage() {
   
 }
 
+function getOrPad(passage, index) {
+  if (index < 0) {
+    return "<S>";
+  }
+  if (index >= passage.length) {
+    return "<E>";
+  }
+  return passage[index];
+}
+
+function getErrorScore(passage) {
+  let defualtModelScore = 0;
+  let personaModalScore = 0;
+  // Weigh by some metric of coverage over expected coverage at final state
+  let charWeight = Object.keys(seenLog['char']).length ** 2  / 75;
+  let bigramWeight = Object.keys(seenLog['bigram']).length ** 2 / (75*75);
+  let trigramWeight = Object.keys(seenLog['trigram']).length ** 2 / (75*75*75);
+  let quadgramWeight = Object.keys(seenLog['quadgram']).length ** 2 / (75*75*75*75);
+  let totalWeight = charWeight + bigramWeight + trigramWeight + quadgramWeight;
+  charWeight /= totalWeight;
+  bigramWeight /= totalWeight;
+  trigramWeight /= totalWeight;
+  quadgramWeight /= totalWeight;
+  for(let i = 0; i < passage.length; i++) {
+    const char = getOrPad(passage, i);
+    const bigram = getOrPad(passage, i+1) + char;
+    const trigram = getOrPad(passage, i+2) + bigram;
+    const quadgram = getOrPad(passage, i+3) + trigram;
+
+    defualtModelScore += (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"]);
+    const personalCharScore = (errorLog['char'][char] || 0) / (seenLog['char'][char] || 1);
+    const personalBigramScore = (errorLog['bigram'][bigram] || 0) / (seenLog['bigram'][bigram] || 1);
+    const personalTrigramScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
+    const personalQuadgramScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
+
+    personaModalScore += charWeight * personalCharScore + bigramWeight * personalBigramScore + trigramWeight * personalTrigramScore + quadgramWeight * personalQuadgramScore;
+  }
+  // at start defualtModelScore gets weight 1
+  // after 500 errors defualtModelScore gets weight 0
+  const persoalErrorWeight = Math.min(1, errorCount / 500);
+  return (1 - persoalErrorWeight) * defualtModelScore / passage.length + persoalErrorWeight * personaModalScore / passage.length;
+}
+
+function getNaturalnessScore(passage) {
+  let naturalnessScore = 0;
+  for(let i = 0; i < passage.length; i++) {
+    const char = getOrPad(passage, i);
+    const bigram = getOrPad(passage, i+1) + char;
+    const trigram = getOrPad(passage, i+2) + bigram;
+    const quadgram = getOrPad(passage, i+3) + trigram;
+
+
+    naturalnessScore += (quadgramFrequency[quadgram] || 0);
+  }
+  return naturalnessScore / passage.length;
+}
+
 function getDesireForPassage(passage) {
-  // Calculate a desire score for a passage based on character and bigram frequencies
-  // and error rates. Higher scores indicate passages that target characters and 
-  // bigrams the user needs more practice with.
-  //
-  // The desire score is a weighted combination of:
-  // 1. Character-level desire: For each character, considers both its error rate 
-  //    and natural frequency
-  // 2. Bigram-level desire: For each character pair, considers both its error rate
-  //    and natural frequency
-  //
-  // Parameters:
-  //   passage (string): The text passage to evaluate
-  //
-  // Returns:
-  //   number: A desire score where higher values indicate more valuable practice passages
-  const charMap = {};
-  const bigramMap = {};
-  const trigramMap = {};
-  const quadgramMap = {};
-
-  for (let char of passage) {
-    charMap[char] = (charMap[char] || 0) + 1;
-  }
-  for (let i = 0; i < passage.length - 1; i++) {
-    const bigram = passage.slice(i, i + 2);
-    bigramMap[bigram] = (bigramMap[bigram] || 0) + 1;
-  }
-  
-  let charDesireAccumulation = 0;
-  let totalLength = 0;
-  
-  for (let char in charMap) {
-    const errorScore = (errorLog['char'][char] || 0) / (seenLog['char'][char] || 1);
-    const frequencyScore = unigramFrequency[char] || 0;
-    charDesireAccumulation += charMap[char] * (alphaChars * errorScore + (1 - alphaChars) * frequencyScore);
-    totalLength += charMap[char];
-  }
-
-  let bigramDesireAccumulation = 0;
-  let bigramTotalLength = 0;
-  for (let bigram in bigramMap) {
-    const errorScore = (errorLog['bigram'][bigram] || 0) / (seenLog['bigram'][bigram] || 1);
-    const frequencyScore = bigramFrequency[bigram] || 0;
-    bigramDesireAccumulation += bigramMap[bigram] * (alphaBigrams * errorScore + (1 - alphaBigrams) * frequencyScore);
-    bigramTotalLength += bigramMap[bigram];
-  }
-
-  let trigramDesireAccumulation = 0;
-  let trigramTotalLength = 0;
-  for (let trigram in trigramMap) {
-    const errorScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
-    const frequencyScore = trigramFrequency[trigram] || 0;
-    trigramDesireAccumulation += trigramMap[trigram] * (alphaTrigrams * errorScore + (1 - alphaTrigrams) * frequencyScore);
-    trigramTotalLength += trigramMap[trigram];
-  }
-
-  let quadgramDesireAccumulation = 0;
-  let quadgramTotalLength = 0;
-  for (let quadgram in quadgramMap) {
-    const errorScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
-    const frequencyScore = quadgramFrequency[quadgram] || 0;
-    quadgramDesireAccumulation += quadgramMap[quadgram] * (alphaQuadgrams * errorScore + (1 - alphaQuadgrams) * frequencyScore);
-    quadgramTotalLength += quadgramMap[quadgram];
-  }
-
-  const bigramDesire = bigramDesireAccumulation / (bigramTotalLength + 1);
-  const charDesire = charDesireAccumulation / (totalLength + 1);
-  const trigramDesire = trigramDesireAccumulation / (trigramTotalLength + 1);
-  const quadgramDesire = quadgramDesireAccumulation / (quadgramTotalLength + 1);
-  return charWeight * charDesire + bigramWeight * bigramDesire + trigramWeight * trigramDesire + quadgramWeight * quadgramDesire;
+  const expectedErrorScore = 0.1;
+  const expectedNaturalnessScore = 0.00002;
+  const errorScore = getErrorScore(passage);
+  const naturalnessScore = getNaturalnessScore(passage);
+  return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore);
 }
 
 function setUpcomingPassages() {
@@ -391,6 +381,7 @@ window.onload = function() {
     'trigram': {},
     'quadgram': {}
   };
+  errorCount = Object.values(errorLog['char']).reduce((acc, curr) => acc + curr, 0);
   
   seenLog = JSON.parse(localStorage.getItem('seenLog')) || {
     'char': {},
@@ -420,9 +411,9 @@ window.onload = function() {
     })
     .then(text => {
       passages = text.split("\n");
-      const arrFreqAndFileName = [[unigramFrequency, 'unigrams'], [bigramFrequency, 'bigrams'], [trigramFrequency, 'trigrams'], [quadgramFrequency, 'quadgrams']];
-      return Promise.all(arrFreqAndFileName.map(freqAndFileName => 
-        fetch(`https://jameshargreaves12.github.io/reference_data/${freqAndFileName[1]}.json`)
+      const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
+      return Promise.all(arrFreqAndFileName.map(([freq, fileName]) => 
+        fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -431,7 +422,9 @@ window.onload = function() {
           })
           .then(data => {
             // Set the appropriate frequency variable based on ngram type
-            freqAndFileName[0] = data;
+            for (let key in data) {
+              freq[key] = data[key];
+            }
           })
       ));
     })
@@ -501,76 +494,12 @@ window.onload = function() {
     }
   });
 
-  // Setup weight sliders
-  const sliders = {
-    char: document.getElementById('charWeightSlider'),
-    bigram: document.getElementById('bigramWeightSlider'),
-    trigram: document.getElementById('trigramWeightSlider'),
-    quadgram: document.getElementById('quadgramWeightSlider')
-  };
 
   // Load saved weights
   charWeight = parseFloat(localStorage.getItem('charWeight')) || 0.71;
   bigramWeight = parseFloat(localStorage.getItem('bigramWeight')) || 0.02;
   trigramWeight = parseFloat(localStorage.getItem('trigramWeight')) || 0.36;
   quadgramWeight = parseFloat(localStorage.getItem('quadgramWeight')) || 0.01;
-
-  // Initialize slider values
-  sliders.char.value = charWeight * 100;
-  sliders.bigram.value = bigramWeight * 100;
-  sliders.trigram.value = trigramWeight * 100;
-  sliders.quadgram.value = quadgramWeight * 100;
-
-  // Update labels
-  function updateWeightLabels() {
-    sliders.char.parentElement.querySelector('label').textContent = `Unigram (${(charWeight * 100).toFixed(0)}%)`;
-    sliders.bigram.parentElement.querySelector('label').textContent = `Bigram (${(bigramWeight * 100).toFixed(0)}%)`;
-    sliders.trigram.parentElement.querySelector('label').textContent = `Trigram (${(trigramWeight * 100).toFixed(0)}%)`;
-    sliders.quadgram.parentElement.querySelector('label').textContent = `Quadgram (${(quadgramWeight * 100).toFixed(0)}%)`;
-  }
-  updateWeightLabels();
-
-  // Handle slider changes
-  function handleSliderChange(e) {
-    const newValue = parseFloat(e.target.value) / 100;
-    const type = Object.keys(sliders).find(key => sliders[key] === e.target);
-    
-    // Update the weight
-    switch(type) {
-      case 'char': charWeight = newValue; break;
-      case 'bigram': bigramWeight = newValue; break;
-      case 'trigram': trigramWeight = newValue; break;
-      case 'quadgram': quadgramWeight = newValue; break;
-    }
-
-    // Normalize weights to sum to 1
-    const total = charWeight + bigramWeight + trigramWeight + quadgramWeight;
-    charWeight /= total;
-    bigramWeight /= total;
-    trigramWeight /= total;
-    quadgramWeight /= total;
-
-    // Update sliders and labels
-    sliders.char.value = charWeight * 100;
-    sliders.bigram.value = bigramWeight * 100;
-    sliders.trigram.value = trigramWeight * 100;
-    sliders.quadgram.value = quadgramWeight * 100;
-    updateWeightLabels();
-
-    // Save to localStorage
-    localStorage.setItem('charWeight', charWeight);
-    localStorage.setItem('bigramWeight', bigramWeight);
-    localStorage.setItem('trigramWeight', trigramWeight);
-    localStorage.setItem('quadgramWeight', quadgramWeight);
-
-    // Trigger recalculation of upcoming passages
-    setUpcomingPassages();
-  }
-
-  // Add event listeners to sliders
-  Object.values(sliders).forEach(slider => {
-    slider.addEventListener('input', handleSliderChange);
-  });
 }
 
 // DOM elements
@@ -697,6 +626,7 @@ function handleInput(e) {
       currentPassageErrors.push(i);
       
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
+      errorCount += 1;
       if (bigram.length > 1) {
         errorLog['bigram'][bigram] = (errorLog['bigram'][bigram] || 0) + 1;
       }
@@ -843,6 +773,7 @@ function resetStats() {
     'trigram': {},
     'quadgram': {}
   };
+  errorCount = 0;
   seenLog = {
     'char': {},
     'bigram': {},
