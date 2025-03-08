@@ -66,16 +66,6 @@ async function persistTypingState() {
   }
 }
 
-let quadgramFrequency = {};
-let defaultQuadgramErrorModel = {};
-let alphaChars = 0.95;
-let alphaBigrams = 0.95;
-let alphaTrigrams = 0.95;
-let alphaQuadgrams = 0.95;
-let charWeight = 0.71;
-let bigramWeight = 0.02;
-let trigramWeight = 0.36;
-let quadgramWeight = 0.01;
 let charErrorCount = 0;
 let charTotalCount = 0;
 let prevInputText = "";
@@ -100,6 +90,8 @@ let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
 let recentPassages = [];
 const MAX_RECENT_PASSAGES = 70;
+let passageWorker = new Worker('passageWorker.js');
+
 
 function getTopErrors() {
   const topErrorLetters = [];
@@ -282,91 +274,25 @@ function getPassage() {
   
 }
 
-function getOrPad(passage, index) {
-  if (index < 0) {
-    return "<S>";
-  }
-  if (index >= passage.length) {
-    return "<E>";
-  }
-  return passage[index];
-}
-
-function getErrorScore(passage) {
-  let defualtModelScore = 0;
-  let personaModalScore = 0;
-  // Weigh by some metric of coverage over expected coverage at final state
-  let charWeight = Object.keys(seenLog['char']).length ** 2  / 75;
-  let bigramWeight = Object.keys(seenLog['bigram']).length ** 2 / (75*75);
-  let trigramWeight = Object.keys(seenLog['trigram']).length ** 2 / (75*75*75);
-  let quadgramWeight = Object.keys(seenLog['quadgram']).length ** 2 / (75*75*75*75);
-  let totalWeight = charWeight + bigramWeight + trigramWeight + quadgramWeight;
-  charWeight /= totalWeight;
-  bigramWeight /= totalWeight;
-  trigramWeight /= totalWeight;
-  quadgramWeight /= totalWeight;
-  for(let i = 0; i < passage.length; i++) {
-    const char = getOrPad(passage, i);
-    const bigram = getOrPad(passage, i+1) + char;
-    const trigram = getOrPad(passage, i+2) + bigram;
-    const quadgram = getOrPad(passage, i+3) + trigram;
-
-    defualtModelScore += (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"]);
-    const personalCharScore = (errorLog['char'][char] || 0) / (seenLog['char'][char] || 1);
-    const personalBigramScore = (errorLog['bigram'][bigram] || 0) / (seenLog['bigram'][bigram] || 1);
-    const personalTrigramScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
-    const personalQuadgramScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
-
-    personaModalScore += charWeight * personalCharScore + bigramWeight * personalBigramScore + trigramWeight * personalTrigramScore + quadgramWeight * personalQuadgramScore;
-  }
-  // at start defualtModelScore gets weight 1
-  // after 500 errors defualtModelScore gets weight 0
-  const persoalErrorWeight = Math.min(1, errorCount / 500);
-  return (1 - persoalErrorWeight) * defualtModelScore / passage.length + persoalErrorWeight * personaModalScore / passage.length;
-}
-
-function getNaturalnessScore(passage) {
-  let naturalnessScore = 0;
-  for(let i = 0; i < passage.length; i++) {
-    const char = getOrPad(passage, i);
-    const bigram = getOrPad(passage, i+1) + char;
-    const trigram = getOrPad(passage, i+2) + bigram;
-    const quadgram = getOrPad(passage, i+3) + trigram;
-
-
-    naturalnessScore += (quadgramFrequency[quadgram] || 0);
-  }
-  return naturalnessScore / passage.length;
-}
-
-function getDesireForPassage(passage) {
-  const expectedErrorScore = 0.1;
-  const expectedNaturalnessScore = 0.00002;
-  const errorScore = getErrorScore(passage);
-  const naturalnessScore = getNaturalnessScore(passage);
-  return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore);
-}
-
 function setUpcomingPassages() {
-  const newUpcomingPassages = [...upcomingPassages];
-  
-  for (let i = 0; i < 20; i++) {
-    const randomPassage = passages[Math.floor(Math.random() * passages.length)];
-    if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
-      newUpcomingPassages.push(randomPassage);
-    } else {
-      i--;
-    }
-  }
-  
-  newUpcomingPassages.sort((a, b) => getDesireForPassage(b) - getDesireForPassage(a));
-  upcomingPassages = newUpcomingPassages.slice(0, 10);
-  localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+  passageWorker.postMessage({
+    upcomingPassages,
+    recentPassages,
+    errorLog,
+    seenLog,
+    errorCount,
+  });
+
   setTimeout(() => {
     setUpcomingPassages();
-  }, 5000); 
-
+  }, 5000);
 }
+
+passageWorker.onmessage = function(e) {
+  upcomingPassages = e.data;
+  localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+};
+
 let startTime = null;
 let targetText = '';
 window.onload = function() {
@@ -401,40 +327,11 @@ window.onload = function() {
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
   updateHistoryDisplay();
-
-  fetch('https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.text();
-    })
-    .then(text => {
-      passages = text.split("\n");
-      const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
-      return Promise.all(arrFreqAndFileName.map(([freq, fileName]) => 
-        fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
-          .then(data => {
-            // Set the appropriate frequency variable based on ngram type
-            for (let key in data) {
-              freq[key] = data[key];
-            }
-          })
-      ));
-    })
-    .then(() => {
-      // on timeout call setUpcomingPassages
-      setTimeout(() => {
-        setUpcomingPassages();
-      }, 1000);
-    });
-
+  
+  setTimeout(() => {
+    setUpcomingPassages();
+  }, 5000);
+  
   // Create tooltip element
   tooltip = document.createElement('div');
   tooltip.className = 'tooltip';
@@ -493,13 +390,6 @@ window.onload = function() {
       errorSound.load();
     }
   });
-
-
-  // Load saved weights
-  charWeight = parseFloat(localStorage.getItem('charWeight')) || 0.71;
-  bigramWeight = parseFloat(localStorage.getItem('bigramWeight')) || 0.02;
-  trigramWeight = parseFloat(localStorage.getItem('trigramWeight')) || 0.36;
-  quadgramWeight = parseFloat(localStorage.getItem('quadgramWeight')) || 0.01;
 }
 
 // DOM elements
