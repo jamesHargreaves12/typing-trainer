@@ -106,7 +106,7 @@ self.onmessage = function(e) {
   } = e.data;
 
   // not yet initialised
-  if (passages.length == 0 || quadgramFrequency.length == 0 || defaultQuadgramErrorModel.length == 0) {
+  if (passages.length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
     return;
   }
 
