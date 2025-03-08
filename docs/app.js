@@ -350,7 +350,7 @@ function getDesireForPassage(passage) {
 function setUpcomingPassages() {
   const newUpcomingPassages = [...upcomingPassages];
   
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 20; i++) {
     const randomPassage = passages[Math.floor(Math.random() * passages.length)];
     if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
       newUpcomingPassages.push(randomPassage);
