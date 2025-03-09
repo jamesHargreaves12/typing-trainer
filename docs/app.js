@@ -421,7 +421,9 @@ window.onload = function() {
   if (cps == "default" || !cps) {
     cps = "wikipedia";
   }
-  document.querySelector(`input[name="passageSource"][value="${cps}"]`).checked = true;
+  if (document.querySelector(`input[name="passageSource"][value="${cps}"]`)) {
+    document.querySelector(`input[name="passageSource"][value="${cps}"]`).checked = true;
+  }
 
   // Handle passage source changes
   document.querySelectorAll('input[name="passageSource"]').forEach(radio => {
