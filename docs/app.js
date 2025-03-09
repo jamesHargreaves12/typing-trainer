@@ -418,7 +418,7 @@ window.onload = function() {
 
   //  initial radio button state
   let cps = currentPassageSource;
-  if (cps == "default" || !cps) {
+  if (cps == "default" || !cps || cps == "unknown") {
     cps = "wikipedia";
   }
   if (document.querySelector(`input[name="passageSource"][value="${cps}"]`)) {
