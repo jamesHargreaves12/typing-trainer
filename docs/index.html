@@ -50,7 +50,7 @@
       </div>
       
       <div class="header-right">
-        <button id="resetStats" class="icon-button" title="Resettstatistics">🗑️</button>
+        <button id="resetStats" class="icon-button" title="Reset statistics">🗑️</button>
         <div class="settings-dropdown">
           <button id="settingsButton" class="icon-button" title="Advanced settings">⚙️</button>
           <div class="settings-content">
@@ -62,6 +62,20 @@
             <label class="settings-item">
               <input type="checkbox" id="soundToggle">
               Sound on error
+            </label>
+          </div>
+        </div>
+        <div class="settings-dropdown">
+          <button id="passageSourceButton" class="icon-button" title="Passage source">📚</button>
+          <div class="settings-content">
+            <div class="settings-title">Passage Source</div>
+            <label class="settings-item">
+              <input type="radio" name="passageSource" value="wikipedia" checked>
+              Wikipedia
+            </label>
+            <label class="settings-item">
+              <input type="radio" name="passageSource" value="sherlock">
+              Sherlock Holmes
             </label>
           </div>
         </div>
@@ -92,8 +106,8 @@
 
       <div class="stats-section">
         <div class="stats-container">
-          <div id="topErrors"></div>
-          <div id="history" class="history-list"></div>
+          <div id="topErrors" style="display: none;"></div>
+          <div id="history" class="history-list" style="display: none;"></div>
         </div>
       </div>
     </div>

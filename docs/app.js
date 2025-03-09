@@ -2,11 +2,10 @@ let DEFAULT_PASSAGES = [
   "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
   "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
   "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate."
-];
+].map(passage => ({passage, source: 'default'}));
 let finishedDefaultPassages = false;
-let passages = DEFAULT_PASSAGES;
 let upcomingDefaultPassages = DEFAULT_PASSAGES;
-let upcomingPassages = passages;
+let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 
 let errorLog = {
@@ -47,6 +46,7 @@ async function persistTypingState() {
     const to_save = JSON.stringify({
       userId: userId,
       passage: targetText, 
+      source: currentPassageSource,
       errors: currentPassageErrors,
       timeTakenMs: (new Date() - startTime)
     });
@@ -90,7 +90,12 @@ let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
 let recentPassages = [];
 const MAX_RECENT_PASSAGES = 70;
+let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
 let passageWorker = new Worker('passageWorker.js');
+passageWorker.postMessage({
+  type: 'sourceChange',
+  source: currentPassageSource
+});
 
 
 function getTopErrors() {
@@ -268,10 +273,9 @@ function getPassage() {
       return nextPassage;
     }
   }
-  
+
   const nextPassage = upcomingPassages.shift();
   return nextPassage;
-  
 }
 
 function setUpcomingPassages() {
@@ -292,11 +296,16 @@ function setUpcomingPassages() {
 
 passageWorker.onmessage = function(e) {
   upcomingPassages = e.data;
+  // refilter here because of race conditions
+  upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
   localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
 };
 
 let startTime = null;
-let targetText = '';
+let targetText = 'Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.';
+const textDisplay = document.getElementById('textDisplay');
+renderText();
+
 window.onload = function() {
   if (!localStorage.getItem('userId')) {
     localStorage.setItem('userId', generateUserId());
@@ -322,7 +331,15 @@ window.onload = function() {
   }
 
   upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
-  targetText = getPassage();
+  // backwards compatibility
+  if (upcomingPassages.length > 0 && typeof upcomingPassages[0] === 'string') {
+    upcomingPassages = upcomingPassages.map(passage => ({passage, source: 'unknown'}));
+  }
+  const p= getPassage();
+  const {passage, source} = p;
+  console.log(p);
+  targetText = passage;
+  currentPassageSource = source;
   renderText();
   colorText("");
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
@@ -392,10 +409,36 @@ window.onload = function() {
       errorSound.load();
     }
   });
+
+  // Passage source selector
+  document.getElementById('passageSourceButton').addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.querySelector('.settings-dropdown:last-of-type').classList.toggle('active');
+  });
+
+  //  initial radio button state
+  let cps = currentPassageSource;
+  if (cps == "default" || !cps) {
+    cps = "wikipedia";
+  }
+  document.querySelector(`input[name="passageSource"][value="${cps}"]`).checked = true;
+
+  // Handle passage source changes
+  document.querySelectorAll('input[name="passageSource"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      currentPassageSource = e.target.value;
+      localStorage.setItem('passageSource', currentPassageSource);
+      passageWorker.postMessage({
+        type: 'sourceChange',
+        source: currentPassageSource
+      });
+      upcomingPassages = [];
+
+    });
+  });
 }
 
 // DOM elements
-const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
 
@@ -638,7 +681,9 @@ function resetSession() {
     localStorage.setItem('recentPassages', JSON.stringify(recentPassages));
   }
   
-  targetText = getPassage();
+  const {passage, source} = getPassage();
+  targetText = passage;
+  currentPassageSource = source;
   renderText();
   colorText("");
   inputArea.value = "";

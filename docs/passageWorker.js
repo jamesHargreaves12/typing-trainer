@@ -1,35 +1,32 @@
-let passages = [];
+let currentSource = 'wikipedia';
 let quadgramFrequency = {};
 let defaultQuadgramErrorModel = {};
+const source_passages = {}
+source_paths = {
+    'wikipedia': 'https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt',
+    'sherlock': 'https://jameshargreaves12.github.io/reference_data/sherlock_holmes.txt'
+}
 
-fetch('https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt')
-.then(response => {
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return response.text();
-})
-.then(text => {
-  passages = text.split("\n");
-  const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
-  return Promise.all(arrFreqAndFileName.map(([freq, fileName]) => 
+const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
+
+fetches = arrFreqAndFileName.map(([freq, fileName]) => 
     fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
-      .then(response => {
+        .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+            throw new Error('Network response was not ok');
         }
         return response.json();
-      })
-      .then(data => {
+        })
+        .then(data => {
         // Set the appropriate frequency variable based on ngram type
         for (let key in data) {
-          freq[key] = data[key];
+            freq[key] = data[key];
         }
-      })
-  ));
-})
-.then(() => {
-  console.log("Initialised passage worker");
+        })
+)
+
+Promise.all(fetches).then(() => {
+  console.log("Initialized passage worker");
 });
 
 function getOrPad(passage, index) {
@@ -97,6 +94,15 @@ function getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorMod
 
 
 self.onmessage = function(e) {
+  if (e.data.type === 'sourceChange') {
+    currentSource = e.data.source;
+    if (source_passages[currentSource]) {
+      return;
+    }
+    fetch(source_paths[currentSource]).then(response => response.text()).then(text => source_passages[currentSource] = text.split("\n"))
+    return;
+  }
+
   const { 
     upcomingPassages, 
     recentPassages, 
@@ -104,13 +110,16 @@ self.onmessage = function(e) {
     seenLog, 
     errorCount,
   } = e.data;
+  let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource).map(passage => passage.passage);
 
   // not yet initialised
-  if (passages.length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+  if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
     return;
   }
 
-  const newUpcomingPassages = [...upcomingPassages];
+  const passages = source_passages[currentSource];
+  
+  const newUpcomingPassages = [...correctSourceUpcomingPassages];
   
   for (let i = 0; i < 100; i++) {
     const randomPassage = passages[Math.floor(Math.random() * passages.length)];
@@ -122,7 +131,6 @@ self.onmessage = function(e) {
   }
   
   newUpcomingPassages.sort((a, b) => getDesireForPassage(b, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency) - getDesireForPassage(a, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency));
-  const result = newUpcomingPassages.slice(0, 10);
-  console.log(result);
+  const result = newUpcomingPassages.slice(0, 10).map(passage => ({passage, source: currentSource}));
   self.postMessage(result);
 }; 
