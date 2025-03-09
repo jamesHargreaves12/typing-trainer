@@ -275,6 +275,7 @@ function getPassage() {
 }
 
 function setUpcomingPassages() {
+  const startTime = performance.now();
   passageWorker.postMessage({
     upcomingPassages,
     recentPassages,
@@ -282,7 +283,8 @@ function setUpcomingPassages() {
     seenLog,
     errorCount,
   });
-
+  console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
+  
   setTimeout(() => {
     setUpcomingPassages();
   }, 5000);
