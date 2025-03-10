@@ -88,7 +88,7 @@ let darkMode = localStorage.getItem('darkMode') === 'true';
 let settingsOpen = false;
 let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
-let recentPassages = [];
+let recentPassages = JSON.parse(localStorage.getItem('recentPassages')) || [];
 const MAX_RECENT_PASSAGES = 70;
 let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
 let passageWorker = new Worker('passageWorker.js');
