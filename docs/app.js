@@ -273,8 +273,14 @@ function getPassage() {
       return nextPassage;
     }
   }
-
-  const nextPassage = upcomingPassages.shift();
+  
+  let nextPassage = upcomingPassages.shift();
+  while (recentPassages.includes(nextPassage)) {
+    nextPassage = upcomingPassages.shift();
+    if (upcomingPassages.length == 0) {
+      return nextPassage;
+    }
+  }
   return nextPassage;
 }
 
@@ -640,7 +646,7 @@ function saveErrorData() {
 }
 
 function resetSession() {
-  if (startTime) { 
+  if (startTime) {
     const metrics = calculateMetrics();
     const wpm = metrics.wpm;
     const accuracy = metrics.accuracy;
