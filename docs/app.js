@@ -84,7 +84,8 @@ const lengthToNgram = {
 let tooltip = null;
 
 // Add after other global variables
-let darkMode = localStorage.getItem('darkMode') === 'true';
+let darkMode = localStorage.getItem('darkMode') !== 'false';
+console.log("darkMode", darkMode);
 let settingsOpen = false;
 let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
@@ -365,6 +366,9 @@ window.onload = function() {
   // Initialize dark mode
   if (darkMode) {
     document.documentElement.setAttribute('data-theme', 'dark');
+  }
+  else {
+    document.documentElement.setAttribute('data-theme', 'light');
   }
   
   // Add dark mode toggle handler

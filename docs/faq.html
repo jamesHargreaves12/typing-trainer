@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <title>Typo Dojo - FAQ & Troubleshooting | Typing Training Help</title>
@@ -79,9 +79,12 @@
 
   <script>
     // Dark mode handling
-    let darkMode = localStorage.getItem('darkMode') === 'true';
+    let darkMode = localStorage.getItem('darkMode') !== 'false';
     if (darkMode) {
       document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
     
     document.getElementById('darkModeToggle').addEventListener('click', () => {
