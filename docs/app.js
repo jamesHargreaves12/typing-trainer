@@ -21,6 +21,14 @@ let seenLog = {
   'trigram': {},
   'quadgram': {}
 };
+function recordUserLeaveText() {
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
+    navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify({ uid: userId, passage: targetText, errors: currentPassageErrors, source: currentPassageSource, timeTakenMs: (new Date() - startTime) }));
+  }
+}
+  
+window.addEventListener('beforeunload', recordUserLeaveText);
+
 
 function trackRepetitionCompletion() {
   let completedTasks = localStorage.getItem('repetition_count') || 0;
@@ -336,6 +344,7 @@ window.onload = function() {
   if (localStorage.getItem('upcomingPassages') != null) {
     finishedDefaultPassages = true;
   }
+
 
   upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
   // backwards compatibility
