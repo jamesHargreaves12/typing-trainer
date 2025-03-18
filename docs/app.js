@@ -284,12 +284,13 @@ function getPassage() {
   }
   
   let nextPassage = upcomingPassages.shift();
-  while (recentPassages.includes(nextPassage)) {
+  while (recentPassages.includes(nextPassage.passage)) {
     nextPassage = upcomingPassages.shift();
     if (upcomingPassages.length == 0) {
       return nextPassage;
     }
   }
+  console.log("get passage", "---", nextPassage.passage, "---", targetText);
   return nextPassage;
 }
 
