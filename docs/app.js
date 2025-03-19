@@ -105,8 +105,7 @@ passageWorker.postMessage({
   type: 'sourceChange',
   source: currentPassageSource
 });
-
-
+let settingTargetTextRef={value: false};
 function getTopErrors() {
   const topErrorLetters = [];
   for (const ngram in errorLog) {
@@ -525,6 +524,9 @@ document.addEventListener('keydown', (e) => {
 });
 
 function handleInput(e) {
+  if (settingTargetTextRef.value) {
+    return;
+  }
   const inputArea = document.getElementById('inputArea');
   
   // Force cursor to end of input
@@ -607,7 +609,11 @@ function handleInput(e) {
   if (inputText === targetText || (inputText.length >= targetText.length)) {
     persistTypingState();
     saveErrorData();
-    setTimeout(resetSession, 500); // brief pause before resetting
+    settingTargetTextRef.value = true;
+    setTimeout(() => {
+      settingTargetTextRef.value = false;
+      resetSession();
+    }, 500); // brief pause before resetting
     trackRepetitionCompletion();
   }
 
