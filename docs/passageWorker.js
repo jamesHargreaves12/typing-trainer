@@ -19,18 +19,15 @@ async function setup_pyodide() {
   pyodide = await loadPyodide();
   // Pyodide is now ready to use...
 
-  pyodide.loadPackage('micropip').then(() => {
-    const micropip = pyodide.pyimport("micropip");
-    micropip.install('lightgbm').then(() => {
-      console.log("Pyodide and LightGBM loaded successfully");
-    });
-  }).then(() => {
-    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt').then((response) => response.text()).then((modelText) => {
-      pyodide.FS.writeFile('model.txt', modelText);
-    });
+  await pyodide.loadPackage('micropip');
+  const micropip = pyodide.pyimport("micropip");
+  await micropip.install('lightgbm');
+  console.log("Pyodide and LightGBM loaded successfully");
+  await fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt').then((response) => response.text()).then((modelText) => {
+    pyodide.FS.writeFile('model.txt', modelText);
   });
 }
-const pyodide_loading = setup_pyodide();
+
 
 const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
 const get_features = (passage) => {
@@ -133,7 +130,7 @@ const fetches = arrFreqAndFileName.map(([freq, fileName]) =>
         })
 )
 
-Promise.all(fetches+[pyodide_loading]+load_lgbm_feat_files()).then(() => {
+Promise.all(fetches+[setup_pyodide()]+load_lgbm_feat_files()).then(() => {
   is_initialised = true;
   console.log("Initialized passage worker");
 });
