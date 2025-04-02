@@ -8,7 +8,7 @@ const source_passages = {}
 let passage_feats = {};
 let passage_user_info_features = {};
 let word_feats = {};
-let is_initialised = false;
+let is_initialised = {value: false};
 
 source_paths = {
     'wikipedia': 'https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt',
@@ -131,7 +131,7 @@ const fetches = arrFreqAndFileName.map(([freq, fileName]) =>
         })
 )
 Promise.all([...fetches, setup_pyodide(), load_lgbm_feat_files()]).then(() => {
-  is_initialised = true;
+  is_initialised.value = true;
   console.log("Initialized passage worker");
 });
 
@@ -212,15 +212,16 @@ function getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorMod
 
 
 self.onmessage = async function(e) {
-  if (!is_initialised) {
-    return;
-  }
   if (e.data.type === 'sourceChange') {
     currentSource = e.data.source;
     if (source_passages[currentSource]) {
       return;
     }
     fetch(source_paths[currentSource]).then(response => response.text()).then(text => source_passages[currentSource] = text.split("\n"))
+    return;
+  }
+  if (!is_initialised.value) {
+    console.log("Not initialised");
     return;
   }
 
