@@ -23,9 +23,10 @@ async function setup_pyodide() {
   const micropip = pyodide.pyimport("micropip");
   await micropip.install('lightgbm');
   console.log("Pyodide and LightGBM loaded successfully");
-  await fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt').then((response) => response.text()).then((modelText) => {
-    pyodide.FS.writeFile('model.txt', modelText);
-  });
+  const lgbm_response = await fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt');
+  const lgbm_model = await lgbm_response.text();
+  await pyodide.FS.writeFile('model.txt', lgbm_model);
+  console.log("Model saved to pyodide successfully");
 }
 
 
