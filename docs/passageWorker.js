@@ -130,8 +130,7 @@ const fetches = arrFreqAndFileName.map(([freq, fileName]) =>
         }
         })
 )
-
-Promise.all(fetches+[setup_pyodide()]+load_lgbm_feat_files()).then(() => {
+Promise.all([...fetches, setup_pyodide(), load_lgbm_feat_files()]).then(() => {
   is_initialised = true;
   console.log("Initialized passage worker");
 });
