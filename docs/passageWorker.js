@@ -1,15 +1,123 @@
+importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js");
+let pyodide = undefined;
+
 let currentSource = 'wikipedia';
 let quadgramFrequency = {};
 let defaultQuadgramErrorModel = {};
 const source_passages = {}
+let passage_feats = {};
+let passage_user_info_features = {};
+let word_feats = {};
+let is_initialised = false;
+
 source_paths = {
     'wikipedia': 'https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt',
     'sherlock': 'https://jameshargreaves12.github.io/reference_data/sherlock_holmes.txt'
 }
 
-const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
+async function setup_pyodide() {
+  pyodide = await loadPyodide();
+  // Pyodide is now ready to use...
 
-fetches = arrFreqAndFileName.map(([freq, fileName]) => 
+  pyodide.loadPackage('micropip').then(() => {
+    const micropip = pyodide.pyimport("micropip");
+    micropip.install('lightgbm').then(() => {
+      console.log("Pyodide and LightGBM loaded successfully");
+    });
+  }).then(() => {
+    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt').then((response) => response.text()).then((modelText) => {
+      pyodide.FS.writeFile('model.txt', modelText);
+    });
+  });
+}
+const pyodide_loading = setup_pyodide();
+
+const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
+const get_features = (passage) => {
+  const features = {};
+  features["passage_many_to_end_count"] = passage_feats[passage]
+  const passage_user_info = passage_user_info_features[passage]
+  features["passage_median_relative_wpm"] = passage_user_info ? passage_user_info[0] : undefined;
+  features["passage_median_relative_acc"] = passage_user_info ? passage_user_info[1] : undefined;
+  
+  const wordScores = passage.split(" ").filter(word => word_feats[word]).map(word => word_feats[word]);
+  if (wordScores.length > 0) {
+    features["word_many_to_end_max"] = Math.max(...wordScores);
+    features["word_many_to_end_min"] = Math.min(...wordScores);
+    features["word_many_to_end_mean"] = wordScores.reduce((acc, score) => acc + score, 0) / wordScores.length;
+    features["word_many_to_end_count_positive"] = wordScores.filter(score => score > 0).length;
+    features["word_many_to_end_count_negative"] = wordScores.filter(score => score < 0).length;
+  }else{
+    features["word_many_to_end_max"] = undefined;
+    features["word_many_to_end_min"] = undefined;
+    features["word_many_to_end_mean"] = undefined;
+    features["word_many_to_end_count_positive"] = undefined;
+    features["word_many_to_end_count_negative"] = undefined;
+  }
+  const utcNow = new Date();
+  features["time_hour"] = utcNow.getHours();
+  features["time_minutes"] = utcNow.getMinutes();
+  features["passage_len"] = passage.length;
+  features["passage_error_score_norm"] = get_default_error_score_norm(passage, defaultQuadgramErrorModel);
+  return features;
+}
+
+const call_lgbm = async (passages) => {
+  const data = passages.map(passage => (
+    get_features(passage)
+  ));
+  // Save the model text to the Pyodide file system
+  pyodide.FS.writeFile('input.json', JSON.stringify(data));
+  
+  // Load the model from the file system
+  const res = await pyodide.runPythonAsync(`
+    import lightgbm as lgb
+    import json
+
+    model = lgb.Booster(model_file='model.txt')
+    inputs = json.load(open('input.json'))
+    model_input = [[x.get(col,None) for col in model.feature_name()] for x in inputs]
+    
+    res = model.predict(model_input)
+    res_list = [x[2]/(x[1]+x[0]) for x in res]
+    res_list
+  `);
+  const result = res.toJs();
+  return result;
+}
+
+const load_lgbm_feat_files = async () => {
+    const a = fetch(`https://jameshargreaves12.github.io/reference_data/passage_feats.json`)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        }).then(data => {
+          passage_feats = data;
+        })
+    const b = fetch(`https://jameshargreaves12.github.io/reference_data/passage_user_info_feats.json`)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        }).then(data => {
+          passage_user_info_features = data;
+        })
+    const c = fetch(`https://jameshargreaves12.github.io/reference_data/word_feats.json`)
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+        }).then(data => {
+          word_feats = data;
+        })
+    return Promise.all([a, b, c]);
+}
+
+const fetches = arrFreqAndFileName.map(([freq, fileName]) => 
     fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
         .then(response => {
         if (!response.ok) {
@@ -25,7 +133,8 @@ fetches = arrFreqAndFileName.map(([freq, fileName]) =>
         })
 )
 
-Promise.all(fetches).then(() => {
+Promise.all(fetches+[pyodide_loading]+load_lgbm_feat_files()).then(() => {
+  is_initialised = true;
   console.log("Initialized passage worker");
 });
 
@@ -39,6 +148,18 @@ function getOrPad(passage, index) {
     return passage[index];
 }
 
+
+function get_default_error_score_norm(passage, quadgram_error_model){
+    let model_score = 0
+    for (let i = 0; i < passage.length; i++) {
+        const char = getOrPad(passage, i)
+        const bigram = getOrPad(passage, i+1) + char
+        const trigram = getOrPad(passage, i+2) + bigram
+        const quadgram = getOrPad(passage, i+3) + trigram
+        model_score += quadgram_error_model["seen_preds"][quadgram] || quadgram_error_model["default"]
+    }
+    return model_score / passage.length
+}
 
 
 function getErrorScore(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount) {
@@ -84,16 +205,19 @@ function getNaturalnessScore(passage, quadgramFrequency) {
     return naturalnessScore / passage.length;
 }
 
-function getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency) {
+function getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency, lgbm_score) {
     const expectedErrorScore = 0.1;
     const expectedNaturalnessScore = 0.00002;
     const errorScore = getErrorScore(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount);
     const naturalnessScore = getNaturalnessScore(passage, quadgramFrequency);
-    return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore);
+    return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score;
   }
 
 
-self.onmessage = function(e) {
+self.onmessage = async function(e) {
+  if (!is_initialised) {
+    return;
+  }
   if (e.data.type === 'sourceChange') {
     currentSource = e.data.source;
     if (source_passages[currentSource]) {
@@ -129,8 +253,9 @@ self.onmessage = function(e) {
       i--;
     }
   }
-  
-  newUpcomingPassages.sort((a, b) => getDesireForPassage(b, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency) - getDesireForPassage(a, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency));
+  const lgbm_scores = await call_lgbm(newUpcomingPassages);
+  const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency, lgbm_scores[index]));
+  newUpcomingPassages.sort((a, b) =>  - desire_for_passages[a] + desire_for_passages[b]);
   const result = newUpcomingPassages.slice(0, 10).map(passage => ({passage, source: currentSource}));
   self.postMessage(result);
 }; 

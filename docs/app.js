@@ -93,7 +93,6 @@ let tooltip = null;
 
 // Add after other global variables
 let darkMode = localStorage.getItem('darkMode') !== 'false';
-console.log("darkMode", darkMode);
 let settingsOpen = false;
 let soundOnError = false;
 const errorSound = document.getElementById('errorSound');
