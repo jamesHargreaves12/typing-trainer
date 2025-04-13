@@ -207,7 +207,7 @@ function getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorMod
     const expectedNaturalnessScore = 0.00002;
     const errorScore = getErrorScore(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount);
     const naturalnessScore = getNaturalnessScore(passage, quadgramFrequency);
-    return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score;
+    return (errorScore / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score * 3;
   }
 
 
