@@ -5,7 +5,7 @@ let currentSource = 'wikipedia';
 let quadgramFrequency = {};
 let defaultQuadgramErrorModel = {};
 const source_passages = {}
-let passage_feats = {};
+// let passage_feats = {};
 let passage_user_info_features = {};
 let word_feats = {};
 let is_initialised = {value: false};
@@ -31,39 +31,48 @@ async function setup_pyodide() {
 
 
 const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
-const get_features = (passage) => {
-  const features = {};
-  features["passage_many_to_end_count"] = passage_feats[passage]
-  const passage_user_info = passage_user_info_features[passage]
-  features["passage_median_relative_wpm"] = passage_user_info ? passage_user_info[0] : undefined;
-  features["passage_median_relative_acc"] = passage_user_info ? passage_user_info[1] : undefined;
+const get_features = (passage, user_intro_acc, user_intro_wpm) => {
+  const features = {
+    "user_intro_acc": user_intro_acc,
+    "user_intro_wpm": user_intro_wpm,
+  };
+
+  // features["passage_many_to_end_count"] = passage_feats[passage]
+  // const passage_user_info = passage_user_info_features[passage]
+  // features["passage_median_relative_wpm"] = passage_user_info ? passage_user_info[0] : undefined;
+  // features["passage_median_relative_acc"] = passage_user_info ? passage_user_info[1] : undefined;
   
   const wordScores = passage.split(" ").filter(word => word_feats[word]).map(word => word_feats[word]);
   if (wordScores.length > 0) {
-    features["word_many_to_end_max"] = Math.max(...wordScores);
-    features["word_many_to_end_min"] = Math.min(...wordScores);
-    features["word_many_to_end_mean"] = wordScores.reduce((acc, score) => acc + score, 0) / wordScores.length;
-    features["word_many_to_end_count_positive"] = wordScores.filter(score => score > 0).length;
-    features["word_many_to_end_count_negative"] = wordScores.filter(score => score < 0).length;
+    // features["word_many_to_end_max"] = Math.max(...wordScores);
+    // features["word_many_to_end_min"] = Math.min(...wordScores);
+    features["word_zero_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[0], 0) / wordScores.length;
+    features["word_one_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[1], 0) / wordScores.length;
+    features["word_many_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[2], 0) / wordScores.length;
+    // features["word_many_to_end_count_positive"] = wordScores.filter(score => score > 0).length;
+    // features["word_many_to_end_count_negative"] = wordScores.filter(score => score < 0).length;
   }else{
-    features["word_many_to_end_max"] = undefined;
-    features["word_many_to_end_min"] = undefined;
+    // features["word_many_to_end_max"] = undefined;
+    // features["word_many_to_end_min"] = undefined;
+    features["word_zero_to_end_mean"] = undefined;
+    features["word_one_to_end_mean"] = undefined;
     features["word_many_to_end_mean"] = undefined;
-    features["word_many_to_end_count_positive"] = undefined;
-    features["word_many_to_end_count_negative"] = undefined;
+    // features["word_many_to_end_count_positive"] = undefined;
+    // features["word_many_to_end_count_negative"] = undefined;
   }
   const utcNow = new Date();
-  features["time_hour"] = utcNow.getHours();
-  features["time_minutes"] = utcNow.getMinutes();
-  features["passage_len"] = passage.length;
-  features["passage_error_score_norm"] = get_default_error_score_norm(passage, defaultQuadgramErrorModel);
+  // features["time_hour"] = utcNow.getHours();
+  // features["time_minutes"] = utcNow.getMinutes();
+  // features["passage_len"] = passage.length;
+  // features["passage_error_score_norm"] = get_default_error_score_norm(passage, defaultQuadgramErrorModel);
   return features;
 }
 
-const call_lgbm = async (passages) => {
+const call_lgbm = async (passages, user_intro_acc, user_intro_wpm) => {
   const data = passages.map(passage => (
-    get_features(passage)
+    get_features(passage, user_intro_acc, user_intro_wpm)
   ));
+  console.log(data);
   // Save the model text to the Pyodide file system
   pyodide.FS.writeFile('input.json', JSON.stringify(data));
   
@@ -85,24 +94,24 @@ const call_lgbm = async (passages) => {
 }
 
 const load_lgbm_feat_files = async () => {
-    const a = fetch(`https://jameshargreaves12.github.io/reference_data/passage_feats.json`)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        }).then(data => {
-          passage_feats = data;
-        })
-    const b = fetch(`https://jameshargreaves12.github.io/reference_data/passage_user_info_feats.json`)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        }).then(data => {
-          passage_user_info_features = data;
-        })
+    // const a = fetch(`https://jameshargreaves12.github.io/reference_data/passage_feats.json`)
+    //     .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    //     }).then(data => {
+    //       passage_feats = data;
+    //     })
+    // const b = fetch(`https://jameshargreaves12.github.io/reference_data/passage_user_info_feats.json`)
+    //     .then(response => {
+    //     if (!response.ok) {
+    //         throw new Error('Network response was not ok');
+    //     }
+    //     return response.json();
+    //     }).then(data => {
+    //       passage_user_info_features = data;
+    //     })
     const c = fetch(`https://jameshargreaves12.github.io/reference_data/word_feats.json`)
         .then(response => {
         if (!response.ok) {
@@ -112,7 +121,7 @@ const load_lgbm_feat_files = async () => {
         }).then(data => {
           word_feats = data;
         })
-    return Promise.all([a, b, c]);
+    return Promise.all([c]);
 }
 
 const fetches = arrFreqAndFileName.map(([freq, fileName]) => 
@@ -231,6 +240,8 @@ self.onmessage = async function(e) {
     errorLog, 
     seenLog, 
     errorCount,
+    user_intro_acc,
+    user_intro_wpm
   } = e.data;
   let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource).map(passage => passage.passage);
 
@@ -251,7 +262,7 @@ self.onmessage = async function(e) {
       i--;
     }
   }
-  const lgbm_scores = await call_lgbm(newUpcomingPassages);
+  const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
   const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, quadgramFrequency, lgbm_scores[index]));
   newUpcomingPassages.sort((a, b) =>  - desire_for_passages[a] + desire_for_passages[b]);
   const result = newUpcomingPassages.slice(0, 10).map(passage => ({passage, source: currentSource}));

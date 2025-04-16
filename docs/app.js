@@ -7,6 +7,9 @@ let finishedDefaultPassages = false;
 let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
+let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
+let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
+
 
 let errorLog = {
   'char': {},
@@ -269,12 +272,32 @@ function updateHistoryDisplay() {
   `;
 }
 
+function recordUserIntro() {
+  if (runHistory.length != 3) {
+    console.error("runHistory.length != 3 (", runHistory.length, ")");
+    return;
+  }
+  
+  const prevRuns = runHistory.slice(0, 3);
+  const avgWPM = prevRuns.length > 0 ? 
+    prevRuns.reduce((sum, run) => sum + run.wpm, 0) / prevRuns.length : 0;
+  const avgAccuracy = prevRuns.length > 0 ? 
+    prevRuns.reduce((sum, run) => sum + run.accuracy, 0) / prevRuns.length : 0;
+  if (avgAccuracy > 30 && avgAccuracy <= 100 && avgWPM > 5 && avgWPM <= 150) {
+    user_intro_acc = avgAccuracy / 100;
+    user_intro_wpm = avgWPM;
+    localStorage.setItem('user_intro_acc', user_intro_acc);
+    localStorage.setItem('user_intro_wpm', user_intro_wpm);
+  }
+}
+
 
 function getPassage() {
   if (!finishedDefaultPassages) {
     const nextPassage = upcomingDefaultPassages.shift();
     if (nextPassage == null) {
       finishedDefaultPassages = true;
+      recordUserIntro();
     }
     else {
       return nextPassage;
@@ -300,6 +323,8 @@ function setUpcomingPassages() {
     errorLog,
     seenLog,
     errorCount,
+    user_intro_acc,
+    user_intro_wpm
   });
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
@@ -344,7 +369,9 @@ window.onload = function() {
     finishedDefaultPassages = true;
   }
 
-
+  user_intro_acc = localStorage.getItem('user_intro_acc') ? parseFloat(localStorage.getItem('user_intro_acc')) : user_intro_acc;
+  user_intro_wpm = localStorage.getItem('user_intro_wpm') ? parseFloat(localStorage.getItem('user_intro_wpm')) : user_intro_wpm;
+  
   upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
   // backwards compatibility
   if (upcomingPassages.length > 0 && typeof upcomingPassages[0] === 'string') {
@@ -642,9 +669,9 @@ inputArea.addEventListener('select', function(e) {
 });
 
 function calculateMetrics() {
-  const timeElapsed = (new Date() - startTime) / 60000; // minutes
+  const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
   const charsPerWord = 4.7;
-  let wpm = Math.round((charTotalCount / charsPerWord / timeElapsed));
+  let wpm = Math.round((charTotalCount / charsPerWord / timeElapsedMins));
   let accuracy = Math.round((charTotalCount - charErrorCount) / charTotalCount * 100);
   wpm = isNaN(wpm) || !isFinite(wpm) ? 0 : wpm;
   accuracy = isNaN(accuracy) || !isFinite(accuracy) ? 100 : accuracy;
