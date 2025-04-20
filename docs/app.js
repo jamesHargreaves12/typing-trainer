@@ -1,3 +1,187 @@
+// Lanczos approximation of log-gamma function
+function logGamma(z) {
+  const cof = [
+    76.18009172947146,   -86.50532032941677,
+    24.01409824083091,   -1.231739572450155,
+    0.1208650973866179e-2, -0.5395239384953e-5
+  ];
+  let x = z;
+  let y = z;
+  let tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (let j = 0; j < cof.length; j++) {
+    y += 1;
+    ser += cof[j] / y;
+  }
+  return Math.log(2.5066282746310005 * ser / x) - tmp;
+}
+
+// Lower regularized incomplete gamma function P(a, x)
+function gammaP(a, x) {
+  const EPS = 1e-8;
+  const MAX_ITER = 100;
+
+  if (x < 0 || a <= 0) return NaN;
+
+  if (x === 0) return 0;
+
+  if (x < a + 1) {
+    // Series representation
+    let ap = a;
+    let sum = 1 / a;
+    let delta = sum;
+    for (let n = 1; n <= MAX_ITER; n++) {
+      ap += 1;
+      delta *= x / ap;
+      sum += delta;
+      if (Math.abs(delta) < Math.abs(sum) * EPS) break;
+    }
+    return sum * Math.exp(-x + a * Math.log(x) - logGamma(a));
+  } else {
+    // Continued fraction representation
+    let b = x + 1 - a;
+    let c = 1 / 1e-30;
+    let d = 1 / b;
+    let h = d;
+
+    for (let i = 1; i <= MAX_ITER; i++) {
+      let an = -i * (i - a);
+      b += 2;
+      d = an * d + b;
+      if (Math.abs(d) < 1e-30) d = 1e-30;
+      c = b + an / c;
+      if (Math.abs(c) < 1e-30) c = 1e-30;
+      d = 1 / d;
+      const delta = d * c;
+      h *= delta;
+      if (Math.abs(delta - 1.0) < EPS) break;
+    }
+
+    return 1 - h * Math.exp(-x + a * Math.log(x) - logGamma(a));
+  }
+}
+
+// Gamma CDF
+function gammaCDF(x, shape, loc = 0, scale = 1) {
+  if (x <= loc) return 0;
+  return gammaP(shape, (x - loc) / scale);
+}
+function betacf(x, a, b) {
+  const MAX_ITER = 100;
+  const EPS = 1e-8;
+
+  let qab = a + b;
+  let qap = a + 1;
+  let qam = a - 1;
+  let c = 1;
+  let d = 1 - qab * x / qap;
+  if (Math.abs(d) < EPS) d = EPS;
+  d = 1 / d;
+  let h = d;
+
+  for (let m = 1; m <= MAX_ITER; m++) {
+    const m2 = 2 * m;
+    let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < EPS) d = EPS;
+    c = 1 + aa / c;
+    if (Math.abs(c) < EPS) c = EPS;
+    d = 1 / d;
+    h *= d * c;
+
+    aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < EPS) d = EPS;
+    c = 1 + aa / c;
+    if (Math.abs(c) < EPS) c = EPS;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+
+    if (Math.abs(del - 1.0) < EPS) break;
+  }
+
+  return h;
+}
+
+function betaCDF(x, a, b, loc = 0, scale = 1) {
+  const z = (x - loc) / scale;
+  if (z <= 0) return 0;
+  if (z >= 1) return 1;
+
+  const bt = Math.exp(
+    a * Math.log(z) + b * Math.log(1 - z) - Math.logBeta(a, b)
+  );
+
+  if (z < (a + 1) / (a + b + 2)) {
+    return bt * betacf(z, a, b) / a;
+  } else {
+    return 1 - bt * betacf(1 - z, b, a) / b;
+  }
+}
+
+// Add logBeta approximation
+Math.logBeta = function(a, b) {
+  return Math.lgamma(a)[0] + Math.lgamma(b)[0] - Math.lgamma(a + b)[0];
+}
+
+// Add lgamma function (Lanczos approx)
+Math.lgamma = function(z) {
+  const cof = [
+    76.18009172947146,   -86.50532032941677,
+    24.01409824083091,   -1.231739572450155,
+    0.1208650973866179e-2, -0.5395239384953e-5
+  ];
+  let x = z;
+  let y = z;
+  let tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (let j = 0; j < cof.length; j++) {
+    y += 1;
+    ser += cof[j] / y;
+  }
+  return [-tmp + Math.log(2.5066282746310005 * ser / x), 0];
+}
+
+function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, session_rep_count){
+  let header = `Over the last ${session_rep_count} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+
+  if (wpm > 70) {
+    header =  `${header} Impressive speed!`
+  }
+  else if (accuracy > 0.95 && wpm_percentile <= accuracy_percentile) {
+    header =  `${header} Impressive accuracy!`
+  }
+
+  if (wpm < 40 && accuracy < 0.95) {
+    return `${header} Focus on slowing down and improving your accuracy.`
+  }
+  else if (wpm < 40) {
+    return `${header} Focus on typing without looking at the keyboard and gradually increasing your speed. Don't worry about a few mistakes.`
+  }
+  else if (accuracy < 0.95) {
+    return `${header} Focus on improving your accuracy, even if it slows you down slightly.`
+  }
+  else if (wpm_percentile <= accuracy_percentile) {
+    return `${header} Focus on increasing your speed, even if it means making a few more mistakes.`
+  }
+  else {
+    return `${header} Focus on refining your accuracy and maintaining consistency.`
+  }
+}
+
+function suggestRepetitionStrategy(){
+  prev_reps = runHistory.slice(0, session_rep_count);
+  const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
+  const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
+  const wpm_percentile = gammaCDF(wpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
+  const error_rate_percentile = betaCDF(1 - accuracy, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
+  const accuracy_percentile = 1 - error_rate_percentile;
+  return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, session_rep_count);
+}
+
 let DEFAULT_PASSAGES = [
   "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
   "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
@@ -9,7 +193,7 @@ let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
-
+let session_rep_count = 0;
 
 let errorLog = {
   'char': {},
@@ -84,13 +268,24 @@ let bgFlashOnError = false;
 let userId = "";
 let runHistory = [];
 const MAX_HISTORY = 20;
-
+let stats_rep_shown = false;
 const lengthToNgram = {
   1: 'char',
   2: 'bigram',
   3: 'trigram',
   4: 'quadgram'
 };
+const ERROR_RATE_DISTRIBUTION_PARAMS = {
+  a: 1.7202,
+  b: 14.9972,
+  loc: 0.0000,
+  scale: 1.0000
+}
+const WPM_DISTRIBUTION_PARAMS = {
+  a: 8.1095,
+  loc: -9.3006,
+  scale: 5.3861
+}
 
 let tooltip = null;
 
@@ -302,6 +497,13 @@ function getPassage() {
     else {
       return nextPassage;
     }
+  }
+  if (session_rep_count == 5 && stats_rep_shown == false) {
+    stats_rep_shown = true;
+    return {
+      passage: suggestRepetitionStrategy(),
+      source: "stats_rep"
+    };
   }
   
   let nextPassage = upcomingPassages.shift();
@@ -638,6 +840,8 @@ function handleInput(e) {
     settingTargetTextRef.value = true;
     setTimeout(() => {
       settingTargetTextRef.value = false;
+      session_rep_count++;
+      updateLiveMetrics();
       resetSession();
     }, 500); // brief pause before resetting
     trackRepetitionCompletion();
@@ -671,11 +875,15 @@ inputArea.addEventListener('select', function(e) {
 function calculateMetrics() {
   const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
   const charsPerWord = 4.7;
-  let wpm = Math.round((charTotalCount / charsPerWord / timeElapsedMins));
-  let accuracy = Math.round((charTotalCount - charErrorCount) / charTotalCount * 100);
+  let rawWpm = charTotalCount / charsPerWord / timeElapsedMins;
+  let wpm = Math.round(rawWpm);
+  const rawErrRate = charErrorCount / charTotalCount;
+  const errRate_percentile = betaCDF(rawErrRate, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
+  const wpm_percentile = gammaCDF(rawWpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
+  let accuracy = Math.round((1-rawErrRate) * 100);
   wpm = isNaN(wpm) || !isFinite(wpm) ? 0 : wpm;
   accuracy = isNaN(accuracy) || !isFinite(accuracy) ? 100 : accuracy;
-  return { wpm, accuracy };
+  return { wpm, accuracy, errRate_percentile, wpm_percentile };
 }
 
 function updateLiveMetrics() {
@@ -684,6 +892,10 @@ function updateLiveMetrics() {
   const accuracy = metrics.accuracy;
   document.getElementById('wpm').textContent = `WPM: ${wpm}`;
   document.getElementById('accuracy').textContent = `Accuracy: ${accuracy}%`;
+  if (session_rep_count > 0) {
+    document.getElementById('session_rep_count').textContent = `Reps: ${session_rep_count}`;
+    document.getElementById('session_rep_count').style.display = 'block';
+  }
 }
 
 function saveErrorData() {
