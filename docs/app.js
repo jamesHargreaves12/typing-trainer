@@ -194,7 +194,7 @@ let currentPassageErrors = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 let session_rep_count = 0;
-
+let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
 let errorLog = {
   'char': {},
   'bigram': {},
@@ -286,7 +286,7 @@ const WPM_DISTRIBUTION_PARAMS = {
   loc: -9.3006,
   scale: 5.3861
 }
-
+let toHighlight = [];
 let tooltip = null;
 
 // Add after other global variables
@@ -493,6 +493,10 @@ function getPassage() {
     if (nextPassage == null) {
       finishedDefaultPassages = true;
       recordUserIntro();
+      document.getElementById('settings-speech-bubble').classList.add('visible');
+      setTimeout(() => {
+        document.getElementById('settings-speech-bubble').classList.remove('visible');
+      }, 30000);
     }
     else {
       return nextPassage;
@@ -526,7 +530,8 @@ function setUpcomingPassages() {
     seenLog,
     errorCount,
     user_intro_acc,
-    user_intro_wpm
+    user_intro_wpm,
+    highlight_error_pct: 0.1
   });
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
@@ -579,11 +584,12 @@ window.onload = function() {
   if (upcomingPassages.length > 0 && typeof upcomingPassages[0] === 'string') {
     upcomingPassages = upcomingPassages.map(passage => ({passage, source: 'unknown'}));
   }
-  const p= getPassage();
-  const {passage, source} = p;
+  const p = getPassage();
+  const {passage, source, highlightIndecies} = p;
   console.log(p);
   targetText = passage;
   currentPassageSource = source;
+  toHighlight = highlightIndecies;
   renderText();
   colorText("");
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
@@ -620,6 +626,9 @@ window.onload = function() {
     e.stopPropagation();
     settingsOpen = !settingsOpen;
     document.querySelector('.settings-dropdown').classList.toggle('active');
+    if (document.getElementById('settings-speech-bubble').classList.contains('visible')) {
+      document.getElementById('settings-speech-bubble').classList.remove('visible');
+    }
   });
 
   // Close settings when clicking outside
@@ -639,6 +648,17 @@ window.onload = function() {
     bgFlashOnError = e.target.checked;
     localStorage.setItem('bgFlashOnError', bgFlashOnError);
   });
+
+  const predictiveErrorHighlightToggle = document.getElementById('predictiveErrorHighlightToggle');
+  predictiveErrorHighlightToggle.checked = localStorage.getItem('predictiveErrorHighlight') !== 'false';
+  predictiveErrorHighlight = predictiveErrorHighlightToggle.checked;
+
+  predictiveErrorHighlightToggle.addEventListener('change', (e) => {
+    predictiveErrorHighlight = e.target.checked;
+    localStorage.setItem('predictiveErrorHighlight', predictiveErrorHighlight);
+  });
+
+
 
   // Preload and setup error sound
   errorSound.load();
@@ -704,10 +724,11 @@ function renderText() {
   
   for (let i = 0; i < targetText.length; i++) {
     let char = targetText[i];
+    let highlight = toHighlight?.includes(i) && predictiveErrorHighlight;
     if (char === " ") {
       html += `<span id="char-${i}" class="letter space">&nbsp;</span></span><span class="word">`;
     } else {
-      html += `<span id="char-${i}" class="letter">${char}</span>`;
+      html += `<span id="char-${i}" class="letter ${highlight ? 'highlight' : ''}">${char}</span>`;
     }
   }
   textDisplay.innerHTML = html;
@@ -716,10 +737,16 @@ function renderText() {
 
 function colorText(inputText)
 {
+  
   for (let i = 0; i < targetText.length; i++) {
+    
     const targetLetter = targetText[i];
     const charSpan = document.getElementById(`char-${i}`);
     let currentClasses = charSpan.className.replace(' correct', '').replace(' error', '').replace(' cursor', '') || '';
+    if (!predictiveErrorHighlight) {
+      currentClasses = currentClasses.replace('highlight', '');
+      charSpan.className = currentClasses;
+    }
 
     if (i >= inputText.length) {
       charSpan.className = currentClasses;
@@ -732,7 +759,11 @@ function colorText(inputText)
     if (inputLetter == null) {
       charSpan.className = currentClasses.replace('letter', 'letter error');
     } else if (inputLetter === targetLetter) {
-      charSpan.className = currentClasses.replace('letter', 'letter correct');
+      if (!currentClasses.includes('highlight')) {
+        currentClasses = currentClasses;
+      }
+      charSpan.className = currentClasses.replace('highlight', '').replace('letter', 'letter correct');
+
     } else {
       charSpan.className = currentClasses.replace('letter', 'letter error');
     }
@@ -947,9 +978,10 @@ function resetSession() {
     localStorage.setItem('recentPassages', JSON.stringify(recentPassages));
   }
   
-  const {passage, source} = getPassage();
+  const {passage, source, highlightIndecies} = getPassage();
   targetText = passage;
   currentPassageSource = source;
+  toHighlight = highlightIndecies;
   renderText();
   colorText("");
   inputArea.value = "";

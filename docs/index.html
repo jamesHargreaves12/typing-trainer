@@ -52,7 +52,10 @@
       <div class="header-right">
         <button id="resetStats" class="icon-button" title="Reset statistics">🗑️</button>
         <div class="settings-dropdown">
-          <button id="settingsButton" class="icon-button" title="Advanced settings">⚙️</button>
+          <div class="settings-button-container">
+            <button id="settingsButton" class="icon-button" title="Advanced settings">⚙️</button>
+            <div id="settings-speech-bubble" class="speech-bubble">Predictive error highlighting turned on. It can be disabled in settings.</div>
+          </div>
           <div class="settings-content">
             <div class="settings-title">Error Behavior</div>
             <label class="settings-item">
@@ -62,6 +65,10 @@
             <label class="settings-item">
               <input type="checkbox" id="soundToggle">
               Sound on error
+            </label>
+            <label class="settings-item">
+              <input type="checkbox" id="predictiveErrorHighlightToggle">
+              Predictive error highlighting
             </label>
           </div>
         </div>

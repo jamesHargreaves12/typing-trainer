@@ -12,6 +12,7 @@
   --error-color: #e53e3e;
   --text-muted: #718096;
   --text-secondary: #4a5568;
+  --highlight-color: rgba(255, 245, 157, 0.7);
 }
 
 [data-theme="dark"] {
@@ -27,6 +28,7 @@
   --error-color: #ef5350;
   --text-muted: #888;
   --text-secondary: #999;
+  --highlight-color: rgba(255, 245, 157, 0.3);
 }
 
 /* Add theme toggle styles */
@@ -156,6 +158,10 @@ body {
   display: inline-block;
   white-space: nowrap;
   margin-bottom: 4px 
+}
+
+.text-display .highlight {
+  background-color: var(--highlight-color);
 }
 
 .text-display .space {
@@ -328,7 +334,7 @@ textarea#inputArea:focus {
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #666;
+  color: var(--text-muted);
   margin-bottom: 0.8rem;
 }
 
@@ -336,7 +342,7 @@ textarea#inputArea:focus {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .history-item {
@@ -345,7 +351,7 @@ textarea#inputArea:focus {
   gap: 0.5rem;
   margin: 0.1rem 0;
   font-size: 0.9rem;
-  color: #333;
+  color: var(--text-muted);
 }
 
 /* Add these styles for SVG tooltips */
@@ -585,7 +591,7 @@ body.flash-error {
 
 .history-table td {
   font-size: 0.9rem;
-  color: var(--text-color);
+  color: var(--text-muted);
 }
 
 /* FAQ page styles */
@@ -630,4 +636,55 @@ body.flash-error {
 /* Make app title clickable in header */
 .app-title {
   text-decoration: none;
+}
+
+/* Speech Bubble Styles */
+.speech-bubble {
+  position: absolute;
+  top: 48px;
+  right: -105px; /* Center the bubble relative to the settings button */
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+  color: var(--text-color);
+  width: 250px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 158px; /* Position the arrow to point at the settings button */
+  transform: translateX(-50%);
+  border-width: 0 10px 10px 10px;
+  border-style: solid;
+  border-color: transparent transparent var(--border-color) transparent;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 158px; /* Position the arrow to point at the settings button */
+  transform: translateX(-50%);
+  border-width: 0 8px 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent var(--card-bg) transparent;
+}
+
+.speech-bubble.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Add this to ensure proper positioning context */
+.settings-button-container {
+  position: relative;
 }
