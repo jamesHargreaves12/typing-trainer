@@ -67,6 +67,7 @@ function gammaCDF(x, shape, loc = 0, scale = 1) {
   if (x <= loc) return 0;
   return gammaP(shape, (x - loc) / scale);
 }
+
 function betacf(x, a, b) {
   const MAX_ITER = 100;
   const EPS = 1e-8;
@@ -208,6 +209,56 @@ let seenLog = {
   'trigram': {},
   'quadgram': {}
 };
+
+let charErrorCount = 0;
+let charTotalCount = 0;
+let prevInputText = "";
+let bgFlashOnError = false;
+let userId = "";
+let runHistory = [];
+const MAX_HISTORY = 20;
+let stats_rep_shown = false;
+const lengthToNgram = {
+  1: 'char',
+  2: 'bigram',
+  3: 'trigram',
+  4: 'quadgram'
+};
+const ERROR_RATE_DISTRIBUTION_PARAMS = {
+  a: 1.7202,
+  b: 14.9972,
+  loc: 0.0000,
+  scale: 1.0000
+}
+const WPM_DISTRIBUTION_PARAMS = {
+  a: 8.1095,
+  loc: -9.3006,
+  scale: 5.3861
+}
+let toHighlight = [];
+let tooltip = null;
+
+// Add after other global variables
+let darkMode = localStorage.getItem('darkMode') !== 'false';
+let settingsOpen = false;
+let soundOnError = false;
+const errorSound = document.getElementById('errorSound');
+let recentPassages = JSON.parse(localStorage.getItem('recentPassages')) || [];
+const MAX_RECENT_PASSAGES = 70;
+let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
+let passageWorker = new Worker('passageWorker.js');
+passageWorker.postMessage({
+  type: 'sourceChange',
+  source: currentPassageSource
+});
+let settingTargetTextRef={value: false};
+
+let startTime = null;
+let targetText = 'Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.';
+const textDisplay = document.getElementById('textDisplay');
+const inputArea = document.getElementById('inputArea');
+const progressBar = document.getElementById('progressBar');
+
 function recordUserLeaveText() {
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
     navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify({ uid: userId, passage: targetText, errors: currentPassageErrors, source: currentPassageSource, timeTakenMs: (new Date() - startTime) }));
@@ -261,48 +312,6 @@ async function persistTypingState() {
   }
 }
 
-let charErrorCount = 0;
-let charTotalCount = 0;
-let prevInputText = "";
-let bgFlashOnError = false;
-let userId = "";
-let runHistory = [];
-const MAX_HISTORY = 20;
-let stats_rep_shown = false;
-const lengthToNgram = {
-  1: 'char',
-  2: 'bigram',
-  3: 'trigram',
-  4: 'quadgram'
-};
-const ERROR_RATE_DISTRIBUTION_PARAMS = {
-  a: 1.7202,
-  b: 14.9972,
-  loc: 0.0000,
-  scale: 1.0000
-}
-const WPM_DISTRIBUTION_PARAMS = {
-  a: 8.1095,
-  loc: -9.3006,
-  scale: 5.3861
-}
-let toHighlight = [];
-let tooltip = null;
-
-// Add after other global variables
-let darkMode = localStorage.getItem('darkMode') !== 'false';
-let settingsOpen = false;
-let soundOnError = false;
-const errorSound = document.getElementById('errorSound');
-let recentPassages = JSON.parse(localStorage.getItem('recentPassages')) || [];
-const MAX_RECENT_PASSAGES = 70;
-let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
-let passageWorker = new Worker('passageWorker.js');
-passageWorker.postMessage({
-  type: 'sourceChange',
-  source: currentPassageSource
-});
-let settingTargetTextRef={value: false};
 function getTopErrors() {
   const topErrorLetters = [];
   for (const ngram in errorLog) {
@@ -537,7 +546,7 @@ function setUpcomingPassages() {
   
   setTimeout(() => {
     setUpcomingPassages();
-  }, 5000);
+  }, 7_000);
 }
 
 passageWorker.onmessage = function(e) {
@@ -547,10 +556,6 @@ passageWorker.onmessage = function(e) {
   localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
 };
 
-let startTime = null;
-let targetText = 'Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.';
-const textDisplay = document.getElementById('textDisplay');
-renderText();
 
 window.onload = function() {
   if (!localStorage.getItem('userId')) {
@@ -707,10 +712,6 @@ window.onload = function() {
   });
 }
 
-// DOM elements
-const inputArea = document.getElementById('inputArea');
-const progressBar = document.getElementById('progressBar');
-
 
 function renderText() {
   let words = targetText.split(" ");
@@ -734,6 +735,7 @@ function renderText() {
   textDisplay.innerHTML = html;
 }
 
+renderText();
 
 function colorText(inputText)
 {
@@ -774,7 +776,6 @@ function colorText(inputText)
   }
 }
 
-inputArea.addEventListener('input', handleInput);
 document.addEventListener('keydown', (e) => {
   inputArea.focus();
   if (e.key === 'Tab') {
@@ -881,8 +882,8 @@ function handleInput(e) {
 
   document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
 }
+inputArea.addEventListener('input', handleInput);
 
-// Add this event listener after the existing input listener
 inputArea.addEventListener('keydown', function(e) {
   // Prevent left/right arrow keys and mouse clicks from moving cursor
   if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
