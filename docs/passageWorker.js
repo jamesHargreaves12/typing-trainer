@@ -467,63 +467,68 @@ function getDesireForPassage(passage, quadgramFrequency, error_score, lgbm_score
 
 
 self.onmessage = async function(e) {
-  if (e.data.type === 'sourceChange') {
-    currentSource = e.data.source;
-    if (source_passages[currentSource]) {
+  try{
+    if (e.data.type === 'sourceChange') {
+      currentSource = e.data.source;
+      if (source_passages[currentSource]) {
+        return;
+      }
+      fetch(source_paths[currentSource])
+        .then(response => response.text())
+        .then(text => source_passages[currentSource] = text.split("\n"))
       return;
     }
-    fetch(source_paths[currentSource]).then(response => response.text()).then(text => source_passages[currentSource] = text.split("\n"))
-    return;
-  }
-  if (!is_initialised.value) {
-    console.log("Not initialised");
-    return;
-  }
-
-  const { 
-    upcomingPassages, 
-    recentPassages, 
-    errorLog, 
-    seenLog, 
-    errorCount,
-    user_intro_acc,
-    user_intro_wpm,
-    highlight_error_pct
-  } = e.data;
-  let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource).map(passage => passage.passage);
-
-  // not yet initialised
-  if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
-    return;
-  }
-
-  const passages = source_passages[currentSource];
-  
-  const newUpcomingPassages = [...correctSourceUpcomingPassages];
-  
-  for (let i = 0; i < 100; i++) {
-    const randomPassage = passages[Math.floor(Math.random() * passages.length)];
-    if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
-      newUpcomingPassages.push(randomPassage);
-    } else {
-      i--;
+    if (!is_initialised.value) {
+      console.log("Not initialised");
+      return;
     }
-  }
-  const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
-  const {errorScores, passageToHighlightIndecies} = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
 
-  const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
-  const result = newUpcomingPassages.map((passage) => ({passage, source: currentSource, highlightIndecies: passageToHighlightIndecies[passage]})).sort((a, b) =>  - desire_for_passages[a.passage] + desire_for_passages[b.passage]).slice(0, 10);
-  
-  let result_with_error_highlight_indecies = result;
-  try{
-    if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
-      result_with_error_highlight_indecies = await add_error_highlight_indecies(result,highlight_error_pct);
+    const { 
+      upcomingPassages, 
+      recentPassages, 
+      errorLog, 
+      seenLog, 
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct
+    } = e.data;
+    let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource).map(passage => passage.passage);
+
+    // not yet initialised
+    if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+      return;
     }
+
+    const passages = source_passages[currentSource];
+    
+    const newUpcomingPassages = [...correctSourceUpcomingPassages];
+    
+    for (let i = 0; i < 100; i++) {
+      const randomPassage = passages[Math.floor(Math.random() * passages.length)];
+      if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
+        newUpcomingPassages.push(randomPassage);
+      } else {
+        i--;
+      }
+    }
+    const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
+    const {errorScores, passageToHighlightIndecies} = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
+
+    const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
+    const result = newUpcomingPassages.map((passage) => ({passage, source: currentSource, highlightIndecies: passageToHighlightIndecies[passage]})).sort((a, b) =>  - desire_for_passages[a.passage] + desire_for_passages[b.passage]).slice(0, 10);
+    
+    let result_with_error_highlight_indecies = result;
+    try{
+      if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
+        result_with_error_highlight_indecies = await add_error_highlight_indecies(result,highlight_error_pct);
+      }
+    } catch (e) {
+      BETTER_ERROR_MODEL = false;
+    }
+    HAS_SUCCEEDED_ONCE = true;
+    self.postMessage(result_with_error_highlight_indecies);
   } catch (e) {
-    BETTER_ERROR_MODEL = false
+    self.postMessage({type: 'error', error: e});
   }
-  HAS_SUCCEEDED_ONCE = true;
-  self.postMessage(result_with_error_highlight_indecies);
-
 }; 

@@ -540,7 +540,8 @@ function setUpcomingPassages() {
     errorCount,
     user_intro_acc,
     user_intro_wpm,
-    highlight_error_pct: 0.1
+    highlight_error_pct: 0.1,
+    userId: userId
   });
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
@@ -550,10 +551,25 @@ function setUpcomingPassages() {
 }
 
 passageWorker.onmessage = function(e) {
-  upcomingPassages = e.data;
-  // refilter here because of race conditions
-  upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
-  localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+  try {
+    if (e.data.type == 'error') {
+      console.error(e.data.error);
+      return;
+    }
+    upcomingPassages = e.data;
+    // refilter here because of race conditions
+    upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
+    localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+  } catch (error) {
+    console.error('Error handling worker message:', error);
+    // The console.error override will handle logging to S3
+  }
+};
+
+// Add error handler for worker errors
+passageWorker.onerror = function(error) {
+  console.error('Worker error:', error);
+  // The console.error override will handle logging to S3
 };
 
 
@@ -1036,6 +1052,87 @@ function resetStats() {
 }
 
 // Add event listener after window load
+// Store original console.error to avoid infinite loops
+const originalConsoleError = console.error;
+
+// Centralized error logging function
+function logErrorToS3(error, source = 'main_app') {
+  try {
+    if (window.location.hostname === 'localhost' || window.location.hostname === '') {
+      originalConsoleError('Error would be sent to S3:', error);
+      return;
+    }
+
+    const errorData = {
+      uid: userId,
+      timestamp: new Date().toISOString(),
+      error: {
+        message: error.message,
+        stack: error.stack,
+        filename: error.filename,
+        lineno: error.lineno,
+        colno: error.colno,
+        type: error.type || 'unknown_error'
+      },
+      userAgent: navigator.userAgent,
+      url: window.location.href,
+      source: source
+    };
+
+    navigator.sendBeacon('https://214nbnmwmc.execute-api.eu-west-2.amazonaws.com/default/error-log', JSON.stringify(errorData));
+  } catch (sendError) {
+    originalConsoleError('Failed to send error to S3:', sendError);
+  }
+}
+
+// Override console.error to automatically log all errors
+console.error = function(...args) {
+  // Call original console.error first
+  originalConsoleError.apply(console, args);
+  
+  try {
+    // Only log to S3 if it looks like an actual Error object or error message
+    const firstArg = args[0];
+    if (firstArg instanceof Error) {
+      logErrorToS3({
+        message: firstArg.message,
+        stack: firstArg.stack,
+        filename: 'unknown',
+        lineno: 0,
+        colno: 0,
+        type: 'console_error_object'
+      });
+    } else if (typeof firstArg === 'string' && (
+      firstArg.toLowerCase().includes('error') || 
+      firstArg.toLowerCase().includes('failed') ||
+      firstArg.toLowerCase().includes('exception')
+    )) {
+      logErrorToS3({
+        message: args.join(' '),
+        stack: new Error().stack,
+        filename: 'unknown',
+        lineno: 0,
+        colno: 0,
+        type: 'console_error_string'
+      });
+    }
+  } catch (interceptError) {
+    originalConsoleError('Error in console.error interceptor:', interceptError);
+  }
+};
+
+// Global error handler for the main app
+window.addEventListener('error', (event) => {
+  console.error('Global error:', event.error);
+  // The console.error override will handle logging to S3
+});
+
+// Global unhandled promise rejection handler
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', event.reason);
+  // The console.error override will handle logging to S3
+});
+
 window.addEventListener('load', () => {
   document.getElementById('resetStats').addEventListener('click', resetStats);
 });
