@@ -588,7 +588,7 @@ passageWorker.onmessage = function(e) {
 
 // Add error handler for worker errors
 passageWorker.onerror = function(error) {
-  console.error('Worker error:', error);
+  console.error('Worker error:', JSON.stringify(error));
   // The console.error override will handle logging to S3
 };
 
