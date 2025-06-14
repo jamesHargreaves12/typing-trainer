@@ -188,6 +188,22 @@ let DEFAULT_PASSAGES = [
   "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
   "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate."
 ].map(passage => ({passage, source: 'default'}));
+
+let FALLBACK_PASSAGES = [
+  'Tungsten is essential for some archaea. The following tungsten-utilizing enzymes are known:',
+  'A dialdehyde is an organic chemical compound with two aldehyde groups. The nomenclature of dialdehydes have the ending -dial or sometimes -dialdehyde. Short aliphatic dialdehydes are sometimes named after the diacid from which they can be derived.',
+  'The two-point form of the equation of a line can be expressed simply in terms of a determinant. There are two common ways for that.',
+  'Alabama is 30th in size and borders four U.S. states: Mississippi, Tennessee, Georgia, and Florida. It also borders the Gulf of Mexico.',
+  'The active end of a line used in making the knot. May also be called the "running end", "live end", or "tag end".',
+  'Some aldehydes are substrates for aldehyde dehydrogenase enzymes which metabolize aldehydes in the body. There are toxicities associated with some aldehydes that are related to neurodegenerative disease, heart disease, and some types of cancer.',
+  'Khan Tokhtamysh of the White Horde dethrones Mamai of the Blue Horde. The two hordes unite to form the Golden Horde.',
+  'Disulfiram prevents the elimination of acetaldehyde by inhibiting the enzyme acetaldehyde dehydrogenase. Acetaldehyde is a chemical the body produces when breaking down ethanol. Acetaldehyde itself is the cause of many hangover symptoms from alcohol use.',
+  "Barnett Jr., James F. Mississippi's American Indians. Jackson, MS: University Press of Mississippi, 2012.",
+  'Aldehydes have properties that are diverse and that depend on the remainder of the molecule. Smaller aldehydes such as formaldehyde and acetaldehyde are soluble in water, and the volatile aldehydes have pungent odors.',
+  'PROL An embeddable Prolog engine for Java. It includes a small IDE and a few libraries.',
+  'A preordered class is a class equipped with a preorder. Every set is a class and so every preordered set is a preordered class.'
+].map(passage => ({passage, source: 'fallback'}))
+ 
 let finishedDefaultPassages = false;
 let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = upcomingDefaultPassages;
@@ -520,6 +536,10 @@ function getPassage() {
   }
   
   let nextPassage = upcomingPassages.shift();
+  // Fall back in the ccase where upcomingPassagest is empty. Need to work out why.
+  if (!nextPassage) {
+    nextPassage = FALLBACK_PASSAGES[Math.floor(Math.random() * FALLBACK_PASSAGES.length)];
+  }
   while (recentPassages.includes(nextPassage.passage)) {
     nextPassage = upcomingPassages.shift();
     if (upcomingPassages.length == 0) {
