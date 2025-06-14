@@ -515,7 +515,7 @@ function recordUserIntro() {
 function getPassage() {
   if (!finishedDefaultPassages) {
     const nextPassage = upcomingDefaultPassages.shift();
-    if (nextPassage == null) {
+    if (!nextPassage) {
       finishedDefaultPassages = true;
       recordUserIntro();
       document.getElementById('settings-speech-bubble').classList.add('visible');
@@ -666,7 +666,7 @@ window.onload = function() {
   document.getElementById('settingsButton').addEventListener('click', (e) => {
     e.stopPropagation();
     settingsOpen = !settingsOpen;
-    document.querySelector('.settings-dropdown').classList.toggle('active');
+    document.querySelector('#settingsDropdown').classList.toggle('active');
     if (document.getElementById('settings-speech-bubble').classList.contains('visible')) {
       document.getElementById('settings-speech-bubble').classList.remove('visible');
     }
