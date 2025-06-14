@@ -200,7 +200,6 @@ let currentSource = 'wikipedia';
 let quadgramFrequency = {};
 let defaultQuadgramErrorModel = {};
 const source_passages = {}
-// let passage_feats = {};
 let passage_user_info_features = {};
 let word_feats = {};
 let is_initialised = {value: false};
@@ -222,8 +221,8 @@ async function setup_pyodide() {
   const lgbm_model = await lgbm_response.text();
   await pyodide.FS.writeFile('model.txt', lgbm_model);
   const error_model_response = await fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz');
-  const error_model = await error_model_response.bytes();
-  await pyodide.FS.writeFile('error_model_weights.npz', error_model);
+  const error_model = await error_model_response.arrayBuffer();
+  await pyodide.FS.writeFile('error_model_weights.npz', new Uint8Array(error_model));
   console.log("Model saved to pyodide successfully");
 }
 
@@ -463,7 +462,7 @@ function getDesireForPassage(passage, quadgramFrequency, error_score, lgbm_score
     const expectedNaturalnessScore = 0.00002;
     const naturalnessScore = getNaturalnessScore(passage, quadgramFrequency);
     return (error_score / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score * 3;
-  }
+}
 
 
 self.onmessage = async function(e) {
