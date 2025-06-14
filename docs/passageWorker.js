@@ -215,12 +215,15 @@ async function setup_pyodide() {
 
   await pyodide.loadPackage('micropip');
   const micropip = pyodide.pyimport("micropip");
+  const [x,lgbm_response, error_model_response] = await Promise.all([
+    micropip.install(['lightgbm', 'numpy']),
+    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt'),
+    fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz')
+  ]);
   // await micropip.install('numpy');
-  await micropip.install(['lightgbm', 'numpy'])
-  const lgbm_response = await fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt');
   const lgbm_model = await lgbm_response.text();
   await pyodide.FS.writeFile('model.txt', lgbm_model);
-  const error_model_response = await fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz');
+
   const error_model = await error_model_response.arrayBuffer();
   await pyodide.FS.writeFile('error_model_weights.npz', new Uint8Array(error_model));
   console.log("Model saved to pyodide successfully");
