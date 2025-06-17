@@ -542,6 +542,10 @@ function getPassage() {
   }
   while (recentPassages.includes(nextPassage.passage)) {
     nextPassage = upcomingPassages.shift();
+    if (!nextPassage) {
+      nextPassage = FALLBACK_PASSAGES[Math.floor(Math.random() * FALLBACK_PASSAGES.length)];
+      return nextPassage;
+    }
     if (upcomingPassages.length == 0) {
       return nextPassage;
     }
