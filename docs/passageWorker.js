@@ -192,6 +192,7 @@ res_list
 `
 BETTER_ERROR_MODEL = true;
 HAS_SUCCEEDED_ONCE = false;
+const NEG_INF = Number.POSITIVE_INFINITY;
 
 importScripts("https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js");
 let pyodide = undefined;
@@ -296,6 +297,7 @@ const call_cnn_error_model = async (passage) => {
 
 let ERROR_SCORE_CACHE_KEY = 'na'
 let ERROR_SCORE_CACHE = []
+
 const error_scores_cached = async (passage) => {
   if (ERROR_SCORE_CACHE_KEY == passage) {
     return ERROR_SCORE_CACHE;
@@ -305,13 +307,257 @@ const error_scores_cached = async (passage) => {
   return ERROR_SCORE_CACHE;
 }
 
-const add_error_highlight_indecies = async (passages, highlight_error_pct) => {
+UNIGRAM_STD = {
+  'm': 0.035250909191469115,
+  'f': 0.03695542239285691,
+  '?': 0.0936364685537428,
+  'L': 0.07772211558675739,
+  ')': 0.10977908932471044,
+  'C': 0.07377953466245117,
+  'l': 0.03021346633635183,
+  'B': 0.06640424235737112,
+  ';': 0.20817240351506988,
+  'u': 0.038937114367984554,
+  'Y': 0.16595312797438103,
+  'n': 0.030484792139803818,
+  '3': 0.06884811761995714,
+  'E': 0.07729793358206127,
+  'p': 0.03842193678749636,
+  '9': 0.06462195791539867,
+  'M': 0.063368768821528,
+  'z': 0.0964913325198731,
+  '4': 0.0805880804677427,
+  'o': 0.03434061090166928,
+  'O': 0.07723182439532356,
+  'v': 0.058299615501815706,
+  'b': 0.042218762041903606,
+  '7': 0.08912325313725529,
+  'a': 0.02702475055506549,
+  '1': 0.04150421558012398,
+  'D': 0.0699996699233979,
+  '.': 0.09815703580521853,
+  'e': 0.028127670146057153,
+  'y': 0.0493668759421138,
+  '"': 0.13915426821811414,
+  'G': 0.0821046817438331,
+  'W': 0.13702040110284322,
+  'K': 0.08773764653996162,
+  'X': 0.07203267889076902,
+  '-': 0.12501072683212905,
+  '2': 0.052224500876861424,
+  'r': 0.034731680713281664,
+  'N': 0.06871926110003576,
+  'F': 0.07379872463607537,
+  "'": 0.17001506148419257,
+  'Q': 0.08579187525673862,
+  'd': 0.03948711024960669,
+  '5': 0.07175866045059018,
+  'R': 0.08427430182569198,
+  'H': 0.06435035895869423,
+  's': 0.031318665799798806,
+  'T': 0.0644400469326798,
+  '0': 0.05847984327960287,
+  'q': 0.06708271250979798,
+  'x': 0.08876097515696056,
+  'g': 0.04089215210121809,
+  'j': 0.09662766774549124,
+  '(': 0.08230213031788058,
+  'I': 0.06537827525363547,
+  'k': 0.05171203746242511,
+  'i': 0.03278154954078478,
+  'c': 0.03641026236032212,
+  'P': 0.07768482941035788,
+  ',': 0.12739553771065584,
+  ' ': 0.02123139512120665,
+  'h': 0.030405706780887293,
+  'V': 0.09692033026314154,
+  '6': 0.1043364311329082,
+  'w': 0.040539342694805074,
+  'U': 0.06468621228143943,
+  't': 0.030104127538495326,
+  'A': 0.06268830214753172,
+  'Z': 0.09212544383812245,
+  ':': 0.15782421497473512,
+  '!': 0.20698825363136056,
+  '%': 0.08984992257545195,
+  'S': 0.07299977706942225,
+  '8': 0.07942753154417806,
+  'J': 0.09051758104455739
+}
+
+const UNIGRAM_MEAN_ERROR_RATE = {
+  ' ': 0.04494756056197226,
+  '0': 0.06949357711973116,
+  'e': 0.07121088290787903,
+  'a': 0.07240791486176659,
+  'h': 0.07250551909598359,
+  '1': 0.07251969869666484,
+  'l': 0.07610229636211416,
+  't': 0.0764293706619892,
+  'n': 0.07662865081890807,
+  's': 0.08128601074074474,
+  'm': 0.08154831691285441,
+  '9': 0.08201504298323402,
+  '2': 0.08227111987983293,
+  'o': 0.08310732154609433,
+  'f': 0.08390191857095694,
+  'r': 0.08431221265661083,
+  'i': 0.08458058869682056,
+  'p': 0.0858016881822663,
+  'w': 0.08882508276787156,
+  'c': 0.0914569706287151,
+  'b': 0.09192249691673522,
+  '7': 0.09252556686849553,
+  'u': 0.09283717236612894,
+  'd': 0.09318718800765248,
+  '5': 0.09605206513206209,
+  'g': 0.09753288630724552,
+  '4': 0.09895124315258705,
+  'k': 0.10059635653086178,
+  '8': 0.10178416013925153,
+  '3': 0.10332686413625614,
+  '6': 0.10434379859066398,
+  'y': 0.1044824949769741,
+  'q': 0.1103108800766673,
+  'H': 0.11701539865952387,
+  'v': 0.1198491610847135,
+  'U': 0.1204879523676621,
+  'N': 0.12067344536354514,
+  'M': 0.12312228655675034,
+  'F': 0.12397431436434378,
+  'A': 0.12437056446290508,
+  'B': 0.12523831163065222,
+  'D': 0.12688199203663944,
+  '(': 0.12841006243685069,
+  'C': 0.12872282364645007,
+  'I': 0.1290493611155294,
+  '%': 0.12988333038713099,
+  'R': 0.1303762741351494,
+  'T': 0.13062808856883526,
+  'G': 0.13857991959947716,
+  'X': 0.13969120191667775,
+  'P': 0.14006869095259705,
+  'O': 0.14050050237166156,
+  'L': 0.1406750717581659,
+  'E': 0.14087242146708892,
+  'S': 0.1415333394440617,
+  'Q': 0.14227272727272727,
+  'j': 0.14889501250068435,
+  'x': 0.14932922200765367,
+  'V': 0.14954651316910608,
+  'K': 0.15156585474198564,
+  '!': 0.1575880415505447,
+  'Z': 0.15959913864502237,
+  '?': 0.1610873960907661,
+  'J': 0.16177686184366968,
+  'z': 0.17351851338489543,
+  ')': 0.1845214166223594,
+  '.': 0.20406353413867082,
+  '"': 0.2269214895710975,
+  'W': 0.241879435892709,
+  ',': 0.2594410613134759,
+  '-': 0.26148812587309755,
+  'Y': 0.2768391198569835,
+  ':': 0.2976530921988082,
+  "'": 0.30947778643803586,
+  ';': 0.3569477154969383,
+  '_': 0.3695652173913043
+};
+
+
+function findMAP(base_model_mean, base_model_std, numPos, total, tol = 1e-10, maxIter = 30, verbose = false) {
+  if (total == 0) {
+    return base_model_mean;
+  }
+
+  const kink = 0.01;
+  const totNeg = total - numPos;
+  // start at ML (clamped into (0,1))
+  let factor = 1;
+  let e = base_model_mean;
+  let hasCrossedKink = false;
+  for (let i = 0; i < maxIter; i++) {
+    // gradient of log-prior
+    // Prior is a gaussian above the kink and then a sqrt decay to 0 bellow it
+    const dPrior = e < kink
+      ? (e === 0 ? Infinity : 0.5/e)
+      : -((e - base_model_mean)/base_model_std);
+    
+    // second deriv of log-prior
+    const d2Prior = e < kink
+      ? -1/e/e
+      : -1/base_model_std;
+    // gradient & Hessian of log-likelihood
+    const dLik  = numPos/e - totNeg/(1 - e);
+    const d2Lik = -numPos/(e*e) - totNeg/((1 - e)*(1 - e));
+    // Newton step on –(prior+lik)
+    const g = -(dPrior + dLik);
+    const h = -(d2Prior + d2Lik);
+    let step = g/h * factor;
+    while (e < kink && e - step / 2> kink && Math.abs(step) > tol){
+      factor *= 0.5;
+      step = g/h * factor;
+    }
+    if (e < kink) {
+      hasCrossedKink = true;
+    } else if (e > kink && e - step < kink && hasCrossedKink) {
+      // Indicates that this is the second time crossing the king, so put it very close to the kink so that the step size gets pushed down for the next step if it wants to cross back
+      e = kink - tol /2 ;
+      continue;
+    }
+    if (verbose) {
+      console.log(i, step, e);
+    }
+    e -= step;
+
+    if (e <= 1e-3) { e = 1e-3; }
+    if (e >= 1-1e-6) { e = 1-1e-6; }
+    if (Math.abs(step) < tol) break;
+  }
+  return e;
+}
+
+function findUnigramErrorRates(charErrorLog, charSeenLog){
+  best_error_rates = {};
+  for (let letter of Object.keys(charSeenLog)){
+    const errorCount = charErrorLog[letter] ?? 0;
+    const seenCount = charSeenLog[letter] ?? 0;
+    const verbose = falseh;
+    if (verbose) {
+      console.log("letter", letter, "errorCount", errorCount, "seenCount", seenCount, "verbose", verbose);
+    }
+    const bestErr = findMAP(
+      UNIGRAM_MEAN_ERROR_RATE[letter],
+      UNIGRAM_STD[letter],
+      errorCount,
+      seenCount,
+      1e-10,
+      30,
+      verbose
+    );
+    best_error_rates[letter] = bestErr;
+  }
+  return best_error_rates;
+}
+
+const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654*3, 0.645296487587596, -0.014092068726190543*0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
+
+const add_error_highlight_indecies = async (passages, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
   // For performance reasons only do it for the top passage
   const cnn_score = await error_scores_cached(passages[0].passage)
-  const indexToScore = cnn_score.map((score, index) => ({index, score}));
+  const unigram_error_rates = findUnigramErrorRates(unigramErrorLog, unigramSeenLog);
+  console.log("unigram_error_rates", unigram_error_rates);
+  const unigram_score = passages[0].passage.split('').map((char, _) => unigram_error_rates[char] || 0);
+  const by_cnn = cnn_score.map((score, index) => ({index, score: score})).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
+  const by_unigram = unigram_score.map((score, index) => ({index, score: score})).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
+
+  const indexToScore = cnn_score.map((score, index) => ({index, score:  CNN_WEIGHT*score + UNIGRAM_WEIGHT * unigram_score[index] + BIAS}));
   const highlightIndecies = indexToScore.sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
 
-  passages[0].error_scores = cnn_score;
+  console.log("by_cnn", by_cnn);
+  console.log("by_unigram", by_unigram);
+  console.log("highlightIndecies", highlightIndecies);
+  // passages[0].error_scores = cnn_score;
   passages[0].highlightIndecies = highlightIndecies;
   return passages;
 }
@@ -366,6 +612,8 @@ Promise.all([...fetches, setup_pyodide(), load_lgbm_feat_files()]).then(() => {
   is_initialised.value = true;
   console.log("Initialized passage worker");
 });
+
+
 
 function getOrPad(passage, index) {
     if (index < 0) {
@@ -523,7 +771,7 @@ self.onmessage = async function(e) {
     let result_with_error_highlight_indecies = result;
     try{
       if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
-        result_with_error_highlight_indecies = await add_error_highlight_indecies(result,highlight_error_pct);
+        result_with_error_highlight_indecies = await add_error_highlight_indecies(result,highlight_error_pct, unigramErrorLog=errorLog["char"], unigramSeenLog=seenLog["char"]);
       }
     } catch (e) {
       BETTER_ERROR_MODEL = false;
@@ -531,6 +779,7 @@ self.onmessage = async function(e) {
     HAS_SUCCEEDED_ONCE = true;
     self.postMessage(result_with_error_highlight_indecies);
   } catch (e) {
+    console.error(e);
     self.postMessage({type: 'error', error: e});
   }
 }; 
