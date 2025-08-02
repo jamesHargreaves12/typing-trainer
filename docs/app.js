@@ -209,6 +209,7 @@ let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 let currentPassageErrorActualChar = [];
+let currentPassageLetterTimesSec = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 let session_rep_count = 0;
@@ -272,6 +273,7 @@ passageWorker.postMessage({
 let settingTargetTextRef={value: false};
 
 let startTime = null;
+let prevCharTime = null;
 let targetText = 'Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.';
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
@@ -283,6 +285,7 @@ function recordUserLeaveText() {
     passage: targetText,
     errors: currentPassageErrors,
     errorChars: currentPassageErrorActualChar,
+    letterTimesSec: currentPassageLetterTimesSec,
     source: currentPassageSource,
     timeTakenMs: (new Date() - startTime)
   }
@@ -319,6 +322,7 @@ async function persistTypingState() {
     passage: targetText, 
     source: currentPassageSource,
     errors: currentPassageErrors,
+    letterTimesSec: currentPassageLetterTimesSec,
     errorChars: currentPassageErrorActualChar,
     timeTakenMs: (new Date() - startTime)
   }
@@ -866,10 +870,16 @@ function handleInput(e) {
   // Start timer on first keystroke
   if (!startTime && inputText.length > 0) {
     startTime = new Date();
+    prevCharTime = new Date();
   }
-  
+  let i = prevInputText.length
+
+  if (currentPassageLetterTimesSec.length <= i) {
+    currentPassageLetterTimesSec.push(parseFloat(((new Date() - prevCharTime)/1000).toFixed(2))); // seconds
+    prevCharTime = new Date();
+  }
+
   if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
-    let i = prevInputText.length
     unigram = targetText[i];
     bigram = targetText.slice(i-1, i+1);
     trigram = targetText.slice(i-2, i+1);
@@ -1032,6 +1042,8 @@ function resetSession() {
   charErrorCount = 0;
   charTotalCount = 0;
   startTime = null;
+  prevCharTime = null;
+  currentPassageLetterTimesSec = [];
   currentPassageErrors = [];
   currentPassageErrorActualChar = [];
   // Add current passage to recent list
