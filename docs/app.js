@@ -208,6 +208,7 @@ let finishedDefaultPassages = false;
 let upcomingDefaultPassages = DEFAULT_PASSAGES;
 let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
+let currentPassageErrorActualChar = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 let session_rep_count = 0;
@@ -277,8 +278,16 @@ const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
 
 function recordUserLeaveText() {
+  const data = { 
+    uid: userId,
+    passage: targetText,
+    errors: currentPassageErrors,
+    errorChars: currentPassageErrorActualChar,
+    source: currentPassageSource,
+    timeTakenMs: (new Date() - startTime)
+  }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
-    navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify({ uid: userId, passage: targetText, errors: currentPassageErrors, source: currentPassageSource, timeTakenMs: (new Date() - startTime) }));
+    navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify(data));
   }
 }
   
@@ -305,14 +314,16 @@ function generateUserId() {
 }
 
 async function persistTypingState() {
+  const data = {
+    userId: userId,
+    passage: targetText, 
+    source: currentPassageSource,
+    errors: currentPassageErrors,
+    errorChars: currentPassageErrorActualChar,
+    timeTakenMs: (new Date() - startTime)
+  }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
-    const to_save = JSON.stringify({
-      userId: userId,
-      passage: targetText, 
-      source: currentPassageSource,
-      errors: currentPassageErrors,
-      timeTakenMs: (new Date() - startTime)
-    });
+    const to_save = JSON.stringify(data);
     const response = await fetch("https://sfuwlmeqrd.execute-api.eu-west-2.amazonaws.com/default/typo-dojo-write-to-bucket", {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
@@ -892,6 +903,7 @@ function handleInput(e) {
       }
       
       currentPassageErrors.push(i);
+      currentPassageErrorActualChar.push(typedChar);
       
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
       errorCount += 1;
@@ -1021,6 +1033,7 @@ function resetSession() {
   charTotalCount = 0;
   startTime = null;
   currentPassageErrors = [];
+  currentPassageErrorActualChar = [];
   // Add current passage to recent list
   if (targetText) {
     recentPassages.unshift(targetText);
