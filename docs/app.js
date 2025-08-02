@@ -147,7 +147,7 @@ Math.lgamma = function(z) {
 }
 
 function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile){
-  let header = `Over the last 5 reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+  let header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
 
   if (wpm > 70) {
     header =  `${header} Impressive speed!`
@@ -174,7 +174,7 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
 }
 
 function suggestRepetitionStrategy(){
-  prev_reps = runHistory.slice(session_rep_count - 5, session_rep_count);
+  prev_reps = runHistory.slice(0,REPETION_STRATEGY_HISTORY_LENGTH);
   const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
   const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
   const wpm_percentile = gammaCDF(wpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
@@ -212,6 +212,7 @@ let currentPassageErrorActualChar = [];
 let currentPassageLetterTimesSec = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
+const REPETION_STRATEGY_HISTORY_LENGTH = 5;
 let session_rep_count = 0;
 let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
 let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
@@ -543,7 +544,7 @@ function getPassage() {
       return nextPassage;
     }
   }
-  if (session_rep_count == 5 && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % 5 == 0 && session_rep_count != 0)) {
+  if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
     return {
       passage: suggestRepetitionStrategy(),
