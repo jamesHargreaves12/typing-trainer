@@ -146,8 +146,8 @@ Math.lgamma = function(z) {
   return [-tmp + Math.log(2.5066282746310005 * ser / x), 0];
 }
 
-function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, session_rep_count){
-  let header = `Over the last ${session_rep_count} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile){
+  let header = `Over the last 5 reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
 
   if (wpm > 70) {
     header =  `${header} Impressive speed!`
@@ -174,13 +174,13 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
 }
 
 function suggestRepetitionStrategy(){
-  prev_reps = runHistory.slice(0, session_rep_count);
+  prev_reps = runHistory.slice(session_rep_count - 5, session_rep_count);
   const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
   const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
   const wpm_percentile = gammaCDF(wpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
   const error_rate_percentile = betaCDF(1 - accuracy, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
   const accuracy_percentile = 1 - error_rate_percentile;
-  return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, session_rep_count);
+  return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile);
 }
 
 let DEFAULT_PASSAGES = [
@@ -212,6 +212,7 @@ let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 let session_rep_count = 0;
 let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
+let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
 let errorLog = {
   'char': {},
   'bigram': {},
@@ -527,7 +528,7 @@ function getPassage() {
       return nextPassage;
     }
   }
-  if (session_rep_count == 5 && stats_rep_shown == false) {
+  if (session_rep_count == 5 && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % 5 == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
     return {
       passage: suggestRepetitionStrategy(),
@@ -703,6 +704,14 @@ window.onload = function() {
     localStorage.setItem('predictiveErrorHighlight', predictiveErrorHighlight);
   });
 
+  const showStatsEvery5thRepetitionToggle = document.getElementById('showStatsEvery5thRepetition');
+  showStatsEvery5thRepetitionToggle.checked = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
+  showStatsEvery5thRepetition = showStatsEvery5thRepetitionToggle.checked;
+
+  showStatsEvery5thRepetitionToggle.addEventListener('change', (e) => {
+    showStatsEvery5thRepetition = e.target.checked;
+    localStorage.setItem('showStatsEvery5thRepetition', showStatsEvery5thRepetition);
+  });
 
 
   // Preload and setup error sound
