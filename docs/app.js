@@ -216,6 +216,7 @@ const REPETION_STRATEGY_HISTORY_LENGTH = 5;
 let session_rep_count = 0;
 let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
 let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
+let onlyShowCursorAfterDelay = localStorage.getItem('onlyShowCursorAfterDelay') === 'true';
 let errorLog = {
   'char': {},
   'bigram': {},
@@ -275,6 +276,7 @@ let settingTargetTextRef={value: false};
 
 let startTime = null;
 let prevCharTime = null;
+let cursorTimeoutId = null;
 let targetText = 'Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.';
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
@@ -728,6 +730,15 @@ window.onload = function() {
     showStatsEvery5thRepetition = e.target.checked;
     localStorage.setItem('showStatsEvery5thRepetition', showStatsEvery5thRepetition);
   });
+  
+  const onlyShowCursorAfterDelayToggle = document.getElementById('onlyShowCursorAfterDelay');
+  onlyShowCursorAfterDelayToggle.checked = localStorage.getItem('onlyShowCursorAfterDelay') === 'true';
+  onlyShowCursorAfterDelay = onlyShowCursorAfterDelayToggle.checked;
+
+  onlyShowCursorAfterDelayToggle.addEventListener('change', (e) => {
+    onlyShowCursorAfterDelay = e.target.checked;
+    localStorage.setItem('onlyShowCursorAfterDelay', onlyShowCursorAfterDelay);
+  });
 
 
   // Preload and setup error sound
@@ -837,7 +848,18 @@ function colorText(inputText)
   }
   const NextChar = document.getElementById(`char-${inputText.length}`);
   if (NextChar) {
-    NextChar.className = NextChar.className.replace('letter', 'letter cursor');
+    if (!onlyShowCursorAfterDelay || inputText.length == 0 || (new Date() - prevCharTime) > 1000) {
+      NextChar.className = NextChar.className.replace('letter', 'letter cursor');
+    } else {
+      if (cursorTimeoutId) {
+        clearTimeout(cursorTimeoutId);
+      }
+      cursorTimeoutId = setTimeout(() => {
+        if (new Date() - prevCharTime > 1000) {
+          NextChar.className = NextChar.className.replace('letter', 'letter cursor');
+        }
+      }, 1000);
+    }
   }
 }
 
