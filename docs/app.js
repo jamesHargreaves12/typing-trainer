@@ -462,6 +462,7 @@ function generateUserId() {
 }
 
 async function persistTypingState() {
+  const timeTakenMs = (new Date() - startTime);
   const data = {
     userId: userId,
     passage: targetText, 
@@ -469,7 +470,7 @@ async function persistTypingState() {
     errors: currentPassageErrors,
     letterTimesSec: currentPassageLetterTimesSec,
     errorChars: currentPassageErrorActualChar,
-    timeTakenMs: (new Date() - startTime),
+    timeTakenMs: timeTakenMs,
     selectionStratedy: currentSelectionStratedy
   }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
@@ -533,7 +534,7 @@ function topErrorsToHtmlTable(includeFrequencyInCost) {
   const tooltipText = (
     includeFrequencyInCost 
     ? "Ordered also takes into account letter frequency."
-    :"Ordered by error rate with correction factor for rarely seen characters."
+    : "Ordered by error rate with correction factor for characters that haven't been seen much."
   );
   let html = `<div class="${errorListClass}" style="position: relative;">
   <div class="${errorTooltipClass}" style="position: absolute; display: none; visibility: hidden; opacity: 0; z-index: 1000;">
@@ -1205,7 +1206,9 @@ inputArea.addEventListener('select', function(e) {
 });
 
 function calculateMetrics() {
-  const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
+  // const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
+  const cappedPassageLetterTimes = currentPassageLetterTimesSec.map(t => Math.min(t, 2)); // cap the time for a letter at 2 seconds ~ 6wpm
+  const timeElapsedMins = cappedPassageLetterTimes.reduce((a, b) => a + b, 0) / 60;
   const charsPerWord = 4.7;
   let rawWpm = charTotalCount / charsPerWord / timeElapsedMins;
   let wpm = Math.round(rawWpm);
