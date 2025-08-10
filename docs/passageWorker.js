@@ -261,7 +261,7 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
     // features["word_many_to_end_count_positive"] = undefined;
     // features["word_many_to_end_count_negative"] = undefined;
   }
-  const utcNow = new Date();
+  // const utcNow = new Date();
   // features["time_hour"] = utcNow.getHours();
   // features["time_minutes"] = utcNow.getMinutes();
   // features["passage_len"] = passage.length;
@@ -306,6 +306,11 @@ const error_scores_cached = async (passage) => {
   ERROR_SCORE_CACHE = await call_cnn_error_model(passage);
   return ERROR_SCORE_CACHE;
 }
+
+const cartesianProduct = (a, b) =>{
+  return [].concat(...a.map(x => b.map(y => [x, y])));
+}
+
 
 UNIGRAM_STD = {
   'm': 0.035250909191469115,
@@ -463,6 +468,162 @@ const UNIGRAM_MEAN_ERROR_RATE = {
   ';': 0.3569477154969383,
   '_': 0.3695652173913043
 };
+
+const LOGICAL_GROUP_MEAN_RATE = {
+  // 'letter': 0.04710802768380675,
+  'punc': 0.19139587835792835,
+  'caps': 0.1221530417042965,
+  // 'lower': 0.045637418553671885,
+  'rare_letters': 0.08235635777737926,
+  'home_row': 0.045891066255235494,
+  'top_row': 0.044501279789748084,
+  'bottom_row': 0.04988849782879142,
+  'pinky': 0.041502681315260456,
+  'ring_pinky': 0.04534980695965584,
+  'left_hand': 0.04455314778139376,
+  'right_hand': 0.04658913374462804,
+  'numbers': 0.053865817036945214,
+  'difficult_to_reach_letters': 0.048868147824499636,
+  'repeat_bigrams': 0.04379537185923001,
+  'left_hand_only_bigrams': 0.04455314778139376,
+  'right_hand_only_bigrams': 0.04658913374462804,
+  'alternate_hand_bigrams': 0.04658913374462804,
+  'same_finger_bigrams': 0.04658913374462804
+}
+
+const LOGICAL_GROUP_STD = {
+  // 'letter': 0.03523360348119574,
+  'punc': 0.09289475301157596,
+  'caps': 0.0970367902696615,
+  // 'lower': 0.019822447415430645,
+  'rare_letters': 0.06273010481428627,
+  'home_row': 0.02122425754557468,
+  'top_row': 0.0193088422852222,
+  'bottom_row': 0.03017464163666382,
+  'pinky': 0.019324861750724752,
+  'ring_pinky': 0.018870082026008157,
+  'left_hand': 0.019319888976857703,
+  'right_hand': 0.021412425028466915,
+  'numbers': 0.0721423531437064,
+  'difficult_to_reach_letters': 0.02346746227281291,
+  'repeat_bigrams': 0.041692472990016084,
+  'left_hand_only_bigrams': 0.04979720360147768,
+  'right_hand_only_bigrams': 0.04666375110417023,
+  'alternate_hand_bigrams': 0.05200793503384313,
+  'same_finger_bigrams': 0.04742022244468924 
+}
+
+const LOGICAL_GROUP_FREQUENCY = {
+  'punc':                       0.02689224985046569,
+  'caps':                       0.031072374604802187,
+  // 'lower':                      0.7750833119712894,
+  'rare_letters':               0.01589677860377681,
+  'home_row':                   0.20841835426813637,
+  'top_row':                    0.3909493292318209,
+  'bottom_row':                 0.12504486029223277,
+  'pinky':                      0.08613517901392806,
+  'ring_pinky':                 0.24499017345979662,
+  'left_hand':                  0.44476459027599763,
+  'right_hand':                 0.31931299666752117,
+  'numbers':                    0.010400751943945998,
+  'difficult_to_reach_letters': 0.09004870546013842,
+  'repeat_bigrams':             0.014840092600531596,
+  'left_hand_only_bigrams': 0.1825327960216068,
+  'right_hand_only_bigrams': 0.10707365171911172,
+  'alternate_hand_bigrams': 0.31248906799279774,
+  'same_finger_bigrams': 0.045806396295978734
+}
+
+const LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz".split('');
+const LOGICAL_LETTER_GROUPINGS = {
+  punc: "(%!).?\",-:\\';_£'".split(''),
+  caps: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''),
+  rare_letters: "zxjqkv".split(''),
+  home_row: "asdfjkl".split(''),
+  top_row: "qwertyuiop".split(''),
+  bottom_row: "zxcvbnm".split(''),
+  pinky: "qazp".split(''),
+  ring_pinky: "qazpwsxol".split(''),
+  left_hand: "qwertasdfgzxcv".split(''),
+  right_hand: "yuiophjklnm".split(''),
+  numbers: "1234567890".split(''),
+  difficult_to_reach_letters: "ytbz".split('')
+}
+
+const LOGICAL_BIGRAM_GROUPINGS = {
+  repeat_bigrams: LOWER_CASE_LETTERS.map((x, i) => `${x}${LOWER_CASE_LETTERS[i]}`),
+
+  left_hand_only_bigrams: cartesianProduct(LOGICAL_LETTER_GROUPINGS.left_hand, LOGICAL_LETTER_GROUPINGS.left_hand)
+    .map(([x, y]) => `${x}${y}`),
+
+  right_hand_only_bigrams: cartesianProduct(LOGICAL_LETTER_GROUPINGS.right_hand, LOGICAL_LETTER_GROUPINGS.right_hand)
+    .map(([x, y]) => `${x}${y}`),
+
+  alternate_hand_bigrams: [
+    ...cartesianProduct(LOGICAL_LETTER_GROUPINGS.left_hand, LOGICAL_LETTER_GROUPINGS.right_hand),
+    ...cartesianProduct(LOGICAL_LETTER_GROUPINGS.right_hand, LOGICAL_LETTER_GROUPINGS.left_hand)
+  ].map(([x, y]) => `${x}${y}`)
+};
+
+const finger_keys = ["qaz","wsx","edc","rfvtg","yhnujm","ujm","ik","ol","p"].map(x => x.split(''));
+
+
+LOGICAL_BIGRAM_GROUPINGS.same_finger_bigrams = finger_keys.flatMap(fks =>
+  cartesianProduct(fks, fks)
+    .map(([x, y]) => `${x}${y}`)
+    .filter(bigram => !LOGICAL_BIGRAM_GROUPINGS.repeat_bigrams.includes(bigram))
+);
+
+const suggestStrategyFromIneterstingErrors = (interestingErrorLog, seenLog, previousSelectionStrategies) => {
+  const charErrorLog = interestingErrorLog['char'];
+  const bigramErrorLog = interestingErrorLog['bigram'];
+  const charSeenLog = seenLog['char'];
+  const bigramSeenLog = seenLog['bigram'];
+
+  const groupErrorCount = {};
+  const groupSeenCount = {};
+
+  for (let group in LOGICAL_LETTER_GROUPINGS) {
+    const groupChars = LOGICAL_LETTER_GROUPINGS[group];
+    for (let char of groupChars) {
+      groupErrorCount[group] = (groupErrorCount[group] || 0) + (charErrorLog[char] || 0);
+      groupSeenCount[group] = (groupSeenCount[group] || 0) + (charSeenLog[char] || 0);
+    }
+  }
+  for (let group in LOGICAL_BIGRAM_GROUPINGS) {
+    const groupBigrams = LOGICAL_BIGRAM_GROUPINGS[group];
+    for (let bigram of groupBigrams) {
+      groupErrorCount[group] = (groupErrorCount[group] || 0) + (bigramErrorLog[bigram] || 0);
+      groupSeenCount[group]= (groupSeenCount[group] || 0) + (bigramSeenLog[bigram] || 0);
+    }
+  }
+
+  let maxCost = 0;
+  let maxCostGroup = null;
+  let previousSelectedStrategy = previousSelectionStrategies[previousSelectionStrategies.length - 1];
+  let tmp = []
+  for (let group in groupErrorCount) {
+    const errorCount = groupErrorCount[group] || 0;
+    const seenCount = groupSeenCount[group] || 0;
+    const meanRate = LOGICAL_GROUP_MEAN_RATE[group];
+    const std = LOGICAL_GROUP_STD[group];
+    const errorRate = findMAP(meanRate, std, errorCount, seenCount);
+    const cost = errorRate * LOGICAL_GROUP_FREQUENCY[group];
+    tmp.push([cost, group, LOGICAL_GROUP_FREQUENCY[group], errorRate]);
+    // console.log(group, errorRate, cost);
+    if (cost > maxCost && group != previousSelectedStrategy) {
+      maxCost = cost;
+      maxCostGroup = group;
+    }
+  }
+  tmp.sort((a, b) => b[0] - a[0]);
+  console.log(tmp);
+  // Fallback just in case.
+  if (maxCostGroup == null) {
+    maxCostGroup = previousSelectedStrategy;
+  }
+  return maxCostGroup;
+}
 
 
 function findMAP(base_model_mean, base_model_std, numPos, total, tol = 1e-10, maxIter = 30, verbose = false) {
@@ -715,9 +876,37 @@ function getDesireForPassage(passage, quadgramFrequency, error_score, lgbm_score
     return (error_score / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score * 3;
 }
 
+function getScoreBySelectionStrategy(passage, selectionStratedy) {
+  if (selectionStratedy == null) {
+    return 0;
+  }
+  if (selectionStratedy in LOGICAL_LETTER_GROUPINGS) {
+    const letters = LOGICAL_LETTER_GROUPINGS[selectionStratedy];
+    return passage.split('').filter(char => letters.includes(char)).length / passage.length;
+  }
+  if (selectionStratedy in LOGICAL_BIGRAM_GROUPINGS) {
+    const bigrams = LOGICAL_BIGRAM_GROUPINGS[selectionStratedy];
+    return passage.split('').filter((char, index) => bigrams.includes(char + getOrPad(passage, index+1))).length / passage.length;
+  }
+  return 0;
+}
+
+function topNBySelectionStrategy(passages, selectionStratedy, n) {
+  if (selectionStratedy == null) {
+    return passages;
+  }
+  passages = passages.sort((a, b) => getScoreBySelectionStrategy(a, selectionStratedy) - getScoreBySelectionStrategy(b, selectionStratedy));
+  return passages.slice(passages.length - n, passages.length);
+}
+
 
 self.onmessage = async function(e) {
   try{
+    if (e.data.type === 'suggestStrategyFromIneterstingErrors') {
+      const strategy = suggestStrategyFromIneterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousSelectionStrategies);
+      self.postMessage({type: 'suggestStrategyFromIneterstingErrors', strategy: strategy});
+      return;
+    }
     if (e.data.type === 'sourceChange') {
       currentSource = e.data.source;
       if (source_passages[currentSource]) {
@@ -741,9 +930,10 @@ self.onmessage = async function(e) {
       errorCount,
       user_intro_acc,
       user_intro_wpm,
-      highlight_error_pct
+      highlight_error_pct,
+      selectionStratedy
     } = e.data;
-    let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource).map(passage => passage.passage);
+    let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
 
     // not yet initialised
     if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
@@ -752,7 +942,7 @@ self.onmessage = async function(e) {
 
     const passages = source_passages[currentSource];
     
-    const newUpcomingPassages = [...correctSourceUpcomingPassages];
+    let newUpcomingPassages = [...correctSourceUpcomingPassages];
     
     for (let i = 0; i < 100; i++) {
       const randomPassage = passages[Math.floor(Math.random() * passages.length)];
@@ -762,11 +952,21 @@ self.onmessage = async function(e) {
         i--;
       }
     }
+    
+    newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
+    
     const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
     const {errorScores, passageToHighlightIndecies} = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
 
     const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
-    const result = newUpcomingPassages.map((passage) => ({passage, source: currentSource, highlightIndecies: passageToHighlightIndecies[passage]})).sort((a, b) =>  - desire_for_passages[a.passage] + desire_for_passages[b.passage]).slice(0, 10);
+    const result = newUpcomingPassages.map((passage) => (
+      {
+        passage, 
+        source: currentSource,
+        selectionStratedy: selectionStratedy,
+        highlightIndecies: passageToHighlightIndecies[passage],
+        desireForPassage: desire_for_passages[passage]
+      })).sort((a, b) =>  - a.desireForPassage + b.desireForPassage).slice(0, 10);
     
     let result_with_error_highlight_indecies = result;
     try{

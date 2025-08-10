@@ -146,41 +146,94 @@ Math.lgamma = function(z) {
   return [-tmp + Math.log(2.5066282746310005 * ser / x), 0];
 }
 
-function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile){
+const STRATEGY_DESCRIPTIONS = {
+  'punc': 'punctuation characters',
+  'caps': 'capital letters',
+  'lower': 'lowercase letters',
+  'rare_letters': 'rare letters (z, x, q, k, v)',
+  'home_row': 'letters on the home row of the keyboard',
+  'top_row': 'letters on the top row of the keyboard',
+  'bottom_row': 'letters on the bottom row of the keyboard',
+  'pinky': 'letters typed by the pinky finger',
+  'ring_pinky': 'letters typed by the ring or pinky finger',
+  'left_hand': 'letters typed by the left hand',
+  'right_hand': 'letters typed by the right hand',
+  'numbers': 'numbers',
+  'difficult_to_reach_letters': 'letters that are difficult to reach on the keyboard (y, t, b, z)',
+  'repeat_bigrams': 'repeated letters',
+  'left_hand_only_bigrams': 'pairs of letters that are typed repeatedly by the left hand (e.g. sd)',
+  'right_hand_only_bigrams': 'pairs of letters that are typed repeatedly by the right hand (e.g. kl)',
+  'alternate_hand_bigrams': 'pairs of letters that are typed alternately by the left and right hand (e.g. sk)',
+  'same_finger_bigrams': 'pairs of letters that are typed with the same finger (e.g. ws)',
+}
+
+const STRATEGY_DESCRIPTIONS_SHORT = {
+  'punc': 'punctuation',
+  'caps': 'capital letters',
+  'lower': 'lowercase',
+  'rare_letters': 'rare letters',
+  'home_row': 'home row letters',
+  'top_row': 'top row letters',
+  'bottom_row': 'bottom row letters',
+  'pinky': 'letters typed by the pinky finger',
+  'ring_pinky': 'letters typed by the ring or pinky finger',
+  'left_hand': 'letters typed by the left hand',
+  'right_hand': 'letters typed by the right hand',
+  'numbers': 'numbers',
+  'difficult_to_reach_letters': 'difficult to reach letters',
+  'repeat_bigrams': 'repeated letters',
+  'left_hand_only_bigrams': 'pair of letters for the left hand',
+  'right_hand_only_bigrams': 'pair of letters for the right hand',
+  'alternate_hand_bigrams': 'pair of letters for alternating hands',
+  'same_finger_bigrams': 'pair of letters for the same finger',
+}
+
+function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy){
   let header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
 
   if (wpm > 70) {
     header =  `${header} Impressive speed!`
   }
-  else if (accuracy > 0.95 && wpm_percentile <= accuracy_percentile) {
+  else if (accuracy > 0.96 && wpm_percentile <= accuracy_percentile) {
     header =  `${header} Impressive accuracy!`
   }
 
-  if (wpm < 40 && accuracy < 0.95) {
-    return `${header} Focus on slowing down and improving your accuracy.`
+  if (strategy) {
+    if (!hasSeenRepetitionStrategyUpdate) {
+      hasSeenRepetitionStrategyUpdate = true;
+      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[strategy]} will be prioritised.`;
+    }
+    else {
+      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you.`;
+    }
   }
-  else if (wpm < 40) {
-    return `${header} Focus on typing without looking at the keyboard and gradually increasing your speed. Don't worry about a few mistakes.`
-  }
-  else if (accuracy < 0.95) {
-    return `${header} Focus on improving your accuracy, even if it slows you down slightly.`
-  }
-  else if (wpm_percentile <= accuracy_percentile) {
-    return `${header} Focus on increasing your speed, even if it means making a few more mistakes.`
-  }
-  else {
-    return `${header} Focus on refining your accuracy and maintaining consistency.`
-  }
+
+  return header;
+  // if (wpm < 40 && accuracy < 0.95) {
+  //   return `${header} Focus on slowing down and improving your accuracy.`
+  // }
+  // else if (wpm < 40) {
+  //   return `${header} Focus on typing without looking at the keyboard and gradually increasing your speed. Don't worry about a few mistakes.`
+  // }
+  // else if (accuracy < 0.95) {
+  //   return `${header} Focus on improving your accuracy, even if it slows you down slightly.`
+  // }
+  // else if (wpm_percentile <= accuracy_percentile) {
+  //   return `${header} Focus on increasing your speed, even if it means making a few more mistakes.`
+  // }
+  // else {
+  //   return `${header} Focus on refining your accuracy and maintaining consistency.`
+  // }
 }
 
-function suggestRepetitionStrategy(){
+function suggestRepetitionStrategy(strategy){
   prev_reps = runHistory.slice(0,REPETION_STRATEGY_HISTORY_LENGTH);
   const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
   const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
   const wpm_percentile = gammaCDF(wpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
   const error_rate_percentile = betaCDF(1 - accuracy, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
   const accuracy_percentile = 1 - error_rate_percentile;
-  return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile);
+  return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy);
 }
 
 let DEFAULT_PASSAGES = [
@@ -215,14 +268,22 @@ let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 const REPETION_STRATEGY_HISTORY_LENGTH = 5;
 let session_rep_count = 0;
 let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
-let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
+let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') !== 'false';
 let onlyShowCursorAfterDelay = localStorage.getItem('onlyShowCursorAfterDelay') === 'true';
+let hasSeenRepetitionStrategyUpdate = false;
+const previousSelectionStrategies = [];
 let errorLog = {
   'char': {},
   'bigram': {},
   'trigram': {},
   'quadgram': {}
 };
+let interestingErrorLog = {
+  'char': {},
+  'bigram': {},
+  'trigram': {},
+  'quadgram': {}
+}
 let errorCount = 0;
 let seenLog = {
   'char': {},
@@ -267,6 +328,7 @@ const errorSound = document.getElementById('errorSound');
 let recentPassages = JSON.parse(localStorage.getItem('recentPassages')) || [];
 const MAX_RECENT_PASSAGES = 70;
 let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
+let currentSelectionStratedy = localStorage.getItem('selectionStratedy') || null;
 let passageWorker = new Worker('passageWorker.js');
 passageWorker.postMessage({
   type: 'sourceChange',
@@ -281,6 +343,8 @@ let targetText = 'Your personal typing coach, typo dojo, identifies your perform
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
+let selectionStratedy = null;
+let nextSelectionStrategy = null;
 
 function recordUserLeaveText() {
   const data = { 
@@ -290,7 +354,8 @@ function recordUserLeaveText() {
     errorChars: currentPassageErrorActualChar,
     letterTimesSec: currentPassageLetterTimesSec,
     source: currentPassageSource,
-    timeTakenMs: (new Date() - startTime)
+    timeTakenMs: (new Date() - startTime),
+    selectionStratedy: currentSelectionStratedy
   }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
     navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify(data));
@@ -327,7 +392,8 @@ async function persistTypingState() {
     errors: currentPassageErrors,
     letterTimesSec: currentPassageLetterTimesSec,
     errorChars: currentPassageErrorActualChar,
-    timeTakenMs: (new Date() - startTime)
+    timeTakenMs: (new Date() - startTime),
+    selectionStratedy: currentSelectionStratedy
   }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
     const to_save = JSON.stringify(data);
@@ -548,8 +614,17 @@ function getPassage() {
   }
   if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
+    if (nextSelectionStrategy && !selectionStratedy) {
+      console.log("nextSelectionStrategy", nextSelectionStrategy, selectionStratedy);
+      selectionStratedy = nextSelectionStrategy;
+      previousSelectionStrategies.push(selectionStratedy);
+      nextSelectionStrategy = null;
+    }
+    else {
+      selectionStratedy = null;
+    }
     return {
-      passage: suggestRepetitionStrategy(),
+      passage: suggestRepetitionStrategy(selectionStratedy),
       source: "stats_rep"
     };
   }
@@ -584,7 +659,8 @@ function setUpcomingPassages() {
     user_intro_acc,
     user_intro_wpm,
     highlight_error_pct: 0.1,
-    userId: userId
+    userId: userId,
+    selectionStratedy: selectionStratedy
   });
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
@@ -597,6 +673,10 @@ passageWorker.onmessage = function(e) {
   try {
     if (e.data.type == 'error') {
       console.error(e.data.error);
+      return;
+    }
+    if (e.data.type == 'suggestStrategyFromIneterstingErrors') {
+      nextSelectionStrategy = e.data.strategy;
       return;
     }
     upcomingPassages = e.data;
@@ -628,6 +708,12 @@ window.onload = function() {
     'trigram': {},
     'quadgram': {}
   };
+  interestingErrorLog = JSON.parse(localStorage.getItem('interestingErrorLog')) || {
+    'char': {},
+    'bigram': {},
+    'trigram': {},
+    'quadgram': {}
+  };
   errorCount = Object.values(errorLog['char']).reduce((acc, curr) => acc + curr, 0);
   
   seenLog = JSON.parse(localStorage.getItem('seenLog')) || {
@@ -649,10 +735,10 @@ window.onload = function() {
     upcomingPassages = upcomingPassages.map(passage => ({passage, source: 'unknown'}));
   }
   const p = getPassage();
-  const {passage, source, highlightIndecies} = p;
-  console.log(p);
+  const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = p;
   targetText = passage;
   currentPassageSource = source;
+  currentSelectionStratedy = currentPassageSelectionStratedy;
   toHighlight = highlightIndecies;
   renderText();
   colorText("");
@@ -723,7 +809,7 @@ window.onload = function() {
   });
 
   const showStatsEvery5thRepetitionToggle = document.getElementById('showStatsEvery5thRepetition');
-  showStatsEvery5thRepetitionToggle.checked = localStorage.getItem('showStatsEvery5thRepetition') === 'true';
+  showStatsEvery5thRepetitionToggle.checked = localStorage.getItem('showStatsEvery5thRepetition') !== 'false';
   showStatsEvery5thRepetition = showStatsEvery5thRepetitionToggle.checked;
 
   showStatsEvery5thRepetitionToggle.addEventListener('change', (e) => {
@@ -934,9 +1020,13 @@ function handleInput(e) {
         document.body.classList.add('flash-error');
         setTimeout(() => document.body.classList.remove('flash-error'), 300);
       }
+
+      // Only interesting if not a repeated error and not preceeded by an error.
+      const isNonInterestingError = currentPassageErrors.includes(i) && currentPassageErrors.includes(i-1);
       
       currentPassageErrors.push(i);
       currentPassageErrorActualChar.push(typedChar);
+
       
       errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
       errorCount += 1;
@@ -948,6 +1038,13 @@ function handleInput(e) {
       }
       if (quadgram.length > 3) {
         errorLog['quadgram'][quadgram] = (errorLog['quadgram'][quadgram] || 0) + 1;
+      }
+
+      if (!isNonInterestingError) {
+        interestingErrorLog['char'][unigram] = (interestingErrorLog['char'][unigram] || 0) + 1;
+        if (bigram.length > 1) {
+          interestingErrorLog['bigram'][bigram] = (interestingErrorLog['bigram'][bigram] || 0) + 1;
+        }
       }
     }
   }
@@ -1027,6 +1124,7 @@ function updateLiveMetrics() {
 function saveErrorData() {
   localStorage.setItem('errorLog', JSON.stringify(errorLog));
   localStorage.setItem('seenLog', JSON.stringify(seenLog));
+  localStorage.setItem('interestingErrorLog', JSON.stringify(interestingErrorLog));
 }
 
 function resetSession() {
@@ -1076,14 +1174,22 @@ function resetSession() {
     localStorage.setItem('recentPassages', JSON.stringify(recentPassages));
   }
   
-  const {passage, source, highlightIndecies} = getPassage();
+  const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = getPassage();
   targetText = passage;
   currentPassageSource = source;
+  currentSelectionStratedy = currentPassageSelectionStratedy;
   toHighlight = highlightIndecies;
   renderText();
   colorText("");
   inputArea.value = "";
   progressBar.style.width = "0%";
+
+  passageWorker.postMessage({
+    type: 'suggestStrategyFromIneterstingErrors',
+    interestingErrorLog: interestingErrorLog,
+    seenLog: seenLog,
+    previousSelectionStrategies: previousSelectionStrategies
+  });
 }
 
 function showTooltip(event, text) {
