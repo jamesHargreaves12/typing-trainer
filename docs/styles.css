@@ -688,3 +688,23 @@ body.flash-error {
 .settings-button-container {
   position: relative;
 }
+
+.error-tooltip {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.7em 0.5em; /* More horizontal padding */
+  font-size: 0.7em; /* Smaller text size */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 1100;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+  max-width: 600px;
+  width: 120%;
+  line-height: 1;
+  text-align: left;
+  top: 15%;
+  left: 30%;
+  transform: translateX(40%);
+}

@@ -1,3 +1,79 @@
+const LETTER_FREQUENCIES = {
+  'A': 0.003153352805124311,
+  'n': 0.055725109439303484,
+  'a': 0.06574879237610978,
+  'r': 0.04895343918863251,
+  'c': 0.02368663480872584,
+  'h': 0.03440809510193862,
+  'i': 0.05736555569780318,
+  's': 0.05098628684359351,
+  't': 0.06283249477699976,
+  ' ': 0.16126223748404583,
+  'v': 0.00792397035237102,
+  'e': 0.09536583341888472,
+  'f': 0.015292696431959359,
+  'd': 0.030829563440896025,
+  'u': 0.020792086046599403,
+  'g': 0.013797676968572934,
+  'o': 0.0567961830999978,
+  'l': 0.03205162970570526,
+  'y': 0.01153414941517434,
+  '.': 0.010558070614780313,
+  '2': 0.0032394917857312498,
+  '0': 0.003898399323498048,
+  'm': 0.017988761235399744,
+  'k': 0.005075728496221641,
+  'w': 0.011476864805862281,
+  'p': 0.015483219067633279,
+  'b': 0.01152292290241313,
+  ',': 0.00878202900526206,
+  'T': 0.004579806176913074,
+  'j': 0.0007302944339057933,
+  '9': 0.0022726125692146813,
+  '4': 0.0009719173180840281,
+  'D': 0.0015318912844709844,
+  'z': 0.0007556475358099878,
+  'W': 0.0013337568162347675,
+  'E': 0.001062871629027983,
+  'I': 0.002681382154161148,
+  'x': 0.0012442623801334335,
+  'S': 0.003723010665829977,
+  'H': 0.0018290195012505923,
+  'C': 0.0033144800536579863,
+  '(': 0.0017254667539418384,
+  ')': 0.001725539082263411,
+  'q': 0.0009409735262355593,
+  ';': 0.00013218839775919848,
+  '-': 0.0016721602023162718,
+  '6': 0.0009902592018082627,
+  'M': 0.0022375125026953655,
+  '5': 0.0010397612837191113,
+  '1': 0.004230895510900077,
+  'L': 0.0012864755031094834,
+  'R': 0.0014376283867850131,
+  'F': 0.0013433822692696467,
+  'V': 0.000527198242809697,
+  'G': 0.0011281308697633483,
+  'B': 0.001900767460370877,
+  'Y': 0.00029471823710480933,
+  '"': 0.0010622791154176604,
+  "'": 0.0017780592803768405,
+  '8': 0.0012323368864725459,
+  'J': 0.0010586430260355636,
+  'N': 0.0013529180351857762,
+  'O': 0.0010358590261136272,
+  '7': 0.000974268856474996,
+  '3': 0.0010637262604756847,
+  'U': 0.0011245786812342758,
+  'P': 0.0021464748695249588,
+  'K': 0.0007279492604071239,
+  ':': 0.0008468361905158379,
+  'Q': 0.00010038303094415696,
+  'Z': 0.00012192356236161744,
+  '?': 9.530037513060838e-05,
+  'X': 8.027517892040621e-05,
+  '!': 2.290377562246053e-05}
+
 // Lanczos approximation of log-gamma function
 function logGamma(z) {
   const cof = [
@@ -319,7 +395,8 @@ const WPM_DISTRIBUTION_PARAMS = {
 }
 let toHighlight = [];
 let tooltip = null;
-
+const errorTooltipClass = "error-tooltip";
+let errorBoxIncludeFrequencyInCost = false;
 // Add after other global variables
 let darkMode = localStorage.getItem('darkMode') !== 'false';
 let settingsOpen = false;
@@ -413,18 +490,24 @@ async function persistTypingState() {
   }
 }
 
-function getTopErrors() {
-  const topErrorLetters = [];
+function getTopErrors(includeFrequencyInCost) {
+  let topErrorLetters = [];
   for (const ngram in errorLog) {
+    if (includeFrequencyInCost && ngram != 'char') {
+      continue;
+    }
+    const countCostFunction = (char, errorCount) => (errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length);
+    const frequencyCostFunction = (char, errorCount) => ((errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length))*LETTER_FREQUENCIES[char];
     const errorScores = Object.entries(errorLog[ngram])
       .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null && char != 'undefined' )
-      .map(([char,errorCount]) => [char, (errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length)]);
+      .map(([char,errorCount]) => [char, includeFrequencyInCost ? frequencyCostFunction(char, errorCount) : countCostFunction(char, errorCount)]);
     const sortedErrorScores = errorScores.sort((a, b) => b[1] - a[1]);
     const worstLetters = sortedErrorScores.slice(0, 5);
-    topErrorLetters.push(...worstLetters.map(letter => letter[0]));
+
+    topErrorLetters.push(...worstLetters);
   }
-  return topErrorLetters.slice(0, 5).map(letter => {
-      const letterKey = letter[0];
+  topErrorLetters = topErrorLetters.sort((a, b) => b[1] - a[1]);
+  return topErrorLetters.slice(0, 5).map(([letterKey, _]) => {
       const ngramLength = lengthToNgram[letterKey.length];
       const errorCount = errorLog[ngramLength][letterKey];
       const seenCount = seenLog[ngramLength][letterKey];
@@ -437,8 +520,8 @@ function getTopErrors() {
   });
 }
 
-function topErrorsToHtmlTable() {
-  const topErrors = getTopErrors();
+function topErrorsToHtmlTable(includeFrequencyInCost) {
+  const topErrors = getTopErrors(includeFrequencyInCost);
   if (topErrors.length == 0) {
     document.getElementById('topErrors').style.display = "none";
     return "";
@@ -447,9 +530,16 @@ function topErrorsToHtmlTable() {
   const errorListClass = 'error-list';
   const errorItemClass = 'error-item';
   const titleClass = "error-title";
-  
-  let html = `<div class="${errorListClass}">`;
-  let title = "Most common typos";
+  const tooltipText = (
+    includeFrequencyInCost 
+    ? "Ordered also takes into account letter frequency."
+    :"Ordered by error rate with correction factor for rarely seen characters."
+  );
+  let html = `<div class="${errorListClass}" style="position: relative;">
+  <div class="${errorTooltipClass}" style="position: absolute; display: none; visibility: hidden; opacity: 0; z-index: 1000;">
+    ${tooltipText}
+  </div>`;
+  let title =includeFrequencyInCost? "Most costly typos" : "Most common typos";
   html += `<div class="${titleClass}">${title}</div>`;
   
   for (const error of topErrors) {
@@ -695,6 +785,25 @@ passageWorker.onerror = function(error) {
   // The console.error override will handle logging to S3
 };
 
+function setupTopErrorsBox() {
+  const topErrorsBox = document.getElementById('topErrors');
+  topErrorsBox.innerHTML = topErrorsToHtmlTable(errorBoxIncludeFrequencyInCost);
+  topErrorsBox.onclick = function() {
+    errorBoxIncludeFrequencyInCost = !errorBoxIncludeFrequencyInCost;
+    setupTopErrorsBox();
+  };
+  topErrorsBox.onmouseenter = function() {
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'block'; 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'visible';
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '1';
+  };
+  topErrorsBox.onmouseleave = function() { 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'none'; 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'hidden';
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '0';
+  };
+}
+
 
 window.onload = function() {
   if (!localStorage.getItem('userId')) {
@@ -742,7 +851,7 @@ window.onload = function() {
   toHighlight = highlightIndecies;
   renderText();
   colorText("");
-  document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
+  setupTopErrorsBox();
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
   updateHistoryDisplay();
@@ -1071,7 +1180,7 @@ function handleInput(e) {
   }
 
 
-  document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
+  setupTopErrorsBox();
 }
 inputArea.addEventListener('input', handleInput);
 
@@ -1230,7 +1339,7 @@ function resetStats() {
   localStorage.removeItem('repetition_count');
   
   // Update UI
-  document.getElementById('topErrors').innerHTML = topErrorsToHtmlTable();
+  setupTopErrorsBox();
   updateHistoryDisplay();
   
   // Flash feedback
