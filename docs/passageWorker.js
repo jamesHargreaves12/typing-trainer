@@ -888,6 +888,11 @@ function getScoreBySelectionStrategy(passage, selectionStratedy) {
     const bigrams = LOGICAL_BIGRAM_GROUPINGS[selectionStratedy];
     return passage.split('').filter((char, index) => bigrams.includes(char + getOrPad(passage, index+1))).length / passage.length;
   }
+
+  if (selectionStratedy == "easy_mode") {
+    // least number of punctuation and numbers
+    return 1 - (passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["punc"].includes(char) || LOGICAL_LETTER_GROUPINGS["numbers"].includes(char)).length) / passage.length;
+  }
   return 0;
 }
 
@@ -899,6 +904,18 @@ function topNBySelectionStrategy(passages, selectionStratedy, n) {
   return passages.slice(passages.length - n, passages.length);
 }
 
+function makePassageEasy(passage) {
+  const easyPassage = passage.split('').map(char => {
+    if (LOGICAL_LETTER_GROUPINGS["punc"].includes(char)) {
+      return " ";
+    }
+    if (LOGICAL_LETTER_GROUPINGS["numbers"].includes(char)) {
+      return " ";
+    }
+    return char;
+  }).join('');
+  return easyPassage.replace(/\s+/g, ' ').trim();
+}
 
 self.onmessage = async function(e) {
   try{
@@ -954,7 +971,11 @@ self.onmessage = async function(e) {
     }
     
     newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
-    
+    // hack in easy mode.
+    if (selectionStratedy == "easy_mode") {
+      newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
+    }
+
     const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
     const {errorScores, passageToHighlightIndecies} = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
 
