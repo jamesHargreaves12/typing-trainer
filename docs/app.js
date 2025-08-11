@@ -265,7 +265,15 @@ const STRATEGY_DESCRIPTIONS_SHORT = {
 }
 
 function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy){
-  let header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+  let header = "";
+  key = `${Math.round(wpm)},${Math.round(accuracy*100)}`
+  console.log(key, stats_rep_common_strings[key]);
+  if (stats_rep_common_strings[key]) {
+    header = stats_rep_common_strings[key];
+  }
+  else {
+    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+  }
 
   if (wpm > 70) {
     header =  `${header} Impressive speed!`
@@ -422,6 +430,7 @@ const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
 let selectionStratedy = null;
 let nextSelectionStrategy = null;
+let stats_rep_common_strings = {};
 
 function recordUserLeaveText() {
   const data = { 
@@ -805,6 +814,17 @@ function setupTopErrorsBox() {
   };
 }
 
+async function loadStatsRepCommonStrings() {
+  fetch(`https://jameshargreaves12.github.io/reference_data/stats_rep_common_strings.json`)
+        .then(response => {
+        if (!response.ok) {
+            console.error('Network response was not ok', response);
+        }
+        return response.json();
+        }).then(data => {
+          stats_rep_common_strings = data;
+        })
+}
 
 window.onload = function() {
   if (!localStorage.getItem('userId')) {
@@ -982,6 +1002,7 @@ window.onload = function() {
 
     });
   });
+  loadStatsRepCommonStrings();
 }
 
 

@@ -186,7 +186,7 @@ body {
   color: var(--text-color);
   border-bottom: 2px solid var(--text-color);
   margin-bottom: 2px;
-  animation: cursor-flash 1.5s ease-in-out infinite;
+  animation: cursor-flash 1.5s ease-in-out 1s infinite;
 }
 
 @keyframes cursor-flash {
