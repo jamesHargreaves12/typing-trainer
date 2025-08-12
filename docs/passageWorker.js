@@ -218,7 +218,7 @@ async function setup_pyodide() {
   const micropip = pyodide.pyimport("micropip");
   const [x,lgbm_response, error_model_response] = await Promise.all([
     micropip.install(['lightgbm', 'numpy']),
-    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model.txt'),
+    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model_2.txt'),
     fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz')
   ]);
   // await micropip.install('numpy');
@@ -471,9 +471,9 @@ const UNIGRAM_MEAN_ERROR_RATE = {
 
 const LOGICAL_GROUP_MEAN_RATE = {
   // 'letter': 0.04710802768380675,
-  'punc': 0.18732653114551692,
+  'most_common': 0.041260398079809635,
+  'punc': 0.18711053231320202,
   'caps': 0.12161804263744862,
-  // 'lower': 0.045531860299229836,
   'rare_letters': 0.08231099677630574,
   'home_row': 0.04576929812980636,
   'top_row': 0.044401965838177605,
@@ -492,10 +492,9 @@ const LOGICAL_GROUP_MEAN_RATE = {
 }
 
 const LOGICAL_GROUP_STD = {
-  // 'letter': 0.03523360348119574,
-  'punc': 0.08863452884889553,
+  'most_common': 0.01639303445611817,
+  'punc': 0.08841770875084964,
   'caps': 0.09519842977687655,
-  // 'lower': 0.01966017136225645,
   'rare_letters': 0.06217410797883992,
   'home_row': 0.020966102046362713,
   'top_row': 0.019219644905343614,
@@ -514,6 +513,7 @@ const LOGICAL_GROUP_STD = {
 }
 
 const LOGICAL_GROUP_FREQUENCY = {
+  'most_common':                0.49377369484,
   'punc':                       0.02689224985046569,
   'caps':                       0.031072374604802187,
   // 'lower':                      0.7750833119712894,
@@ -536,6 +536,7 @@ const LOGICAL_GROUP_FREQUENCY = {
 
 const LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz".split('');
 const LOGICAL_LETTER_GROUPINGS = {
+  most_common: "etaoinsr".split(''),
   punc: "(%!).?\",-:\\';_£'".split(''),
   caps: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split(''),
   rare_letters: "zxjqkv".split(''),
@@ -880,6 +881,10 @@ function getScoreBySelectionStrategy(passage, selectionStratedy) {
   if (selectionStratedy == null) {
     return 0;
   }
+  if (selectionStratedy == "most_common") {
+    return (passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["most_common"].includes(char)).length - passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["punc"].includes(char)).length) / passage.length;
+  }
+
   if (selectionStratedy in LOGICAL_LETTER_GROUPINGS) {
     const letters = LOGICAL_LETTER_GROUPINGS[selectionStratedy];
     return passage.split('').filter(char => letters.includes(char)).length / passage.length;
@@ -904,17 +909,56 @@ function topNBySelectionStrategy(passages, selectionStratedy, n) {
   return passages.slice(passages.length - n, passages.length);
 }
 
+
+function numberToWords(n) {
+  if (n < 0 || n > 2100 || !Number.isInteger(n)) return null;
+  const units = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
+    "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+  const tens  = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+
+  function under100(num) {
+    if (num < 20) return units[num];
+    const t = Math.floor(num / 10), u = num % 10;
+    return tens[t] + (u ? "-" + units[u] : "");
+  }
+
+  if (n < 100) return under100(n);
+  if (n < 1000) {
+    const h = Math.floor(n / 100), r = n % 100;
+    return units[h] + " hundred" + (r ? " and " + under100(r) : "");
+  }
+  if (n < 2000) {
+    const r = n % 1000;
+    return "one thousand" + (r ? " " + numberToWords(r) : "");
+  }
+  if (n <= 2100) {
+    const r = n % 2000;
+    return "two thousand" + (r ? " " + numberToWords(r) : "");
+  }
+}
+
 function makePassageEasy(passage) {
-  const easyPassage = passage.split('').map(char => {
-    if (LOGICAL_LETTER_GROUPINGS["punc"].includes(char)) {
-      return " ";
+
+  // Replace all numbers in the passage with their string representation using numberToWords
+  // We'll match numbers (integers) and replace them
+  const easyPassageWithNumbers = passage.replace(/\b\d+\b/g, (match) => {
+    const num = parseInt(match, 10);
+    const val = numberToWords(num);
+    if (val) {
+      return val;
     }
-    if (LOGICAL_LETTER_GROUPINGS["numbers"].includes(char)) {
-      return " ";
-    }
-    return char;
-  }).join('');
-  return easyPassage.replace(/\s+/g, ' ').trim();
+    return match;
+  });
+
+  passage = easyPassageWithNumbers;
+  return passage;
+  // const easyPassage = passage.split('').map(char => {
+  //   if (LOGICAL_LETTER_GROUPINGS["punc"].includes(char)) {
+  //     return " ";
+  //   }
+  //   return char;
+  // }).join('');
+  // return easyPassage.replace(/\s+/g, ' ').trim();
 }
 
 self.onmessage = async function(e) {
@@ -972,7 +1016,7 @@ self.onmessage = async function(e) {
     
     newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
     // hack in easy mode.
-    if (selectionStratedy == "easy_mode") {
+    if (selectionStratedy == "most_common") {
       newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
     }
 

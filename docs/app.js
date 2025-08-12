@@ -223,6 +223,7 @@ Math.lgamma = function(z) {
 }
 
 const STRATEGY_DESCRIPTIONS = {
+  'most_common': 'most common letters (etaoinsr)',
   'punc': 'punctuation characters',
   'caps': 'capital letters',
   'lower': 'lowercase letters',
@@ -272,7 +273,7 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
     header = stats_rep_common_strings[key];
   }
   else {
-    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
   }
 
   if (wpm > 70) {
@@ -285,9 +286,15 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
   if (strategy) {
     if (!hasSeenRepetitionStrategyUpdate) {
       hasSeenRepetitionStrategyUpdate = true;
-      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[strategy]} will be prioritised.`;
+      if (strategy == 'most_common') {
+        return `${header} Most of your errors come from the most common letters "etaoinsr". For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, simple passages will be prioritised so that you can focus on just these letters.`;
+      }
+      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[strategy]} will be prioritised.`;
     }
     else {
+      if (strategy == 'most_common') {
+        return `${header} Most of your errors come from the most common letters "etaoinsr". Lets keep it simple for the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps.`;
+      }
       return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you.`;
     }
   }
@@ -350,6 +357,7 @@ let currentPassageLetterTimesSec = [];
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 const REPETION_STRATEGY_HISTORY_LENGTH = 5;
+const REPETION_STRATEGY_HISTORY_LENGTH_STR = "five";
 let session_rep_count = 0;
 let predictiveErrorHighlight = localStorage.getItem('predictiveErrorHighlight') !== 'false';
 let showStatsEvery5thRepetition = localStorage.getItem('showStatsEvery5thRepetition') !== 'false';
