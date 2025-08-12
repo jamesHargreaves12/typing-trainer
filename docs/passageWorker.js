@@ -919,7 +919,7 @@ function numberToWords(n) {
   function under100(num) {
     if (num < 20) return units[num];
     const t = Math.floor(num / 10), u = num % 10;
-    return tens[t] + (u ? "-" + units[u] : "");
+    return tens[t] + (u ? " " + units[u] : "");
   }
 
   if (n < 100) return under100(n);
