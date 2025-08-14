@@ -287,13 +287,13 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
     if (!hasSeenRepetitionStrategyUpdate) {
       hasSeenRepetitionStrategyUpdate = true;
       if (strategy == 'most_common') {
-        return `${header} Most of your errors come from the most common letters "etaoinsr". For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, simple passages will be prioritised so that you can focus on just these letters.`;
+        return `${header} Most of your errors come from the most common letters "etaoinsr". For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, we will simplify the passages so that you can focus on just these letters.`;
       }
       return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[strategy]} will be prioritised.`;
     }
     else {
       if (strategy == 'most_common') {
-        return `${header} Most of your errors come from the most common letters "etaoinsr". Lets keep it simple for the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps.`;
+        return `${header} Most of your errors come from the most common letters "etaoinsr". We will simplify the passages for the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps.`;
       }
       return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you.`;
     }

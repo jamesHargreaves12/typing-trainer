@@ -937,6 +937,58 @@ function numberToWords(n) {
   }
 }
 
+function simplifySentence(input) {
+  // Preserve abbreviations and numbers
+  const abbreviations = /\b([A-Z]\.){2,}/g;
+  const preserved = [];
+  let text = input.replace(abbreviations, match => {
+    preserved.push(match);
+    return `__PRESERVED_${preserved.length - 1}__`;
+  });
+ 
+  let sentences = text.split(".");
+  sentences = sentences.map(sentence => {
+    sentence = sentence
+    .trim()
+    .split(/\s+/)
+    .map((word, idx) => {
+      if (idx > 0 && /^[A-Z][a-z]/.test(word)|| /^[A-Z]{2,}$/.test(word)) return word;
+      return word.toLowerCase();
+    })
+    .join(' ');
+    return sentence;
+  });
+  text = sentences.join(". ");
+
+
+  text = text.replace(/,(?=\s*\d{3})/g, '__NUMCOMMA__'); // keep numeric commas
+  text = text.replace(/,(?=\s*[A-Z][a-z]+ \d{1,2}, \d{4})/g, '__DATECOMMA__'); // keep date commas
+  text = text.replace(/,/g, ''); // remove other commas
+
+  // Remove periods at sentence ends, keep for decimals
+  text = text.replace(/(?<=\d)\.(?=\d)/g, '__DECIMAL__'); // decimal numbers
+  text = text.replace(/\.(?=\s|$)/g, ''); // remove sentence periods
+
+  // Remove semicolons, colons, and quotation marks
+  text = text.replace(/[;:"“”]/g, '');
+
+  // Remove parentheses and brackets
+  text = text.replace(/[\(\)\[\]]/g, '');
+
+  // Restore preserved tokens
+  text = text
+    .replace(/__PRESERVED_(\d+)__/g, (_, i) => preserved[i])
+    .replace(/__NUMCOMMA__/g, ',')
+    .replace(/__DATECOMMA__/g, ',')
+    .replace(/__DECIMAL__/g, '.');
+
+  return text.trim();
+}
+
+// Example
+console.log(simplifySentence("Let's meet on August 14, 2025 at NASA HQ. Bring 1,234 documents."));
+
+
 function makePassageEasy(passage) {
 
   // Replace all numbers in the passage with their string representation using numberToWords
@@ -949,8 +1001,9 @@ function makePassageEasy(passage) {
     }
     return match;
   });
+  
+  passage = simplifySentence(easyPassageWithNumbers);
 
-  passage = easyPassageWithNumbers;
   return passage;
   // const easyPassage = passage.split('').map(char => {
   //   if (LOGICAL_LETTER_GROUPINGS["punc"].includes(char)) {
