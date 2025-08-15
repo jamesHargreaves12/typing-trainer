@@ -1103,7 +1103,6 @@ function handleInput(e) {
   if (settingTargetTextRef.value) {
     return;
   }
-  const inputArea = document.getElementById('inputArea');
   
   // Force cursor to end of input
   const end = inputArea.value.length;
@@ -1255,15 +1254,18 @@ function calculateMetrics() {
   return { wpm, accuracy, errRate_percentile, wpm_percentile };
 }
 
+const liveMetricsWpm = document.getElementById('wpm');
+const liveMetricsAccuracy = document.getElementById('accuracy');
+const liveMetricsReps = document.getElementById('session_rep_count');
 function updateLiveMetrics() {
   const metrics = calculateMetrics();
   const wpm = metrics.wpm;
   const accuracy = metrics.accuracy;
-  document.getElementById('wpm').textContent = `WPM: ${wpm}`;
-  document.getElementById('accuracy').textContent = `Accuracy: ${accuracy}%`;
+  liveMetricsWpm.textContent = `WPM: ${wpm}`;
+  liveMetricsAccuracy.textContent = `Accuracy: ${accuracy}%`;
   if (session_rep_count > 0) {
-    document.getElementById('session_rep_count').textContent = `Reps: ${session_rep_count}`;
-    document.getElementById('session_rep_count').style.display = 'block';
+    liveMetricsReps.textContent = `Reps: ${session_rep_count}`;
+    liveMetricsReps.style.display = 'block';
   }
 }
 
