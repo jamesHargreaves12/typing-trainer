@@ -511,7 +511,7 @@ async function persistTypingState() {
 function getTopErrors(includeFrequencyInCost) {
   let topErrorLetters = [];
   for (const ngram in errorLog) {
-    if (includeFrequencyInCost && ngram != 'char') {
+    if (ngram != 'char') {
       continue;
     }
     const countCostFunction = (char, errorCount) => (errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length);
