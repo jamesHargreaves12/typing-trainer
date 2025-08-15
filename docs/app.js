@@ -810,16 +810,6 @@ function setupTopErrorsBox() {
     errorBoxIncludeFrequencyInCost = !errorBoxIncludeFrequencyInCost;
     setupTopErrorsBox();
   };
-  topErrorsBox.onmouseenter = function() {
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'block'; 
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'visible';
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '1';
-  };
-  topErrorsBox.onmouseleave = function() { 
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'none'; 
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'hidden';
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '0';
-  };
 }
 
 async function loadStatsRepCommonStrings() {
@@ -1011,6 +1001,20 @@ window.onload = function() {
     });
   });
   loadStatsRepCommonStrings();
+
+  const topErrorsBox = document.getElementById('topErrors');
+
+  topErrorsBox.onmouseenter = function() {
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'block'; 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'visible';
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '1';
+  };
+  topErrorsBox.onmouseleave = function() { 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'none'; 
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'hidden';
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '0';
+  };
+
 }
 
 
@@ -1123,8 +1127,9 @@ function handleInput(e) {
   let i = prevInputText.length
 
   if (currentPassageLetterTimesSec.length <= i) {
-    currentPassageLetterTimesSec.push(parseFloat(((new Date() - prevCharTime)/1000).toFixed(2))); // seconds
-    prevCharTime = new Date();
+    const dt = new Date();
+    currentPassageLetterTimesSec.push(Math.round((dt - prevCharTime)/1000 * 100) / 100); // seconds, rounded to 2 decimals
+    prevCharTime = dt;
   }
 
   if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
