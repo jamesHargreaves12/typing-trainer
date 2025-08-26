@@ -1172,10 +1172,11 @@ function handleInput(e) {
   }
   
   // Force cursor to end of input
+  let i = prevInputText.length
   const end = inputArea.value.length;
   inputArea.setSelectionRange(end, end);
   
-  if (e.data == ">") {
+  if (e.data == ">" && targetText[i] != ".") {
     resetSession();
     return;
   }
@@ -1190,7 +1191,6 @@ function handleInput(e) {
     startTime = new Date();
     prevCharTime = new Date();
   }
-  let i = prevInputText.length
   unigram = targetText[i];
 
   if (currentPassageLetterTimesSec.length <= i) {
