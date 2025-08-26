@@ -203,11 +203,11 @@ let defaultQuadgramErrorModel = {};
 const source_passages = {}
 let passage_user_info_features = {};
 let word_feats = {};
-let is_initialised = {value: false};
+let is_initialised = { value: false };
 
 source_paths = {
-    'wikipedia': 'https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt',
-    'sherlock': 'https://jameshargreaves12.github.io/reference_data/sherlock_holmes.txt'
+  'wikipedia': 'https://jameshargreaves12.github.io/reference_data/cleaned_wikipedia_articles.txt',
+  'sherlock': 'https://jameshargreaves12.github.io/reference_data/sherlock_holmes.txt'
 }
 
 async function setup_pyodide() {
@@ -216,7 +216,7 @@ async function setup_pyodide() {
 
   await pyodide.loadPackage('micropip');
   const micropip = pyodide.pyimport("micropip");
-  const [x,lgbm_response, error_model_response] = await Promise.all([
+  const [x, lgbm_response, error_model_response] = await Promise.all([
     micropip.install(['lightgbm', 'numpy']),
     fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model_2.txt'),
     fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz')
@@ -242,7 +242,7 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
   // const passage_user_info = passage_user_info_features[passage]
   // features["passage_median_relative_wpm"] = passage_user_info ? passage_user_info[0] : undefined;
   // features["passage_median_relative_acc"] = passage_user_info ? passage_user_info[1] : undefined;
-  
+
   const wordScores = passage.split(" ").filter(word => word_feats[word]).map(word => word_feats[word]);
   if (wordScores.length > 0) {
     // features["word_many_to_end_max"] = Math.max(...wordScores);
@@ -252,7 +252,7 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
     features["word_many_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[2], 0) / wordScores.length;
     // features["word_many_to_end_count_positive"] = wordScores.filter(score => score > 0).length;
     // features["word_many_to_end_count_negative"] = wordScores.filter(score => score < 0).length;
-  }else{
+  } else {
     // features["word_many_to_end_max"] = undefined;
     // features["word_many_to_end_min"] = undefined;
     features["word_zero_to_end_mean"] = undefined;
@@ -276,7 +276,7 @@ const call_lgbm = async (passages, user_intro_acc, user_intro_wpm) => {
   // console.log(data);
   // Save the model text to the Pyodide file system
   pyodide.FS.writeFile('input.json', JSON.stringify(data));
-  
+
   // Load the model from the file system
   const res = await pyodide.runPythonAsync(lgbm_inference_script);
   const result = res.toJs();
@@ -307,12 +307,12 @@ const error_scores_cached = async (passage) => {
   return ERROR_SCORE_CACHE;
 }
 
-const cartesianProduct = (a, b) =>{
+const cartesianProduct = (a, b) => {
   return [].concat(...a.map(x => b.map(y => [x, y])));
 }
 
 
-UNIGRAM_STD = {
+const UNIGRAM_STD = {
   'm': 0.035250909191469115,
   'f': 0.03695542239285691,
   '?': 0.0936364685537428,
@@ -469,6 +469,396 @@ const UNIGRAM_MEAN_ERROR_RATE = {
   '_': 0.3695652173913043
 };
 
+const LETTER_SPEED_STD = {
+  "h": 0.08527910052546951,
+  "e": 0.09341712766378299,
+  "n": 0.1005098583243086,
+  "a": 0.10113049620128993,
+  " ": 0.10179156532873941,
+  "l": 0.10257678569991069,
+  "s": 0.107387680553308,
+  "o": 0.10853041234318929,
+  "r": 0.10943969813584854,
+  "i": 0.11195010893323416,
+  "k": 0.1153050021105183,
+  "d": 0.11818166955884758,
+  "B": 0.11882183647359865,
+  "u": 0.12009248106637008,
+  "m": 0.12064728029136529,
+  "y": 0.12336068498563145,
+  "0": 0.12826696859391173,
+  "f": 0.13034132671432883,
+  "g": 0.13272920920662315,
+  "5": 0.13393690053870044,
+  "t": 0.13429044369935214,
+  "P": 0.1363679700007288,
+  "x": 0.14224431134265747,
+  "v": 0.14299703324992194,
+  "c": 0.143060220536856,
+  "M": 0.1444421048825252,
+  "9": 0.14453224541137455,
+  "p": 0.1493027745756534,
+  "I": 0.1551280498184238,
+  "w": 0.15719668693184688,
+  "H": 0.1578966286403463,
+  "W": 0.16433684837835733,
+  "1": 0.17065633842332703,
+  "b": 0.17076630617286606,
+  "%": 0.17849981315216754,
+  "'": 0.1815263255355476,
+  '"': 0.18332252315609673,
+  ")": 0.18528758300952888,
+  "F": 0.19006271371835046,
+  "T": 0.19083854298213374,
+  "-": 0.1931523409343729,
+  "A": 0.1931904142110019,
+  ",": 0.196862083857489,
+  ".": 0.20046723233648747,
+  "2": 0.20138000938311118,
+  "(": 0.20333070054177463,
+  "S": 0.22465418827791378,
+  "C": 0.22762325373937833,
+  "j": 0.12264072603579045,
+  "4": 0.155754492470085,
+  "D": 0.17303295919297804,
+  "z": 0.12264072603579045,
+  "E": 0.17303295919297804,
+  "q": 0.12264072603579045,
+  ";": 0.1903060753154331,
+  "6": 0.155754492470085,
+  "L": 0.17303295919297804,
+  "R": 0.17303295919297804,
+  "V": 0.17303295919297804,
+  "G": 0.17303295919297804,
+  "Y": 0.17303295919297804,
+  "8": 0.155754492470085,
+  "J": 0.17303295919297804,
+  "N": 0.17303295919297804,
+  "O": 0.17303295919297804,
+  "7": 0.155754492470085,
+  "3": 0.155754492470085,
+  "U": 0.17303295919297804,
+  "K": 0.17303295919297804,
+  ":": 0.1903060753154331,
+  "Q": 0.17303295919297804,
+  "Z": 0.17303295919297804,
+  "?": 0.1903060753154331,
+  "X": 0.17303295919297804,
+  "!": 0.1903060753154331,
+}
+
+const LETTER_SPEED_MEAN = {
+  "e": 0.2511311646984058,
+  "h": 0.25939754671160303,
+  "n": 0.2691648401564615,
+  "a": 0.2786946399749476,
+  " ": 0.27985219578414333,
+  "o": 0.28486122932431457,
+  "r": 0.2924755282090619,
+  "i": 0.29851610915203824,
+  "l": 0.3039834515914638,
+  "s": 0.30885313751853116,
+  "u": 0.3178507222215826,
+  "k": 0.32126980995592386,
+  "0": 0.3220502633421425,
+  "m": 0.33036058760485904,
+  "d": 0.33726824468863814,
+  "t": 0.34041939372123814,
+  "g": 0.35548836789223437,
+  "y": 0.3602838520615609,
+  "f": 0.3646398947657114,
+  "c": 0.381477849205429,
+  "v": 0.3879135052710464,
+  "p": 0.3901701129428811,
+  "w": 0.4054751287244022,
+  "j": 0.4418349878305432,
+  "b": 0.44520980409843963,
+  "x": 0.44825493512483783,
+  "9": 0.522965520255203,
+  "z": 0.5283738271298044,
+  "q": 0.5373574078768408,
+  "7": 0.561667857475688,
+  "8": 0.5635226537216692,
+  ",": 0.5648866505840043,
+  "P": 0.568031105358122,
+  "M": 0.5710681860008521,
+  "1": 0.5777886164194658,
+  "2": 0.5793671111744868,
+  "N": 0.5888517546861324,
+  "L": 0.5901164386101535,
+  "O": 0.5916425742574241,
+  "I": 0.593990937430794,
+  ".": 0.5991289477999734,
+  "A": 0.6099093368428643,
+  "5": 0.622882510277865,
+  "S": 0.6245810770477099,
+  "U": 0.6256289876648216,
+  "4": 0.6305142499403701,
+  "K": 0.6307633587786262,
+  "3": 0.6413713734206828,
+  "6": 0.6438038557725649,
+  "H": 0.6439057239057242,
+  "T": 0.6443014923335902,
+  "C": 0.644380148650229,
+  "-": 0.6500483305294895,
+  "B": 0.6507231328730325,
+  "R": 0.6527978519098087,
+  "D": 0.6539747195658596,
+  "J": 0.6596191110883272,
+  "E": 0.6629458874973244,
+  "Y": 0.6708200258955554,
+  "F": 0.6724143670138454,
+  "V": 0.6835295197869788,
+  "—": 0.6839999999999999,
+  "G": 0.6922065745520801,
+  "'": 0.699440891023178,
+  "W": 0.714028908794785,
+  "X": 0.7323891371605381,
+  "_": 0.7583561643835611,
+  "?": 0.7776311844077965,
+  "!": 0.7856172653184423,
+  "Q": 0.790721558211598,
+  "Z": 0.7954545454545463,
+  ")": 0.8142289128935858,
+  "(": 0.8170971355123008,
+  ":": 0.818851181102361,
+  ";": 0.8345761245674757,
+  '"': 0.8377289103073918,
+  "%": 0.8674524714828853,
+}
+const LETTER_CHANGABILITY_PER_OCCURENCE_M = {
+  "a": 14.187655656326152,
+  "_": 12.896929499116526,
+  "h": 11.294291474951597,
+  "k": 11.070603703578605,
+  "i": 10.282764308231432,
+  "y": 8.73580026798989,
+  "r": 8.51327843090219,
+  "d": 8.132273264436389,
+  "c": 8.026167568307926,
+  "g": 8.008112807394049,
+  "m": 7.672499090271686,
+  "u": 7.563671367357598,
+  "p": 7.523416260847157,
+  "e": 7.427616718359616,
+  "n": 6.114238758868869,
+  "0": 6.037148912826794,
+  "s": 5.670450981676915,
+  "I": 5.590108274038296,
+  "t": 5.473873231279184,
+  "x": 4.374710674767829,
+  "N": 4.353742955811747,
+  "l": 4.086146421496499,
+  "b": 4.047483266151356,
+  "1": 3.9818381258255457,
+  "P": 3.586031142426755,
+  ".": 3.440055833743398,
+  "o": 3.1066183351815257,
+  "5": 2.9581210154513924,
+  "q": 2.7560315737639116,
+  "w": 2.6220690313311468,
+  "f": 2.6106604391310406,
+  "M": 2.5791374183101907,
+  "7": 2.5312021347269384,
+  "v": 2.487126313248461,
+  "-": 2.217285306528848,
+  "9": 2.1110024387885424,
+  " ": 0.948298037039152,
+  "'": 0.948298037039152,
+  ")": 0.948298037039152,
+  "(": 0.948298037039152,
+  "W": 0.948298037039152,
+  "G": 0.948298037039152,
+  '"': 0.948298037039152,
+  ":": 0.948298037039152,
+  "K": 0.948298037039152,
+  "V": 0.948298037039152,
+  "Y": 0.948298037039152,
+  ";": 0.948298037039152,
+  "Z": 0.948298037039152,
+  "Q": 0.948298037039152,
+  "?": 0.948298037039152,
+  "X": 0.948298037039152,
+  "!": 0.948298037039152,
+  "R": 0.874554746523508,
+  "2": 0.5947661651227405,
+  "O": 0.08579012959424064,
+  ",": 0,
+  "T": 0,
+  "S": 0,
+  "C": 0,
+  "A": 0,
+  "B": 0,
+  "H": 0,
+  "D": 0,
+  "F": 0,
+  "L": 0,
+  "8": 0,
+  "U": 0,
+  "3": 0,
+  "E": 0,
+  "J": 0,
+  "6": 0,
+  "4": 0,
+  "z": 0,
+  "j": 0,
+}
+
+const LETTER_CHANGABILITY_PER_OCCURENCE_C = {
+  "6": -6.981085309964023,
+  "O": -7.2517694732155595,
+  "J": -7.541887398673,
+  "4": -7.574360153005463,
+  "L": -7.687053972904508,
+  "8": -7.695565975684325,
+  "F": -7.709638135693311,
+  "R": -7.80331651968226,
+  "2": -7.809103964625912,
+  "j": -7.814548737844509,
+  "D": -7.829295924419092,
+  "E": -7.878338365542895,
+  "B": -7.901553199507989,
+  "z": -7.983958911193294,
+  "U": -8.110350046433952,
+  "H": -8.130365027833145,
+  "7": -8.257597237279871,
+  "3": -8.286423570189656,
+  "A": -8.421090155136227,
+  " ": -8.543062640397748,
+  "'": -8.543062640397748,
+  ")": -8.543062640397748,
+  "(": -8.543062640397748,
+  "W": -8.543062640397748,
+  "G": -8.543062640397748,
+  '"': -8.543062640397748,
+  ":": -8.543062640397748,
+  "K": -8.543062640397748,
+  "V": -8.543062640397748,
+  "Y": -8.543062640397748,
+  ";": -8.543062640397748,
+  "Z": -8.543062640397748,
+  "Q": -8.543062640397748,
+  "?": -8.543062640397748,
+  "X": -8.543062640397748,
+  "!": -8.543062640397748,
+  "C": -8.590210143402503,
+  "-": -8.63963521379376,
+  "S": -8.758116825564938,
+  "9": -9.154132328261422,
+  "5": -9.211166565669885,
+  "q": -9.226678109366174,
+  "M": -9.408886550739473,
+  "P": -9.418229352993976,
+  "T": -9.454370429016015,
+  "1": -9.602946051903455,
+  "x": -10.146774161448343,
+  "N": -10.314598878749198,
+  ",": -10.447946371919187,
+  "0": -10.953793214722593,
+  "v": -11.247338515712523,
+  ".": -11.527262548208508,
+  "I": -11.566057127651442,
+  "b": -11.798981606736888,
+  "w": -12.009448816585966,
+  "f": -12.124063410382329,
+  "k": -13.068970020909534,
+  "l": -13.28796528364296,
+  "p": -13.446397984814311,
+  "u": -13.571311850164117,
+  "y": -13.585920518209932,
+  "m": -13.63731249546063,
+  "g": -13.705078650085795,
+  "t": -14.089627100908753,
+  "d": -14.130204415720145,
+  "s": -14.198541987403235,
+  "o": -14.21881925391331,
+  "h": -14.333290450213328,
+  "n": -14.48669659369837,
+  "c": -14.505990436215606,
+  "i": -14.982290383316432,
+  "r": -15.03945828923975,
+  "e": -15.340101052305787,
+  "_": -16.148018304213107,
+  "a": -16.460183896956682,
+}
+
+const LETTER_FREQUENCY = {
+  "A": 0.003153352805124311,
+  "n": 0.055725109439303484,
+  "a": 0.06574879237610978,
+  "r": 0.04895343918863251,
+  "c": 0.02368663480872584,
+  "h": 0.03440809510193862,
+  "i": 0.05736555569780318,
+  "s": 0.05098628684359351,
+  "t": 0.06283249477699976,
+  " ": 0.16126223748404583,
+  "v": 0.00792397035237102,
+  "e": 0.09536583341888472,
+  "f": 0.015292696431959359,
+  "d": 0.030829563440896025,
+  "u": 0.020792086046599403,
+  "g": 0.013797676968572934,
+  "o": 0.0567961830999978,
+  "l": 0.03205162970570526,
+  "y": 0.01153414941517434,
+  ".": 0.010558070614780313,
+  "2": 0.0032394917857312498,
+  "0": 0.003898399323498048,
+  "m": 0.017988761235399744,
+  "k": 0.005075728496221641,
+  "w": 0.011476864805862281,
+  "p": 0.015483219067633279,
+  "b": 0.01152292290241313,
+  ",": 0.00878202900526206,
+  "T": 0.004579806176913074,
+  "j": 0.0007302944339057933,
+  "9": 0.0022726125692146813,
+  "4": 0.0009719173180840281,
+  "D": 0.0015318912844709844,
+  "z": 0.0007556475358099878,
+  "W": 0.0013337568162347675,
+  "E": 0.001062871629027983,
+  "I": 0.002681382154161148,
+  "x": 0.0012442623801334335,
+  "S": 0.003723010665829977,
+  "H": 0.0018290195012505923,
+  "C": 0.0033144800536579863,
+  "(": 0.0017254667539418384,
+  ")": 0.001725539082263411,
+  "q": 0.0009409735262355593,
+  ";": 0.00013218839775919848,
+  "-": 0.0016721602023162718,
+  "6": 0.0009902592018082627,
+  "M": 0.0022375125026953655,
+  "5": 0.0010397612837191113,
+  "1": 0.004230895510900077,
+  "L": 0.0012864755031094834,
+  "R": 0.0014376283867850131,
+  "F": 0.0013433822692696467,
+  "V": 0.000527198242809697,
+  "G": 0.0011281308697633483,
+  "B": 0.001900767460370877,
+  "Y": 0.00029471823710480933,
+  '"': 0.0010622791154176604,
+  "'": 0.0017780592803768405,
+  "8": 0.0012323368864725459,
+  "J": 0.0010586430260355636,
+  "N": 0.0013529180351857762,
+  "O": 0.0010358590261136272,
+  "7": 0.000974268856474996,
+  "3": 0.0010637262604756847,
+  "U": 0.0011245786812342758,
+  "P": 0.0021464748695249588,
+  "K": 0.0007279492604071239,
+  ":": 0.0008468361905158379,
+  "Q": 0.00010038303094415696,
+  "Z": 0.00012192356236161744,
+  "?": 9.530037513060838e-05,
+  "X": 8.027517892040621e-05,
+  "!": 2.290377562246053e-05,
+}
+
 const LOGICAL_GROUP_MEAN_RATE = {
   // 'letter': 0.04710802768380675,
   'most_common': 0.041260398079809635,
@@ -513,21 +903,21 @@ const LOGICAL_GROUP_STD = {
 }
 
 const LOGICAL_GROUP_FREQUENCY = {
-  'most_common':                0.49377369484,
-  'punc':                       0.02689224985046569,
-  'caps':                       0.031072374604802187,
+  'most_common': 0.49377369484,
+  'punc': 0.02689224985046569,
+  'caps': 0.031072374604802187,
   // 'lower':                      0.7750833119712894,
-  'rare_letters':               0.01589677860377681,
-  'home_row':                   0.20841835426813637,
-  'top_row':                    0.3909493292318209,
-  'bottom_row':                 0.12504486029223277,
-  'pinky':                      0.08613517901392806,
-  'ring_pinky':                 0.24499017345979662,
-  'left_hand':                  0.44476459027599763,
-  'right_hand':                 0.31931299666752117,
-  'numbers':                    0.010400751943945998,
+  'rare_letters': 0.01589677860377681,
+  'home_row': 0.20841835426813637,
+  'top_row': 0.3909493292318209,
+  'bottom_row': 0.12504486029223277,
+  'pinky': 0.08613517901392806,
+  'ring_pinky': 0.24499017345979662,
+  'left_hand': 0.44476459027599763,
+  'right_hand': 0.31931299666752117,
+  'numbers': 0.010400751943945998,
   'difficult_to_reach_letters': 0.09004870546013842,
-  'repeat_bigrams':             0.014840092600531596,
+  'repeat_bigrams': 0.014840092600531596,
   'left_hand_only_bigrams': 0.1825327960216068,
   'right_hand_only_bigrams': 0.10707365171911172,
   'alternate_hand_bigrams': 0.31248906799279774,
@@ -566,7 +956,7 @@ const LOGICAL_BIGRAM_GROUPINGS = {
   ].map(([x, y]) => `${x}${y}`)
 };
 
-const finger_keys = ["qaz","wsx","edc","rfvtg","yhnujm","ujm","ik","ol","p"].map(x => x.split(''));
+const finger_keys = ["qaz", "wsx", "edc", "rfvtg", "yhnujm", "ujm", "ik", "ol", "p"].map(x => x.split(''));
 
 
 LOGICAL_BIGRAM_GROUPINGS.same_finger_bigrams = finger_keys.flatMap(fks =>
@@ -575,7 +965,79 @@ LOGICAL_BIGRAM_GROUPINGS.same_finger_bigrams = finger_keys.flatMap(fks =>
     .filter(bigram => !LOGICAL_BIGRAM_GROUPINGS.repeat_bigrams.includes(bigram))
 );
 
-const suggestStrategyFromIneterstingErrors = (interestingErrorLog, seenLog, previousSelectionStrategies) => {
+const getBestGuessTimeToTypeLetter = (speedLog) => {
+  const timeToTypeLetter = {}
+  for (let letter in speedLog['char']) {
+    const priorStd = LETTER_SPEED_STD[letter];
+    const priorMean = LETTER_SPEED_MEAN[letter];
+    const priorVar = priorStd ** 2;
+  
+    const speeds = speedLog["char"][letter] || [];
+    const N = speeds.length;
+    if (N == 0) {
+      timeToTypeLetter[letter] = priorMean;
+    }
+    else{
+      const sampleMeanTimesN = speeds.reduce((a, b) => a + b, 0);
+      const posteriorVar = 1 / (1 / priorVar + N / priorVar);
+      const posteriorMean = posteriorVar * (priorMean / priorVar + sampleMeanTimesN / priorVar);
+      timeToTypeLetter[letter] = posteriorMean;
+    }
+  }
+  return timeToTypeLetter;
+}
+
+const computerSpeedChangePerRepEstimate = (timeToTypeLetter) => {
+  const typeSpeedChangePerRep = {}
+  for (let letter in timeToTypeLetter) {
+    const tttLetter = timeToTypeLetter[letter];
+    const changabilityPerOccurence = -Math.exp((LETTER_CHANGABILITY_PER_OCCURENCE_M[letter] * tttLetter + LETTER_CHANGABILITY_PER_OCCURENCE_C[letter]));
+    typeSpeedChangePerRep[letter] = changabilityPerOccurence;
+  }
+  return typeSpeedChangePerRep;
+}
+
+const computerValuePerRepEstimate = (speedLog) => {
+  const timeToTypeLetter = getBestGuessTimeToTypeLetter(speedLog);
+  const typeSpeedChangePerRep = computerSpeedChangePerRepEstimate(timeToTypeLetter);
+
+  const valuePerRep = {}
+  for (let letter in typeSpeedChangePerRep) {
+    const tscpr = typeSpeedChangePerRep[letter];
+    const freq = LETTER_FREQUENCY[letter];
+    const timePerLetter = timeToTypeLetter[letter];
+    const val = - (timePerLetter * tscpr * freq);  // negative so that the values is positive (tspcr is reduction in time)
+    valuePerRep[letter] = Math.min(val, 0.0000005);
+  }
+  return valuePerRep;
+}
+
+const isStringNumber = (str) => {
+  return !isNaN(parseInt(str));
+}
+const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousSpeedSelectionStrategies) => {
+  const valuePerRep = computerValuePerRepEstimate(speedLog);
+  const wasLastNumber = previousSpeedSelectionStrategies.length == 0 ? false : isStringNumber(previousSpeedSelectionStrategies[previousSpeedSelectionStrategies.length - 1]);
+  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !previousSpeedSelectionStrategies.includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
+  console.log("top12", top12);
+  const totalValue = top12.reduce((a, b) => a + b[1], 0);
+  const loc = Math.random() * totalValue;
+  let cumSum = 0;
+  for (let [letter, value] of top12) {
+    cumSum += value;
+    if (cumSum > loc) {
+      return letter;
+    }
+  }
+  return 'e';
+}
+const suggestStrategyFromSpeedLog = (speedLog, previousSpeedSelectionStrategies) => {
+  const letterSpeedSuggestion = getLetterSpeedSuggestionFromSpeedLog(speedLog, previousSpeedSelectionStrategies);
+  console.log("letterSpeedSuggestion", letterSpeedSuggestion);
+  return letterSpeedSuggestion;
+}
+
+const suggestStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previousSelectionStrategies,speedLog) => {
   const charErrorLog = interestingErrorLog['char'];
   const bigramErrorLog = interestingErrorLog['bigram'];
   const charSeenLog = seenLog['char'];
@@ -595,7 +1057,7 @@ const suggestStrategyFromIneterstingErrors = (interestingErrorLog, seenLog, prev
     const groupBigrams = LOGICAL_BIGRAM_GROUPINGS[group];
     for (let bigram of groupBigrams) {
       groupErrorCount[group] = (groupErrorCount[group] || 0) + (bigramErrorLog[bigram] || 0);
-      groupSeenCount[group]= (groupSeenCount[group] || 0) + (bigramSeenLog[bigram] || 0);
+      groupSeenCount[group] = (groupSeenCount[group] || 0) + (bigramSeenLog[bigram] || 0);
     }
   }
 
@@ -617,8 +1079,6 @@ const suggestStrategyFromIneterstingErrors = (interestingErrorLog, seenLog, prev
       maxCostGroup = group;
     }
   }
-  tmp.sort((a, b) => b[0] - a[0]);
-  console.log(tmp);
   // Fallback just in case.
   if (maxCostGroup == null) {
     maxCostGroup = previousSelectedStrategy;
@@ -642,29 +1102,29 @@ function findMAP(base_model_mean, base_model_std, numPos, total, tol = 1e-10, ma
     // gradient of log-prior
     // Prior is a gaussian above the kink and then a sqrt decay to 0 bellow it
     const dPrior = e < kink
-      ? (e === 0 ? Infinity : 0.5/e)
-      : -((e - base_model_mean)/base_model_std);
-    
+      ? (e === 0 ? Infinity : 0.5 / e)
+      : -((e - base_model_mean) / base_model_std);
+
     // second deriv of log-prior
     const d2Prior = e < kink
-      ? -1/e/e
-      : -1/base_model_std;
+      ? -1 / e / e
+      : -1 / base_model_std;
     // gradient & Hessian of log-likelihood
-    const dLik  = numPos/e - totNeg/(1 - e);
-    const d2Lik = -numPos/(e*e) - totNeg/((1 - e)*(1 - e));
+    const dLik = numPos / e - totNeg / (1 - e);
+    const d2Lik = -numPos / (e * e) - totNeg / ((1 - e) * (1 - e));
     // Newton step on –(prior+lik)
     const g = -(dPrior + dLik);
     const h = -(d2Prior + d2Lik);
-    let step = g/h * factor;
-    while (e < kink && e - step / 2> kink && Math.abs(step) > tol){
+    let step = g / h * factor;
+    while (e < kink && e - step / 2 > kink && Math.abs(step) > tol) {
       factor *= 0.5;
-      step = g/h * factor;
+      step = g / h * factor;
     }
     if (e < kink) {
       hasCrossedKink = true;
     } else if (e > kink && e - step < kink && hasCrossedKink) {
       // Indicates that this is the second time crossing the king, so put it very close to the kink so that the step size gets pushed down for the next step if it wants to cross back
-      e = kink - tol /2 ;
+      e = kink - tol / 2;
       continue;
     }
     if (verbose) {
@@ -673,18 +1133,18 @@ function findMAP(base_model_mean, base_model_std, numPos, total, tol = 1e-10, ma
     e -= step;
 
     if (e <= 1e-3) { e = 1e-3; }
-    if (e >= 1-1e-6) { e = 1-1e-6; }
+    if (e >= 1 - 1e-6) { e = 1 - 1e-6; }
     if (Math.abs(step) < tol) break;
   }
   return e;
 }
 
-function findUnigramErrorRates(charErrorLog, charSeenLog){
+function findUnigramErrorRates(charErrorLog, charSeenLog) {
   best_error_rates = {};
-  for (let letter of Object.keys(charSeenLog)){
+  for (let letter of Object.keys(charSeenLog)) {
     const errorCount = charErrorLog[letter] ?? 0;
     const seenCount = charSeenLog[letter] ?? 0;
-    const verbose = falseh;
+    const verbose = false;
     if (verbose) {
       console.log("letter", letter, "errorCount", errorCount, "seenCount", seenCount, "verbose", verbose);
     }
@@ -702,73 +1162,56 @@ function findUnigramErrorRates(charErrorLog, charSeenLog){
   return best_error_rates;
 }
 
-const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654*3, 0.645296487587596, -0.014092068726190543*0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
+const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
 
 const add_error_highlight_indecies = async (passages, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
   // For performance reasons only do it for the top passage
-  const cnn_score = await error_scores_cached(passages[0].passage)
-  const unigram_error_rates = findUnigramErrorRates(unigramErrorLog, unigramSeenLog);
-  console.log("unigram_error_rates", unigram_error_rates);
-  const unigram_score = passages[0].passage.split('').map((char, _) => unigram_error_rates[char] || 0);
-  const by_cnn = cnn_score.map((score, index) => ({index, score: score})).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
-  const by_unigram = unigram_score.map((score, index) => ({index, score: score})).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
-
-  const indexToScore = cnn_score.map((score, index) => ({index, score:  CNN_WEIGHT*score + UNIGRAM_WEIGHT * unigram_score[index] + BIAS}));
-  const highlightIndecies = indexToScore.sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passages[0].passage.length).map(item => item.index);
-
-  console.log("by_cnn", by_cnn);
-  console.log("by_unigram", by_unigram);
-  console.log("highlightIndecies", highlightIndecies);
-  // passages[0].error_scores = cnn_score;
+  const highlightIndecies = await compute_error_highlight_indecies(passages[0].passage, highlight_error_pct, unigramErrorLog, unigramSeenLog);
   passages[0].highlightIndecies = highlightIndecies;
   return passages;
 }
 
-const load_lgbm_feat_files = async () => {
-    // const a = fetch(`https://jameshargreaves12.github.io/reference_data/passage_feats.json`)
-    //     .then(response => {
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    //     }).then(data => {
-    //       passage_feats = data;
-    //     })
-    // const b = fetch(`https://jameshargreaves12.github.io/reference_data/passage_user_info_feats.json`)
-    //     .then(response => {
-    //     if (!response.ok) {
-    //         throw new Error('Network response was not ok');
-    //     }
-    //     return response.json();
-    //     }).then(data => {
-    //       passage_user_info_features = data;
-    //     })
-    const c = fetch(`https://jameshargreaves12.github.io/reference_data/word_feats.json`)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        }).then(data => {
-          word_feats = data;
-        })
-    return Promise.all([c]);
+const compute_error_highlight_indecies = async (passage, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
+  const cnn_score = await error_scores_cached(passage)
+  const unigram_error_rates = findUnigramErrorRates(unigramErrorLog, unigramSeenLog);
+  const unigram_score = passage.split('').map((char, _) => unigram_error_rates[char] || 0);
+  const by_cnn = cnn_score.map((score, index) => ({ index, score: score })).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct * passage.length).map(item => item.index);
+  const by_unigram = unigram_score.map((score, index) => ({ index, score: score })).sort((a, b) => b.score - a.score).slice(0, highlight_error_pct * passage.length).map(item => item.index);
+  const indexToScore = cnn_score.map((score, index) => ({ index, score: CNN_WEIGHT * score + UNIGRAM_WEIGHT * unigram_score[index] + BIAS }));
+  const highlightIndecies = indexToScore.sort((a, b) => b.score - a.score).slice(0, highlight_error_pct * passage.length).map(item => item.index);
+  console.log("by_cnn", by_cnn);
+  console.log("by_unigram", by_unigram);
+  console.log("highlightIndecies", highlightIndecies);
+  return highlightIndecies;
 }
 
-const fetches = arrFreqAndFileName.map(([freq, fileName]) => 
-    fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
-        .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-        })
-        .then(data => {
-        // Set the appropriate frequency variable based on ngram type
-        for (let key in data) {
-            freq[key] = data[key];
-        }
-        })
+const load_lgbm_feat_files = async () => {
+  const c = fetch(`https://jameshargreaves12.github.io/reference_data/word_feats.json`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    }).then(data => {
+      word_feats = data;
+    })
+  return Promise.all([c]);
+}
+
+const fetches = arrFreqAndFileName.map(([freq, fileName]) =>
+  fetch(`https://jameshargreaves12.github.io/reference_data/${fileName}.json`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Set the appropriate frequency variable based on ngram type
+      for (let key in data) {
+        freq[key] = data[key];
+      }
+    })
 )
 Promise.all([...fetches, setup_pyodide(), load_lgbm_feat_files()]).then(() => {
   is_initialised.value = true;
@@ -778,69 +1221,69 @@ Promise.all([...fetches, setup_pyodide(), load_lgbm_feat_files()]).then(() => {
 
 
 function getOrPad(passage, index) {
-    if (index < 0) {
-      return "<S>";
-    }
-    if (index >= passage.length) {
-      return "<E>";
-    }
-    return passage[index];
+  if (index < 0) {
+    return "<S>";
+  }
+  if (index >= passage.length) {
+    return "<E>";
+  }
+  return passage[index];
 }
 
 
-function get_default_error_score_norm(passage, quadgram_error_model){
-    let model_score = 0
-    for (let i = 0; i < passage.length; i++) {
-        const char = getOrPad(passage, i)
-        const bigram = getOrPad(passage, i+1) + char
-        const trigram = getOrPad(passage, i+2) + bigram
-        const quadgram = getOrPad(passage, i+3) + trigram
-        model_score += quadgram_error_model["seen_preds"][quadgram] || quadgram_error_model["default"]
-    }
-    return model_score / passage.length
+function get_default_error_score_norm(passage, quadgram_error_model) {
+  let model_score = 0
+  for (let i = 0; i < passage.length; i++) {
+    const char = getOrPad(passage, i)
+    const bigram = getOrPad(passage, i + 1) + char
+    const trigram = getOrPad(passage, i + 2) + bigram
+    const quadgram = getOrPad(passage, i + 3) + trigram
+    model_score += quadgram_error_model["seen_preds"][quadgram] || quadgram_error_model["default"]
+  }
+  return model_score / passage.length
 }
 
 
 function getErrorScoreAndMostLikelyErrorChars(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct) {
-    let passageErrorScore = 0;
-    let charWeight = Object.keys(seenLog['char']).length ** 2  / 75;
-    let bigramWeight = Object.keys(seenLog['bigram']).length ** 2 / (75*75);
-    let trigramWeight = Object.keys(seenLog['trigram']).length ** 2 / (75*75*75);
-    let quadgramWeight = Object.keys(seenLog['quadgram']).length ** 2 / (75*75*75*75);
-    let totalWeight = charWeight + bigramWeight + trigramWeight + quadgramWeight;
-    charWeight /= totalWeight;
-    bigramWeight /= totalWeight;
-    trigramWeight /= totalWeight;
-    quadgramWeight /= totalWeight;
-    const indexToScore = [];
-    const persoalErrorWeight = Math.min(1, errorCount / 500);
-    const hightlightPersoalErrorWeight = Math.max(0.5, Math.min(1, errorCount / 500));
+  let passageErrorScore = 0;
+  let charWeight = Object.keys(seenLog['char']).length ** 2 / 75;
+  let bigramWeight = Object.keys(seenLog['bigram']).length ** 2 / (75 * 75);
+  let trigramWeight = Object.keys(seenLog['trigram']).length ** 2 / (75 * 75 * 75);
+  let quadgramWeight = Object.keys(seenLog['quadgram']).length ** 2 / (75 * 75 * 75 * 75);
+  let totalWeight = charWeight + bigramWeight + trigramWeight + quadgramWeight;
+  charWeight /= totalWeight;
+  bigramWeight /= totalWeight;
+  trigramWeight /= totalWeight;
+  quadgramWeight /= totalWeight;
+  const indexToScore = [];
+  const persoalErrorWeight = Math.min(1, errorCount / 500);
+  const hightlightPersoalErrorWeight = Math.max(0.5, Math.min(1, errorCount / 500));
 
-    for(let i = 0; i < passage.length; i++) {
-      const char = getOrPad(passage, i);
-      const bigram = getOrPad(passage, i+1) + char;
-      const trigram = getOrPad(passage, i+2) + bigram;
-      const quadgram = getOrPad(passage, i+3) + trigram;
+  for (let i = 0; i < passage.length; i++) {
+    const char = getOrPad(passage, i);
+    const bigram = getOrPad(passage, i + 1) + char;
+    const trigram = getOrPad(passage, i + 2) + bigram;
+    const quadgram = getOrPad(passage, i + 3) + trigram;
 
-      const personalCharScore = (errorLog['char'][char] || 0) / (seenLog['char'][char] || 1);
-      const personalBigramScore = (errorLog['bigram'][bigram] || 0) / (seenLog['bigram'][bigram] || 1);
-      const personalTrigramScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
-      const personalQuadgramScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
-      const p_score = charWeight * personalCharScore + bigramWeight * personalBigramScore + trigramWeight * personalTrigramScore + quadgramWeight * personalQuadgramScore;
-      const d_score = (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"])
+    const personalCharScore = (errorLog['char'][char] || 0) / (seenLog['char'][char] || 1);
+    const personalBigramScore = (errorLog['bigram'][bigram] || 0) / (seenLog['bigram'][bigram] || 1);
+    const personalTrigramScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
+    const personalQuadgramScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
+    const p_score = charWeight * personalCharScore + bigramWeight * personalBigramScore + trigramWeight * personalTrigramScore + quadgramWeight * personalQuadgramScore;
+    const d_score = (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"])
 
-      const charScore = (1 - hightlightPersoalErrorWeight) * d_score + hightlightPersoalErrorWeight * p_score;
-      indexToScore.push({
-        index: i,
-        score: charScore
-      }); 
-      passageErrorScore += (1 - persoalErrorWeight) * d_score + persoalErrorWeight * p_score;
-    }
-    const highlightIndecies = indexToScore.sort((a, b) => b.score - a.score).slice(0, highlight_error_pct*passage.length).map(item => item.index);
-    return {
-      errorScore: passageErrorScore / passage.length,
-      highlightIndecies
-    };
+    const charScore = (1 - hightlightPersoalErrorWeight) * d_score + hightlightPersoalErrorWeight * p_score;
+    indexToScore.push({
+      index: i,
+      score: charScore
+    });
+    passageErrorScore += (1 - persoalErrorWeight) * d_score + persoalErrorWeight * p_score;
+  }
+  const highlightIndecies = indexToScore.sort((a, b) => b.score - a.score).slice(0, highlight_error_pct * passage.length).map(item => item.index);
+  return {
+    errorScore: passageErrorScore / passage.length,
+    highlightIndecies
+  };
 }
 
 function getErrorScores(passages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct) {
@@ -850,7 +1293,7 @@ function getErrorScores(passages, seenLog, errorLog, defaultQuadgramErrorModel, 
   }
   for (let i = 0; i < passages.length; i++) {
     const passage = passages[i];
-    const {errorScore,highlightIndecies} = getErrorScoreAndMostLikelyErrorChars(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
+    const { errorScore, highlightIndecies } = getErrorScoreAndMostLikelyErrorChars(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
     result.errorScores.push(errorScore);
     result.passageToHighlightIndecies[passage] = highlightIndecies;
   }
@@ -858,29 +1301,35 @@ function getErrorScores(passages, seenLog, errorLog, defaultQuadgramErrorModel, 
 }
 
 function getNaturalnessScore(passage, quadgramFrequency) {
-    let naturalnessScore = 0;
-    for(let i = 0; i < passage.length; i++) {
-      const char = getOrPad(passage, i);
-      const bigram = getOrPad(passage, i+1) + char;
-      const trigram = getOrPad(passage, i+2) + bigram;
-      const quadgram = getOrPad(passage, i+3) + trigram;
+  let naturalnessScore = 0;
+  for (let i = 0; i < passage.length; i++) {
+    const char = getOrPad(passage, i);
+    const bigram = getOrPad(passage, i + 1) + char;
+    const trigram = getOrPad(passage, i + 2) + bigram;
+    const quadgram = getOrPad(passage, i + 3) + trigram;
 
-      naturalnessScore += (quadgramFrequency[quadgram] || 0);
-    }
-    return naturalnessScore / passage.length;
+    naturalnessScore += (quadgramFrequency[quadgram] || 0);
+  }
+  return naturalnessScore / passage.length;
 }
 
 function getDesireForPassage(passage, quadgramFrequency, error_score, lgbm_score) {
-    const expectedErrorScore = 0.1;
-    const expectedNaturalnessScore = 0.00002;
-    const naturalnessScore = getNaturalnessScore(passage, quadgramFrequency);
-    return (error_score / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score * 3;
+  const expectedErrorScore = 0.1;
+  const expectedNaturalnessScore = 0.00002;
+  const naturalnessScore = getNaturalnessScore(passage, quadgramFrequency);
+  return (error_score / expectedErrorScore) + 0.02 * (naturalnessScore / expectedNaturalnessScore) + lgbm_score * 3;
 }
 
 function getScoreBySelectionStrategy(passage, selectionStratedy) {
   if (selectionStratedy == null) {
     return 0;
   }
+
+  if (selectionStratedy.startsWith("speed")) {
+    const letterSpeedSuggestion = selectionStratedy.split("->")[1]
+    return passage.split('').map((char, index) =>  letterSpeedSuggestion == char ? index : null).filter(index => index !== null).length / passage.length;
+  }
+
   if (selectionStratedy == "most_common") {
     return (passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["most_common"].includes(char)).length - passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["punc"].includes(char)).length) / passage.length;
   }
@@ -891,13 +1340,9 @@ function getScoreBySelectionStrategy(passage, selectionStratedy) {
   }
   if (selectionStratedy in LOGICAL_BIGRAM_GROUPINGS) {
     const bigrams = LOGICAL_BIGRAM_GROUPINGS[selectionStratedy];
-    return passage.split('').filter((char, index) => bigrams.includes(char + getOrPad(passage, index+1))).length / passage.length;
+    return passage.split('').filter((char, index) => bigrams.includes(char + getOrPad(passage, index + 1))).length / passage.length;
   }
 
-  if (selectionStratedy == "easy_mode") {
-    // least number of punctuation and numbers
-    return 1 - (passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["punc"].includes(char) || LOGICAL_LETTER_GROUPINGS["numbers"].includes(char)).length) / passage.length;
-  }
   return 0;
 }
 
@@ -912,9 +1357,9 @@ function topNBySelectionStrategy(passages, selectionStratedy, n) {
 
 function numberToWords(n) {
   if (n < 0 || n > 2100 || !Number.isInteger(n)) return null;
-  const units = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
-    "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
-  const tens  = ["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+  const units = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+    "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+  const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
 
   function under100(num) {
     if (num < 20) return units[num];
@@ -945,17 +1390,17 @@ function simplifySentence(input) {
     preserved.push(match);
     return `__PRESERVED_${preserved.length - 1}__`;
   });
- 
+
   let sentences = text.split(".");
   sentences = sentences.map(sentence => {
     sentence = sentence
-    .trim()
-    .split(/\s+/)
-    .map((word, idx) => {
-      if (idx > 0 && /^[A-Z][a-z]/.test(word)|| /^[A-Z]{2,}$/.test(word)) return word;
-      return word.toLowerCase();
-    })
-    .join(' ');
+      .trim()
+      .split(/\s+/)
+      .map((word, idx) => {
+        if (idx > 0 && /^[A-Z][a-z]/.test(word) || /^[A-Z]{2,}$/.test(word)) return word;
+        return word.toLowerCase();
+      })
+      .join(' ');
     return sentence;
   });
   text = sentences.join(". ");
@@ -1001,7 +1446,7 @@ function makePassageEasy(passage) {
     }
     return match;
   });
-  
+
   passage = simplifySentence(easyPassageWithNumbers);
 
   return passage;
@@ -1014,11 +1459,98 @@ function makePassageEasy(passage) {
   // return easyPassage.replace(/\s+/g, ' ').trim();
 }
 
-self.onmessage = async function(e) {
-  try{
-    if (e.data.type === 'suggestStrategyFromIneterstingErrors') {
-      const strategy = suggestStrategyFromIneterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousSelectionStrategies);
-      self.postMessage({type: 'suggestStrategyFromIneterstingErrors', strategy: strategy});
+const shortenPassageBasedOnStrategy = (passages, strategy) => {
+  if (!strategy || !strategy.startsWith("speed")) {
+    return;
+  }
+  console.log("shortenPassageBasedOnStrategy", strategy, passages[0].passage);
+  for (let i = 0; i < 1; i++) {
+    const passage = passages[i].passage;
+    let sentences = passage.split(".").map(sentence => sentence);
+    const skip_indexs = [];
+    for (let j = 0; j < sentences.length; j++) {
+      const sentence = sentences[j];
+      if (strategy.startsWith("speed")) {
+        const letterSpeedSuggestion = strategy.split("->")[1]
+        const numberOfInstances = sentence.split('').filter((char) => letterSpeedSuggestion == char).length;
+        if (numberOfInstances == 0 && sentence.length > 10) {
+          skip_indexs.push(j);
+        }
+      }
+    }
+    // Only remove sentences from start or end
+    let remove_from_start = -1;
+    let remove_from_end = sentences.length;
+    for (let j = 0; j < sentences.length; j++) {
+      if (skip_indexs.includes(j)) {
+        remove_from_start = j;
+      } else {
+        break;
+      }
+    }
+    for (let j = sentences.length - 1; j >= 0; j--) {
+      if (skip_indexs.includes(j)) {
+        remove_from_end = j;
+      } else {
+        break;
+      }
+    }
+    let filtered_sentences = sentences.slice(remove_from_start + 1, remove_from_end).join(".").trim();
+
+    if (`"'?!):;%,`.includes(filtered_sentences[0])) {
+      filtered_sentences = filtered_sentences.slice(1).trim();
+    }
+    if (filtered_sentences.length > 30) {
+      passages[i].passage = filtered_sentences;
+    }
+  }
+}
+
+const add_error_highlight_from_strategy = async (passages, strategy, unigramErrorLog, unigramSeenLog) => {
+  const firstPassage = passages[0].passage;
+  let strategyHighlightIndecies = [];
+  if (strategy.startsWith("speed")) {
+    const letterSpeedSuggestion = strategy.split("->")[1]
+    const letterSpeedSuggestionIdxs = firstPassage.split('').map((char, index) =>  letterSpeedSuggestion == char ? index : null).filter(index => index !== null);
+    strategyHighlightIndecies = letterSpeedSuggestionIdxs;
+  }
+  else if (strategy == "most_common") {
+    const mostCommonLetterIdxs = firstPassage.split('').map((char, index) =>  LOGICAL_LETTER_GROUPINGS["most_common"].includes(char) ? index : null).filter(index => index !== null);
+    strategyHighlightIndecies = mostCommonLetterIdxs;
+  }
+  else if (strategy in LOGICAL_LETTER_GROUPINGS) {
+    const letters = LOGICAL_LETTER_GROUPINGS[strategy];
+    const letterIdxs = firstPassage.split('').map((char, index) =>  letters.includes(char) ? index : null).filter(index => index !== null);
+    strategyHighlightIndecies = letterIdxs;
+  }
+  else if (strategy in LOGICAL_BIGRAM_GROUPINGS) {
+    const bigrams = LOGICAL_BIGRAM_GROUPINGS[strategy];
+    const bigramIdxs = firstPassage.split('').map((char, index) =>  bigrams.includes(char + getOrPad(firstPassage, index + 1)) || bigrams.includes(getOrPad(firstPassage, index) + char) ? index : null).filter(index => index !== null);
+    strategyHighlightIndecies = bigramIdxs; 
+  }
+  console.log("strategyHighlightIndecies", strategyHighlightIndecies, strategy);
+  if (strategyHighlightIndecies.length > firstPassage.length*0.25 && HAS_SUCCEEDED_ONCE && BETTER_ERROR_MODEL) {
+    const errorModelHighlightIndecies = await compute_error_highlight_indecies(firstPassage, 0.25, unigramErrorLog, unigramSeenLog);
+    const intersection = strategyHighlightIndecies.filter(index => errorModelHighlightIndecies.includes(index));
+    strategyHighlightIndecies = intersection;
+  }
+
+  passages[0].highlightIndecies = strategyHighlightIndecies;
+
+  // Not handling easy_mode I think this is dead?
+  return passages;
+}
+
+self.onmessage = async function (e) {
+  try {
+    if (e.data.type === 'suggestStrategyFromInterstingErrors') {
+      const strategy = suggestStrategyFromInterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousSelectionStrategies, e.data.speedLog);
+      self.postMessage({ type: 'suggestStrategyFromInterstingErrors', strategy: strategy });
+      return;
+    }
+    if (e.data.type === 'suggestStrategyFromSpeedLog') {
+      const strategy = suggestStrategyFromSpeedLog(e.data.speedLog, e.data.previousSpeedSelectionStrategies);
+      self.postMessage({ type: 'suggestStrategyFromSpeedLog', strategy: strategy });
       return;
     }
     if (e.data.type === 'sourceChange') {
@@ -1036,11 +1568,11 @@ self.onmessage = async function(e) {
       return;
     }
 
-    const { 
-      upcomingPassages, 
-      recentPassages, 
-      errorLog, 
-      seenLog, 
+    const {
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
       errorCount,
       user_intro_acc,
       user_intro_wpm,
@@ -1055,10 +1587,11 @@ self.onmessage = async function(e) {
     }
 
     const passages = source_passages[currentSource];
-    
+
     let newUpcomingPassages = [...correctSourceUpcomingPassages];
-    
-    for (let i = 0; i < 100; i++) {
+
+    const max_new_passages = selectionStratedy ? 500 : 100;
+    for (let i = 0; i < max_new_passages; i++) {
       const randomPassage = passages[Math.floor(Math.random() * passages.length)];
       if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
         newUpcomingPassages.push(randomPassage);
@@ -1066,7 +1599,7 @@ self.onmessage = async function(e) {
         i--;
       }
     }
-    
+
     newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
     // hack in easy mode.
     if (selectionStratedy == "most_common") {
@@ -1074,30 +1607,36 @@ self.onmessage = async function(e) {
     }
 
     const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
-    const {errorScores, passageToHighlightIndecies} = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
+    const { errorScores, passageToHighlightIndecies } = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
 
     const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
     const result = newUpcomingPassages.map((passage) => (
       {
-        passage, 
+        passage,
         source: currentSource,
         selectionStratedy: selectionStratedy,
         highlightIndecies: passageToHighlightIndecies[passage],
         desireForPassage: desire_for_passages[passage]
-      })).sort((a, b) =>  - a.desireForPassage + b.desireForPassage).slice(0, 10);
-    
+      })).sort((a, b) => - a.desireForPassage + b.desireForPassage).slice(0, 10);
+
     let result_with_error_highlight_indecies = result;
-    try{
-      if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
-        result_with_error_highlight_indecies = await add_error_highlight_indecies(result,highlight_error_pct, unigramErrorLog=errorLog["char"], unigramSeenLog=seenLog["char"]);
+    try {
+      if (selectionStratedy)
+      {
+        shortenPassageBasedOnStrategy(result, selectionStratedy);
+        result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+      }
+      else if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
+        result_with_error_highlight_indecies = await add_error_highlight_indecies(result, highlight_error_pct, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
       }
     } catch (e) {
+      console.error(e);
       BETTER_ERROR_MODEL = false;
     }
     HAS_SUCCEEDED_ONCE = true;
     self.postMessage(result_with_error_highlight_indecies);
   } catch (e) {
     console.error(e);
-    self.postMessage({type: 'error', error: e});
+    self.postMessage({ type: 'error', error: e });
   }
 }; 

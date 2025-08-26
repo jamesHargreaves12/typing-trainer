@@ -72,8 +72,8 @@ const LETTER_FREQUENCIES = {
   'Z': 0.00012192356236161744,
   '?': 9.530037513060838e-05,
   'X': 8.027517892040621e-05,
-  '!': 2.290377562246053e-05}
-
+  '!': 2.290377562246053e-05
+}
 // Lanczos approximation of log-gamma function
 function logGamma(z) {
   const cof = [
@@ -265,6 +265,29 @@ const STRATEGY_DESCRIPTIONS_SHORT = {
   'same_finger_bigrams': 'pair of letters for the same finger',
 }
 
+const STRATEGY_DESCRIPTIONS_SHORTEST = {
+  'most_common': 'most common',
+  'punc': 'punctuation',
+  'caps': 'capital',
+  'lower': 'lowercase',
+  'rare_letters': 'rare',
+  'home_row': 'home row',
+  'top_row': 'top row',
+  'bottom_row': 'bottom row',
+  'pinky': 'pinky',
+  'ring_pinky': 'ring or pinky',
+  'left_hand': 'left hand',
+  'right_hand': 'right hand',
+  'numbers': 'numbers',
+  'difficult_to_reach_letters': 'difficult to reach',
+  'repeat_bigrams': 'repeated',
+  'left_hand_only_bigrams': 'left hand',
+  'right_hand_only_bigrams': 'right hand',
+  'alternate_hand_bigrams': 'alternating hands',
+  'same_finger_bigrams': 'same finger',
+}
+
+
 function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy){
   let header = "";
   key = `${Math.round(wpm)},${Math.round(accuracy*100)}`
@@ -284,6 +307,9 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
   }
 
   if (strategy) {
+    if (strategy == 'speed') {
+      return `${header} For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letters that will lead to the biggest improvement in your speed.`;
+    }
     if (!hasSeenRepetitionStrategyUpdate) {
       hasSeenRepetitionStrategyUpdate = true;
       if (strategy == 'most_common') {
@@ -300,24 +326,9 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
   }
 
   return header;
-  // if (wpm < 40 && accuracy < 0.95) {
-  //   return `${header} Focus on slowing down and improving your accuracy.`
-  // }
-  // else if (wpm < 40) {
-  //   return `${header} Focus on typing without looking at the keyboard and gradually increasing your speed. Don't worry about a few mistakes.`
-  // }
-  // else if (accuracy < 0.95) {
-  //   return `${header} Focus on improving your accuracy, even if it slows you down slightly.`
-  // }
-  // else if (wpm_percentile <= accuracy_percentile) {
-  //   return `${header} Focus on increasing your speed, even if it means making a few more mistakes.`
-  // }
-  // else {
-  //   return `${header} Focus on refining your accuracy and maintaining consistency.`
-  // }
 }
 
-function suggestRepetitionStrategy(strategy){
+function suggestErrorRepetitionStrategy(strategy){
   prev_reps = runHistory.slice(0,REPETION_STRATEGY_HISTORY_LENGTH);
   const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
   const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
@@ -383,7 +394,12 @@ let seenLog = {
   'trigram': {},
   'quadgram': {}
 };
-
+let speedLog = {
+  'char': {},
+  'bigram': {},
+  'trigram': {},
+  'quadgram': {}
+}
 let charErrorCount = 0;
 let charTotalCount = 0;
 let prevInputText = "";
@@ -436,8 +452,11 @@ let targetText = 'Your personal typing coach, typo dojo, identifies your perform
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
-let selectionStratedy = null;
-let nextSelectionStrategy = null;
+let nextStrategySpeed = true;
+let selectionStratedgy = null;
+let nextSelectionStrategyError = null;
+let nextSelectionStrategySpeed = null;
+let previousSpeedSelectionStrategies = [];
 let stats_rep_common_strings = {};
 
 function recordUserLeaveText() {
@@ -704,6 +723,26 @@ function recordUserIntro() {
   }
 }
 
+function setFocusText(strategy) {
+  const focusTextElement = document.getElementById('rep_focus');
+  if (strategy) {
+    focusTextElement.style.display = "block";
+  }
+  else{
+    focusTextElement.style.display = "none";
+    return;
+  }
+  if (strategy in STRATEGY_DESCRIPTIONS_SHORTEST) {
+    focusTextElement.innerHTML = `Focus: ${STRATEGY_DESCRIPTIONS_SHORTEST[strategy]}`;
+  }
+  else if (strategy && strategy.startsWith("speed")) {
+    focusTextElement.innerHTML = `Focus: ${strategy.split("->")[1]}`;
+  }
+  else {
+    focusTextElement.style.display = "none";
+    focusTextElement.innerHTML = `Focus: N.A.`;
+  }
+}
 
 function getPassage() {
   if (!finishedDefaultPassages) {
@@ -722,17 +761,23 @@ function getPassage() {
   }
   if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
-    if (nextSelectionStrategy && !selectionStratedy) {
-      console.log("nextSelectionStrategy", nextSelectionStrategy, selectionStratedy);
-      selectionStratedy = nextSelectionStrategy;
-      previousSelectionStrategies.push(selectionStratedy);
-      nextSelectionStrategy = null;
+    if (nextSelectionStrategySpeed && !selectionStratedgy && nextStrategySpeed) {
+      selectionStratedgy = "speed";
+      nextStrategySpeed = false;
+      nextSelectionStrategySpeed = null;
+    }
+    else if (nextSelectionStrategyError && !selectionStratedgy) {
+      nextStrategySpeed = true;
+      console.log("nextSelectionStrategy", nextSelectionStrategyError, selectionStratedgy);
+      selectionStratedgy = nextSelectionStrategyError;
+      previousSelectionStrategies.push(selectionStratedgy);
+      nextSelectionStrategyError = null;
     }
     else {
-      selectionStratedy = null;
+      selectionStratedgy = null;
     }
     return {
-      passage: suggestRepetitionStrategy(selectionStratedy),
+      passage: suggestErrorRepetitionStrategy(selectionStratedgy),
       source: "stats_rep"
     };
   }
@@ -768,7 +813,7 @@ function setUpcomingPassages() {
     user_intro_wpm,
     highlight_error_pct: 0.1,
     userId: userId,
-    selectionStratedy: selectionStratedy
+    selectionStratedy: selectionStratedgy != "speed" ? selectionStratedgy : `speed->${nextSelectionStrategySpeed}`
   });
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
@@ -783,8 +828,20 @@ passageWorker.onmessage = function(e) {
       console.error(e.data.error);
       return;
     }
-    if (e.data.type == 'suggestStrategyFromIneterstingErrors') {
-      nextSelectionStrategy = e.data.strategy;
+    if (e.data.type == 'suggestStrategyFromInterstingErrors') {
+      nextSelectionStrategyError = e.data.strategy;
+      return;
+    }
+    if (e.data.type == 'suggestStrategyFromSpeedLog') {
+      nextSelectionStrategySpeed = e.data.strategy;
+      // Trigger error version now
+      passageWorker.postMessage({
+        type: 'suggestStrategyFromInterstingErrors',
+        interestingErrorLog: interestingErrorLog,
+        seenLog: seenLog,
+        previousSelectionStrategies: previousSelectionStrategies,
+      });
+    
       return;
     }
     upcomingPassages = e.data;
@@ -850,6 +907,12 @@ window.onload = function() {
     'trigram': {},
     'quadgram': {}
   };
+  speedLog = JSON.parse(localStorage.getItem('speedLog')) || {
+    'char': {},
+    'bigram': {},
+    'trigram': {},
+    'quadgram': {}
+  };
   if (localStorage.getItem('upcomingPassages') != null) {
     finishedDefaultPassages = true;
   }
@@ -864,6 +927,10 @@ window.onload = function() {
   }
   const p = getPassage();
   const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = p;
+  if (currentPassageSelectionStratedy && currentPassageSelectionStratedy.startsWith("speed")) {
+    previousSpeedSelectionStrategies.push(currentPassageSelectionStratedy.split("->")[1]);
+  }
+  setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
   currentPassageSource = source;
   currentSelectionStratedy = currentPassageSelectionStratedy;
@@ -1124,15 +1191,23 @@ function handleInput(e) {
     prevCharTime = new Date();
   }
   let i = prevInputText.length
+  unigram = targetText[i];
 
   if (currentPassageLetterTimesSec.length <= i) {
     const dt = new Date();
-    currentPassageLetterTimesSec.push(Math.round((dt - prevCharTime)/1000 * 100) / 100); // seconds, rounded to 2 decimals
+    const letterTimeSec = (dt - prevCharTime) / 1000;
+    currentPassageLetterTimesSec.push(Math.round(letterTimeSec * 100) / 100); // seconds, rounded to 2 decimals
+    if (speedLog['char'][unigram]) {
+      speedLog['char'][unigram].unshift(letterTimeSec);
+      speedLog['char'][unigram] = speedLog['char'][unigram].slice(0, 1000);
+    }
+    else{
+      speedLog['char'][unigram] = [letterTimeSec];
+    }
     prevCharTime = dt;
   }
 
   if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
-    unigram = targetText[i];
     bigram = targetText.slice(i-1, i+1);
     trigram = targetText.slice(i-2, i+1);
     quadgram = targetText.slice(i-3, i+1);
@@ -1271,6 +1346,7 @@ function updateLiveMetrics() {
 
 function saveErrorData() {
   localStorage.setItem('errorLog', JSON.stringify(errorLog));
+  localStorage.setItem('speedLog', JSON.stringify(speedLog));
   localStorage.setItem('seenLog', JSON.stringify(seenLog));
   localStorage.setItem('interestingErrorLog', JSON.stringify(interestingErrorLog));
 }
@@ -1323,6 +1399,10 @@ function resetSession() {
   }
   
   const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = getPassage();
+  if (currentPassageSelectionStratedy && currentPassageSelectionStratedy.startsWith("speed")) {
+    previousSpeedSelectionStrategies.push(currentPassageSelectionStratedy.split("->")[1]);
+  }
+  setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
   currentPassageSource = source;
   currentSelectionStratedy = currentPassageSelectionStratedy;
@@ -1331,12 +1411,10 @@ function resetSession() {
   colorText("");
   inputArea.value = "";
   progressBar.style.width = "0%";
-
   passageWorker.postMessage({
-    type: 'suggestStrategyFromIneterstingErrors',
-    interestingErrorLog: interestingErrorLog,
-    seenLog: seenLog,
-    previousSelectionStrategies: previousSelectionStrategies
+    type: 'suggestStrategyFromSpeedLog',
+    speedLog: speedLog,
+    previousSpeedSelectionStrategies: previousSpeedSelectionStrategies
   });
 }
 
@@ -1374,6 +1452,7 @@ function resetStats() {
   // Clear localStorage
   localStorage.removeItem('errorLog');
   localStorage.removeItem('seenLog');
+  localStorage.removeItem('speedLog');
   localStorage.removeItem('runHistory');
   localStorage.removeItem('repetition_count');
   
