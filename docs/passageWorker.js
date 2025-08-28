@@ -1579,7 +1579,10 @@ self.onmessage = async function (e) {
       highlight_error_pct,
       selectionStratedy
     } = e.data;
-    let correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
+    let correctSourceUpcomingPassages = [];
+    if (upcomingPassages) {
+      correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
+    }
 
     // not yet initialised
     if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {

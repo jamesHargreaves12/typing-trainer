@@ -1159,12 +1159,52 @@ function colorText(inputText)
   }
 }
 
+function annotateEdits(typed, target) {
+  const m = typed.length, n = target.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = typed[i-1] === target[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+
+  let i = m, j = n, out = [];
+  while (i > 0 || j > 0) {
+    if (i > 0 && j > 0 && typed[i-1] === target[j-1] && dp[i][j] === dp[i-1][j-1]) {
+      out.push(target[j-1]); i--; j--;
+    } else if (i > 0 && j > 0 && dp[i][j] === dp[i-1][j-1] + 1) {
+      out.push("^"); i--; j--;
+    } else if (j > 0 && dp[i][j] === dp[i][j-1] + 1) {
+      out.push("$");
+      j--;
+    } else {
+      out.push("#"); i--;
+    }
+  }
+
+  return out.reverse().join("");
+}
+
 document.addEventListener('keydown', (e) => {
   inputArea.focus();
   if (e.key === 'Tab') {
     e.preventDefault();
   }
 });
+
+function countCharErrors(inputText, targetText) {
+  let errorCount = 0;
+  for (let i = 0; i < inputText.length; i++) {
+    if (inputText[i] !== targetText[i]) {
+      errorCount += 1;
+    }
+  }
+  return errorCount;
+}
 
 function handleInput(e) {
   if (settingTargetTextRef.value) {
@@ -1180,8 +1220,7 @@ function handleInput(e) {
     resetSession();
     return;
   }
-  const inputText = inputArea.value;
-  colorText(inputText);
+  let inputText = inputArea.value;
 
   if (e["inputType"] != "deleteContentBackward") {
     charTotalCount += 1;
@@ -1196,7 +1235,7 @@ function handleInput(e) {
   if (currentPassageLetterTimesSec.length <= i) {
     const dt = new Date();
     const letterTimeSec = (dt - prevCharTime) / 1000;
-    currentPassageLetterTimesSec.push(Math.round(letterTimeSec * 100) / 100); // seconds, rounded to 2 decimals
+    currentPassageLetterTimesSec.push(Math.round(letterTimeSec * 1000) / 1000); // seconds, rounded to 3 decimals
     if (speedLog['char'][unigram]) {
       speedLog['char'][unigram].unshift(letterTimeSec);
       speedLog['char'][unigram] = speedLog['char'][unigram].slice(0, 1000);
@@ -1206,6 +1245,7 @@ function handleInput(e) {
     }
     prevCharTime = dt;
   }
+  const typedChar = inputText[i];
 
   if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
     bigram = targetText.slice(i-1, i+1);
@@ -1224,7 +1264,6 @@ function handleInput(e) {
       seenLog['quadgram'][quadgram] = (seenLog['quadgram'][quadgram] || 0) + 1;
     }
 
-    const typedChar = inputText[i];
 
     if (typedChar !== null && typedChar !== targetText[i]) {
       charErrorCount += 1;
@@ -1266,6 +1305,83 @@ function handleInput(e) {
       }
     }
   }
+  if (typedChar == " ") {
+    if (i < targetText.length && targetText[i+1] == " ") {
+      let targetPreviousWordStart = i-1;
+      while (targetPreviousWordStart > 0 && targetText[targetPreviousWordStart] != " ") {
+        targetPreviousWordStart--;
+      }
+      let inputPreviousWordStart = i-1;
+      while (inputPreviousWordStart > 0 && inputText[inputPreviousWordStart] != " ") {
+        inputPreviousWordStart--;
+      }
+      const currentWordTyped = inputText.slice(inputPreviousWordStart, i);
+      const currentWordTarget = targetText.slice(targetPreviousWordStart, i+1);
+      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")){
+        const edit_string = annotateEdits(currentWordTyped, currentWordTarget) + " ";
+        if (edit_string.split('#').length + edit_string.split('$').length === 3 && edit_string.indexOf('^') === -1) {
+          const beforeErrorCount = countCharErrors(inputText, targetText);
+          inputText = inputText.slice(0, inputPreviousWordStart) + edit_string.replace(/#(.)/g, '#');
+          const afterErrorCount = countCharErrors(inputText, targetText);
+          if (afterErrorCount > beforeErrorCount) {
+            console.error("afterErrorCount > beforeErrorCount");
+          }
+          charErrorCount += afterErrorCount - beforeErrorCount;
+          inputArea.value = inputText;  
+          if (edit_string.split('$').length === 2) {
+            // then we have added a char so need to makes the per letter timings the same.
+            const lastDollarIndex = inputText.lastIndexOf('$');
+            currentPassageLetterTimesSec.splice(lastDollarIndex, 0, -1);
+          }
+          else {
+            const lastHashIndex = edit_string.lastIndexOf('#');
+            if (lastHashIndex == -1) {
+              console.error("lastHashIndex == -1");
+            }
+            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex+1, 1);
+          }
+        }
+      }
+    }
+    if (i > 0 && targetText[i-1] == " ") {
+      let targetPreviousWordStart = i-2;
+      while (targetPreviousWordStart > 0 && targetText[targetPreviousWordStart] != " ") {
+        targetPreviousWordStart--;
+      }
+      let inputPreviousWordStart = i-1;
+      while (inputPreviousWordStart > 0 && inputText[inputPreviousWordStart] != " ") {
+        inputPreviousWordStart--;
+      }
+      const currentWordTyped = inputText.slice(inputPreviousWordStart, i);
+      const currentWordTarget = targetText.slice(targetPreviousWordStart, i-1);
+      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")){
+        const edit_string = annotateEdits(currentWordTyped, currentWordTarget) + " ";
+        if (edit_string.split('#').length + edit_string.split('$').length === 3 && edit_string.indexOf('^') === -1) {
+          const beforeErrorCount = countCharErrors(inputText, targetText);
+          inputText = inputText.slice(0, inputPreviousWordStart) + edit_string.replace(/#(.)/g, '#');
+          const afterErrorCount = countCharErrors(inputText, targetText);
+          if (afterErrorCount > beforeErrorCount) {
+            console.error("afterErrorCount > beforeErrorCount");
+          }
+          charErrorCount += afterErrorCount - beforeErrorCount;
+          inputArea.value = inputText;
+          if (edit_string.split('$').length === 2) {
+            // then we have added a char so need to makes the per letter timings the same.
+            const lastDollarIndex = inputText.lastIndexOf('$');
+            currentPassageLetterTimesSec.splice(lastDollarIndex, 0, -1);
+          }
+          else {
+            const lastHashIndex = edit_string.lastIndexOf('#');
+            if (lastHashIndex == -1) {
+              console.error("lastHashIndex == -1");
+            }
+            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex+1, 1);
+          }
+        }
+      }
+    }
+  }
+  colorText(inputText);
 
   prevInputText = inputText;
   // Update the progress bar width based on completion percentage
@@ -1315,7 +1431,7 @@ inputArea.addEventListener('select', function(e) {
 
 function calculateMetrics() {
   // const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
-  const cappedPassageLetterTimes = currentPassageLetterTimesSec.map(t => Math.min(t, 2)); // cap the time for a letter at 2 seconds ~ 6wpm
+  const cappedPassageLetterTimes = currentPassageLetterTimesSec.map(t => Math.max(0, Math.min(t, 2))); // cap the time for a letter at 2 seconds ~ 6wpm
   const timeElapsedMins = cappedPassageLetterTimes.reduce((a, b) => a + b, 0) / 60;
   const charsPerWord = 4.7;
   let rawWpm = charTotalCount / charsPerWord / timeElapsedMins;
