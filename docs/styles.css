@@ -71,11 +71,14 @@
 }
 
 body {
-  font-family: "Roboto Mono", "Roboto Mono", Vazirmatn, monospace;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,Vazirmatn, monospace;
   margin: 0;
   background-color: var(--bg-color);
   color: var(--text-color);
+  line-height: 1;
   font-variant-ligatures: no-common-ligatures;
+  font-size-adjust: from-font;   /* reduces size jump on swap */
+  font-synthesis-weight: none;   /* avoids faux-bold jitter */
 }
 
 #app {
@@ -427,6 +430,24 @@ circle:hover, rect:hover {
 .separator {
   color: var(--border-color);
   font-weight: 300;
+}
+
+.social-proof-text {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 400;
+  display: block;
+  margin-bottom: 3rem;
+}
+
+.social-proof-number {
+  color: var(--text-color);
+  font-weight: 450;
+}
+
+.cta-text {
+  color: var(--text-color);
+  font-weight: 450;
 }
 
 /* Update flash error animation */

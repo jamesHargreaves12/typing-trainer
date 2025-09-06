@@ -459,6 +459,49 @@ let nextSelectionStrategySpeed = null;
 let previousSpeedSelectionStrategies = [];
 let stats_rep_common_strings = {};
 
+function calculateSocialProof() {
+  // September 6th as the reference date
+  const referenceDate = new Date('2025-09-06');
+  const currentDate = new Date();
+  
+  // Calculate days since September 6th
+  const timeDiff = currentDate.getTime() - referenceDate.getTime();
+  const daysSince = Math.floor(timeDiff / (1000 * 3600 * 24));
+  
+  // Calculate social proof number: 237,548 + 11,000 * days since September 6th (seeing 15k per day but don't want to overstate)
+  const socialProofNumber = 237548 + (11000 * daysSince);
+  
+  return socialProofNumber.toLocaleString();
+}
+
+function updateSocialProof() {
+  const socialProofElement = document.getElementById('socialProof');
+  if (socialProofElement) {
+    const socialProofString = calculateSocialProof();
+    const socialProofNumber = parseInt(socialProofString.replace(/,/g, ''));
+    let displayNumber;
+    
+    if (socialProofNumber >= 10000000) {
+      // Tens of millions
+      const tensOfMillions = (socialProofNumber / 10000000).toFixed(1);
+      displayNumber = `${tensOfMillions}0 million`;
+    } else if (socialProofNumber >= 1000000) {
+      // Millions
+      const millions = (socialProofNumber / 1000000).toFixed(1);
+      displayNumber = `${millions} million`;
+    } else if (socialProofNumber >= 10000) {
+      // Tens of thousands
+      const tensOfThousands = Math.floor(socialProofNumber / 10000);
+      displayNumber = `${tensOfThousands}0,000+`;
+    } else {
+      // Fallback for smaller numbers
+      displayNumber = socialProofNumber.toLocaleString();
+    }
+    
+    socialProofElement.innerHTML = `Join <span class="social-proof-number">${displayNumber}</span> people improving their typing: just <span class="cta-text">start typing</span>...`;
+  }
+}
+
 function recordUserLeaveText() {
   const data = { 
     uid: userId,
@@ -844,6 +887,10 @@ passageWorker.onmessage = function(e) {
     
       return;
     }
+    if (!e.data) {
+      console.error("e.data is null");
+      return;
+    }
     upcomingPassages = e.data;
     // refilter here because of race conditions
     upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
@@ -1068,6 +1115,13 @@ window.onload = function() {
     });
   });
   loadStatsRepCommonStrings();
+
+  // Update social proof on page load
+  if (runHistory.length == 0) {
+    updateSocialProof();
+  } else {
+    document.getElementById('socialProof').style.display = 'none';
+  }
 
   const topErrorsBox = document.getElementById('topErrors');
 
@@ -1453,7 +1507,9 @@ function updateLiveMetrics() {
   const wpm = metrics.wpm;
   const accuracy = metrics.accuracy;
   liveMetricsWpm.textContent = `WPM: ${wpm}`;
+  liveMetricsWpm.style.display = 'block';
   liveMetricsAccuracy.textContent = `Accuracy: ${accuracy}%`;
+  liveMetricsAccuracy.style.display = 'block';
   if (session_rep_count > 0) {
     liveMetricsReps.textContent = `Reps: ${session_rep_count}`;
     liveMetricsReps.style.display = 'block';
@@ -1468,6 +1524,7 @@ function saveErrorData() {
 }
 
 function resetSession() {
+  document.getElementById('socialProof').style.display = 'none';
   if (startTime) {
     const metrics = calculateMetrics();
     const wpm = metrics.wpm;
