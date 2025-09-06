@@ -1378,7 +1378,7 @@ function handleInput(e) {
           inputText = inputText.slice(0, inputPreviousWordStart) + edit_string.replace(/#(.)/g, '#');
           const afterErrorCount = countCharErrors(inputText, targetText);
           if (afterErrorCount > beforeErrorCount) {
-            console.error("afterErrorCount > beforeErrorCount");
+            console.error("1: afterErrorCount > beforeErrorCount");
           }
           charErrorCount += afterErrorCount - beforeErrorCount;
           inputArea.value = inputText;  
@@ -1415,7 +1415,7 @@ function handleInput(e) {
           inputText = inputText.slice(0, inputPreviousWordStart) + edit_string.replace(/#(.)/g, '#');
           const afterErrorCount = countCharErrors(inputText, targetText);
           if (afterErrorCount > beforeErrorCount) {
-            console.error("afterErrorCount > beforeErrorCount");
+            console.error("2: afterErrorCount > beforeErrorCount");
           }
           charErrorCount += afterErrorCount - beforeErrorCount;
           inputArea.value = inputText;
