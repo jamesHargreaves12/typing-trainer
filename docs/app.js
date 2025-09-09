@@ -1,3 +1,102 @@
+const INITIAL_SENTENCE_VARIANTS = [
+  // Group 1: Personal Coach & Adaptive Training
+  [
+    "Typo Dojo acts like your personal coach, tracking every keystroke and creating targeted drills to make progress inevitable.",
+    "With Typo Dojo, practice is never wasted-each drill is tailored to your mistakes, ensuring speed and accuracy improvements.",
+    // "Typo Dojo adapts to your strengths and weaknesses, guiding you with drills that evolve as your typing skills improve.",
+    "Every keystroke you make fuels Typo Dojo's adaptive engine, creating the most efficient training path for faster results.",
+    "Typo Dojo finds your toughest keystrokes and turns them into strengths with personalized, evolving practice sessions.",
+    "Stop generic practice. Typo Dojo adapts every drill to your errors, so progress in speed and accuracy becomes inevitable.",
+    "Typo Dojo is your typing mentor. An adaptive coach that evolves with you, ensuring every session brings measurable growth.",
+    "Practice smarter, not longer. Typo Dojo adapts training in real time so your weaknesses shrink and your speed soars.",
+    "Typo Dojo evolves with you, adjusting drills as you improve so growth never stops and typing mastery becomes natural.",
+    "Personalized coaching at scale. Typo Dojo uses your mistakes as fuel to craft adaptive drills that accelerate progress.",
+    // "With Typo Dojo, every session is custom-built for your skill level, ensuring that effort always turns into measurable growth.",
+    "Typo Dojo guides you step by step with adaptive coaching so you never plateau and your speed keeps climbing."
+  ],
+
+  // Group 2: Real-World Practice & Authentic Text
+  [
+    "Unlike other apps, Typo Dojo uses real sentences from Wikipedia and Sherlock Holmes to build skills that transfer to life.",
+    "Typo Dojo teaches with authentic sentences, not nonsense words, so the skills you build stick in emails, reports, and work.",
+    "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
+    "Typo Dojo makes practice real by using natural sentences, ensuring skills transfer seamlessly to daily typing tasks.",
+    "Random drills won't prepare you for real life. Typo Dojo builds speed and accuracy with authentic, meaningful text.",
+    "Typo Dojo trains you on real-world language so improvements instantly show up in emails, documents, and everyday typing.",
+    "Don't waste time on nonsense drills. Typo Dojo gives you natural, flowing text so you improve the way you actually type.",
+    "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
+    "Typo Dojo pulls from trusted sources to make practice authentic, so your training mirrors the way you really type.",
+    "By practicing with coherent text, Typo Dojo ensures your speed and accuracy upgrades show up where you need them most.",
+    "Meaningful practice with Typo Dojo means faster typing that feels natural in everyday communication.",
+    "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen."
+  ],
+
+  // Group 3: Error Elimination & Prediction
+  [
+    "Typo Dojo doesn't just track mistakes-it predicts them, highlights them, and helps you eliminate them one by one.",
+    "By recording every keystroke, Typo Dojo pinpoints your weak spots and designs drills to fix them permanently.",
+    "Typo Dojo anticipates where you're most likely to trip and highlights those areas so you can eliminate recurring mistakes.",
+    "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
+    "With predictive error highlighting, Typo Dojo ensures your toughest keystrokes get the focus they deserve.",
+    "Typo Dojo shines a spotlight on your weak points, transforming them into strengths with targeted drills and predictions.",
+    "Don't fight the same mistakes forever-Typo Dojo predicts them, highlights them, and helps you eliminate them fast.",
+    "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
+    "Your errors become the lesson plan: Typo Dojo finds, predicts, and fixes the mistakes holding you back.",
+    "Targeted error drills ensure Typo Dojo helps you unlearn bad habits and replace them with accuracy that lasts.",
+    "Typo Dojo analyzes your typo history to craft custom drills that attack your weakest patterns until they disappear.",
+    "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast."
+  ],
+
+  // Group 4: Speed & Accuracy
+  [
+    "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
+    "In today's digital world, typing faster and more accurately is priceless. Typo Dojo helps you master both efficiently.",
+    "Typo Dojo boosts your WPM and accuracy at the same time, turning practice into tangible improvements session by session.",
+    "Train smarter with Typo Dojo and watch your speed rise while your mistakes fall-it's the fastest way to real progress.",
+    "Faster typing saves hours every week. Typo Dojo makes every practice session count toward higher speed and accuracy.",
+    "Typo Dojo focuses training where it matters, giving you lasting gains in both typing speed and typing precision.",
+    "Typo Dojo is built for measurable results-each session makes you faster, smoother, and more accurate at the keyboard.",
+    "Typo Dojo doesn't waste time-it turns every drill into a step forward in speed and typing accuracy.",
+    "Your speed and accuracy grow hand in hand with Typo Dojo, making every session a leap forward in performance.",
+    "Typing mastery is measurable: Typo Dojo turns minutes of practice into noticeable gains in speed and precision.",
+    "Typo Dojo is your fast track to faster typing-accuracy improves naturally as drills sharpen your skills.",
+    // "Speed and accuracy no longer compete. With Typo Dojo, both rise together through focused, adaptive drills."
+  ],
+
+  // Group 5: Efficiency & Progress
+  [
+    "Typo Dojo eliminates wasted effort-every drill is optimized to deliver maximum improvement in minimum time.",
+    "Five minutes with Typo Dojo is more effective than hours of generic drills, because every keystroke is purposeful.",
+    "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
+    "Built for busy people, Typo Dojo skips the fluff and focuses only on what makes your typing better, faster.",
+    // "No filler, no wasted time. Typo Dojo delivers lean, efficient practice that guarantees progress without burnout.",
+    "Typo Dojo turns practice into progress by focusing training on the exact areas you need most.",
+    "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
+    "With Typo Dojo, every keystroke counts-progress becomes a natural byproduct of efficient, focused practice.",
+    "Efficiency is everything. Typo Dojo ensures that even short practice sessions turn into big typing gains.",
+    "Busy schedule? Typo Dojo compresses training into minutes that deliver real, lasting improvements.",
+    "Typo Dojo makes better typing achievable for anyone by squeezing maximum value out of every drill.",
+    "Focused practice beats long practice. Typo Dojo ensures the time you spend always moves you forward."
+  ],
+
+  // Group 6: Proof, Trust & Results
+  [
+    // "Over 230,000 learners have already improved their typing with Typo Dojo-consistent practice delivers proven results.",
+    "Hundreds of thousands of users trust Typo Dojo for lasting gains in speed and accuracy. Join them and see the progress for yourself.",
+    "Typo Dojo has a proven track record: stick with it and you'll see measurable improvements in speed and accuracy.",
+    "Real results, not empty promises-Typo Dojo has helped thousands transform typos into triumphs.",
+    "Typo Dojo's track record speaks for itself: consistent training leads to lasting speed and accuracy gains.",
+    "Join the Typo Dojo community of learners who've already unlocked faster, smoother typing through consistent practice.",
+    "Typo Dojo is proven to work-every learner who commits sees measurable, lasting improvements in typing performance.",
+    "With Typo Dojo, consistent practice turns into proven results you can measure in speed and accuracy.",
+    // "Trusted worldwide, Typo Dojo has helped thousands accelerate typing mastery through data-driven practice.",
+    "Every committed learner sees results: Typo Dojo consistently delivers measurable gains in speed and accuracy.",
+    "Proven impact at scale. Typo Dojo has transformed typing skills for thousands who dedicated just minutes each day.",
+    // "When learners commit, Typo Dojo delivers. Speed climbs, accuracy improves, and results speak for themselves."
+  ]
+];
+
+
 const LETTER_FREQUENCIES = {
   'A': 0.003153352805124311,
   'n': 0.055725109439303484,
@@ -327,6 +426,9 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
 
   return header;
 }
+function sampleOne(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
 
 function suggestErrorRepetitionStrategy(strategy){
   prev_reps = runHistory.slice(0,REPETION_STRATEGY_HISTORY_LENGTH);
@@ -336,6 +438,11 @@ function suggestErrorRepetitionStrategy(strategy){
   const error_rate_percentile = betaCDF(1 - accuracy, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
   const accuracy_percentile = 1 - error_rate_percentile;
   return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy);
+}
+const SECOND_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
+let THIRD_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
+while (SECOND_PASSAGE_INDEX === THIRD_PASSAGE_INDEX) {
+  THIRD_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
 }
 
 let DEFAULT_PASSAGES = [
@@ -360,7 +467,11 @@ let FALLBACK_PASSAGES = [
 ].map(passage => ({passage, source: 'fallback'}))
  
 let finishedDefaultPassages = false;
-let upcomingDefaultPassages = DEFAULT_PASSAGES;
+let upcomingDefaultPassages = [
+  DEFAULT_PASSAGES[0].passage,
+  sampleOne(INITIAL_SENTENCE_VARIANTS[SECOND_PASSAGE_INDEX]),
+  sampleOne(INITIAL_SENTENCE_VARIANTS[THIRD_PASSAGE_INDEX]),
+].map(passage => ({passage, source: 'default'}));
 let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 let currentPassageErrorActualChar = [];

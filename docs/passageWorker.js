@@ -1436,7 +1436,7 @@ const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousSpeedSelectionSt
 }
 const suggestStrategyFromSpeedLog = (speedLog, previousSpeedSelectionStrategies) => {
   const letterSpeedSuggestion = getLetterSpeedSuggestionFromSpeedLog(speedLog, previousSpeedSelectionStrategies);
-  console.log("letterSpeedSuggestion", letterSpeedSuggestion);
+  // console.log("letterSpeedSuggestion", letterSpeedSuggestion);
   return letterSpeedSuggestion;
 }
 
@@ -1831,10 +1831,6 @@ function simplifySentence(input) {
 
   return text.trim();
 }
-
-// Example
-console.log(simplifySentence("Let's meet on August 14, 2025 at NASA HQ. Bring 1,234 documents."));
-
 
 function makePassageEasy(passage) {
 
