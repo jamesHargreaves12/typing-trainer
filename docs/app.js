@@ -1377,15 +1377,22 @@ function handleInput(e) {
   }
   
   // Force cursor to end of input
-  let i = prevInputText.length
+  let inputText = inputArea.value;
+  let i = inputText.length - 1;
   const end = inputArea.value.length;
   inputArea.setSelectionRange(end, end);
+  
+  // Handle empty input
+  if (inputText.length === 0) {
+    colorText(inputText);
+    prevInputText = inputText;
+    return;
+  }
   
   if (e.data == ">" && targetText[i] != ".") {
     resetSession();
     return;
   }
-  let inputText = inputArea.value;
 
   if (e["inputType"] != "deleteContentBackward") {
     charTotalCount += 1;
@@ -1395,12 +1402,13 @@ function handleInput(e) {
     startTime = new Date();
     prevCharTime = new Date();
   }
-  unigram = targetText[i];
-
-  if (currentPassageLetterTimesSec.length <= i) {
-    const dt = new Date();
-    const letterTimeSec = (dt - prevCharTime) / 1000;
+  // Update timing for new characters
+  const dt = new Date();
+  for (let charIndex = currentPassageLetterTimesSec.length; charIndex < inputText.length && charIndex < targetText.length; charIndex++) {
+    const letterTimeSec = charIndex === 0 ? 0 : (dt - prevCharTime) / 1000;
     currentPassageLetterTimesSec.push(Math.round(letterTimeSec * 1000) / 1000); // seconds, rounded to 3 decimals
+    
+    const unigram = targetText[charIndex];
     if (speedLog['char'][unigram]) {
       speedLog['char'][unigram].unshift(letterTimeSec);
       speedLog['char'][unigram] = speedLog['char'][unigram].slice(0, 1000);
@@ -1408,29 +1416,39 @@ function handleInput(e) {
     else{
       speedLog['char'][unigram] = [letterTimeSec];
     }
+  }
+  if (inputText.length > 0) {
     prevCharTime = dt;
   }
   const typedChar = inputText[i];
 
-  if (prevInputText.length == inputText.length - 1 && prevInputText == inputText.slice(0, -1) && inputText.length <= targetText.length) {
-    bigram = targetText.slice(i-1, i+1);
-    trigram = targetText.slice(i-2, i+1);
-    quadgram = targetText.slice(i-3, i+1);
+  // Process all characters that are new since last input (handles rapid typing, paste, etc.)
+  const startIndex = Math.max(0, prevInputText.length);
+  const endIndex = Math.min(inputText.length, targetText.length);
+  
+  for (let charIndex = startIndex; charIndex < endIndex; charIndex++) {
+    const currentTypedChar = inputText[charIndex];
+    const currentTargetChar = targetText[charIndex];
+    
+    // Update n-gram tracking
+    const currentUnigram = targetText[charIndex];
+    const currentBigram = targetText.slice(charIndex-1, charIndex+1);
+    const currentTrigram = targetText.slice(charIndex-2, charIndex+1);
+    const currentQuadgram = targetText.slice(charIndex-3, charIndex+1);
 
-    // TODO we should add a suffix to start to capture first letter bigrams etc
-    seenLog['char'][unigram] = (seenLog['char'][unigram] || 0) + 1;
-    if (bigram.length > 1) {
-      seenLog['bigram'][bigram] = (seenLog['bigram'][bigram] || 0) + 1;
+    seenLog['char'][currentUnigram] = (seenLog['char'][currentUnigram] || 0) + 1;
+    if (currentBigram.length > 1) {
+      seenLog['bigram'][currentBigram] = (seenLog['bigram'][currentBigram] || 0) + 1;
     }
-    if (trigram.length > 2) {
-      seenLog['trigram'][trigram] = (seenLog['trigram'][trigram] || 0) + 1;
+    if (currentTrigram.length > 2) {
+      seenLog['trigram'][currentTrigram] = (seenLog['trigram'][currentTrigram] || 0) + 1;
     }
-    if (quadgram.length > 3) {
-      seenLog['quadgram'][quadgram] = (seenLog['quadgram'][quadgram] || 0) + 1;
+    if (currentQuadgram.length > 3) {
+      seenLog['quadgram'][currentQuadgram] = (seenLog['quadgram'][currentQuadgram] || 0) + 1;
     }
 
-
-    if (typedChar !== null && typedChar !== targetText[i]) {
+    // Check for errors
+    if (currentTypedChar !== null && currentTypedChar !== currentTargetChar) {
       charErrorCount += 1;
       if (soundOnError) {
         errorSound.currentTime = 0; // Reset sound to start
@@ -1444,28 +1462,27 @@ function handleInput(e) {
       }
 
       // Only interesting if not a repeated error and not preceeded by an error.
-      const isNonInterestingError = currentPassageErrors.includes(i) && currentPassageErrors.includes(i-1);
+      const isNonInterestingError = currentPassageErrors.includes(charIndex) || currentPassageErrors.includes(charIndex-1);
       
-      currentPassageErrors.push(i);
-      currentPassageErrorActualChar.push(typedChar);
+      currentPassageErrors.push(charIndex);
+      currentPassageErrorActualChar.push(currentTypedChar);
 
-      
-      errorLog['char'][unigram] = (errorLog['char'][unigram] || 0) + 1;
+      errorLog['char'][currentUnigram] = (errorLog['char'][currentUnigram] || 0) + 1;
       errorCount += 1;
-      if (bigram.length > 1) {
-        errorLog['bigram'][bigram] = (errorLog['bigram'][bigram] || 0) + 1;
+      if (currentBigram.length > 1) {
+        errorLog['bigram'][currentBigram] = (errorLog['bigram'][currentBigram] || 0) + 1;
       }
-      if (trigram.length > 2) {
-        errorLog['trigram'][trigram] = (errorLog['trigram'][trigram] || 0) + 1;
+      if (currentTrigram.length > 2) {
+        errorLog['trigram'][currentTrigram] = (errorLog['trigram'][currentTrigram] || 0) + 1;
       }
-      if (quadgram.length > 3) {
-        errorLog['quadgram'][quadgram] = (errorLog['quadgram'][quadgram] || 0) + 1;
+      if (currentQuadgram.length > 3) {
+        errorLog['quadgram'][currentQuadgram] = (errorLog['quadgram'][currentQuadgram] || 0) + 1;
       }
 
       if (!isNonInterestingError) {
-        interestingErrorLog['char'][unigram] = (interestingErrorLog['char'][unigram] || 0) + 1;
-        if (bigram.length > 1) {
-          interestingErrorLog['bigram'][bigram] = (interestingErrorLog['bigram'][bigram] || 0) + 1;
+        interestingErrorLog['char'][currentUnigram] = (interestingErrorLog['char'][currentUnigram] || 0) + 1;
+        if (currentBigram.length > 1) {
+          interestingErrorLog['bigram'][currentBigram] = (interestingErrorLog['bigram'][currentBigram] || 0) + 1;
         }
       }
     }
@@ -1729,6 +1746,12 @@ function resetStats() {
     'trigram': {},
     'quadgram': {}
   };
+  interestingErrorLog = {
+    'char': {},
+    'bigram': {},
+    'trigram': {},
+    'quadgram': {}
+  };
   
   // Reset run history
   runHistory = [];
@@ -1736,6 +1759,7 @@ function resetStats() {
   // Clear localStorage
   localStorage.removeItem('errorLog');
   localStorage.removeItem('seenLog');
+  localStorage.removeItem('interestingErrorLog');
   localStorage.removeItem('speedLog');
   localStorage.removeItem('runHistory');
   localStorage.removeItem('repetition_count');
