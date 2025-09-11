@@ -621,7 +621,7 @@ async function setup_pyodide() {
   const micropip = pyodide.pyimport("micropip");
   const [x, lgbm_response, error_model_response] = await Promise.all([
     micropip.install(['lightgbm', 'numpy']),
-    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_model_2.txt'),
+    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_v2/lgbm_model.txt'),
     fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz')
   ]);
   // await micropip.install('numpy');
@@ -635,6 +635,7 @@ async function setup_pyodide() {
 
 
 const arrFreqAndFileName = [[quadgramFrequency, 'quadgrams_2'], [defaultQuadgramErrorModel, 'quadgram_error_model']];
+const get_or_zero = (obj, key) => obj[key] || 0;
 const get_features = (passage, user_intro_acc, user_intro_wpm) => {
   const features = {
     "user_intro_acc": user_intro_acc,
@@ -648,27 +649,47 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
 
   const wordScores = passage.split(" ").filter(word => word_feats[word]).map(word => word_feats[word]);
   if (wordScores.length > 0) {
-    // features["word_many_to_end_max"] = Math.max(...wordScores);
+    features["word_zero_to_end_count_max"] = Math.max(...wordScores.map(word_score => word_score[0]));
+    features["word_one_to_end_count_max"] = Math.max(...wordScores.map(word_score => word_score[1]));
+    features["word_many_to_end_max"] = Math.max(...wordScores.map(word_score => word_score[2]));
+
+    // features["word_zero_to_end_max"] = Math.max(...wordScores.map(word_score => word_score[0]));
+    features["word_one_to_end_count_min"] = Math.min(...wordScores.map(word_score => word_score[1]));
+    features["word_many_to_end_min"] = Math.min(...wordScores.map(word_score => word_score[2]));
+
     // features["word_many_to_end_min"] = Math.min(...wordScores);
-    features["word_zero_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[0], 0) / wordScores.length;
-    features["word_one_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[1], 0) / wordScores.length;
+    features["word_zero_to_end_count_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[0], 0) / wordScores.length;
+    features["word_one_to_end_count_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[1], 0) / wordScores.length;
     features["word_many_to_end_mean"] = wordScores.reduce((acc, word_scores) => acc + word_scores[2], 0) / wordScores.length;
     // features["word_many_to_end_count_positive"] = wordScores.filter(score => score > 0).length;
     // features["word_many_to_end_count_negative"] = wordScores.filter(score => score < 0).length;
   } else {
-    // features["word_many_to_end_max"] = undefined;
-    // features["word_many_to_end_min"] = undefined;
-    features["word_zero_to_end_mean"] = undefined;
-    features["word_one_to_end_mean"] = undefined;
+    features["word_zero_to_end_count_max"] = undefined;
+    features["word_one_to_end_count_max"] = undefined;
+    features["word_many_to_end_max"] = undefined;
+    features["word_one_to_end_count_min"] = undefined;
+    features["word_many_to_end_min"] = undefined;
+    features["word_zero_to_end_count_mean"] = undefined;
+    features["word_one_to_end_count_mean"] = undefined;
     features["word_many_to_end_mean"] = undefined;
     // features["word_many_to_end_count_positive"] = undefined;
     // features["word_many_to_end_count_negative"] = undefined;
   }
-  // const utcNow = new Date();
-  // features["time_hour"] = utcNow.getHours();
-  // features["time_minutes"] = utcNow.getMinutes();
-  // features["passage_len"] = passage.length;
-  // features["passage_error_score_norm"] = get_default_error_score_norm(passage, defaultQuadgramErrorModel);
+  // Count letters
+  const letterCounts = passage.split("").reduce((acc, letter) => {
+    acc[letter] = (acc[letter] || 0) + 1;
+    return acc;
+  }, {});
+  features["apostrophe_len"] = letterCounts["'"] || 0;
+  features["comma_len"] = letterCounts[","] || 0;
+  features["period_len"] = letterCounts["."] || 0;
+  features["exclamation_mark_len"] = letterCounts["!"] || 0;
+  features["passage_len"] = passage.length;
+
+  features["punc_len"] = "()\"',.?!-:".split("").reduce((acc, letter) => acc + get_or_zero(letterCounts, letter), 0);
+  features["caps_len"] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").reduce((acc, letter) => acc + get_or_zero(letterCounts, letter), 0);
+  features["numbers_len"] = "0123456789".split("").reduce((acc, letter) => acc + get_or_zero(letterCounts, letter), 0);
+
   return features;
 }
 
@@ -678,6 +699,7 @@ const call_lgbm = async (passages, user_intro_acc, user_intro_wpm) => {
   ));
   // console.log(data);
   // Save the model text to the Pyodide file system
+  console.log("feats", data[0]);
   pyodide.FS.writeFile('input.json', JSON.stringify(data));
 
   // Load the model from the file system
@@ -1589,7 +1611,7 @@ const compute_error_highlight_indecies = async (passage, highlight_error_pct, un
 }
 
 const load_lgbm_feat_files = async () => {
-  const c = fetch(`https://jameshargreaves12.github.io/reference_data/word_feats.json`)
+  const c = fetch(`https://jameshargreaves12.github.io/reference_data/lgbm_v2/word_feats.json`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
