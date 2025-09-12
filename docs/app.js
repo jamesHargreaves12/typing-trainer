@@ -1630,6 +1630,9 @@ function annotateEdits(typed, target) {
 }
 
 document.addEventListener('keydown', (e) => {
+  if (e.target.id == "feedbackMessage") {
+    return;
+  }
   inputArea.focus();
   if (e.key === 'Tab') {
     e.preventDefault();
@@ -2082,6 +2085,24 @@ function logErrorToS3(error, source = 'main_app') {
   }
 }
 
+const logFeedbackToS3 = (feedback) => {
+  try {
+    const data = {
+      uid: userId,
+      timestamp: new Date().toISOString(),
+      feedback: feedback
+    };
+    if (window.location.hostname === 'localhost' || window.location.hostname === '') {
+      console.log('Feedback would be sent to S3:', JSON.stringify(data));
+      return;
+    }
+
+    navigator.sendBeacon('https://fhh4l7u7d7.execute-api.eu-west-2.amazonaws.com/default/feedback-log', JSON.stringify(data));
+  } catch (sendError) {
+    originalConsoleError('Failed to send feedback to S3:', sendError);
+  }
+}
+
 // Override console.error to automatically log all errors
 console.error = function(...args) {
   // Call original console.error first
@@ -2130,6 +2151,101 @@ window.addEventListener('unhandledrejection', (event) => {
   // The console.error override will handle logging to S3
 });
 
+// Feedback Dialog functionality
+function openFeedbackModal() {
+  const modal = document.getElementById('feedbackModal');
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  
+  // Auto-focus the textarea
+  setTimeout(() => {
+    const textarea = document.getElementById('feedbackMessage');
+    if (textarea) {
+      textarea.focus();
+    }
+  }, 100); // Small delay to ensure modal is fully rendered
+}
+
+function closeFeedbackModal() {
+  const modal = document.getElementById('feedbackModal');
+  modal.style.display = 'none';
+  document.body.style.overflow = 'auto'; // Restore scrolling
+  // Reset form
+  document.getElementById('feedbackForm').reset();
+}
+
+function handleFeedbackSubmission(event) {
+  event.preventDefault();
+  
+  const message = document.getElementById('feedbackMessage').value.trim();
+  const email = document.getElementById('feedbackEmail').value.trim();
+  
+  // Validate required fields
+  if (!message) {
+    alert('Please share your thoughts on how we can improve Typo Dojo.');
+    return;
+  }
+  
+  const feedbackData = {
+    message: message,
+    email: email
+  };
+  
+  // Disable submit button to prevent double submission
+  const submitButton = document.getElementById('submitFeedback');
+  submitButton.disabled = true;
+  submitButton.textContent = 'Sending...';
+  
+  // Send feedback to S3
+  logFeedbackToS3(feedbackData);
+  
+  // Show success message and close modal
+  setTimeout(() => {
+    closeFeedbackModal();
+    submitButton.disabled = false;
+    submitButton.textContent = 'Send Feedback';
+  }, 100);
+}
+
 window.addEventListener('load', () => {
   document.getElementById('resetStats').addEventListener('click', resetStats);
+  
+  // Feedback dialog event listeners
+  const feedbackButton = document.getElementById('feedbackButton');
+  const closeButton = document.getElementById('closeFeedbackModal');
+  const cancelButton = document.getElementById('cancelFeedback');
+  const feedbackForm = document.getElementById('feedbackForm');
+  const modal = document.getElementById('feedbackModal');
+  
+  if (feedbackButton) {
+    feedbackButton.addEventListener('click', openFeedbackModal);
+  }
+  
+  if (closeButton) {
+    closeButton.addEventListener('click', closeFeedbackModal);
+  }
+  
+  if (cancelButton) {
+    cancelButton.addEventListener('click', closeFeedbackModal);
+  }
+  
+  if (feedbackForm) {
+    feedbackForm.addEventListener('submit', handleFeedbackSubmission);
+  }
+  
+  // Close modal when clicking outside of it
+  if (modal) {
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        closeFeedbackModal();
+      }
+    });
+  }
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal && modal.style.display === 'block') {
+      closeFeedbackModal();
+    }
+  });
 });

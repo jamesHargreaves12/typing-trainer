@@ -52,7 +52,7 @@
         <span class="separator">|</span>
         <a href="https://github.com/jamesHargreaves12" class="feedback-tab">Team</a>
         <span class="separator">|</span>
-        <a href="mailto:typo-dojo@gmail.com" class="feedback-tab">Feedback</a>
+        <button id="feedbackButton" class="feedback-tab">Feedback</button>
         <span class="separator">|</span>
         <a href="/faq.html" class="feedback-tab">FAQ</a>
       </div>
@@ -139,6 +139,32 @@
           <div id="topErrors" style="display: none;"></div>
           <div id="history" class="history-list" style="display: none;"></div>
         </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Feedback Dialog Modal -->
+  <div id="feedbackModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Send Feedback</h2>
+        <span class="close" id="closeFeedbackModal">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="feedbackForm">
+          <div class="form-group">
+            <label for="feedbackMessage">How can we improve Typo Dojo?</label>
+            <textarea id="feedbackMessage" placeholder="Share your thoughts..." required rows="5"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="feedbackEmail">Email (optional):</label>
+            <input type="email" id="feedbackEmail" placeholder="your.email@example.com">
+          </div>
+          <div class="form-actions">
+            <button type="button" id="cancelFeedback" class="btn btn-secondary">Cancel</button>
+            <button type="submit" id="submitFeedback" class="btn btn-primary">Send Feedback</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
