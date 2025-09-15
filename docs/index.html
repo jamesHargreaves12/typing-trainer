@@ -7,6 +7,13 @@
   <meta name="keywords" content="typing test, typing speed test, typing practice, wpm test, typing training, improve typing speed, typing accuracy, touch typing, typing tutor, typing skills, keyboard practice, typing games, typing exercises, learn to type, typing lessons, online typing test, typing speed calculator, typing drills, typing improvement, typing metrics, typing analytics, typing statistics, typing progress tracker, typing speed improvement, typing accuracy training">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <!-- Performance optimizations -->
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//cdn.freesound.org">
+  
   <!-- Open Graph tags for social sharing -->
   <meta property="og:title" content="Typo Dojo - Free Personalised Typing Training">
   <meta property="og:description" content="Improve your typing speed and accuracy with personalised practice and real-time feedback. Track WPM and accuracy progress.">
@@ -18,27 +25,245 @@
   <meta name="twitter:title" content="Typo Dojo - Free Personalised Typing Training">
   <meta name="twitter:description" content="Free typing training tool that learns and adapts from your mistakes to improve your typing speed and accuracy.">
 
-  <link rel="stylesheet" href="styles.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="canonical" href="https://typo-dojo.com">
+  
+  <!-- Resource hints for faster loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="app.js" as="script">
+  <link rel="preload" href="styles.css" as="style">
 
   <link rel="preload" 
         href="https://fonts.gstatic.com/s/robotomono/v30/L0x5DF4xlVMF-BfR8bXMIjhLq3-cXbKD.woff2" 
         as="font" type="font/woff2" crossorigin>
 
-
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-T5BNNGSFNN"></script>
+  <!-- Critical CSS inlined for faster rendering -->
+  <style>
+    body {
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, Vazirmatn, monospace;
+      margin: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1;
+      font-variant-ligatures: no-common-ligatures;
+      font-size-adjust: from-font;
+      font-synthesis-weight: none;
+    }
+    
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #2c3e50;
+      --card-bg: #ffffff;
+      --border-color: #e1e8ed;
+      --progress-bg: #edf2f7;
+      --progress-fill: #38a169;
+      --button-bg: #3182ce;
+      --button-hover: #2b6cb0;
+      --correct-color: #38a169;
+      --error-color: #e53e3e;
+      --text-muted: #718096;
+      --text-secondary: #4a5568;
+      --highlight-color: rgba(255, 245, 157, 0.7);
+    }
+    
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #e0e0e0;
+      --card-bg: #2d2d2d;
+      --border-color: #404040;
+      --progress-bg: #404040;
+      --progress-fill: #66bb6a;
+      --button-bg: #4a768a;
+      --button-hover: #5f8fa0;
+      --correct-color: #66bb6a;
+      --error-color: #ef5350;
+      --text-muted: #888;
+      --text-secondary: #999;
+      --highlight-color: rgba(255, 245, 157, 0.3);
+    }
+    
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: none;
+      margin: 0;
+      padding: 2rem;
+    }
+    
+    .main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 4rem 0;
+      width: 100%;
+    }
+    
+    .text-display {
+      font-family: "Roboto Mono", "Roboto Mono", Vazirmatn, monospace;
+      font-size: 1.4rem;
+      background-color: var(--card-bg);
+      padding: 1rem;
+      border: 1px solid var(--border-color);
+      line-height: 1;
+      margin-bottom: 1rem;
+      user-select: none;
+      white-space: normal;
+      word-wrap: normal;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      display: flex;
+      flex-wrap: wrap;
+      border-radius: 8px;
+      font-variant-ligatures: no-common-ligatures;
+    }
+    
+    .text-display .word {
+      display: inline-flex;
+      white-space: nowrap;
+      line-height: 1;
+      margin-right: 0.2rem;
+    }
+    
+    .text-display .letter {
+      display: inline-block;
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+    
+    .text-display .space {
+      display: inline-block;
+      width: 0.6rem;
+    }
+    
+    .text-display .cursor {
+      color: var(--text-color);
+      border-bottom: 2px solid var(--text-color);
+      margin-bottom: 2px;
+      animation: cursor-flash 1.5s ease-in-out 1s infinite;
+    }
+    
+    @keyframes cursor-flash {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    
+    .progress-bar-background {
+      background-color: var(--progress-bg);
+      height: 6px;
+      border-radius: 3px;
+      flex: 1;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background-color: var(--progress-fill);
+      width: 0;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    .next-button {
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      font-weight: 500;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2.5rem;
+      flex: 0;
+    }
+    
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .app-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--text-color);
+      letter-spacing: -0.5px;
+    }
+    
+    .social-proof-text {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 3rem;
+    }
+    
+    /* Prevent layout shift during font loading */
+    .text-display {
+      font-display: swap;
+      min-height: 60px; /* Reserve space for text */
+    }
+    
+    /* Optimize initial paint */
+    .progress-and-next {
+      display: flex;
+      gap: 1rem;
+      min-height: 40px; /* Reserve space */
+    }
+    
+    /* Hide non-critical elements initially */
+    #metrics {
+      display: flex;
+      gap: 2rem;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      visibility: hidden; /* Will be shown by JS */
+    }
+    
+    .stats-section {
+      min-height: 200px; /* Reserve space */
+    }
+  </style>
+  
+  <!-- Load full CSS asynchronously -->
+  <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="styles.css"></noscript>
+  
+  <!-- Defer analytics to not block rendering -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-T5BNNGSFNN');
+    // Defer Google Analytics loading
+    window.addEventListener('load', function() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-T5BNNGSFNN';
+      document.head.appendChild(script);
+      
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-T5BNNGSFNN');
+    });
   </script>
-  <audio id="errorSound" src="https://cdn.freesound.org/previews/764/764796_2954988-lq.mp3" preload="auto"></audio>
+  
+  <!-- Preload audio but don't auto-load -->
+  <audio id="errorSound" preload="metadata">
+    <source src="https://cdn.freesound.org/previews/764/764796_2954988-lq.mp3" type="audio/mpeg">
+  </audio>
 </head>
 <body>
   <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">
@@ -169,7 +394,18 @@
     </div>
   </div>
   
-  <script src="app.js"></script>
+  <!-- Defer JavaScript to not block rendering -->
+  <script defer src="app.js"></script>
+  
+  <!-- Show metrics when ready -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const metrics = document.getElementById('metrics');
+      if (metrics) {
+        metrics.style.visibility = 'visible';
+      }
+    });
+  </script>
 </body>
 </html>
 
