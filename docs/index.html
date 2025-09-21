@@ -246,6 +246,12 @@
   
   <!-- Defer analytics to not block rendering -->
   <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+  </script>
+  
+  
+  <script>
     // Defer Google Analytics loading
     window.addEventListener('load', function() {
       const script = document.createElement('script');
@@ -254,7 +260,6 @@
       document.head.appendChild(script);
       
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-T5BNNGSFNN');
     });
