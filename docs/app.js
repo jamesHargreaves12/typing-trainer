@@ -902,7 +902,7 @@ function recordUserLeaveText() {
     navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify(data));
   }
 }
-  
+
 window.addEventListener('beforeunload', recordUserLeaveText);
 
 
@@ -1892,8 +1892,9 @@ function calculateMetrics() {
   // const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
   const cappedPassageLetterTimes = currentPassageLetterTimesSec.map(t => Math.max(0, Math.min(t, 2))); // cap the time for a letter at 2 seconds ~ 6wpm
   const timeElapsedMins = cappedPassageLetterTimes.reduce((a, b) => a + b, 0) / 60;
-  const charsPerWord = 4.7;
-  let rawWpm = charTotalCount / charsPerWord / timeElapsedMins;
+  const charsPerWord = 5.0;
+  let lettersTyped = currentPassageLetterTimesSec.length;
+  let rawWpm = lettersTyped / charsPerWord / timeElapsedMins;
   let wpm = Math.round(rawWpm);
   const rawErrRate = charErrorCount / charTotalCount;
   const errRate_percentile = betaCDF(rawErrRate, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
