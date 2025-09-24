@@ -2,305 +2,305 @@ const INITIAL_SENTENCE_VARIANTS = [
   [
     {
       "passage": "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
-      "alpha": 188.57537750061311,
-      "beta": 56.424622499386885
+      "alpha": 233.60811746379738,
+      "beta": 68.39188253620262
     }
   ],
   [
     {
       "passage": "By practicing with coherent text, Typo Dojo ensures your speed and accuracy upgrades show up where you need them most.",
-      "alpha": 88.57537750061311,
-      "beta": 8.424622499386885
+      "alpha": 198.60811746379738,
+      "beta": 16.391882536202615
     },
     {
       "passage": "Don't waste time on nonsense drills. Typo Dojo gives you natural, flowing text so you improve the way you actually type.",
-      "alpha": 320.5753775006131,
-      "beta": 26.424622499386885
+      "alpha": 351.6081174637974,
+      "beta": 27.391882536202615
     },
     {
       "passage": "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
-      "alpha": 444.5753775006131,
-      "beta": 33.424622499386885
+      "alpha": 501.6081174637974,
+      "beta": 34.391882536202615
     },
     {
       "passage": "Meaningful practice with Typo Dojo means faster typing that feels natural in everyday communication.",
-      "alpha": 610.5753775006131,
-      "beta": 52.42462249938694
+      "alpha": 700.6081174637974,
+      "beta": 56.391882536202615
     },
     {
       "passage": "Random drills won't prepare you for real life. Typo Dojo builds speed and accuracy with authentic, meaningful text.",
-      "alpha": 300.5753775006131,
-      "beta": 27.424622499386885
+      "alpha": 307.6081174637974,
+      "beta": 27.391882536202615
     },
     {
       "passage": "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
-      "alpha": 205.57537750061311,
-      "beta": 16.424622499386885
+      "alpha": 308.6081174637974,
+      "beta": 23.391882536202615
     },
     {
       "passage": "Typo Dojo makes practice real by using natural sentences, ensuring skills transfer seamlessly to daily typing tasks.",
-      "alpha": 491.5753775006131,
-      "beta": 42.42462249938694
+      "alpha": 496.6081174637974,
+      "beta": 42.391882536202615
     },
     {
       "passage": "Typo Dojo pulls from trusted sources to make practice authentic, so your training mirrors the way you really type.",
-      "alpha": 102.57537750061311,
-      "beta": 10.424622499386885
+      "alpha": 176.60811746379738,
+      "beta": 13.391882536202615
     },
     {
       "passage": "Typo Dojo teaches with authentic sentences, not nonsense words, so the skills you build stick in emails, reports, and work.",
-      "alpha": 62.57537750061311,
-      "beta": 7.424622499386885
+      "alpha": 120.60811746379738,
+      "beta": 8.391882536202615
     },
     {
       "passage": "Typo Dojo trains you on real-world language so improvements instantly show up in emails, documents, and everyday typing.",
-      "alpha": 83.57537750061311,
-      "beta": 10.424622499386885
+      "alpha": 108.60811746379738,
+      "beta": 11.391882536202615
     },
     {
       "passage": "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen.",
-      "alpha": 171.57537750061311,
-      "beta": 16.424622499386885
+      "alpha": 194.60811746379738,
+      "beta": 16.391882536202615
     },
     {
       "passage": "Unlike other apps, Typo Dojo uses real sentences from Wikipedia and Sherlock Holmes to build skills that transfer to life.",
-      "alpha": 1773.575377500613,
-      "beta": 133.42462249938694
+      "alpha": 2006.6081174637973,
+      "beta": 156.3918825362025
     },
     {
       "passage": "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
-      "alpha": 4772.575377500613,
-      "beta": 415.4246224993867
+      "alpha": 4884.6081174637975,
+      "beta": 422.3918825362025
     }
   ],
   [
     {
       "passage": "By recording every keystroke, Typo Dojo pinpoints your weak spots and designs drills to fix them permanently.",
-      "alpha": 453.5753775006131,
-      "beta": 38.424622499386885
+      "alpha": 523.6081174637974,
+      "beta": 42.391882536202615
     },
     {
       "passage": "Don't fight the same mistakes forever-Typo Dojo predicts them, highlights them, and helps you eliminate them fast.",
-      "alpha": 57.57537750061311,
-      "beta": 9.424622499386892
+      "alpha": 60.608117463797385,
+      "beta": 9.391882536202615
     },
     {
       "passage": "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast.",
-      "alpha": 236.57537750061311,
-      "beta": 16.424622499386885
+      "alpha": 508.6081174637974,
+      "beta": 24.391882536202615
     },
     {
       "passage": "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
-      "alpha": 624.5753775006131,
-      "beta": 37.42462249938694
+      "alpha": 948.6081174637974,
+      "beta": 39.391882536202615
     },
     {
       "passage": "Targeted error drills ensure Typo Dojo helps you unlearn bad habits and replace them with accuracy that lasts.",
-      "alpha": 166.57537750061311,
-      "beta": 13.424622499386885
+      "alpha": 282.6081174637974,
+      "beta": 14.391882536202615
     },
     {
       "passage": "Typo Dojo analyzes your typo history to craft custom drills that attack your weakest patterns until they disappear.",
-      "alpha": 156.57537750061311,
-      "beta": 18.424622499386885
+      "alpha": 157.60811746379738,
+      "beta": 18.391882536202615
     },
     {
       "passage": "Typo Dojo anticipates where you're most likely to trip and highlights those areas so you can eliminate recurring mistakes.",
-      "alpha": 77.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 99.60811746379738,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Typo Dojo doesn't just track mistakes-it predicts them, highlights them, and helps you eliminate them one by one.",
-      "alpha": 125.57537750061311,
-      "beta": 13.424622499386885
+      "alpha": 141.60811746379738,
+      "beta": 14.391882536202615
     },
     {
       "passage": "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
-      "alpha": 539.5753775006131,
-      "beta": 35.42462249938694
+      "alpha": 683.6081174637974,
+      "beta": 38.391882536202615
     },
     {
       "passage": "Typo Dojo shines a spotlight on your weak points, transforming them into strengths with targeted drills and predictions.",
-      "alpha": 142.57537750061311,
-      "beta": 11.424622499386885
+      "alpha": 321.6081174637974,
+      "beta": 19.391882536202615
     },
     {
       "passage": "With predictive error highlighting, Typo Dojo ensures your toughest keystrokes get the focus they deserve.",
-      "alpha": 302.5753775006131,
-      "beta": 20.424622499386885
+      "alpha": 511.6081174637974,
+      "beta": 33.391882536202615
     },
     {
       "passage": "Your errors become the lesson plan: Typo Dojo finds, predicts, and fixes the mistakes holding you back.",
-      "alpha": 488.5753775006131,
-      "beta": 36.42462249938694
+      "alpha": 516.6081174637974,
+      "beta": 37.391882536202615
     }
   ],
   [
     {
       "passage": "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
-      "alpha": 178.57537750061311,
-      "beta": 22.424622499386885
+      "alpha": 178.60811746379738,
+      "beta": 22.391882536202615
     },
     {
       "passage": "Faster typing saves hours every week. Typo Dojo makes every practice session count toward higher speed and accuracy.",
-      "alpha": 2987.5753775006133,
-      "beta": 265.4246224993867
+      "alpha": 3495.6081174637975,
+      "beta": 324.3918825362025
     },
     {
       "passage": "In today's digital world, typing faster and more accurately is priceless. Typo Dojo helps you master both efficiently.",
-      "alpha": 165.57537750061311,
-      "beta": 13.424622499386885
+      "alpha": 276.6081174637974,
+      "beta": 20.391882536202615
     },
     {
       "passage": "Train smarter with Typo Dojo and watch your speed rise while your mistakes fall-it's the fastest way to real progress.",
-      "alpha": 398.5753775006131,
-      "beta": 24.424622499386885
+      "alpha": 777.6081174637974,
+      "beta": 36.391882536202615
     },
     {
       "passage": "Typing mastery is measurable: Typo Dojo turns minutes of practice into noticeable gains in speed and precision.",
-      "alpha": 79.57537750061311,
-      "beta": 10.424622499386885
+      "alpha": 92.60811746379738,
+      "beta": 12.391882536202615
     },
     {
       "passage": "Typo Dojo boosts your WPM and accuracy at the same time, turning practice into tangible improvements session by session.",
-      "alpha": 58.57537750061311,
-      "beta": 9.424622499386892
+      "alpha": 61.608117463797385,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Typo Dojo doesn't waste time-it turns every drill into a step forward in speed and typing accuracy.",
-      "alpha": 76.57537750061311,
-      "beta": 8.424622499386885
+      "alpha": 145.60811746379738,
+      "beta": 9.391882536202615
     },
     {
       "passage": "Typo Dojo focuses training where it matters, giving you lasting gains in both typing speed and typing precision.",
-      "alpha": 79.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 107.60811746379738,
+      "beta": 12.391882536202615
     },
     {
       "passage": "Typo Dojo is built for measurable results-each session makes you faster, smoother, and more accurate at the keyboard.",
-      "alpha": 195.57537750061311,
-      "beta": 19.424622499386885
+      "alpha": 212.60811746379738,
+      "beta": 19.391882536202615
     },
     {
       "passage": "Typo Dojo is your fast track to faster typing-accuracy improves naturally as drills sharpen your skills.",
-      "alpha": 69.57537750061311,
-      "beta": 11.424622499386885
+      "alpha": 73.60811746379738,
+      "beta": 12.391882536202615
     },
     {
       "passage": "Your speed and accuracy grow hand in hand with Typo Dojo, making every session a leap forward in performance.",
-      "alpha": 467.5753775006131,
-      "beta": 28.424622499386885
+      "alpha": 836.6081174637974,
+      "beta": 37.391882536202615
     }
   ],
   [
     {
       "passage": "Built for busy people, Typo Dojo skips the fluff and focuses only on what makes your typing better, faster.",
-      "alpha": 88.57537750061311,
-      "beta": 8.424622499386885
+      "alpha": 198.60811746379738,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Busy schedule? Typo Dojo compresses training into minutes that deliver real, lasting improvements.",
-      "alpha": 131.57537750061311,
-      "beta": 10.424622499386885
+      "alpha": 346.6081174637974,
+      "beta": 18.391882536202615
     },
     {
       "passage": "Efficiency is everything. Typo Dojo ensures that even short practice sessions turn into big typing gains.",
-      "alpha": 561.5753775006131,
-      "beta": 55.42462249938694
+      "alpha": 632.6081174637974,
+      "beta": 61.391882536202615
     },
     {
       "passage": "Five minutes with Typo Dojo is more effective than hours of generic drills, because every keystroke is purposeful.",
-      "alpha": 336.5753775006131,
-      "beta": 26.424622499386885
+      "alpha": 386.6081174637974,
+      "beta": 26.391882536202615
     },
     {
       "passage": "Focused practice beats long practice. Typo Dojo ensures the time you spend always moves you forward.",
-      "alpha": 140.57537750061311,
-      "beta": 12.424622499386885
+      "alpha": 250.60811746379738,
+      "beta": 14.391882536202615
     },
     {
       "passage": "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
-      "alpha": 79.57537750061311,
-      "beta": 10.424622499386885
+      "alpha": 87.60811746379738,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
-      "alpha": 67.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 81.60811746379738,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Typo Dojo eliminates wasted effort-every drill is optimized to deliver maximum improvement in minimum time.",
-      "alpha": 84.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 113.60811746379738,
+      "beta": 11.391882536202615
     },
     {
       "passage": "Typo Dojo makes better typing achievable for anyone by squeezing maximum value out of every drill.",
-      "alpha": 99.57537750061311,
-      "beta": 7.424622499386885
+      "alpha": 473.6081174637974,
+      "beta": 24.391882536202615
     },
     {
       "passage": "Typo Dojo turns practice into progress by focusing training on the exact areas you need most.",
-      "alpha": 294.5753775006131,
-      "beta": 20.424622499386885
+      "alpha": 477.6081174637974,
+      "beta": 29.391882536202615
     },
     {
       "passage": "With Typo Dojo, every keystroke counts-progress becomes a natural byproduct of efficient, focused practice.",
-      "alpha": 395.5753775006131,
-      "beta": 37.424622499386885
+      "alpha": 476.6081174637974,
+      "beta": 49.391882536202615
     }
   ],
   [
     {
       "passage": "Every committed learner sees results: Typo Dojo consistently delivers measurable gains in speed and accuracy.",
-      "alpha": 217.57537750061311,
-      "beta": 16.424622499386885
+      "alpha": 379.6081174637974,
+      "beta": 21.391882536202615
     },
     {
       "passage": "Hundreds of thousands of users trust Typo Dojo for lasting gains in speed and accuracy. Join them and see the progress for yourself.",
-      "alpha": 289.5753775006131,
-      "beta": 22.424622499386885
+      "alpha": 351.6081174637974,
+      "beta": 23.391882536202615
     },
     {
       "passage": "Join the Typo Dojo community of learners who've already unlocked faster, smoother typing through consistent practice.",
-      "alpha": 79.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 106.60811746379738,
+      "beta": 11.391882536202615
     },
     {
       "passage": "Proven impact at scale. Typo Dojo has transformed typing skills for thousands who dedicated just minutes each day.",
-      "alpha": 203.57537750061311,
-      "beta": 16.424622499386885
+      "alpha": 311.6081174637974,
+      "beta": 18.391882536202615
     },
     {
       "passage": "Real results, not empty promises-Typo Dojo has helped thousands transform typos into triumphs.",
-      "alpha": 154.57537750061311,
-      "beta": 13.424622499386885
+      "alpha": 260.6081174637974,
+      "beta": 14.391882536202615
     },
     {
       "passage": "Typo Dojo has a proven track record: stick with it and you'll see measurable improvements in speed and accuracy.",
-      "alpha": 90.57537750061311,
-      "beta": 8.424622499386885
+      "alpha": 204.60811746379738,
+      "beta": 15.391882536202615
     },
     {
       "passage": "Typo Dojo is proven to work-every learner who commits sees measurable, lasting improvements in typing performance.",
-      "alpha": 68.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 89.60811746379738,
+      "beta": 10.391882536202615
     },
     {
       "passage": "Typo Dojo's track record speaks for itself: consistent training leads to lasting speed and accuracy gains.",
-      "alpha": 552.5753775006131,
-      "beta": 60.42462249938694
+      "alpha": 618.6081174637974,
+      "beta": 68.39188253620262
     },
     {
       "passage": "With Typo Dojo, consistent practice turns into proven results you can measure in speed and accuracy.",
-      "alpha": 74.57537750061311,
-      "beta": 9.424622499386885
+      "alpha": 97.60811746379738,
+      "beta": 9.391882536202615
     }
   ],
   [
     {
       "passage": "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate.",
-      "alpha": 4626.575377500613,
-      "beta": 535.4246224993867
+      "alpha": 4664.6081174637975,
+      "beta": 537.3918825362025
     }
   ]
 ]
