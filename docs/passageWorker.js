@@ -1207,6 +1207,83 @@ const LETTER_CHANGABILITY_PER_OCCURENCE_C = {
   "a": -16.460183896956682,
 }
 
+const ERROR_GAP_CHANGE_PER_OCCURENCE_M = {
+    ' ': 0.0,
+    '!': 0.02762150578200817,
+    '"': 0.027355128899216652,
+    "'": 0.055554391531762906,
+    '(': 0.027185166254639626,
+    ')': 0.027185147628188133,
+    ',': 0.016433069550742967,
+    '-': 0.014485814568948313,
+    '.': 0.023937829776400736,
+    '0': 0.005579594958258943,
+    '1': 0.10018995522406005,
+    '2': 0.02679714560508728,
+    '3': 0.027354758232831955,
+    '4': 0.024193571996383393,
+    '5': 0.08645739397932142,
+    '6': 0.01774990482101928,
+    '7': 0.02737768553197384,
+    '8': 0.027311546728014946,
+    '9': 0.02704494073987007,
+    ':': 0.027410345152020454,
+    ';': 0.04056618851327079,
+    '?': 0.027602950111031532,
+    'A': 0.026819221675395966,
+    'B': 0.027140239253640175,
+    'C': 0.026777926832437515,
+    'D': 0.027234775945544243,
+    'E': 0.027354978024959564,
+    'F': 0.027283087372779846,
+    'G': 0.02733825333416462,
+    'H': 0.027158627286553383,
+    'I': 0.026940179988741875,
+    'J': 0.027356062084436417,
+    'K': 0.027440812438726425,
+    'L': 0.027297671884298325,
+    'M': 0.027053935453295708,
+    'N': 0.027280643582344055,
+    'O': 0.027361901476979256,
+    'P': 0.027077266946434975,
+    'Q': 0.02760164812207222,
+    'R': 0.02725893445312977,
+    'S': 0.026673227548599243,
+    'T': 0.026453644037246704,
+    'U': 0.027339164167642593,
+    'V': 0.027492262423038483,
+    'W': 0.027285553514957428,
+    'X': 0.027606802061200142,
+    'Y': 0.027551842853426933,
+    'Z': 0.0275961272418499,
+    'a': 0.015028034890447444,
+    'b': 0.011837444226316413,
+    'c': 0.020957814129645664,
+    'd': 0.018110590142249958,
+    'e': 0.009919670916302336,
+    'f': 0.018068605367603713,
+    'g': 0.02566453822759248,
+    'h': 0.02099126723335691,
+    'i': 0.012581232234952947,
+    'j': 0.017488199334519845,
+    'k': 0.02768675279763049,
+    'l': 0.019191089520825495,
+    'm': 0.01828165655097792,
+    'n': 0.015869987925016753,
+    'o': 0.01198687726776839,
+    'p': 0.014960567962165803,
+    'q': 0.0582313095481994,
+    'r': 0.012117847795492426,
+    's': 0.007636535049323982,
+    't': 0.01424464841158235,
+    'u': 0.015958946592541615,
+    'v': 0.02471880919039897,
+    'w': 0.022315728346128362,
+    'x': 0.06938012358824568,
+    'y': 0.020388198293396893,
+    'z': 0.0225620099240695
+}
+
 const LETTER_FREQUENCY = {
   "A": 0.003153352805124311,
   "n": 0.055725109439303484,
@@ -1412,7 +1489,7 @@ const getBestGuessTimeToTypeLetter = (speedLog) => {
   return timeToTypeLetter;
 }
 
-const computerSpeedChangePerRepEstimate = (timeToTypeLetter) => {
+const computeSpeedChangePerRepEstimate = (timeToTypeLetter) => {
   const typeSpeedChangePerRep = {}
   for (let letter in timeToTypeLetter) {
     const tttLetter = timeToTypeLetter[letter];
@@ -1422,9 +1499,9 @@ const computerSpeedChangePerRepEstimate = (timeToTypeLetter) => {
   return typeSpeedChangePerRep;
 }
 
-const computerValuePerRepEstimate = (speedLog) => {
+const computeValuePerRepEstimateSpeed = (speedLog) => {
   const timeToTypeLetter = getBestGuessTimeToTypeLetter(speedLog);
-  const typeSpeedChangePerRep = computerSpeedChangePerRepEstimate(timeToTypeLetter);
+  const typeSpeedChangePerRep = computeSpeedChangePerRepEstimate(timeToTypeLetter);
 
   const valuePerRep = {}
   for (let letter in typeSpeedChangePerRep) {
@@ -1437,13 +1514,25 @@ const computerValuePerRepEstimate = (speedLog) => {
   return valuePerRep;
 }
 
-const isStringNumber = (str) => {
-  return !isNaN(parseInt(str));
+const computeValuePerRepEstimateError = (charErrorLog, charSeenLog) => {
+  const errorRateLetter = findUnigramErrorRates(charErrorLog, charSeenLog);
+  const valuePerRep = {}
+  for (let letter in errorRateLetter) {
+    const errorRate = errorRateLetter[letter];
+    const freq = LETTER_FREQUENCY[letter];
+    const val = freq * (errorRate - (errorRate / (1 + errorRate * ERROR_GAP_CHANGE_PER_OCCURENCE_M[letter])));
+    valuePerRep[letter] = val;
+  }
+  return valuePerRep;
 }
-const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousSpeedSelectionStrategies) => {
-  const valuePerRep = computerValuePerRepEstimate(speedLog);
-  const wasLastNumber = previousSpeedSelectionStrategies.length == 0 ? false : isStringNumber(previousSpeedSelectionStrategies[previousSpeedSelectionStrategies.length - 1]);
-  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !previousSpeedSelectionStrategies.includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
+
+
+const getLetterErrorSuggestionFromErrorLog = (charErrorLog, charSeenLog, previousRepSelectionStrategies) => {
+  const errorSelectionStrategies = previousRepSelectionStrategies.filter(strategy => strategy && strategy.startsWith("letter-error")).map(strategy => strategy.split("->")[1]);
+
+  const valuePerRep = computeValuePerRepEstimateError(charErrorLog, charSeenLog);
+  const wasLastNumber = errorSelectionStrategies.length == 0 ? false : isStringNumber(errorSelectionStrategies[0]);
+  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !errorSelectionStrategies.slice(0,7).includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
   console.log("top12", top12);
   const totalValue = top12.reduce((a, b) => a + b[1], 0);
   const loc = Math.random() * totalValue;
@@ -1456,13 +1545,33 @@ const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousSpeedSelectionSt
   }
   return 'e';
 }
-const suggestStrategyFromSpeedLog = (speedLog, previousSpeedSelectionStrategies) => {
-  const letterSpeedSuggestion = getLetterSpeedSuggestionFromSpeedLog(speedLog, previousSpeedSelectionStrategies);
-  // console.log("letterSpeedSuggestion", letterSpeedSuggestion);
-  return letterSpeedSuggestion;
+
+const isStringNumber = (str) => {
+  return !isNaN(parseInt(str));
 }
 
-const suggestStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previousSelectionStrategies, speedLog) => {
+const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousRepSelectionStrategies) => {
+  const speedSelectionStrategies = previousRepSelectionStrategies.filter(strategy => strategy && strategy.startsWith("letter-speed")).map(strategy => strategy.split("->")[1]);
+
+  const valuePerRep = computeValuePerRepEstimateSpeed(speedLog);
+  const wasLastNumber = speedSelectionStrategies.length == 0 ? false : isStringNumber(speedSelectionStrategies[0]);
+  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !speedSelectionStrategies.includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
+  console.log("top12", top12);
+  const totalValue = top12.reduce((a, b) => a + b[1], 0);
+  const loc = Math.random() * totalValue;
+  let cumSum = 0;
+  for (let [letter, value] of top12) {
+    cumSum += value;
+    if (cumSum > loc) {
+      return letter;
+    }
+  }
+  return 'e';
+}
+
+const suggestErrorGroupStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previousRepSelectionStrategies) => {
+  // TODO defining this based on what it isn't sucks - just do the work to prefix it.
+  const previousErrorGroupStrategies = previousRepSelectionStrategies.filter(strategy => strategy && !strategy.startsWith("letter-error") && !strategy.startsWith("letter-speed"));
   const charErrorLog = interestingErrorLog['char'];
   const bigramErrorLog = interestingErrorLog['bigram'];
   const charSeenLog = seenLog['char'];
@@ -1488,7 +1597,7 @@ const suggestStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previ
 
   let maxCost = 0;
   let maxCostGroup = null;
-  let previousSelectedStrategy = previousSelectionStrategies[previousSelectionStrategies.length - 1];
+  let previousSelectedStrategy = previousErrorGroupStrategies ? previousErrorGroupStrategies[0] : null;
   let tmp = []
   for (let group in groupErrorCount) {
     const errorCount = groupErrorCount[group] || 0;
@@ -1508,7 +1617,7 @@ const suggestStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previ
   if (maxCostGroup == null) {
     maxCostGroup = previousSelectedStrategy;
   }
-  return maxCostGroup;
+  return maxCostGroup || "error-group";
 }
 
 
@@ -1749,9 +1858,9 @@ function getScoreBySelectionStrategy(passage, selectionStratedy) {
   if (selectionStratedy == null) {
     return 0;
   }
-  if (selectionStratedy.startsWith("speed->")) {
-    const letterSpeedSuggestion = selectionStratedy.split("->")[1]
-    return passage.split('').map((char, index) => letterSpeedSuggestion == char ? index : null).filter(index => index !== null).length / passage.length;
+  if (selectionStratedy.includes("->")) {
+    const letterSuggestion = selectionStratedy.split("->")[1]
+    return passage.split('').map((char, index) => letterSuggestion == char ? index : null).filter(index => index !== null).length / passage.length;
   }
 
   if (selectionStratedy == "most_common") {
@@ -1880,7 +1989,7 @@ function makePassageEasy(passage) {
 }
 
 const shortenPassageBasedOnStrategy = (passages, strategy) => {
-  if (!strategy || !strategy.startsWith("speed")) {
+  if (!strategy || !strategy.startsWith("letter-speed") || !strategy.startsWith("letter-error")) {
     return;
   }
   console.log("shortenPassageBasedOnStrategy", strategy, passages[0].passage);
@@ -1890,7 +1999,7 @@ const shortenPassageBasedOnStrategy = (passages, strategy) => {
     const skip_indexs = [];
     for (let j = 0; j < sentences.length; j++) {
       const sentence = sentences[j];
-      if (strategy.startsWith("speed")) {
+      if (strategy.startsWith("letter-speed")) {
         const letterSpeedSuggestion = strategy.split("->")[1]
         const numberOfInstances = sentence.split('').filter((char) => letterSpeedSuggestion == char).length;
         if (numberOfInstances == 0 && sentence.length > 10) {
@@ -1929,7 +2038,7 @@ const shortenPassageBasedOnStrategy = (passages, strategy) => {
 const add_error_highlight_from_strategy = async (passages, strategy, unigramErrorLog, unigramSeenLog) => {
   const firstPassage = passages[0].passage;
   let strategyHighlightIndecies = [];
-  if (strategy.startsWith("speed")) {
+  if (strategy && (strategy.startsWith("letter-speed") || strategy.startsWith("letter-error"))) {
     const letterSpeedSuggestion = strategy.split("->")[1]
     const letterSpeedSuggestionIdxs = firstPassage.split('').map((char, index) => letterSpeedSuggestion == char ? index : null).filter(index => index !== null);
     strategyHighlightIndecies = letterSpeedSuggestionIdxs;
@@ -1949,7 +2058,7 @@ const add_error_highlight_from_strategy = async (passages, strategy, unigramErro
     strategyHighlightIndecies = bigramIdxs;
   }
   console.log("strategyHighlightIndecies", strategyHighlightIndecies, strategy);
-  if (strategyHighlightIndecies.length > firstPassage.length * 0.25 && HAS_SUCCEEDED_ONCE && BETTER_ERROR_MODEL) {
+  if (strategyHighlightIndecies.length > firstPassage.length * 0.25 && BETTER_ERROR_MODEL) {
     const errorModelHighlightIndecies = await compute_error_highlight_indecies(firstPassage, 0.25, unigramErrorLog, unigramSeenLog);
     const intersection = strategyHighlightIndecies.filter(index => errorModelHighlightIndecies.includes(index));
     strategyHighlightIndecies = intersection;
@@ -1961,119 +2070,234 @@ const add_error_highlight_from_strategy = async (passages, strategy, unigramErro
   return passages;
 }
 
+const sourceChange = (source) => {
+  currentSource = source;
+  if (source_passages[currentSource]) {
+    return;
+  }
+  fetch(source_paths[currentSource])
+    .then(response => response.text())
+    .then(text => source_passages[currentSource] = text.split("\n"));
+  return;
+}
+
+
+
+const randomlySelectExtraPassages = (max_new_passages, newUpcomingPassages, recentPassages) => {
+  const passages = source_passages[currentSource];
+
+  for (let i = 0, total_loops = 0; i < max_new_passages && total_loops <= 2000; i++, total_loops++) {
+    const randomPassage = passages[Math.floor(Math.random() * passages.length)];
+    if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
+      newUpcomingPassages.push(randomPassage);
+    } else {
+      i--;
+    }
+  }
+  return newUpcomingPassages;
+}
+
+const orderPassages = async (passages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog) => {
+  const lgbm_scores = await call_lgbm(passages, user_intro_acc, user_intro_wpm);
+  const { errorScores, passageToHighlightIndecies } = getErrorScores(passages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
+
+  const desire_for_passages = passages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
+  const result = passages.map((passage) => (
+    {
+      passage,
+      source: currentSource,
+      selectionStratedy: selectionStratedy,
+      highlightIndecies: passageToHighlightIndecies[passage],
+      desireForPassage: desire_for_passages[passage]
+    })).sort((a, b) => - a.desireForPassage + b.desireForPassage);
+  return result;
+}
+
+const handleGetNextPassagesErrorGroup = async (
+    upcomingPassages,
+    recentPassages,
+    errorLog,
+    seenLog,
+    errorCount,
+    user_intro_acc,
+    user_intro_wpm,
+    highlight_error_pct,
+    selectionStratedy
+  ) => {
+    let correctSourceUpcomingPassages = [];
+    if (upcomingPassages) {
+      correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
+    }
+  
+    // not yet initialised
+    if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+      return;
+    }
+    
+    let newUpcomingPassages = [...correctSourceUpcomingPassages];
+  
+    newUpcomingPassages = randomlySelectExtraPassages(500, newUpcomingPassages, recentPassages);  
+    newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
+
+    // hack in easy mode.
+    if (selectionStratedy == "most_common") {
+      newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
+    }
+
+    const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
+  
+    let result_with_error_highlight_indecies = result.slice(0, 10);
+    shortenPassageBasedOnStrategy(result, selectionStratedy);
+    result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+    return result_with_error_highlight_indecies;
+  }
+
+
+const handleGetNextPassagesLetterFocused = async (
+  upcomingPassages,
+  recentPassages,
+  errorLog,
+  seenLog,
+  errorCount,
+  user_intro_acc,
+  user_intro_wpm,
+  highlight_error_pct,
+  selectionStratedy
+) => {
+  let correctSourceUpcomingPassages = [];
+  if (upcomingPassages) {
+    console.log("upcomingPassages", upcomingPassages);
+    correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
+  }
+
+  // not yet initialised
+  if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+    return;
+  }
+
+  const letter = selectionStratedy.split("->")[1];
+  let newUpcomingPassages = [...correctSourceUpcomingPassages];
+
+  if (letter in specificLetterPassages) {
+    newUpcomingPassages = specificLetterPassages[letter].sort(() => Math.random() - 0.5).slice(0, 10);
+    let res = newUpcomingPassages.map(passage => ({
+      passage,
+      source: "hardcoded-letter",
+      selectionStratedy: selectionStratedy,
+      highlightIndecies: [],
+      desireForPassage: 0
+    }));
+    res = await add_error_highlight_from_strategy(res, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+    return res;
+  }
+
+  newUpcomingPassages = randomlySelectExtraPassages(500, newUpcomingPassages, recentPassages);
+  newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10); // todo split this up
+  
+  const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
+
+  let result_with_error_highlight_indecies = result.slice(0, 10);
+  shortenPassageBasedOnStrategy(result, selectionStratedy);
+  result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+  console.log("result_with_error_highlight_indecies", result_with_error_highlight_indecies);
+  return result_with_error_highlight_indecies;
+}
+
+
+const handleGetNextPassagesDefault = async (
+  upcomingPassages,
+  recentPassages,
+  errorLog,
+  seenLog,
+  errorCount,
+  user_intro_acc,
+  user_intro_wpm,
+  highlight_error_pct,
+) => {
+  let correctSourceUpcomingPassages = [];
+  if (upcomingPassages) {
+    console.log("upcomingPassages", upcomingPassages);
+    correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == null).map(passage => passage.passage);
+  }
+
+  // not yet initialised
+  if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+    return;
+  }
+
+  let newUpcomingPassages = [...correctSourceUpcomingPassages];
+  newUpcomingPassages = randomlySelectExtraPassages(100, newUpcomingPassages, recentPassages);
+  const result = await orderPassages(newUpcomingPassages, null, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
+
+
+  let result_with_error_highlight_indecies = result.slice(0, 10);
+  try {
+    if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
+      result_with_error_highlight_indecies = await add_error_highlight_indecies(result, highlight_error_pct, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+    }
+  } catch (e) {
+    console.error(e);
+    BETTER_ERROR_MODEL = false;
+  }
+  HAS_SUCCEEDED_ONCE = true;
+  return result_with_error_highlight_indecies;
+}
+
+
 self.onmessage = async function (e) {
   try {
-    if (e.data.type === 'suggestStrategyFromInterstingErrors') {
-      const strategy = suggestStrategyFromInterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousSelectionStrategies, e.data.speedLog);
-      self.postMessage({ type: 'suggestStrategyFromInterstingErrors', strategy: strategy });
+    if (e.data.type === 'suggestErrorGroupStrategyFromInterstingErrors') {
+      const strategy = suggestErrorGroupStrategyFromInterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousRepSelectionStrategies)
+      self.postMessage({ type: 'suggestErrorGroupStrategyFromInterstingErrors', strategy: strategy });
+      return;
+    }
+    if (e.data.type === 'suggestErrorLetterStrategyFromInterestingErrors') {
+      const strategy = getLetterErrorSuggestionFromErrorLog(e.data.interestingErrorLog["char"], e.data.seenLog["char"], e.data.previousRepSelectionStrategies);
+      self.postMessage({ type: 'suggestErrorLetterStrategyFromInterestingErrors', strategy: strategy });
       return;
     }
     if (e.data.type === 'suggestStrategyFromSpeedLog') {
-      const strategy = suggestStrategyFromSpeedLog(e.data.speedLog, e.data.previousSpeedSelectionStrategies);
+      const strategy = getLetterSpeedSuggestionFromSpeedLog(e.data.speedLog, e.data.previousRepSelectionStrategies);
       self.postMessage({ type: 'suggestStrategyFromSpeedLog', strategy: strategy });
       return;
     }
     if (e.data.type === 'sourceChange') {
-      currentSource = e.data.source;
-      if (source_passages[currentSource]) {
-        return;
-      }
-      fetch(source_paths[currentSource])
-        .then(response => response.text())
-        .then(text => source_passages[currentSource] = text.split("\n"))
+      sourceChange(e.data.source);
       return;
     }
     if (!is_initialised.value) {
       console.log("Not initialised");
       return;
     }
-
-    const {
-      upcomingPassages,
-      recentPassages,
-      errorLog,
-      seenLog,
-      errorCount,
-      user_intro_acc,
-      user_intro_wpm,
-      highlight_error_pct,
-      selectionStratedy
-    } = e.data;
-    let correctSourceUpcomingPassages = [];
-    if (upcomingPassages) {
-      correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
-    }
-
-    // not yet initialised
-    if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+    if (e.data.type === 'get-next-passages:letter-speed') {
+      console.log("get-next-passages:letter-speed", e.data.selectionStratedy);
+      const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
+      self.postMessage({res, type: 'get-next-passages:letter-speed'});
       return;
     }
 
-    const passages = source_passages[currentSource];
-
-    let newUpcomingPassages = [...correctSourceUpcomingPassages];
-
-    const max_new_passages = selectionStratedy ? 500 : 100;
-    for (let i = 0; i < max_new_passages; i++) {
-      const randomPassage = passages[Math.floor(Math.random() * passages.length)];
-      if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
-        newUpcomingPassages.push(randomPassage);
-      } else {
-        i--;
-      }
-    }
-
-    if (selectionStratedy && selectionStratedy.startsWith("speed->") && selectionStratedy.split("->")[1] in specificLetterPassages) {
-      const letter = selectionStratedy.split("->")[1];
-      newUpcomingPassages = specificLetterPassages[letter].sort(() => Math.random() - 0.5).slice(0, 10);
-      let res = newUpcomingPassages.map(passage => ({
-        passage,
-        source: "hardcoded-letter",
-        selectionStratedy: selectionStratedy,
-        highlightIndecies: [],
-        desireForPassage: 0
-      }));
-      res = await add_error_highlight_from_strategy(res, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
-      self.postMessage(res);
+    if (e.data.type === 'get-next-passages:letter-error') {
+      const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
+      self.postMessage({res, type: 'get-next-passages:letter-error'});
       return;
     }
 
-    newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
-    // hack in easy mode.
-    if (selectionStratedy == "most_common") {
-      newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
+    if (e.data.type === 'get-next-passages:error-group') {
+      const res = await handleGetNextPassagesErrorGroup(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
+      self.postMessage({res, type: 'get-next-passages:error-group'});
+      return;
     }
 
-    const lgbm_scores = await call_lgbm(newUpcomingPassages, user_intro_acc, user_intro_wpm);
-    const { errorScores, passageToHighlightIndecies } = getErrorScores(newUpcomingPassages, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct);
-
-    const desire_for_passages = newUpcomingPassages.map((passage, index) => getDesireForPassage(passage, quadgramFrequency, errorScores[index], lgbm_scores[index]));
-    const result = newUpcomingPassages.map((passage) => (
-      {
-        passage,
-        source: currentSource,
-        selectionStratedy: selectionStratedy,
-        highlightIndecies: passageToHighlightIndecies[passage],
-        desireForPassage: desire_for_passages[passage]
-      })).sort((a, b) => - a.desireForPassage + b.desireForPassage).slice(0, 10);
-
-    let result_with_error_highlight_indecies = result;
-    try {
-      if (selectionStratedy) {
-        shortenPassageBasedOnStrategy(result, selectionStratedy);
-        result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
-      }
-      else if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
-        result_with_error_highlight_indecies = await add_error_highlight_indecies(result, highlight_error_pct, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
-      }
-    } catch (e) {
-      console.error(e);
-      BETTER_ERROR_MODEL = false;
+    if (e.data.type === 'get-next-passages:default') {
+      const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct);
+      self.postMessage({res, type: 'get-next-passages:default'});
+      return;
     }
-    HAS_SUCCEEDED_ONCE = true;
-    self.postMessage(result_with_error_highlight_indecies);
-  } catch (e) {
+
+    console.error("No handler for type", e.data.type);
+  }
+  catch (e) {
     console.error(e);
-    self.postMessage({ type: 'error', error: e });
+    self.postMessage({ type: 'error', call_type: e.data.type, error: e });
   }
 }; 

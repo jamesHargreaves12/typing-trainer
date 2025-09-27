@@ -662,6 +662,140 @@ const STRATEGY_DESCRIPTIONS_SHORTEST = {
   'same_finger_bigrams': 'same finger',
 }
 
+class ErrorGroupSelectionStrategy {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    if (this.strategy == 'most_common') {
+      return `Most of your errors come from the most common letters "etaoinsr". For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, we will simplify the passages so that you can focus on just these letters.`;
+    }
+    return `Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[this.strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[this.strategy]} will be prioritised.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages:error-group',
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: this.strategy
+    });
+  }
+
+}
+
+class LetterErrorSelectionStrategy {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letters that will lead to the biggest improvement in your accuracy.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages:letter-error',
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `letter-error->${this.strategy}`
+    });
+  }
+}
+
+class SpeedSelectionStrategy {
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letters that will lead to the biggest improvement in your speed.`;
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages:letter-speed',
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `letter-speed->${this.strategy}`
+    });
+  }
+}
+class DefaultSelectionStrategy {
+  constructor() {
+  }
+  getStatsRepFooter() {
+    return "";
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages:default',
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: null
+    });
+  }
+}
+
+const strategyModeLookup = {
+  "letter-error": new LetterErrorSelectionStrategy("w"),
+  "letter-speed": new SpeedSelectionStrategy("1"),
+  "error-group": new ErrorGroupSelectionStrategy("most_common"),
+  "default": new DefaultSelectionStrategy(),
+}
+
+function getFocusText(passageStrategy) {
+  if (!passageStrategy) {
+    return null;
+  }
+  if (STRATEGY_DESCRIPTIONS_SHORTEST[passageStrategy]) {
+    return `Focus: ${STRATEGY_DESCRIPTIONS_SHORTEST[passageStrategy]}`;
+  }
+  if (passageStrategy.includes("->")) {
+    return `Focus: ${passageStrategy.split("->")[1]}`;
+  }
+  return null;
+}
+
+function setFocusText(strategy) {
+  const focusText = getFocusText(strategy);
+
+  const focusTextElement = document.getElementById('rep_focus');
+  if (focusText) {
+    focusTextElement.style.display = "block";
+    focusTextElement.innerHTML = focusText;
+  }
+  else {
+    focusTextElement.style.display = "none";
+    focusTextElement.innerHTML = `Focus: N.A.`;
+  }
+}
+
 
 function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy){
   let header = "";
@@ -674,30 +808,9 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
     header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
   }
 
-  if (wpm > 70) {
-    header =  `${header} Impressive speed!`
-  }
-  else if (accuracy > 0.96 && wpm_percentile <= accuracy_percentile) {
-    header =  `${header} Impressive accuracy!`
-  }
-
   if (strategy) {
-    if (strategy == 'speed') {
-      return `${header} For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letters that will lead to the biggest improvement in your speed.`;
-    }
-    if (!hasSeenRepetitionStrategyUpdate) {
-      hasSeenRepetitionStrategyUpdate = true;
-      if (strategy == 'most_common') {
-        return `${header} Most of your errors come from the most common letters "etaoinsr". For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, we will simplify the passages so that you can focus on just these letters.`;
-      }
-      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you. For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, passages that contain more ${STRATEGY_DESCRIPTIONS_SHORT[strategy]} will be prioritised.`;
-    }
-    else {
-      if (strategy == 'most_common') {
-        return `${header} Most of your errors come from the most common letters "etaoinsr". We will simplify the passages for the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps.`;
-      }
-      return `${header} Typo dojo's analysis identifies ${STRATEGY_DESCRIPTIONS[strategy]} as a focus area for you.`;
-    }
+    const footer = strategy.getStatsRepFooter();
+    header = `${header} ${footer}`.trim();
   }
 
   return header;
@@ -822,7 +935,7 @@ const errorSound = document.getElementById('errorSound');
 let recentPassages = JSON.parse(localStorage.getItem('recentPassages')) || [];
 const MAX_RECENT_PASSAGES = 70;
 let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
-let currentSelectionStratedy = localStorage.getItem('selectionStratedy') || null;
+let currentPassageSelectionStrategy = localStorage.getItem('selectionStratedy') || null;
 let passageWorker = new Worker('passageWorker.js');
 passageWorker.postMessage({
   type: 'sourceChange',
@@ -837,11 +950,8 @@ let targetText = 'Your personal typing coach, typo dojo, identifies your perform
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
 const progressBar = document.getElementById('progressBar');
-let nextStrategySpeed = true;
-let selectionStratedgy = null;
-let nextSelectionStrategyError = null;
-let nextSelectionStrategySpeed = null;
-let previousSpeedSelectionStrategies = [];
+let currentSelectionStrategyMode = "default";
+let previousRepSelectionStrategies = [];
 let stats_rep_common_strings = {};
 
 function calculateSocialProof() {
@@ -896,7 +1006,7 @@ function recordUserLeaveText() {
     letterTimesSec: currentPassageLetterTimesSec,
     source: currentPassageSource,
     timeTakenMs: (new Date() - startTime),
-    selectionStratedy: currentSelectionStratedy
+    selectionStratedy: currentPassageSelectionStrategy
   }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
     navigator.sendBeacon('https://7awaj14h9h.execute-api.eu-west-2.amazonaws.com/default/record-user-leave-text', JSON.stringify(data));
@@ -935,7 +1045,7 @@ async function persistTypingState() {
     letterTimesSec: currentPassageLetterTimesSec,
     errorChars: currentPassageErrorActualChar,
     timeTakenMs: timeTakenMs,
-    selectionStratedy: currentSelectionStratedy
+    selectionStratedy: currentPassageSelectionStrategy
   }
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '') {
     const to_save = JSON.stringify(data);
@@ -1151,24 +1261,20 @@ function recordUserIntro() {
   }
 }
 
-function setFocusText(strategy) {
-  const focusTextElement = document.getElementById('rep_focus');
-  if (strategy) {
-    focusTextElement.style.display = "block";
-  }
-  else{
-    focusTextElement.style.display = "none";
-    return;
-  }
-  if (strategy in STRATEGY_DESCRIPTIONS_SHORTEST) {
-    focusTextElement.innerHTML = `Focus: ${STRATEGY_DESCRIPTIONS_SHORTEST[strategy]}`;
-  }
-  else if (strategy && strategy.startsWith("speed")) {
-    focusTextElement.innerHTML = `Focus: ${strategy.split("->")[1]}`;
+
+function choseNextSelectionMode() {
+  const selectionModeOrder = [
+    "letter-error",
+    "letter-speed",
+    "error-group"
+  ];
+
+  const index = parseInt(session_rep_count / REPETION_STRATEGY_HISTORY_LENGTH);
+  if (index %2 == 0) {
+    return "default";
   }
   else {
-    focusTextElement.style.display = "none";
-    focusTextElement.innerHTML = `Focus: N.A.`;
+    return selectionModeOrder[parseInt((index - 1) / 2) % selectionModeOrder.length];
   }
 }
 
@@ -1189,29 +1295,15 @@ function getPassage() {
   }
   if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
-    if (nextSelectionStrategySpeed && !selectionStratedgy && nextStrategySpeed) {
-      selectionStratedgy = "speed";
-      nextStrategySpeed = false;
-      nextSelectionStrategySpeed = null;
-    }
-    else if (nextSelectionStrategyError && !selectionStratedgy) {
-      nextStrategySpeed = true;
-      console.log("nextSelectionStrategy", nextSelectionStrategyError, selectionStratedgy);
-      selectionStratedgy = nextSelectionStrategyError;
-      previousSelectionStrategies.push(selectionStratedgy);
-      nextSelectionStrategyError = null;
-    }
-    else {
-      selectionStratedgy = null;
-    }
+    currentSelectionStrategyMode =choseNextSelectionMode();
     return {
-      passage: suggestErrorRepetitionStrategy(selectionStratedgy),
+      passage: suggestErrorRepetitionStrategy(strategyModeLookup[currentSelectionStrategyMode]),
       source: "stats_rep"
     };
   }
   
   let nextPassage = upcomingPassages.shift();
-  // Fall back in the ccase where upcomingPassagest is empty. Need to work out why.
+  // Fall back in the case where upcomingPassagest is empty. Need to work out why.
   if (!nextPassage) {
     nextPassage = FALLBACK_PASSAGES[Math.floor(Math.random() * FALLBACK_PASSAGES.length)];
   }
@@ -1231,18 +1323,8 @@ function getPassage() {
 
 function setUpcomingPassages() {
   const startTime = performance.now();
-  passageWorker.postMessage({
-    upcomingPassages,
-    recentPassages,
-    errorLog,
-    seenLog,
-    errorCount,
-    user_intro_acc,
-    user_intro_wpm,
-    highlight_error_pct: 0.1,
-    userId: userId,
-    selectionStratedy: selectionStratedgy != "speed" ? selectionStratedgy : `speed->${nextSelectionStrategySpeed}`
-  });
+  strategyModeLookup[currentSelectionStrategyMode].sendGetNextPassagesMessage();
+
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
   
   setTimeout(() => {
@@ -1256,30 +1338,48 @@ passageWorker.onmessage = function(e) {
       console.error(e.data.error);
       return;
     }
-    if (e.data.type == 'suggestStrategyFromInterstingErrors') {
-      nextSelectionStrategyError = e.data.strategy;
-      return;
-    }
     if (e.data.type == 'suggestStrategyFromSpeedLog') {
-      nextSelectionStrategySpeed = e.data.strategy;
-      // Trigger error version now
+      strategyModeLookup['letter-speed'] =new SpeedSelectionStrategy(e.data.strategy);
+      
       passageWorker.postMessage({
-        type: 'suggestStrategyFromInterstingErrors',
+        type: 'suggestErrorLetterStrategyFromInterestingErrors',
         interestingErrorLog: interestingErrorLog,
         seenLog: seenLog,
-        previousSelectionStrategies: previousSelectionStrategies,
+        previousRepSelectionStrategies: previousRepSelectionStrategies
       });
     
       return;
     }
+    else if (e.data.type == 'suggestErrorLetterStrategyFromInterestingErrors') {
+      strategyModeLookup['letter-error'] = new LetterErrorSelectionStrategy(e.data.strategy);
+      // For this one we do the full set of reps on a single stratedgy. - you want to use over all selectino startegy soon.
+      if (!currentPassageSelectionStrategy?.startsWith("error-group")) {
+        passageWorker.postMessage({
+          type: 'suggestErrorGroupStrategyFromInterstingErrors',
+          interestingErrorLog: interestingErrorLog,
+          seenLog: seenLog,
+          previousRepSelectionStrategies: previousRepSelectionStrategies
+        });
+      }
+
+      return;
+    }
+    else if (e.data.type == 'suggestErrorGroupStrategyFromInterstingErrors') {
+      strategyModeLookup['error-group'] = new ErrorGroupSelectionStrategy(e.data.strategy);
+      return;
+    }
+    
     if (!e.data) {
       console.error("e.data is null");
       return;
     }
-    upcomingPassages = e.data;
-    // refilter here because of race conditions
-    upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
-    localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+    if (e.data.type == 'get-next-passages:default' || e.data.type == 'get-next-passages:letter-error' || e.data.type == 'get-next-passages:letter-speed' || e.data.type == 'get-next-passages:error-group') {
+      upcomingPassages = e.data.res;
+      // refilter here because of race conditions
+      upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
+      localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+    }
+    
   } catch (error) {
     console.error('Error handling worker message:', error);
     // The console.error override will handle logging to S3
@@ -1359,13 +1459,11 @@ window.onload = function() {
   }
   const p = getPassage();
   const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = p;
-  if (currentPassageSelectionStratedy && currentPassageSelectionStratedy.startsWith("speed")) {
-    previousSpeedSelectionStrategies.push(currentPassageSelectionStratedy.split("->")[1]);
-  }
+  previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
   currentPassageSource = source;
-  currentSelectionStratedy = currentPassageSelectionStratedy;
+  currentPassageSelectionStrategy = currentPassageSelectionStratedy;
   toHighlight = highlightIndecies;
   renderText();
   colorText("");
@@ -1978,13 +2076,11 @@ function resetSession() {
   }
   
   const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = getPassage();
-  if (currentPassageSelectionStratedy && currentPassageSelectionStratedy.startsWith("speed")) {
-    previousSpeedSelectionStrategies.push(currentPassageSelectionStratedy.split("->")[1]);
-  }
+  previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
   currentPassageSource = source;
-  currentSelectionStratedy = currentPassageSelectionStratedy;
+  currentPassageSelectionStrategy = currentPassageSelectionStratedy;
   toHighlight = highlightIndecies;
   renderText();
   colorText("");
@@ -1993,7 +2089,7 @@ function resetSession() {
   passageWorker.postMessage({
     type: 'suggestStrategyFromSpeedLog',
     speedLog: speedLog,
-    previousSpeedSelectionStrategies: previousSpeedSelectionStrategies
+    previousRepSelectionStrategies: previousRepSelectionStrategies
   });
 }
 
