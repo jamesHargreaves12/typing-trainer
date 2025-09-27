@@ -1964,6 +1964,9 @@ function handleInput(e) {
 
   setupTopErrorsBox();
 }
+
+inputArea.addEventListener("paste", e => e.preventDefault());
+
 inputArea.addEventListener('input', handleInput);
 
 inputArea.addEventListener('keydown', function(e) {
