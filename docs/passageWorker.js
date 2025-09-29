@@ -1804,7 +1804,7 @@ function getErrorScoreAndMostLikelyErrorChars(passage, seenLog, errorLog, defaul
     const personalTrigramScore = (errorLog['trigram'][trigram] || 0) / (seenLog['trigram'][trigram] || 1);
     const personalQuadgramScore = (errorLog['quadgram'][quadgram] || 0) / (seenLog['quadgram'][quadgram] || 1);
     const p_score = charWeight * personalCharScore + bigramWeight * personalBigramScore + trigramWeight * personalTrigramScore + quadgramWeight * personalQuadgramScore;
-    const d_score = (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"])
+    const d_score = (defaultQuadgramErrorModel["seen_preds"][quadgram] || defaultQuadgramErrorModel["default"]);
 
     const charScore = (1 - hightlightPersoalErrorWeight) * d_score + hightlightPersoalErrorWeight * p_score;
     indexToScore.push({
@@ -2085,8 +2085,8 @@ const sourceChange = (source) => {
 
 const randomlySelectExtraPassages = (max_new_passages, newUpcomingPassages, recentPassages) => {
   const passages = source_passages[currentSource];
-
-  for (let i = 0, total_loops = 0; i < max_new_passages && total_loops <= 2000; i++, total_loops++) {
+  const initial_length = newUpcomingPassages.length;
+  for (let i = 0, total_loops = 0; i + initial_length < max_new_passages && total_loops <= 2000; i++, total_loops++) {
     const randomPassage = passages[Math.floor(Math.random() * passages.length)];
     if (!newUpcomingPassages.includes(randomPassage) && !recentPassages.includes(randomPassage)) {
       newUpcomingPassages.push(randomPassage);
@@ -2147,8 +2147,8 @@ const handleGetNextPassagesErrorGroup = async (
     const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
   
     let result_with_error_highlight_indecies = result.slice(0, 10);
-    shortenPassageBasedOnStrategy(result, selectionStratedy);
-    result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+    shortenPassageBasedOnStrategy(result_with_error_highlight_indecies, selectionStratedy);
+    result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result_with_error_highlight_indecies, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
     return result_with_error_highlight_indecies;
   }
 
@@ -2197,8 +2197,8 @@ const handleGetNextPassagesLetterFocused = async (
   const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
 
   let result_with_error_highlight_indecies = result.slice(0, 10);
-  shortenPassageBasedOnStrategy(result, selectionStratedy);
-  result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+  shortenPassageBasedOnStrategy(result_with_error_highlight_indecies, selectionStratedy);
+  result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result_with_error_highlight_indecies, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
   console.log("result_with_error_highlight_indecies", result_with_error_highlight_indecies);
   return result_with_error_highlight_indecies;
 }
@@ -2233,7 +2233,7 @@ const handleGetNextPassagesDefault = async (
   let result_with_error_highlight_indecies = result.slice(0, 10);
   try {
     if (BETTER_ERROR_MODEL && HAS_SUCCEEDED_ONCE) {
-      result_with_error_highlight_indecies = await add_error_highlight_indecies(result, highlight_error_pct, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+      result_with_error_highlight_indecies = await add_error_highlight_indecies(result_with_error_highlight_indecies, highlight_error_pct, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
     }
   } catch (e) {
     console.error(e);
