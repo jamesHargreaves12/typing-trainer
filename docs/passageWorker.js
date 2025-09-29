@@ -1208,80 +1208,80 @@ const LETTER_CHANGABILITY_PER_OCCURENCE_C = {
 }
 
 const ERROR_GAP_CHANGE_PER_OCCURENCE_M = {
-    ' ': 0.0,
-    '!': 0.02762150578200817,
-    '"': 0.027355128899216652,
-    "'": 0.055554391531762906,
-    '(': 0.027185166254639626,
-    ')': 0.027185147628188133,
-    ',': 0.016433069550742967,
-    '-': 0.014485814568948313,
-    '.': 0.023937829776400736,
-    '0': 0.005579594958258943,
-    '1': 0.10018995522406005,
-    '2': 0.02679714560508728,
-    '3': 0.027354758232831955,
-    '4': 0.024193571996383393,
-    '5': 0.08645739397932142,
-    '6': 0.01774990482101928,
-    '7': 0.02737768553197384,
-    '8': 0.027311546728014946,
-    '9': 0.02704494073987007,
-    ':': 0.027410345152020454,
-    ';': 0.04056618851327079,
-    '?': 0.027602950111031532,
-    'A': 0.026819221675395966,
-    'B': 0.027140239253640175,
-    'C': 0.026777926832437515,
-    'D': 0.027234775945544243,
-    'E': 0.027354978024959564,
-    'F': 0.027283087372779846,
-    'G': 0.02733825333416462,
-    'H': 0.027158627286553383,
-    'I': 0.026940179988741875,
-    'J': 0.027356062084436417,
-    'K': 0.027440812438726425,
-    'L': 0.027297671884298325,
-    'M': 0.027053935453295708,
-    'N': 0.027280643582344055,
-    'O': 0.027361901476979256,
-    'P': 0.027077266946434975,
-    'Q': 0.02760164812207222,
-    'R': 0.02725893445312977,
-    'S': 0.026673227548599243,
-    'T': 0.026453644037246704,
-    'U': 0.027339164167642593,
-    'V': 0.027492262423038483,
-    'W': 0.027285553514957428,
-    'X': 0.027606802061200142,
-    'Y': 0.027551842853426933,
-    'Z': 0.0275961272418499,
-    'a': 0.015028034890447444,
-    'b': 0.011837444226316413,
-    'c': 0.020957814129645664,
-    'd': 0.018110590142249958,
-    'e': 0.009919670916302336,
-    'f': 0.018068605367603713,
-    'g': 0.02566453822759248,
-    'h': 0.02099126723335691,
-    'i': 0.012581232234952947,
-    'j': 0.017488199334519845,
-    'k': 0.02768675279763049,
-    'l': 0.019191089520825495,
-    'm': 0.01828165655097792,
-    'n': 0.015869987925016753,
-    'o': 0.01198687726776839,
-    'p': 0.014960567962165803,
-    'q': 0.0582313095481994,
-    'r': 0.012117847795492426,
-    's': 0.007636535049323982,
-    't': 0.01424464841158235,
-    'u': 0.015958946592541615,
-    'v': 0.02471880919039897,
-    'w': 0.022315728346128362,
-    'x': 0.06938012358824568,
-    'y': 0.020388198293396893,
-    'z': 0.0225620099240695
+  ' ': 0.0,
+  '!': 0.02762150578200817,
+  '"': 0.027355128899216652,
+  "'": 0.055554391531762906,
+  '(': 0.027185166254639626,
+  ')': 0.027185147628188133,
+  ',': 0.016433069550742967,
+  '-': 0.014485814568948313,
+  '.': 0.023937829776400736,
+  '0': 0.005579594958258943,
+  '1': 0.10018995522406005,
+  '2': 0.02679714560508728,
+  '3': 0.027354758232831955,
+  '4': 0.024193571996383393,
+  '5': 0.08645739397932142,
+  '6': 0.01774990482101928,
+  '7': 0.02737768553197384,
+  '8': 0.027311546728014946,
+  '9': 0.02704494073987007,
+  ':': 0.027410345152020454,
+  ';': 0.04056618851327079,
+  '?': 0.027602950111031532,
+  'A': 0.026819221675395966,
+  'B': 0.027140239253640175,
+  'C': 0.026777926832437515,
+  'D': 0.027234775945544243,
+  'E': 0.027354978024959564,
+  'F': 0.027283087372779846,
+  'G': 0.02733825333416462,
+  'H': 0.027158627286553383,
+  'I': 0.026940179988741875,
+  'J': 0.027356062084436417,
+  'K': 0.027440812438726425,
+  'L': 0.027297671884298325,
+  'M': 0.027053935453295708,
+  'N': 0.027280643582344055,
+  'O': 0.027361901476979256,
+  'P': 0.027077266946434975,
+  'Q': 0.02760164812207222,
+  'R': 0.02725893445312977,
+  'S': 0.026673227548599243,
+  'T': 0.026453644037246704,
+  'U': 0.027339164167642593,
+  'V': 0.027492262423038483,
+  'W': 0.027285553514957428,
+  'X': 0.027606802061200142,
+  'Y': 0.027551842853426933,
+  'Z': 0.0275961272418499,
+  'a': 0.015028034890447444,
+  'b': 0.011837444226316413,
+  'c': 0.020957814129645664,
+  'd': 0.018110590142249958,
+  'e': 0.009919670916302336,
+  'f': 0.018068605367603713,
+  'g': 0.02566453822759248,
+  'h': 0.02099126723335691,
+  'i': 0.012581232234952947,
+  'j': 0.017488199334519845,
+  'k': 0.02768675279763049,
+  'l': 0.019191089520825495,
+  'm': 0.01828165655097792,
+  'n': 0.015869987925016753,
+  'o': 0.01198687726776839,
+  'p': 0.014960567962165803,
+  'q': 0.0582313095481994,
+  'r': 0.012117847795492426,
+  's': 0.007636535049323982,
+  't': 0.01424464841158235,
+  'u': 0.015958946592541615,
+  'v': 0.02471880919039897,
+  'w': 0.022315728346128362,
+  'x': 0.06938012358824568,
+  'y': 0.020388198293396893,
+  'z': 0.0225620099240695
 }
 
 const LETTER_FREQUENCY = {
@@ -1532,7 +1532,7 @@ const getLetterErrorSuggestionFromErrorLog = (charErrorLog, charSeenLog, previou
 
   const valuePerRep = computeValuePerRepEstimateError(charErrorLog, charSeenLog);
   const wasLastNumber = errorSelectionStrategies.length == 0 ? false : isStringNumber(errorSelectionStrategies[0]);
-  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !errorSelectionStrategies.slice(0,7).includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
+  const top12 = Object.entries(valuePerRep).filter(([letter, value]) => !errorSelectionStrategies.slice(0, 7).includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]).slice(0, 12);
   console.log("top12", top12);
   const totalValue = top12.reduce((a, b) => a + b[1], 0);
   const loc = Math.random() * totalValue;
@@ -2114,43 +2114,43 @@ const orderPassages = async (passages, selectionStratedy, user_intro_acc, user_i
 }
 
 const handleGetNextPassagesErrorGroup = async (
-    upcomingPassages,
-    recentPassages,
-    errorLog,
-    seenLog,
-    errorCount,
-    user_intro_acc,
-    user_intro_wpm,
-    highlight_error_pct,
-    selectionStratedy
-  ) => {
-    let correctSourceUpcomingPassages = [];
-    if (upcomingPassages) {
-      correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
-    }
-  
-    // not yet initialised
-    if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
-      return;
-    }
-    
-    let newUpcomingPassages = [...correctSourceUpcomingPassages];
-  
-    newUpcomingPassages = randomlySelectExtraPassages(500, newUpcomingPassages, recentPassages);  
-    newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
-
-    // hack in easy mode.
-    if (selectionStratedy == "most_common") {
-      newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
-    }
-
-    const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
-  
-    let result_with_error_highlight_indecies = result.slice(0, 10);
-    shortenPassageBasedOnStrategy(result_with_error_highlight_indecies, selectionStratedy);
-    result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result_with_error_highlight_indecies, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
-    return result_with_error_highlight_indecies;
+  upcomingPassages,
+  recentPassages,
+  errorLog,
+  seenLog,
+  errorCount,
+  user_intro_acc,
+  user_intro_wpm,
+  highlight_error_pct,
+  selectionStratedy
+) => {
+  let correctSourceUpcomingPassages = [];
+  if (upcomingPassages) {
+    correctSourceUpcomingPassages = upcomingPassages.filter(passage => passage.source == currentSource && passage.selectionStratedy == selectionStratedy).map(passage => passage.passage);
   }
+
+  // not yet initialised
+  if (!source_passages[currentSource] || source_passages[currentSource].length == 0 || Object.keys(quadgramFrequency).length == 0 || Object.keys(defaultQuadgramErrorModel).length == 0) {
+    return;
+  }
+
+  let newUpcomingPassages = [...correctSourceUpcomingPassages];
+
+  newUpcomingPassages = randomlySelectExtraPassages(500, newUpcomingPassages, recentPassages);
+  newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
+
+  // hack in easy mode.
+  if (selectionStratedy == "most_common") {
+    newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
+  }
+
+  const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
+
+  let result_with_error_highlight_indecies = result.slice(0, 10);
+  shortenPassageBasedOnStrategy(result_with_error_highlight_indecies, selectionStratedy);
+  result_with_error_highlight_indecies = await add_error_highlight_from_strategy(result_with_error_highlight_indecies, selectionStratedy, unigramErrorLog = errorLog["char"], unigramSeenLog = seenLog["char"]);
+  return result_with_error_highlight_indecies;
+}
 
 
 const handleGetNextPassagesLetterFocused = async (
@@ -2193,7 +2193,7 @@ const handleGetNextPassagesLetterFocused = async (
 
   newUpcomingPassages = randomlySelectExtraPassages(500, newUpcomingPassages, recentPassages);
   newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10); // todo split this up
-  
+
   const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
 
   let result_with_error_highlight_indecies = result.slice(0, 10);
@@ -2272,25 +2272,25 @@ self.onmessage = async function (e) {
     if (e.data.type === 'get-next-passages:letter-speed') {
       console.log("get-next-passages:letter-speed", e.data.selectionStratedy);
       const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
-      self.postMessage({res, type: 'get-next-passages:letter-speed'});
+      self.postMessage({ res, type: 'get-next-passages:letter-speed' });
       return;
     }
 
     if (e.data.type === 'get-next-passages:letter-error') {
       const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
-      self.postMessage({res, type: 'get-next-passages:letter-error'});
+      self.postMessage({ res, type: 'get-next-passages:letter-error' });
       return;
     }
 
     if (e.data.type === 'get-next-passages:error-group') {
       const res = await handleGetNextPassagesErrorGroup(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
-      self.postMessage({res, type: 'get-next-passages:error-group'});
+      self.postMessage({ res, type: 'get-next-passages:error-group' });
       return;
     }
 
     if (e.data.type === 'get-next-passages:default') {
       const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct);
-      self.postMessage({res, type: 'get-next-passages:default'});
+      self.postMessage({ res, type: 'get-next-passages:default' });
       return;
     }
 

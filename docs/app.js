@@ -346,7 +346,7 @@ function betaSample(alpha, beta) {
   return x / (x + y);
 }
 
-function getPassageVariants(count = 2){
+function getPassageVariants(count = 2) {
   const passageWeights = [];
   for (let i = 1; i < INITIAL_SENTENCE_VARIANTS.length; i++) { // Ignore the first group since we will always show this for now.
     for (let j = 0; j < INITIAL_SENTENCE_VARIANTS[i].length; j++) {
@@ -354,7 +354,7 @@ function getPassageVariants(count = 2){
       const alpha = INITIAL_SENTENCE_VARIANTS[i][j]["alpha"];
       const beta = INITIAL_SENTENCE_VARIANTS[i][j]["beta"];
       const p = betaSample(alpha, beta);
-      passageWeights.push({passage, weight: p, group: i});
+      passageWeights.push({ passage, weight: p, group: i });
     }
   }
   const weightedPassages = passageWeights.sort((a, b) => b.weight - a.weight);
@@ -452,8 +452,8 @@ const LETTER_FREQUENCIES = {
 // Lanczos approximation of log-gamma function
 function logGamma(z) {
   const cof = [
-    76.18009172947146,   -86.50532032941677,
-    24.01409824083091,   -1.231739572450155,
+    76.18009172947146, -86.50532032941677,
+    24.01409824083091, -1.231739572450155,
     0.1208650973866179e-2, -0.5395239384953e-5
   ];
   let x = z;
@@ -574,15 +574,15 @@ function betaCDF(x, a, b, loc = 0, scale = 1) {
 }
 
 // Add logBeta approximation
-Math.logBeta = function(a, b) {
+Math.logBeta = function (a, b) {
   return Math.lgamma(a)[0] + Math.lgamma(b)[0] - Math.lgamma(a + b)[0];
 }
 
 // Add lgamma function (Lanczos approx)
-Math.lgamma = function(z) {
+Math.lgamma = function (z) {
   const cof = [
-    76.18009172947146,   -86.50532032941677,
-    24.01409824083091,   -1.231739572450155,
+    76.18009172947146, -86.50532032941677,
+    24.01409824083091, -1.231739572450155,
     0.1208650973866179e-2, -0.5395239384953e-5
   ];
   let x = z;
@@ -797,15 +797,15 @@ function setFocusText(strategy) {
 }
 
 
-function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy){
+function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy) {
   let header = "";
-  key = `${Math.round(wpm)},${Math.round(accuracy*100)}`
+  key = `${Math.round(wpm)},${Math.round(accuracy * 100)}`
   console.log(key, stats_rep_common_strings[key]);
   if (stats_rep_common_strings[key]) {
     header = stats_rep_common_strings[key];
   }
   else {
-    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile*100)}% of users), and your accuracy has been ${Math.round(accuracy*100)}% (better than ${Math.round(accuracy_percentile*100)}% of users).`
+    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile * 100)}% of users), and your accuracy has been ${Math.round(accuracy * 100)}% (better than ${Math.round(accuracy_percentile * 100)}% of users).`
   }
 
   if (strategy) {
@@ -819,8 +819,8 @@ function sampleOne(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-function suggestErrorRepetitionStrategy(strategy){
-  prev_reps = runHistory.slice(0,REPETION_STRATEGY_HISTORY_LENGTH);
+function suggestErrorRepetitionStrategy(strategy) {
+  prev_reps = runHistory.slice(0, REPETION_STRATEGY_HISTORY_LENGTH);
   const wpm = prev_reps.reduce((sum, run) => sum + run.wpm, 0) / prev_reps.length;
   const accuracy = prev_reps.reduce((sum, run) => sum + run.accuracy, 0) / prev_reps.length / 100;
   const wpm_percentile = gammaCDF(wpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
@@ -838,7 +838,7 @@ let DEFAULT_PASSAGES = [
   "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
   "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
   "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate."
-].map(passage => ({passage, source: 'default'}));
+].map(passage => ({ passage, source: 'default' }));
 
 let FALLBACK_PASSAGES = [
   'Tungsten is essential for some archaea. The following tungsten-utilizing enzymes are known:',
@@ -853,12 +853,12 @@ let FALLBACK_PASSAGES = [
   'Aldehydes have properties that are diverse and that depend on the remainder of the molecule. Smaller aldehydes such as formaldehyde and acetaldehyde are soluble in water, and the volatile aldehydes have pungent odors.',
   'PROL An embeddable Prolog engine for Java. It includes a small IDE and a few libraries.',
   'A preordered class is a class equipped with a preorder. Every set is a class and so every preordered set is a preordered class.'
-].map(passage => ({passage, source: 'fallback'}))
- 
+].map(passage => ({ passage, source: 'fallback' }))
+
 let finishedDefaultPassages = false;
 let upcomingDefaultPassages = ([
   DEFAULT_PASSAGES[0].passage, ...getPassageVariants(2)
-]).map(passage => ({passage, source: 'default'}));
+]).map(passage => ({ passage, source: 'default' }));
 let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 let currentPassageErrorActualChar = [];
@@ -941,7 +941,7 @@ passageWorker.postMessage({
   type: 'sourceChange',
   source: currentPassageSource
 });
-let settingTargetTextRef={value: false};
+let settingTargetTextRef = { value: false };
 
 let startTime = null;
 let prevCharTime = null;
@@ -958,14 +958,14 @@ function calculateSocialProof() {
   // September 6th as the reference date
   const referenceDate = new Date('2025-09-06');
   const currentDate = new Date();
-  
+
   // Calculate days since September 6th
   const timeDiff = currentDate.getTime() - referenceDate.getTime();
   const daysSince = Math.floor(timeDiff / (1000 * 3600 * 24));
-  
+
   // Calculate social proof number: 237,548 + 11,000 * days since September 6th (seeing 15k per day but don't want to overstate)
   const socialProofNumber = 237548 + (11000 * daysSince);
-  
+
   return socialProofNumber.toLocaleString();
 }
 
@@ -975,7 +975,7 @@ function updateSocialProof() {
     const socialProofString = calculateSocialProof();
     const socialProofNumber = parseInt(socialProofString.replace(/,/g, ''));
     let displayNumber;
-    
+
     if (socialProofNumber >= 10000000) {
       // Tens of millions
       const tensOfMillions = (socialProofNumber / 10000000).toFixed(1);
@@ -992,13 +992,13 @@ function updateSocialProof() {
       // Fallback for smaller numbers
       displayNumber = socialProofNumber.toLocaleString();
     }
-    
+
     socialProofElement.innerHTML = `Join <span class="social-proof-number">${displayNumber}</span> people improving their typing: just <span class="cta-text">start typing</span>...`;
   }
 }
 
 function recordUserLeaveText() {
-  const data = { 
+  const data = {
     uid: userId,
     passage: targetText,
     errors: currentPassageErrors,
@@ -1020,7 +1020,7 @@ function trackRepetitionCompletion() {
   let completedTasks = localStorage.getItem('repetition_count') || 0;
   completedTasks++;
   localStorage.setItem('repetition_count', completedTasks);
-  gtag('set', {'repetition_count': completedTasks});
+  gtag('set', { 'repetition_count': completedTasks });
   gtag('event', 'repetition_completed', {
     'event_category': 'repetition',
     'event_label': 'Rep ' + completedTasks
@@ -1028,7 +1028,7 @@ function trackRepetitionCompletion() {
 }
 
 function generateUserId() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = Math.random() * 16 | 0;
     const v = c === 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
@@ -1039,7 +1039,7 @@ async function persistTypingState() {
   const timeTakenMs = (new Date() - startTime);
   const data = {
     userId: userId,
-    passage: targetText, 
+    passage: targetText,
     source: currentPassageSource,
     errors: currentPassageErrors,
     letterTimesSec: currentPassageLetterTimesSec,
@@ -1071,11 +1071,11 @@ function getTopErrors(includeFrequencyInCost) {
     if (ngram != 'char') {
       continue;
     }
-    const countCostFunction = (char, errorCount) => (errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length);
-    const frequencyCostFunction = (char, errorCount) => ((errorCount+1)/(seenLog[ngram][char]+1*Object.keys(errorLog[ngram]).length))*LETTER_FREQUENCIES[char];
+    const countCostFunction = (char, errorCount) => (errorCount + 1) / (seenLog[ngram][char] + 1 * Object.keys(errorLog[ngram]).length);
+    const frequencyCostFunction = (char, errorCount) => ((errorCount + 1) / (seenLog[ngram][char] + 1 * Object.keys(errorLog[ngram]).length)) * LETTER_FREQUENCIES[char];
     const errorScores = Object.entries(errorLog[ngram])
-      .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null && char != 'undefined' )
-      .map(([char,errorCount]) => [char, includeFrequencyInCost ? frequencyCostFunction(char, errorCount) : countCostFunction(char, errorCount)]);
+      .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null && char != 'undefined')
+      .map(([char, errorCount]) => [char, includeFrequencyInCost ? frequencyCostFunction(char, errorCount) : countCostFunction(char, errorCount)]);
     const sortedErrorScores = errorScores.sort((a, b) => b[1] - a[1]);
     const worstLetters = sortedErrorScores.slice(0, 5);
 
@@ -1083,15 +1083,15 @@ function getTopErrors(includeFrequencyInCost) {
   }
   topErrorLetters = topErrorLetters.sort((a, b) => b[1] - a[1]);
   return topErrorLetters.slice(0, 5).map(([letterKey, _]) => {
-      const ngramLength = lengthToNgram[letterKey.length];
-      const errorCount = errorLog[ngramLength][letterKey];
-      const seenCount = seenLog[ngramLength][letterKey];
+    const ngramLength = lengthToNgram[letterKey.length];
+    const errorCount = errorLog[ngramLength][letterKey];
+    const seenCount = seenLog[ngramLength][letterKey];
 
-      return {
-          letter: letterKey,
-          errorRate: errorCount / seenCount,
-          seenCount: seenCount
-      };
+    return {
+      letter: letterKey,
+      errorRate: errorCount / seenCount,
+      seenCount: seenCount
+    };
   });
 }
 
@@ -1106,17 +1106,17 @@ function topErrorsToHtmlTable(includeFrequencyInCost) {
   const errorItemClass = 'error-item';
   const titleClass = "error-title";
   const tooltipText = (
-    includeFrequencyInCost 
-    ? "Ordered also takes into account letter frequency."
-    : "Ordered by error rate with correction factor for characters that haven't been seen much."
+    includeFrequencyInCost
+      ? "Ordered also takes into account letter frequency."
+      : "Ordered by error rate with correction factor for characters that haven't been seen much."
   );
   let html = `<div class="${errorListClass}" style="position: relative;">
   <div class="${errorTooltipClass}" style="position: absolute; display: none; visibility: hidden; opacity: 0; z-index: 1000;">
     ${tooltipText}
   </div>`;
-  let title =includeFrequencyInCost? "Most costly typos" : "Most common typos";
+  let title = includeFrequencyInCost ? "Most costly typos" : "Most common typos";
   html += `<div class="${titleClass}">${title}</div>`;
-  
+
   for (const error of topErrors) {
     const errorRate = (error.errorRate * 100).toFixed(0);
     if (errorRate == "NaN") {
@@ -1128,7 +1128,7 @@ function topErrorsToHtmlTable(includeFrequencyInCost) {
       <span>/${error.seenCount}</span>
     </div>`;
   }
-  
+
   html += '</div>';
   return html;
 }
@@ -1152,7 +1152,7 @@ function updateHistoryDisplay() {
   const maxYaxisAccuracy = Math.min(maxAccuracy, 100);
   const minYaxisWPM = minWPM;
   const minYaxisAccuracy = Math.max(minAccuracy, 0);
-  
+
   let content;
   if (runHistory.length < 5) {
     // Show table for less than 5 runs
@@ -1192,15 +1192,15 @@ function updateHistoryDisplay() {
 
               <!-- WPM data points -->
               ${[...runHistory].reverse().map((run, i) => {
-                const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
-                const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM)/(maxYaxisWPM - minYaxisWPM));
-                return `
+      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+      const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM) / (maxYaxisWPM - minYaxisWPM));
+      return `
                   <circle cx="${x + 15}" cy="${yWPM}" r="3" fill="#666666" 
                     onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
                     onmouseout="hideTooltip()"
                   />
                 `;
-              }).join('')}
+    }).join('')}
               }).join('')}
             </g>
           </svg>
@@ -1221,15 +1221,15 @@ function updateHistoryDisplay() {
 
               <!-- Accuracy data points -->
               ${[...runHistory].reverse().map((run, i) => {
-                const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
-                const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy)/(maxYaxisAccuracy - minYaxisAccuracy));
-                return `
-                  <rect x="${x-3+15}" y="${yAcc-3}" width="6" height="6" fill="#666666"
+      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+      const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy) / (maxYaxisAccuracy - minYaxisAccuracy));
+      return `
+                  <rect x="${x - 3 + 15}" y="${yAcc - 3}" width="6" height="6" fill="#666666"
                     onmouseover="showTooltip(event, 'Accuracy: ${run.accuracy}%')"
                     onmouseout="hideTooltip()"
                   />
                 `;
-              }).join('')}
+    }).join('')}
             </g>
           </svg>
         </div>
@@ -1247,11 +1247,11 @@ function recordUserIntro() {
     console.error("runHistory.length != 3 (", runHistory.length, ")");
     return;
   }
-  
+
   const prevRuns = runHistory.slice(0, 3);
-  const avgWPM = prevRuns.length > 0 ? 
+  const avgWPM = prevRuns.length > 0 ?
     prevRuns.reduce((sum, run) => sum + run.wpm, 0) / prevRuns.length : 0;
-  const avgAccuracy = prevRuns.length > 0 ? 
+  const avgAccuracy = prevRuns.length > 0 ?
     prevRuns.reduce((sum, run) => sum + run.accuracy, 0) / prevRuns.length : 0;
   if (avgAccuracy > 30 && avgAccuracy <= 100 && avgWPM > 5 && avgWPM <= 150) {
     user_intro_acc = avgAccuracy / 100;
@@ -1270,7 +1270,7 @@ function choseNextSelectionMode() {
   ];
 
   const index = parseInt(session_rep_count / REPETION_STRATEGY_HISTORY_LENGTH);
-  if (index %2 == 0) {
+  if (index % 2 == 0) {
     return "default";
   }
   else {
@@ -1295,13 +1295,13 @@ function getPassage() {
   }
   if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
-    currentSelectionStrategyMode =choseNextSelectionMode();
+    currentSelectionStrategyMode = choseNextSelectionMode();
     return {
       passage: suggestErrorRepetitionStrategy(strategyModeLookup[currentSelectionStrategyMode]),
       source: "stats_rep"
     };
   }
-  
+
   let nextPassage = upcomingPassages.shift();
   // Fall back in the case where upcomingPassagest is empty. Need to work out why.
   if (!nextPassage) {
@@ -1326,28 +1326,28 @@ function setUpcomingPassages() {
   strategyModeLookup[currentSelectionStrategyMode].sendGetNextPassagesMessage();
 
   console.log(`Time taken to send message to worker: ${performance.now() - startTime}ms`);
-  
+
   setTimeout(() => {
     setUpcomingPassages();
   }, 7_000);
 }
 
-passageWorker.onmessage = function(e) {
+passageWorker.onmessage = function (e) {
   try {
     if (e.data.type == 'error') {
       console.error(e.data.error);
       return;
     }
     if (e.data.type == 'suggestStrategyFromSpeedLog') {
-      strategyModeLookup['letter-speed'] =new SpeedSelectionStrategy(e.data.strategy);
-      
+      strategyModeLookup['letter-speed'] = new SpeedSelectionStrategy(e.data.strategy);
+
       passageWorker.postMessage({
         type: 'suggestErrorLetterStrategyFromInterestingErrors',
         interestingErrorLog: interestingErrorLog,
         seenLog: seenLog,
         previousRepSelectionStrategies: previousRepSelectionStrategies
       });
-    
+
       return;
     }
     else if (e.data.type == 'suggestErrorLetterStrategyFromInterestingErrors') {
@@ -1368,7 +1368,7 @@ passageWorker.onmessage = function(e) {
       strategyModeLookup['error-group'] = new ErrorGroupSelectionStrategy(e.data.strategy);
       return;
     }
-    
+
     if (!e.data) {
       console.error("e.data is null");
       return;
@@ -1379,7 +1379,7 @@ passageWorker.onmessage = function(e) {
       upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
       localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
     }
-    
+
   } catch (error) {
     console.error('Error handling worker message:', error);
     // The console.error override will handle logging to S3
@@ -1387,7 +1387,7 @@ passageWorker.onmessage = function(e) {
 };
 
 // Add error handler for worker errors
-passageWorker.onerror = function(error) {
+passageWorker.onerror = function (error) {
   console.error('Worker error:', JSON.stringify(error));
   // The console.error override will handle logging to S3
 };
@@ -1395,7 +1395,7 @@ passageWorker.onerror = function(error) {
 function setupTopErrorsBox() {
   const topErrorsBox = document.getElementById('topErrors');
   topErrorsBox.innerHTML = topErrorsToHtmlTable(errorBoxIncludeFrequencyInCost);
-  topErrorsBox.onclick = function() {
+  topErrorsBox.onclick = function () {
     errorBoxIncludeFrequencyInCost = !errorBoxIncludeFrequencyInCost;
     setupTopErrorsBox();
   };
@@ -1403,17 +1403,17 @@ function setupTopErrorsBox() {
 
 async function loadStatsRepCommonStrings() {
   fetch(`https://jameshargreaves12.github.io/reference_data/stats_rep_common_strings.json`)
-        .then(response => {
-        if (!response.ok) {
-            console.error('Network response was not ok', response);
-        }
-        return response.json();
-        }).then(data => {
-          stats_rep_common_strings = data;
-        })
+    .then(response => {
+      if (!response.ok) {
+        console.error('Network response was not ok', response);
+      }
+      return response.json();
+    }).then(data => {
+      stats_rep_common_strings = data;
+    })
 }
 
-window.onload = function() {
+window.onload = function () {
   if (!localStorage.getItem('userId')) {
     localStorage.setItem('userId', generateUserId());
   }
@@ -1432,7 +1432,7 @@ window.onload = function() {
     'quadgram': {}
   };
   errorCount = Object.values(errorLog['char']).reduce((acc, curr) => acc + curr, 0);
-  
+
   seenLog = JSON.parse(localStorage.getItem('seenLog')) || {
     'char': {},
     'bigram': {},
@@ -1451,14 +1451,14 @@ window.onload = function() {
 
   user_intro_acc = localStorage.getItem('user_intro_acc') ? parseFloat(localStorage.getItem('user_intro_acc')) : user_intro_acc;
   user_intro_wpm = localStorage.getItem('user_intro_wpm') ? parseFloat(localStorage.getItem('user_intro_wpm')) : user_intro_wpm;
-  
+
   upcomingPassages = JSON.parse(localStorage.getItem('upcomingPassages')) || DEFAULT_PASSAGES;
   // backwards compatibility
   if (upcomingPassages.length > 0 && typeof upcomingPassages[0] === 'string') {
-    upcomingPassages = upcomingPassages.map(passage => ({passage, source: 'unknown'}));
+    upcomingPassages = upcomingPassages.map(passage => ({ passage, source: 'unknown' }));
   }
   const p = getPassage();
-  const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = p;
+  const { passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy } = p;
   previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
@@ -1471,11 +1471,11 @@ window.onload = function() {
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
   updateHistoryDisplay();
-  
+
   setTimeout(() => {
     setUpcomingPassages();
   }, 5000);
-  
+
   // Create tooltip element
   tooltip = document.createElement('div');
   tooltip.className = 'tooltip';
@@ -1488,7 +1488,7 @@ window.onload = function() {
   else {
     document.documentElement.setAttribute('data-theme', 'light');
   }
-  
+
   // Add dark mode toggle handler
   document.getElementById('darkModeToggle').addEventListener('click', () => {
     darkMode = !darkMode;
@@ -1541,7 +1541,7 @@ window.onload = function() {
     showStatsEvery5thRepetition = e.target.checked;
     localStorage.setItem('showStatsEvery5thRepetition', showStatsEvery5thRepetition);
   });
-  
+
   const onlyShowCursorAfterDelayToggle = document.getElementById('onlyShowCursorAfterDelay');
   onlyShowCursorAfterDelayToggle.checked = localStorage.getItem('onlyShowCursorAfterDelay') === 'true';
   onlyShowCursorAfterDelay = onlyShowCursorAfterDelayToggle.checked;
@@ -1555,7 +1555,7 @@ window.onload = function() {
   // Preload and setup error sound
   errorSound.load();
   errorSound.volume = 0.3;
-  
+
   // Sound toggle with localStorage
   const soundToggle = document.getElementById('soundToggle');
   soundToggle.checked = localStorage.getItem('soundOnError') === 'true';
@@ -1608,13 +1608,13 @@ window.onload = function() {
 
   const topErrorsBox = document.getElementById('topErrors');
 
-  topErrorsBox.onmouseenter = function() {
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'block'; 
+  topErrorsBox.onmouseenter = function () {
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'block';
     topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'visible';
     topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '1';
   };
-  topErrorsBox.onmouseleave = function() { 
-    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'none'; 
+  topErrorsBox.onmouseleave = function () {
+    topErrorsBox.querySelector(`.${errorTooltipClass}`).style.display = 'none';
     topErrorsBox.querySelector(`.${errorTooltipClass}`).style.visibility = 'hidden';
     topErrorsBox.querySelector(`.${errorTooltipClass}`).style.opacity = '0';
   };
@@ -1625,13 +1625,13 @@ window.onload = function() {
 function renderText() {
   let words = targetText.split(" ");
   let wordStartIndecies = [];
-  
+
   for (let i = 0; i < words.length; i++) {
     wordStartIndecies.push(targetText.indexOf(words[i]) + i);
   }
-  
+
   let html = '';
-  
+
   for (let i = 0; i < targetText.length; i++) {
     let char = targetText[i];
     let highlight = toHighlight?.includes(i) && predictiveErrorHighlight;
@@ -1646,11 +1646,10 @@ function renderText() {
 
 renderText();
 
-function colorText(inputText)
-{
-  
+function colorText(inputText) {
+
   for (let i = 0; i < targetText.length; i++) {
-    
+
     const targetLetter = targetText[i];
     const charSpan = document.getElementById(`char-${i}`);
     let currentClasses = charSpan.className.replace(' correct', '').replace(' error', '').replace(' cursor', '') || '';
@@ -1703,19 +1702,19 @@ function annotateEdits(typed, target) {
   for (let j = 0; j <= n; j++) dp[0][j] = j;
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
-      dp[i][j] = typed[i-1] === target[j-1]
-        ? dp[i-1][j-1]
-        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+      dp[i][j] = typed[i - 1] === target[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
     }
   }
 
   let i = m, j = n, out = [];
   while (i > 0 || j > 0) {
-    if (i > 0 && j > 0 && typed[i-1] === target[j-1] && dp[i][j] === dp[i-1][j-1]) {
-      out.push(target[j-1]); i--; j--;
-    } else if (i > 0 && j > 0 && dp[i][j] === dp[i-1][j-1] + 1) {
+    if (i > 0 && j > 0 && typed[i - 1] === target[j - 1] && dp[i][j] === dp[i - 1][j - 1]) {
+      out.push(target[j - 1]); i--; j--;
+    } else if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + 1) {
       out.push("^"); i--; j--;
-    } else if (j > 0 && dp[i][j] === dp[i][j-1] + 1) {
+    } else if (j > 0 && dp[i][j] === dp[i][j - 1] + 1) {
       out.push("$");
       j--;
     } else {
@@ -1750,20 +1749,20 @@ function handleInput(e) {
   if (settingTargetTextRef.value) {
     return;
   }
-  
+
   // Force cursor to end of input
   let inputText = inputArea.value;
   let i = inputText.length - 1;
   const end = inputArea.value.length;
   inputArea.setSelectionRange(end, end);
-  
+
   // Handle empty input
   if (inputText.length === 0) {
     colorText(inputText);
     prevInputText = inputText;
     return;
   }
-  
+
   if (e.data == ">" && targetText[i] != ".") {
     resetSession();
     return;
@@ -1782,13 +1781,13 @@ function handleInput(e) {
   for (let charIndex = currentPassageLetterTimesSec.length; charIndex < inputText.length && charIndex < targetText.length; charIndex++) {
     const letterTimeSec = charIndex === 0 ? 0 : (dt - prevCharTime) / 1000;
     currentPassageLetterTimesSec.push(Math.round(letterTimeSec * 1000) / 1000); // seconds, rounded to 3 decimals
-    
+
     const unigram = targetText[charIndex];
     if (speedLog['char'][unigram]) {
       speedLog['char'][unigram].unshift(letterTimeSec);
       speedLog['char'][unigram] = speedLog['char'][unigram].slice(0, 1000);
     }
-    else{
+    else {
       speedLog['char'][unigram] = [letterTimeSec];
     }
   }
@@ -1800,16 +1799,16 @@ function handleInput(e) {
   // Process all characters that are new since last input (handles rapid typing, paste, etc.)
   const startIndex = Math.max(0, prevInputText.length);
   const endIndex = Math.min(inputText.length, targetText.length);
-  
+
   for (let charIndex = startIndex; charIndex < endIndex; charIndex++) {
     const currentTypedChar = inputText[charIndex];
     const currentTargetChar = targetText[charIndex];
-    
+
     // Update n-gram tracking
     const currentUnigram = targetText[charIndex];
-    const currentBigram = targetText.slice(charIndex-1, charIndex+1);
-    const currentTrigram = targetText.slice(charIndex-2, charIndex+1);
-    const currentQuadgram = targetText.slice(charIndex-3, charIndex+1);
+    const currentBigram = targetText.slice(charIndex - 1, charIndex + 1);
+    const currentTrigram = targetText.slice(charIndex - 2, charIndex + 1);
+    const currentQuadgram = targetText.slice(charIndex - 3, charIndex + 1);
 
     seenLog['char'][currentUnigram] = (seenLog['char'][currentUnigram] || 0) + 1;
     if (currentBigram.length > 1) {
@@ -1837,8 +1836,8 @@ function handleInput(e) {
       }
 
       // Only interesting if not a repeated error and not preceeded by an error.
-      const isNonInterestingError = currentPassageErrors.includes(charIndex) || currentPassageErrors.includes(charIndex-1);
-      
+      const isNonInterestingError = currentPassageErrors.includes(charIndex) || currentPassageErrors.includes(charIndex - 1);
+
       currentPassageErrors.push(charIndex);
       currentPassageErrorActualChar.push(currentTypedChar);
 
@@ -1863,18 +1862,18 @@ function handleInput(e) {
     }
   }
   if (typedChar == " ") {
-    if (i < targetText.length && targetText[i+1] == " ") {
-      let targetPreviousWordStart = i-1;
+    if (i < targetText.length && targetText[i + 1] == " ") {
+      let targetPreviousWordStart = i - 1;
       while (targetPreviousWordStart > 0 && targetText[targetPreviousWordStart] != " ") {
         targetPreviousWordStart--;
       }
-      let inputPreviousWordStart = i-1;
+      let inputPreviousWordStart = i - 1;
       while (inputPreviousWordStart > 0 && inputText[inputPreviousWordStart] != " ") {
         inputPreviousWordStart--;
       }
       const currentWordTyped = inputText.slice(inputPreviousWordStart, i);
-      const currentWordTarget = targetText.slice(targetPreviousWordStart, i+1);
-      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")){
+      const currentWordTarget = targetText.slice(targetPreviousWordStart, i + 1);
+      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")) {
         const edit_string = annotateEdits(currentWordTyped, currentWordTarget) + " ";
         if (edit_string.split('#').length + edit_string.split('$').length === 3 && edit_string.indexOf('^') === -1) {
           const beforeErrorCount = countCharErrors(inputText, targetText);
@@ -1884,7 +1883,7 @@ function handleInput(e) {
             console.error("1: afterErrorCount > beforeErrorCount");
           }
           charErrorCount += afterErrorCount - beforeErrorCount;
-          inputArea.value = inputText;  
+          inputArea.value = inputText;
           if (edit_string.split('$').length === 2) {
             // then we have added a char so need to makes the per letter timings the same.
             const lastDollarIndex = inputText.lastIndexOf('$');
@@ -1895,23 +1894,23 @@ function handleInput(e) {
             if (lastHashIndex == -1) {
               console.error("lastHashIndex == -1");
             }
-            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex+1, 1);
+            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex + 1, 1);
           }
         }
       }
     }
-    if (i > 0 && targetText[i-1] == " ") {
-      let targetPreviousWordStart = i-2;
+    if (i > 0 && targetText[i - 1] == " ") {
+      let targetPreviousWordStart = i - 2;
       while (targetPreviousWordStart > 0 && targetText[targetPreviousWordStart] != " ") {
         targetPreviousWordStart--;
       }
-      let inputPreviousWordStart = i-1;
+      let inputPreviousWordStart = i - 1;
       while (inputPreviousWordStart > 0 && inputText[inputPreviousWordStart] != " ") {
         inputPreviousWordStart--;
       }
       const currentWordTyped = inputText.slice(inputPreviousWordStart, i);
-      const currentWordTarget = targetText.slice(targetPreviousWordStart, i-1);
-      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")){
+      const currentWordTarget = targetText.slice(targetPreviousWordStart, i - 1);
+      if (!currentWordTyped.includes("$") && !currentWordTarget.includes("#")) {
         const edit_string = annotateEdits(currentWordTyped, currentWordTarget) + " ";
         if (edit_string.split('#').length + edit_string.split('$').length === 3 && edit_string.indexOf('^') === -1) {
           const beforeErrorCount = countCharErrors(inputText, targetText);
@@ -1932,7 +1931,7 @@ function handleInput(e) {
             if (lastHashIndex == -1) {
               console.error("lastHashIndex == -1");
             }
-            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex+1, 1);
+            currentPassageLetterTimesSec.splice(inputPreviousWordStart + lastHashIndex + 1, 1);
           }
         }
       }
@@ -1944,9 +1943,9 @@ function handleInput(e) {
   // Update the progress bar width based on completion percentage
   let progress = Math.min((inputText.length / targetText.length) * 100, 100);
   progressBar.style.width = progress + "%";
-  
+
   updateLiveMetrics();
-  
+
   // When the user completes the passage
   if (inputText === targetText || (inputText.length >= targetText.length)) {
     persistTypingState();
@@ -1969,21 +1968,21 @@ inputArea.addEventListener("paste", e => e.preventDefault());
 
 inputArea.addEventListener('input', handleInput);
 
-inputArea.addEventListener('keydown', function(e) {
+inputArea.addEventListener('keydown', function (e) {
   // Prevent left/right arrow keys and mouse clicks from moving cursor
   if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
     e.preventDefault();
   }
 });
 
-inputArea.addEventListener('mousedown', function(e) {
+inputArea.addEventListener('mousedown', function (e) {
   // Prevent mouse clicks from moving cursor
   e.preventDefault();
   const end = this.value.length;
   this.setSelectionRange(end, end);
 });
 
-inputArea.addEventListener('select', function(e) {
+inputArea.addEventListener('select', function (e) {
   // Prevent text selection
   const end = this.value.length;
   this.setSelectionRange(end, end);
@@ -2000,7 +1999,7 @@ function calculateMetrics() {
   const rawErrRate = charErrorCount / charTotalCount;
   const errRate_percentile = betaCDF(rawErrRate, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
   const wpm_percentile = gammaCDF(rawWpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
-  let accuracy = Math.round((1-rawErrRate) * 100);
+  let accuracy = Math.round((1 - rawErrRate) * 100);
   wpm = isNaN(wpm) || !isFinite(wpm) ? 0 : wpm;
   accuracy = isNaN(accuracy) || !isFinite(accuracy) ? 100 : accuracy;
   return { wpm, accuracy, errRate_percentile, wpm_percentile };
@@ -2036,32 +2035,32 @@ function resetSession() {
     const metrics = calculateMetrics();
     const wpm = metrics.wpm;
     const accuracy = metrics.accuracy;
-    
+
     if (wpm > 0 && accuracy > 0 && wpm < 1000 && accuracy <= 100) {
       const prevRuns = runHistory.slice(0, 10);
-      const avgWPM = prevRuns.length > 0 ? 
+      const avgWPM = prevRuns.length > 0 ?
         prevRuns.reduce((sum, run) => sum + run.wpm, 0) / prevRuns.length : 0;
-      const avgAccuracy = prevRuns.length > 0 ? 
+      const avgAccuracy = prevRuns.length > 0 ?
         prevRuns.reduce((sum, run) => sum + run.accuracy, 0) / prevRuns.length : 0;
-      
+
       // Flash WPM
       const wpmElement = document.getElementById('wpm');
       wpmElement.className = wpm > avgWPM ? 'flash-good' : 'flash-bad';
       // Reset animation by removing and re-adding the class
       setTimeout(() => wpmElement.className = '', 1000);
-      
+
       // Flash Accuracy
       const accuracyElement = document.getElementById('accuracy');
       accuracyElement.className = accuracy > avgAccuracy ? 'flash-good' : 'flash-bad';
       setTimeout(() => accuracyElement.className = '', 1000);
-      
+
       runHistory.unshift({ wpm, accuracy });
       runHistory = runHistory.slice(0, MAX_HISTORY);
       localStorage.setItem('runHistory', JSON.stringify(runHistory));
       updateHistoryDisplay();
     }
   }
-  
+
   // Reset state for a new session
   prevInputText = "";
   charErrorCount = 0;
@@ -2077,8 +2076,8 @@ function resetSession() {
     recentPassages = recentPassages.slice(0, MAX_RECENT_PASSAGES);
     localStorage.setItem('recentPassages', JSON.stringify(recentPassages));
   }
-  
-  const {passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy} = getPassage();
+
+  const { passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy } = getPassage();
   previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
@@ -2100,7 +2099,7 @@ function showTooltip(event, text) {
   const rect = event.target.getBoundingClientRect();
   tooltip.textContent = text;
   tooltip.style.opacity = '1';
-  tooltip.style.left = (rect.left + rect.width/2 - tooltip.offsetWidth/2) + 'px';
+  tooltip.style.left = (rect.left + rect.width / 2 - tooltip.offsetWidth / 2) + 'px';
   tooltip.style.top = (rect.top - tooltip.offsetHeight - 8) + 'px';
 }
 
@@ -2129,10 +2128,10 @@ function resetStats() {
     'trigram': {},
     'quadgram': {}
   };
-  
+
   // Reset run history
   runHistory = [];
-  
+
   // Clear localStorage
   localStorage.removeItem('errorLog');
   localStorage.removeItem('seenLog');
@@ -2140,11 +2139,11 @@ function resetStats() {
   localStorage.removeItem('speedLog');
   localStorage.removeItem('runHistory');
   localStorage.removeItem('repetition_count');
-  
+
   // Update UI
   setupTopErrorsBox();
   updateHistoryDisplay();
-  
+
   // Flash feedback
   document.getElementById('resetStats').classList.add('flash-good');
   setTimeout(() => document.getElementById('resetStats').classList.remove('flash-good'), 300);
@@ -2203,10 +2202,10 @@ const logFeedbackToS3 = (feedback) => {
 }
 
 // Override console.error to automatically log all errors
-console.error = function(...args) {
+console.error = function (...args) {
   // Call original console.error first
   originalConsoleError.apply(console, args);
-  
+
   try {
     // Only log to S3 if it looks like an actual Error object or error message
     const firstArg = args[0];
@@ -2220,7 +2219,7 @@ console.error = function(...args) {
         type: 'console_error_object'
       });
     } else if (typeof firstArg === 'string' && (
-      firstArg.toLowerCase().includes('error') || 
+      firstArg.toLowerCase().includes('error') ||
       firstArg.toLowerCase().includes('failed') ||
       firstArg.toLowerCase().includes('exception')
     )) {
@@ -2255,7 +2254,7 @@ function openFeedbackModal() {
   const modal = document.getElementById('feedbackModal');
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden'; // Prevent background scrolling
-  
+
   // Auto-focus the textarea
   setTimeout(() => {
     const textarea = document.getElementById('feedbackMessage');
@@ -2275,29 +2274,29 @@ function closeFeedbackModal() {
 
 function handleFeedbackSubmission(event) {
   event.preventDefault();
-  
+
   const message = document.getElementById('feedbackMessage').value.trim();
   const email = document.getElementById('feedbackEmail').value.trim();
-  
+
   // Validate required fields
   if (!message) {
     alert('Please share your thoughts on how we can improve Typo Dojo.');
     return;
   }
-  
+
   const feedbackData = {
     message: message,
     email: email
   };
-  
+
   // Disable submit button to prevent double submission
   const submitButton = document.getElementById('submitFeedback');
   submitButton.disabled = true;
   submitButton.textContent = 'Sending...';
-  
+
   // Send feedback to S3
   logFeedbackToS3(feedbackData);
-  
+
   // Show success message and close modal
   setTimeout(() => {
     closeFeedbackModal();
@@ -2308,30 +2307,30 @@ function handleFeedbackSubmission(event) {
 
 window.addEventListener('load', () => {
   document.getElementById('resetStats').addEventListener('click', resetStats);
-  
+
   // Feedback dialog event listeners
   const feedbackButton = document.getElementById('feedbackButton');
   const closeButton = document.getElementById('closeFeedbackModal');
   const cancelButton = document.getElementById('cancelFeedback');
   const feedbackForm = document.getElementById('feedbackForm');
   const modal = document.getElementById('feedbackModal');
-  
+
   if (feedbackButton) {
     feedbackButton.addEventListener('click', openFeedbackModal);
   }
-  
+
   if (closeButton) {
     closeButton.addEventListener('click', closeFeedbackModal);
   }
-  
+
   if (cancelButton) {
     cancelButton.addEventListener('click', closeFeedbackModal);
   }
-  
+
   if (feedbackForm) {
     feedbackForm.addEventListener('submit', handleFeedbackSubmission);
   }
-  
+
   // Close modal when clicking outside of it
   if (modal) {
     modal.addEventListener('click', (event) => {
@@ -2340,7 +2339,7 @@ window.addEventListener('load', () => {
       }
     });
   }
-  
+
   // Close modal with Escape key
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && modal && modal.style.display === 'block') {
