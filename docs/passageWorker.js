@@ -1,3 +1,43 @@
+const REP_3_PASSAGES = [
+  'This was awarded to Best Actor and Best Actress. It was later replaced by the Volpi Cup for actors and actresses.',
+    'The Werribee Campus is located in the Werribee agricultural research and tertiary education precinct. It offers trades training as well as facilities for water, food and fire safety research.',
+    'Software testing can determine the correctness of software for specific scenarios but cannot determine correctness for all scenarios. It cannot find all bugs.',
+    'Forces can be classified as conservative or nonconservative. Conservative forces are equivalent to the gradient of a potential while nonconservative forces are not.',
+    'Academic research has identified different types of board directors. Their characteristics and experiences shape their role and performance. For instance, directors with multiple mandates are often referred to as busy directors.',
+    'The same holds for the accusative case. It is accepted practice to use the nominative case instead of the accusative.',
+    'In 1968, NATO held the first software engineering conference where issues related to software were addressed. Guidelines and best practices for the development of software were established.',
+    'They can drink salt water because their supraorbital gland filters excess salt from the bloodstream. The salt is excreted in a concentrated fluid from the nasal passages.',
+    'Westphalia is divided into three governmental districts. These are subdivided into further districts and independent cities.',
+    'Edward escaped the attack, and returned to Normandy. He returned after his place on the throne had been secured.',
+    'Traffic is exchanged between subnetworks through routers when the routing prefixes of the source address and the destination address differ. A router serves as a logical or physical boundary between the subnets.',
+    'Text in PDF is represented by text elements in page content streams. A text element specifies that characters should be drawn at certain positions. The characters are specified using the encoding of a selected font resource.',
+    'State defense forces (SDF) in the United States are military units that operate under the sole authority of a state government. State defense forces are authorized by state and federal law and are under the command of the governor of each state.',
+    'The IETF published the original specification as a Proposed Standard in April 1998 (RFC 2327). Revised specifications were released in 2006 (RFC 4566), and in 2021 (RFC 8866).',
+    'Bowls are made of varying shapes and materials to allow the smoker to try different characteristics or to dedicate particular bowls for particular tobaccos. Bowls are not interchangeable between manufacturers.',
+    'When an electric current flows in a suitably shaped conductor at radio frequencies, radio waves can be generated. These travel at the speed of light and can cause electric currents in distant conductors.',
+    'Another failure was the loss of the star tracker. The star tracker determines spacecraft orientation by comparing the star field to its internal charts. The mission was saved when the MICAS camera was reprogrammed to substitute for the star tracker.',
+    'Some cattle raised in the United States feed on pastures fertilized with sewage sludge. Elevated dioxins may be present in meat from these cattle.',
+    'Word processors evolved dramatically once they became software programs rather than dedicated machines. They can usefully be distinguished from text editors, the category of software they evolved from.',
+    'Seahorses are among the few popular marine aquarium species that can be temperate. Species vary in their temperature requirement, so here an extra category has been added.',
+    'Aberdeen Taxi service provides general taxi service in Aberdeen. Aberdeen Shuttle provides shuttle service to and from the airport along with general taxi services.',
+    'Treachery is a lesser form of Treason, where the intended effects are less severe. It is governed by Brottsbalken chapter 22 paragraph 2.',
+    'Core Vocabulary: Focuses on essential words that are frequently used across various contexts. Core vocabulary systems aim to provide users with a versatile set of words to express a wide range of messages.',
+    'The forward end of a boat is called the bow, the aft end the stern. Facing forward the right side is referred to as starboard and the left side as port.',
+    'The diversity of characteristics of birds is great, sometimes even in closely related species. Several avian characteristics are compared in the table below.',
+    'Peptides can be directly sequenced, or inferred from DNA sequences. Large sequence databases now exist that collate known protein sequences.',
+    'A cascade of identical stages produces successively higher concentrations of 235U. Each stage passes a slightly more concentrated product to the next stage and returns a slightly less concentrated residue to the previous stage.',
+    'In relativity theory, we often want to calculate the coordinates of an event from differing reference frames. The equations that relate measurements made in different frames are called transformation equations.',
+    'Granada has a wide network of taxis to help travellers reach their destinations. Official Granada taxis are white with a green stripe.',
+    'Shear walls resist lateral forces such as in an earthquake or severe wind. There are different kinds of shear walls such as the steel plate shear wall.',
+    'There are several types of medications that are used for the treatment of arthritis. Treatment typically begins with medications that have the fewest side effects with further medications being added if insufficiently effective.',
+    'Character advancement follows the same system as character creation. Characters are awarded character points to improve themselves at regular intervals (usually at the end of a game session or story).',
+    'Raw facts are aggregated to higher levels in various dimensions to extract information more relevant to the service or business. These are called aggregated facts or summaries.',
+    'West Indian manatees can move freely between fresh water and salt water. However, studies suggest that they are susceptible to dehydration if freshwater is not available for an extended period of time.',
+    "Borgia's coat of arms after he was consecrated featured a grazing ox. As pope it remained the same.",
+    'Sweeteners are added to foods for flavoring. Sweeteners other than sugar are added to keep the food energy (calories) low.',
+    'Every maximal element of a directed preordered set is a greatest element. Indeed, a directed preordered set is characterized by equality of the (possibly empty) sets of maximal and of greatest elements.'
+]
+
 const specificLetterPassages = {
   "1": ["Most tutorials begin with an H1 and a course labeled 101; editors set subheads at 16 pt and footnotes at 11 pt, then mark a 1st draft due in 10 days.",
     "Russia spans 11 time zones. The M1 highway leaves Moscow toward Belarus, rail lines climb near 61 N, and planners counted a 1st tranche of 31 priority junctions in the 1970s.",
@@ -998,8 +1038,8 @@ function findUnigramErrorRates(charErrorLog, charSeenLog) {
       console.log("letter", letter, "errorCount", errorCount, "seenCount", seenCount, "verbose", verbose);
     }
     const bestErr = findMAP(
-      HYPERPARAMS["UNIGRAM_MEAN_ERROR_RATE"][letter],
-      HYPERPARAMS["UNIGRAM_STD"][letter],
+      HYPERPARAMS["LETTER_MEAN_RATE"][letter],
+      HYPERPARAMS["LETTER_STD"][letter],
       errorCount,
       seenCount,
       1e-10,
@@ -1011,7 +1051,7 @@ function findUnigramErrorRates(charErrorLog, charSeenLog) {
   return best_error_rates;
 }
 
-const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
+const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596 *2, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
 
 const add_error_highlight_indecies = async (passages, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
   // For performance reasons only do it for the top passage
@@ -1528,6 +1568,7 @@ const handleGetNextPassagesDefault = async (
   user_intro_acc,
   user_intro_wpm,
   highlight_error_pct,
+  has_finished_defaults,
 ) => {
   let correctSourceUpcomingPassages = [];
   if (upcomingPassages) {
@@ -1541,7 +1582,13 @@ const handleGetNextPassagesDefault = async (
   }
 
   let newUpcomingPassages = [...correctSourceUpcomingPassages];
-  newUpcomingPassages = randomlySelectExtraPassages(100, newUpcomingPassages, recentPassages);
+  if (has_finished_defaults && currentSource == "wikipedia") {
+    newUpcomingPassages = newUpcomingPassages.concat(REP_3_PASSAGES.filter(passage => !upcomingPassages.includes(passage) && !recentPassages.includes(passage)));
+    newUpcomingPassages.sort(() => Math.random() - 0.5).slice(0, 10); // Select 10 so that we have some randomness in the choice
+  }
+  else {
+    newUpcomingPassages = randomlySelectExtraPassages(100, newUpcomingPassages, recentPassages);
+  }
   const result = await orderPassages(newUpcomingPassages, null, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
 
 
@@ -1604,7 +1651,7 @@ self.onmessage = async function (e) {
     }
 
     if (e.data.type === 'get-next-passages:default') {
-      const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct);
+      const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.has_finished_defaults);
       self.postMessage({ res, type: 'get-next-passages:default' });
       return;
     }
