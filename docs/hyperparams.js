@@ -1243,5 +1243,6 @@ const HYPERPARAMS={
         "beta": 0.4037
       }
     ]
-  ]
+  ],
+  "TOTAL_USER_COUNT": 286_188
 };

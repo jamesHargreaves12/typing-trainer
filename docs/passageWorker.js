@@ -1,3 +1,4 @@
+// TODO once we have some data compute selection values and move it to hyperparams.
 const REP_3_PASSAGES = [
   'This was awarded to Best Actor and Best Actress. It was later replaced by the Volpi Cup for actors and actresses.',
     'The Werribee Campus is located in the Werribee agricultural research and tertiary education precinct. It offers trades training as well as facilities for water, food and fire safety research.',
@@ -38,6 +39,7 @@ const REP_3_PASSAGES = [
     'Every maximal element of a directed preordered set is a greatest element. Indeed, a directed preordered set is characterized by equality of the (possibly empty) sets of maximal and of greatest elements.'
 ]
 
+// TODO weight this based on seen data and move it to hyperparams.
 const specificLetterPassages = {
   "1": ["Most tutorials begin with an H1 and a course labeled 101; editors set subheads at 16 pt and footnotes at 11 pt, then mark a 1st draft due in 10 days.",
     "Russia spans 11 time zones. The M1 highway leaves Moscow toward Belarus, rail lines climb near 61 N, and planners counted a 1st tranche of 31 priority junctions in the 1970s.",
@@ -777,10 +779,6 @@ const cartesianProduct = (a, b) => {
   return [].concat(...a.map(x => b.map(y => [x, y])));
 }
 
-
-
-
-
 const LOWER_CASE_LETTERS = "abcdefghijklmnopqrstuvwxyz".split('');
 const LOGICAL_LETTER_GROUPINGS = {
   most_common: "etaoinsr".split(''),
@@ -1050,7 +1048,7 @@ function findUnigramErrorRates(charErrorLog, charSeenLog) {
   }
   return best_error_rates;
 }
-
+// TODO move to hyperparams.
 const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596 *2, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
 
 const add_error_highlight_indecies = async (passages, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
@@ -1135,6 +1133,7 @@ function get_default_error_score_norm(passage, quadgram_error_model) {
 
 function getErrorScoreAndMostLikelyErrorChars(passage, seenLog, errorLog, defaultQuadgramErrorModel, errorCount, highlight_error_pct) {
   let passageErrorScore = 0;
+  // These should probably come from hyperparams?
   let charWeight = Object.keys(seenLog['char']).length ** 2 / 75;
   let bigramWeight = Object.keys(seenLog['bigram']).length ** 2 / (75 * 75);
   let trigramWeight = Object.keys(seenLog['trigram']).length ** 2 / (75 * 75 * 75);

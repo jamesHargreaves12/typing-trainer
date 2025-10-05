@@ -68,82 +68,6 @@ function getPassageVariants(firstRep, count = 2) {
   return retPassages;
 }
 
-const LETTER_FREQUENCIES = {
-  'A': 0.003153352805124311,
-  'n': 0.055725109439303484,
-  'a': 0.06574879237610978,
-  'r': 0.04895343918863251,
-  'c': 0.02368663480872584,
-  'h': 0.03440809510193862,
-  'i': 0.05736555569780318,
-  's': 0.05098628684359351,
-  't': 0.06283249477699976,
-  ' ': 0.16126223748404583,
-  'v': 0.00792397035237102,
-  'e': 0.09536583341888472,
-  'f': 0.015292696431959359,
-  'd': 0.030829563440896025,
-  'u': 0.020792086046599403,
-  'g': 0.013797676968572934,
-  'o': 0.0567961830999978,
-  'l': 0.03205162970570526,
-  'y': 0.01153414941517434,
-  '.': 0.010558070614780313,
-  '2': 0.0032394917857312498,
-  '0': 0.003898399323498048,
-  'm': 0.017988761235399744,
-  'k': 0.005075728496221641,
-  'w': 0.011476864805862281,
-  'p': 0.015483219067633279,
-  'b': 0.01152292290241313,
-  ',': 0.00878202900526206,
-  'T': 0.004579806176913074,
-  'j': 0.0007302944339057933,
-  '9': 0.0022726125692146813,
-  '4': 0.0009719173180840281,
-  'D': 0.0015318912844709844,
-  'z': 0.0007556475358099878,
-  'W': 0.0013337568162347675,
-  'E': 0.001062871629027983,
-  'I': 0.002681382154161148,
-  'x': 0.0012442623801334335,
-  'S': 0.003723010665829977,
-  'H': 0.0018290195012505923,
-  'C': 0.0033144800536579863,
-  '(': 0.0017254667539418384,
-  ')': 0.001725539082263411,
-  'q': 0.0009409735262355593,
-  ';': 0.00013218839775919848,
-  '-': 0.0016721602023162718,
-  '6': 0.0009902592018082627,
-  'M': 0.0022375125026953655,
-  '5': 0.0010397612837191113,
-  '1': 0.004230895510900077,
-  'L': 0.0012864755031094834,
-  'R': 0.0014376283867850131,
-  'F': 0.0013433822692696467,
-  'V': 0.000527198242809697,
-  'G': 0.0011281308697633483,
-  'B': 0.001900767460370877,
-  'Y': 0.00029471823710480933,
-  '"': 0.0010622791154176604,
-  "'": 0.0017780592803768405,
-  '8': 0.0012323368864725459,
-  'J': 0.0010586430260355636,
-  'N': 0.0013529180351857762,
-  'O': 0.0010358590261136272,
-  '7': 0.000974268856474996,
-  '3': 0.0010637262604756847,
-  'U': 0.0011245786812342758,
-  'P': 0.0021464748695249588,
-  'K': 0.0007279492604071239,
-  ':': 0.0008468361905158379,
-  'Q': 0.00010038303094415696,
-  'Z': 0.00012192356236161744,
-  '?': 9.530037513060838e-05,
-  'X': 8.027517892040621e-05,
-  '!': 2.290377562246053e-05
-}
 // Lanczos approximation of log-gamma function
 function logGamma(z) {
   const cof = [
@@ -524,11 +448,6 @@ function suggestErrorRepetitionStrategy(strategy) {
   const accuracy_percentile = 1 - error_rate_percentile;
   return _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy);
 }
-const SECOND_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
-let THIRD_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
-while (SECOND_PASSAGE_INDEX === THIRD_PASSAGE_INDEX) {
-  THIRD_PASSAGE_INDEX = Math.floor(Math.random() * 5) + 1;
-}
 
 let DEFAULT_PASSAGES = [
   "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
@@ -600,7 +519,7 @@ let prevInputText = "";
 let bgFlashOnError = false;
 let userId = "";
 let runHistory = [];
-const MAX_HISTORY = 20;
+const MAX_HISTORY_DISPLAYED = 20;
 let stats_rep_shown = false;
 const lengthToNgram = {
   1: 'char',
@@ -645,31 +564,16 @@ let cursorTimeoutId = null;
 let targetText = 'Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.';
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
+// TODO bin the progress bar 
 const progressBar = document.getElementById('progressBar');
 let currentSelectionStrategyMode = "default";
 let previousRepSelectionStrategies = [];
 let stats_rep_common_strings = {};
 
-function calculateSocialProof() {
-  // September 6th as the reference date
-  const referenceDate = new Date('2025-09-06');
-  const currentDate = new Date();
-
-  // Calculate days since September 6th
-  const timeDiff = currentDate.getTime() - referenceDate.getTime();
-  const daysSince = Math.floor(timeDiff / (1000 * 3600 * 24));
-
-  // Calculate social proof number: 237,548 + 11,000 * days since September 6th (seeing 15k per day but don't want to overstate)
-  const socialProofNumber = 237548 + (11000 * daysSince);
-
-  return socialProofNumber.toLocaleString();
-}
-
 function updateSocialProof() {
   const socialProofElement = document.getElementById('socialProof');
   if (socialProofElement) {
-    const socialProofString = calculateSocialProof();
-    const socialProofNumber = parseInt(socialProofString.replace(/,/g, ''));
+    const socialProofNumber = HYPERPARAMS.TOTAL_USER_COUNT;
     let displayNumber;
 
     if (socialProofNumber >= 10000000) {
@@ -768,7 +672,7 @@ function getTopErrors(includeFrequencyInCost) {
       continue;
     }
     const countCostFunction = (char, errorCount) => (errorCount + 1) / (seenLog[ngram][char] + 1 * Object.keys(errorLog[ngram]).length);
-    const frequencyCostFunction = (char, errorCount) => ((errorCount + 1) / (seenLog[ngram][char] + 1 * Object.keys(errorLog[ngram]).length)) * LETTER_FREQUENCIES[char];
+    const frequencyCostFunction = (char, errorCount) => ((errorCount + 1) / (seenLog[ngram][char] + 1 * Object.keys(errorLog[ngram]).length)) * HYPERPARAMS.LETTER_FREQUENCY[char];
     const errorScores = Object.entries(errorLog[ngram])
       .filter(([char, errorCount]) => errorCount > 1 && seenLog[ngram][char] > 3 && char != undefined && char != null && char != 'undefined')
       .map(([char, errorCount]) => [char, includeFrequencyInCost ? frequencyCostFunction(char, errorCount) : countCostFunction(char, errorCount)]);
@@ -1070,7 +974,10 @@ passageWorker.onmessage = function (e) {
       return;
     }
     if (e.data.type == 'get-next-passages:default' || e.data.type == 'get-next-passages:letter-error' || e.data.type == 'get-next-passages:letter-speed' || e.data.type == 'get-next-passages:error-group') {
-      upcomingPassages = e.data.res;
+      upcomingPassages = e.data.res || FALLBACK_PASSAGES;
+      if (upcomingPassages.length == 0) {
+        upcomingPassages = FALLBACK_PASSAGES;
+      }
       // refilter here because of race conditions
       upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
       localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
@@ -1289,7 +1196,7 @@ window.onload = function () {
         type: 'sourceChange',
         source: currentPassageSource
       });
-      upcomingPassages = [];
+      upcomingPassages = FALLBACK_PASSAGES;
 
     });
   });
@@ -1751,7 +1658,7 @@ function resetSession() {
       setTimeout(() => accuracyElement.className = '', 1000);
 
       runHistory.unshift({ wpm, accuracy });
-      runHistory = runHistory.slice(0, MAX_HISTORY);
+      runHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
       localStorage.setItem('runHistory', JSON.stringify(runHistory));
       updateHistoryDisplay();
     }
