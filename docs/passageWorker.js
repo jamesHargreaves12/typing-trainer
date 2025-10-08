@@ -1,7 +1,7 @@
 // TODO once we have some data compute selection values and move it to hyperparams.
 const REP_3_PASSAGES = [
   'This was awarded to Best Actor and Best Actress. It was later replaced by the Volpi Cup for actors and actresses.',
-    'The Werribee Campus is located in the Werribee agricultural research and tertiary education precinct. It offers trades training as well as facilities for water, food and fire safety research.',
+    // 'The Werribee Campus is located in the Werribee agricultural research and tertiary education precinct. It offers trades training as well as facilities for water, food and fire safety research.',
     'Software testing can determine the correctness of software for specific scenarios but cannot determine correctness for all scenarios. It cannot find all bugs.',
     'Forces can be classified as conservative or nonconservative. Conservative forces are equivalent to the gradient of a potential while nonconservative forces are not.',
     'Academic research has identified different types of board directors. Their characteristics and experiences shape their role and performance. For instance, directors with multiple mandates are often referred to as busy directors.',
@@ -12,20 +12,20 @@ const REP_3_PASSAGES = [
     'Edward escaped the attack, and returned to Normandy. He returned after his place on the throne had been secured.',
     'Traffic is exchanged between subnetworks through routers when the routing prefixes of the source address and the destination address differ. A router serves as a logical or physical boundary between the subnets.',
     'Text in PDF is represented by text elements in page content streams. A text element specifies that characters should be drawn at certain positions. The characters are specified using the encoding of a selected font resource.',
-    'State defense forces (SDF) in the United States are military units that operate under the sole authority of a state government. State defense forces are authorized by state and federal law and are under the command of the governor of each state.',
-    'The IETF published the original specification as a Proposed Standard in April 1998 (RFC 2327). Revised specifications were released in 2006 (RFC 4566), and in 2021 (RFC 8866).',
+    // 'State defense forces (SDF) in the United States are military units that operate under the sole authority of a state government. State defense forces are authorized by state and federal law and are under the command of the governor of each state.',
+    // 'The IETF published the original specification as a Proposed Standard in April 1998 (RFC 2327). Revised specifications were released in 2006 (RFC 4566), and in 2021 (RFC 8866).',
     'Bowls are made of varying shapes and materials to allow the smoker to try different characteristics or to dedicate particular bowls for particular tobaccos. Bowls are not interchangeable between manufacturers.',
-    'When an electric current flows in a suitably shaped conductor at radio frequencies, radio waves can be generated. These travel at the speed of light and can cause electric currents in distant conductors.',
+    // 'When an electric current flows in a suitably shaped conductor at radio frequencies, radio waves can be generated. These travel at the speed of light and can cause electric currents in distant conductors.',
     'Another failure was the loss of the star tracker. The star tracker determines spacecraft orientation by comparing the star field to its internal charts. The mission was saved when the MICAS camera was reprogrammed to substitute for the star tracker.',
     'Some cattle raised in the United States feed on pastures fertilized with sewage sludge. Elevated dioxins may be present in meat from these cattle.',
     'Word processors evolved dramatically once they became software programs rather than dedicated machines. They can usefully be distinguished from text editors, the category of software they evolved from.',
     'Seahorses are among the few popular marine aquarium species that can be temperate. Species vary in their temperature requirement, so here an extra category has been added.',
     'Aberdeen Taxi service provides general taxi service in Aberdeen. Aberdeen Shuttle provides shuttle service to and from the airport along with general taxi services.',
-    'Treachery is a lesser form of Treason, where the intended effects are less severe. It is governed by Brottsbalken chapter 22 paragraph 2.',
-    'Core Vocabulary: Focuses on essential words that are frequently used across various contexts. Core vocabulary systems aim to provide users with a versatile set of words to express a wide range of messages.',
+    // 'Treachery is a lesser form of Treason, where the intended effects are less severe. It is governed by Brottsbalken chapter 22 paragraph 2.',
+    // 'Core Vocabulary: Focuses on essential words that are frequently used across various contexts. Core vocabulary systems aim to provide users with a versatile set of words to express a wide range of messages.',
     'The forward end of a boat is called the bow, the aft end the stern. Facing forward the right side is referred to as starboard and the left side as port.',
     'The diversity of characteristics of birds is great, sometimes even in closely related species. Several avian characteristics are compared in the table below.',
-    'Peptides can be directly sequenced, or inferred from DNA sequences. Large sequence databases now exist that collate known protein sequences.',
+    // 'Peptides can be directly sequenced, or inferred from DNA sequences. Large sequence databases now exist that collate known protein sequences.',
     'A cascade of identical stages produces successively higher concentrations of 235U. Each stage passes a slightly more concentrated product to the next stage and returns a slightly less concentrated residue to the previous stage.',
     'In relativity theory, we often want to calculate the coordinates of an event from differing reference frames. The equations that relate measurements made in different frames are called transformation equations.',
     'Granada has a wide network of taxis to help travellers reach their destinations. Official Granada taxis are white with a green stripe.',
@@ -36,7 +36,7 @@ const REP_3_PASSAGES = [
     'West Indian manatees can move freely between fresh water and salt water. However, studies suggest that they are susceptible to dehydration if freshwater is not available for an extended period of time.',
     "Borgia's coat of arms after he was consecrated featured a grazing ox. As pope it remained the same.",
     'Sweeteners are added to foods for flavoring. Sweeteners other than sugar are added to keep the food energy (calories) low.',
-    'Every maximal element of a directed preordered set is a greatest element. Indeed, a directed preordered set is characterized by equality of the (possibly empty) sets of maximal and of greatest elements.'
+    // 'Every maximal element of a directed preordered set is a greatest element. Indeed, a directed preordered set is characterized by equality of the (possibly empty) sets of maximal and of greatest elements.'
 ]
 
 // TODO weight this based on seen data and move it to hyperparams.
