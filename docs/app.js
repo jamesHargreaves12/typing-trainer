@@ -420,6 +420,11 @@ function setFocusText(strategy) {
 function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_percentile, strategy) {
   let header = "";
   key = `${Math.round(wpm)},${Math.round(accuracy * 100)}`
+  wpm = isNaN(wpm) ? 40 : wpm;
+  accuracy = isNaN(accuracy) ? 0.9 : accuracy;
+  wpm_percentile = isNaN(wpm_percentile) ? 0.5 : wpm_percentile;
+  accuracy_percentile = isNaN(accuracy_percentile) ? 0.53 : accuracy_percentile;
+
   console.log(key, stats_rep_common_strings[key]);
   if (stats_rep_common_strings[key]) {
     header = stats_rep_common_strings[key];
