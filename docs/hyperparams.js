@@ -305,79 +305,79 @@ const HYPERPARAMS={
   },
   "ERROR_GAP_CHANGE_PER_OCCURENCE_M": {
     " ": 0,
-    "e": 0.009196,
-    "a": 0.007564,
-    "t": 0.009391,
-    "i": 0.00935,
-    "o": 0.01168,
-    "n": 0.009668,
-    "s": 0.00967,
-    "r": 0.01122,
-    "h": 0.01669,
-    "l": 0.01695,
-    "d": 0.01614,
-    "c": 0.01208,
-    "u": 0.01485,
-    "m": 0.01427,
-    "p": 0.02222,
-    "f": 0.01813,
-    "g": 0.01408,
-    "y": 0.02788,
-    "b": 0.02351,
-    "w": 0.01989,
-    ".": 0.02001,
-    ",": 0.02005,
-    "v": 0.0204,
-    "k": 0.01374,
-    "T": 0.02169,
-    "1": 0.07515,
-    "0": 0.02716,
-    "S": 0.02187,
-    "C": 0.02195,
-    "2": 0.04991,
-    "A": 0.02199,
-    "I": 0.02208,
-    "9": 0.0273,
-    "M": 0.02217,
-    "P": 0.02219,
-    "B": 0.02224,
-    "H": 0.02226,
-    "'": 0.03263,
-    ")": 0.02228,
-    "(": 0.02228,
-    "-": 0.00269,
-    "D": 0.02232,
-    "R": 0.02234,
-    "N": 0.02236,
-    "F": 0.02236,
-    "W": 0.02236,
-    "L": 0.02237,
-    "x": 0.02506,
-    "8": 0.01525,
-    "G": 0.0224,
-    "U": 0.0224,
-    "3": 0.02242,
-    "E": 0.02242,
-    "\"": 0.02242,
-    "J": 0.02242,
-    "5": 0.05441,
-    "O": 0.02242,
-    "6": 0.02046,
-    "7": 0.0595,
-    "4": 0.04164,
-    "q": 0.04866,
-    ":": 0.02246,
-    "z": 0.02248,
-    "j": 0.01314,
-    "K": 0.02249,
-    "V": 0.02253,
-    "Y": 0.02257,
-    ";": 0.01929,
-    "Z": 0.02261,
-    "Q": 0.02261,
-    "?": 0.02262,
-    "X": 0.02262,
-    "!": 0.02263
+    "e": 0.007052,
+    "a": 0.008142,
+    "t": 0.009784,
+    "i": 0.0138,
+    "o": 0.01074,
+    "n": 0.008361,
+    "s": 0.007684,
+    "r": 0.01113,
+    "h": 0.01226,
+    "l": 0.02235,
+    "d": 0.01768,
+    "c": 0.01861,
+    "u": 0.01376,
+    "m": 0.02088,
+    "p": 0.0263,
+    "f": 0.01541,
+    "g": 0.01691,
+    "y": 0.02172,
+    "b": 0.01644,
+    "w": 0.01635,
+    ".": 0.02058,
+    ",": 0.01601,
+    "v": 0.02019,
+    "k": 0.01964,
+    "T": 0.01972,
+    "1": 0.04725,
+    "0": 0.01983,
+    "S": 0.01986,
+    "C": 0.01992,
+    "2": 0.003669,
+    "A": 0.01995,
+    "I": 0.02002,
+    "9": 0.02533,
+    "M": 0.0201,
+    "P": 0.02011,
+    "B": 0.02015,
+    "H": 0.02016,
+    "'": 0.01603,
+    ")": 0.02018,
+    "(": 0.02018,
+    "-": 0.02192,
+    "D": 0.02021,
+    "R": 0.02023,
+    "N": 0.02024,
+    "F": 0.02024,
+    "W": 0.02024,
+    "L": 0.02025,
+    "x": 0.02453,
+    "8": 0.02406,
+    "G": 0.02028,
+    "U": 0.02028,
+    "3": 0.06339,
+    "E": 0.02029,
+    "\"": 0.02029,
+    "J": 0.02029,
+    "5": 0.07389,
+    "O": 0.02029,
+    "6": 0.004879,
+    "7": 0.01328,
+    "4": 0.0337,
+    "q": 0.02031,
+    ":": 0.02032,
+    "z": 0.02034,
+    "j": 0.02034,
+    "K": 0.02034,
+    "V": 0.02037,
+    "Y": 0.02041,
+    ";": 0.02044,
+    "Z": 0.02044,
+    "Q": 0.02044,
+    "?": 0.02044,
+    "X": 0.02044,
+    "!": 0.02045
   },
   "LETTER_FREQUENCY": {
     " ": 0.1613,
@@ -1244,5 +1244,157 @@ const HYPERPARAMS={
       }
     ]
   ],
-  "TOTAL_USER_COUNT": 291480
+  "TOTAL_USER_COUNT": 291480,
+  "BEST_PASSAGES": [
+    {
+      "passage": "Adam is the first human created by God. Adam requests a companion from God: God approves his request then creates Eve. God appoints Adam and Eve to rule over all the creatures of the world and to reside in the Garden of Eden.",
+      "alpha": 154.8,
+      "beta": 0.25
+    },
+    {
+      "passage": "Each rotor contains one or more notches that control rotor stepping. In the military variants, the notches are located on the alphabet ring.",
+      "alpha": 731.8,
+      "beta": 2.25
+    },
+    {
+      "passage": "An example of an infinitely large sample space is measuring the lifetime of a light bulb. The corresponding sample space would be .",
+      "alpha": 175.8,
+      "beta": 1.25
+    },
+    {
+      "passage": "Audio samples of some dialects and accents of Portuguese are available below. There are some differences between the areas but these are the best approximations possible. IPA transcriptions refer to the names in local pronunciation.",
+      "alpha": 460.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "The parentheses around the vowels indicate that the vowel can be dropped when following an open vowel. For the sake of cohesiveness, the above forms are used to discuss the evidential morphemes. There are dialectal variations to the forms.",
+      "alpha": 218.8,
+      "beta": 2.25
+    },
+    {
+      "passage": "Fast Catch: the time taken to throw and catch the boomerang five times. The winner has the fastest timed catches.",
+      "alpha": 132.8,
+      "beta": 2.25
+    },
+    {
+      "passage": "All three elements are required. If any element ceases to exist, then the trade secret will also cease to exist.",
+      "alpha": 149.8,
+      "beta": 3.25
+    },
+    {
+      "passage": "In computer science, finite sequences are called lists. Potentially infinite sequences are called streams. Finite sequences of characters or digits are called strings.",
+      "alpha": 132.8,
+      "beta": 3.25
+    },
+    {
+      "passage": "Alternative methods such as Hoare logic and uniqueness have been developed to track side effects in programs. Some modern research languages use effect systems to make the presence of side effects explicit.",
+      "alpha": 119.8,
+      "beta": 3.25
+    },
+    {
+      "passage": "Faivre identified three characteristics of theosophy. The three characteristics of theosophy are listed below.",
+      "alpha": 106.8,
+      "beta": 3.25
+    },
+    {
+      "passage": "Acacia farnesiana is used in the perfume industry due to its strong fragrance. The use of acacia as a fragrance dates back centuries.",
+      "alpha": 171.8,
+      "beta": 5.25
+    },
+    {
+      "passage": "Data transfer rate The rate at which user data bits are transferred from or to the medium. Technically, this would more accurately be entitled the \"gross\" data transfer rate.",
+      "alpha": 124.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "It is similar to what occurs when waves are scattered from a diffraction grating. Bragg diffraction is a consequence of interference between waves reflecting from many different crystal planes.",
+      "alpha": 122.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "Secretory vesicles contain materials that are to be excreted from the cell. Cells have many reasons to excrete materials.",
+      "alpha": 151.8,
+      "beta": 5.25
+    },
+    {
+      "passage": "Deleting records from a database is relatively easy. The index can stay the same, and the record can just be marked as deleted. The database remains in sorted order.",
+      "alpha": 121.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "Finally, the server stub calls the server procedure. The reply traces the same steps in the reverse direction.",
+      "alpha": 115.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "There are several factors that could contribute to the failure of two adhered surfaces. Sunlight and heat may weaken the adhesive. Solvents can deteriorate or dissolve adhesive.",
+      "alpha": 110.8,
+      "beta": 4.25
+    },
+    {
+      "passage": "For dramatic effect, heel referees may assist a heel wrestler. Several common plot devices involve the heel referee assisting the heel wrestler.",
+      "alpha": 134.8,
+      "beta": 5.25
+    },
+    {
+      "passage": "Files and tables are sorted using and the verb merges and sorts files. The verb provides records to sort and retrieves sorted records in order.",
+      "alpha": 157.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "Sometimes the greenhouse effect is quantified as a temperature difference. This temperature difference is closely related to the quantities above.",
+      "alpha": 182.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Seatack, Virginia is currently the oldest African American community in the United States. It survives today with a vibrant and active civic community.",
+      "alpha": 303.8,
+      "beta": 12.25
+    },
+    {
+      "passage": "A large fire caused significant damage to new seating areas in left field and center field bleachers. These areas were reconstructed before opening day 1934.",
+      "alpha": 150.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "Interspersed among superclusters are large voids of space where few galaxies exist. Superclusters are frequently subdivided into groups of clusters called galaxy groups and clusters.",
+      "alpha": 144.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "Ion thrusters are categorized as either electrostatic or electromagnetic. The main difference is the method for accelerating the ions.",
+      "alpha": 183.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "A metaclass is a class where instances are classes. A metaclass describes a common structure of a collection of classes and can implement a design pattern or describe particular kinds of classes. Metaclasses are often used to describe frameworks.",
+      "alpha": 181.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "Agile software development may involve frequent software releases with relatively small changes. Defects are revealed by user feedback.",
+      "alpha": 111.8,
+      "beta": 5.25
+    },
+    {
+      "passage": "There are no known curative treatments for the majority of motor neuron disorders. Please refer to the articles on individual disorders for more details.",
+      "alpha": 132.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "The country's ccTLD is .nr. Internet service in the country is provided by CenPacNet. Domains must be paid, and can be ordered from CenPacNet.",
+      "alpha": 130.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "Rara is a festival celebrated before Easter. The festival has generated a style of Carnival music.",
+      "alpha": 166.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "A set can never been considered as open by itself. This notion is relative to a containing set and a specific topology on it.",
+      "alpha": 125.8,
+      "beta": 6.25
+    }
+  ]
 };
