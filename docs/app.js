@@ -749,17 +749,18 @@ function updateHistoryDisplay() {
   const width = 250;
   const height = 112;
   const margin = { top: 20, right: 20, bottom: 20, left: 5 };
-  const maxWPM = runHistory.reduce((max, run) => Math.max(max, run.wpm), 0);
-  const maxAccuracy = runHistory.reduce((max, run) => Math.max(max, run.accuracy), 0);
-  const minWPM = runHistory.reduce((min, run) => Math.min(min, run.wpm), 1000);
-  const minAccuracy = runHistory.reduce((min, run) => Math.min(min, run.accuracy), 100);
+  const filteredRunHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
+  const maxWPM = filteredRunHistory.reduce((max, run) => Math.max(max, run.wpm), 0);
+  const maxAccuracy = filteredRunHistory.reduce((max, run) => Math.max(max, run.accuracy), 0);
+  const minWPM = filteredRunHistory.reduce((min, run) => Math.min(min, run.wpm), 1000);
+  const minAccuracy = filteredRunHistory.reduce((min, run) => Math.min(min, run.accuracy), 100);
   const maxYaxisWPM = maxWPM;
   const maxYaxisAccuracy = Math.min(maxAccuracy, 100);
   const minYaxisWPM = minWPM;
   const minYaxisAccuracy = Math.max(minAccuracy, 0);
 
   let content;
-  if (runHistory.length < 5) {
+  if (filteredRunHistory.length < 5) {
     // Show table for less than 5 runs
     content = `
       <table class="history-table">
@@ -770,7 +771,7 @@ function updateHistoryDisplay() {
           </tr>
         </thead>
         <tbody>
-          ${runHistory.map(run => `
+          ${filteredRunHistory.map(run => `
             <tr>
               <td>${run.wpm}</td>
               <td>${run.accuracy}%</td>
@@ -796,8 +797,8 @@ function updateHistoryDisplay() {
               </g>
 
               <!-- WPM data points -->
-              ${[...runHistory].reverse().map((run, i) => {
-      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+              ${[...filteredRunHistory].reverse().map((run, i) => {
+      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(filteredRunHistory.length - 1, 1));
       const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM) / (maxYaxisWPM - minYaxisWPM));
       return `
                   <circle cx="${x + 15}" cy="${yWPM}" r="3" fill="#666666" 
@@ -825,8 +826,8 @@ function updateHistoryDisplay() {
               </g>
 
               <!-- Accuracy data points -->
-              ${[...runHistory].reverse().map((run, i) => {
-      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(runHistory.length - 1, 1));
+              ${[...filteredRunHistory].reverse().map((run, i) => {
+      const x = (width - 15 - margin.left - margin.right) * (i / Math.max(filteredRunHistory.length - 1, 1));
       const yAcc = (height - margin.top - margin.bottom) * (1 - (run.accuracy - minYaxisAccuracy) / (maxYaxisAccuracy - minYaxisAccuracy));
       return `
                   <rect x="${x - 3 + 15}" y="${yAcc - 3}" width="6" height="6" fill="#666666"
@@ -1662,8 +1663,8 @@ function resetSession() {
       accuracyElement.className = accuracy > avgAccuracy ? 'flash-good' : 'flash-bad';
       setTimeout(() => accuracyElement.className = '', 1000);
 
-      runHistory.unshift({ wpm, accuracy });
-      runHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
+      runHistory.unshift({ wpm, accuracy, startTime });
+      // runHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
       localStorage.setItem('runHistory', JSON.stringify(runHistory));
       updateHistoryDisplay();
     }
