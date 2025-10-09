@@ -430,7 +430,7 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
     header = stats_rep_common_strings[key];
   }
   else {
-    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} (faster than ${Math.round(wpm_percentile * 100)}% of users), and your accuracy has been ${Math.round(accuracy * 100)}% (better than ${Math.round(accuracy_percentile * 100)}% of users).`
+    header = `Over the last ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, your words per minute have been ${Math.round(wpm)} and your accuracy has been ${Math.round(accuracy * 100)}%.`
   }
 
   if (strategy) {
@@ -1011,7 +1011,7 @@ function setupTopErrorsBox() {
 }
 
 async function loadStatsRepCommonStrings() {
-  fetch(`https://jameshargreaves12.github.io/reference_data/stats_rep_common_strings.json`)
+  fetch(`https://jameshargreaves12.github.io/reference_data/stats_rep_common_strings_no_comparison.json`)
     .then(response => {
       if (!response.ok) {
         console.error('Network response was not ok', response);
