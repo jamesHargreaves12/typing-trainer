@@ -1,223 +1,223 @@
 const HYPERPARAMS={
   "LETTER_SPEED_STD": {
-    " ": 0.09926,
-    "e": 0.09218,
-    "a": 0.09926,
+    " ": 0.09925,
+    "e": 0.09215,
+    "a": 0.09936,
     "t": 0.133,
-    "i": 0.1105,
-    "o": 0.1073,
+    "i": 0.1108,
+    "o": 0.1076,
     "n": 0.1006,
     "s": 0.1062,
-    "r": 0.1102,
-    "h": 0.08601,
-    "l": 0.1017,
+    "r": 0.1103,
+    "h": 0.0859,
+    "l": 0.1018,
     "d": 0.1168,
-    "c": 0.1453,
-    "u": 0.1231,
-    "m": 0.122,
-    "p": 0.1487,
-    "f": 0.132,
-    "g": 0.135,
-    "y": 0.1226,
+    "c": 0.1454,
+    "u": 0.1232,
+    "m": 0.1219,
+    "p": 0.1485,
+    "f": 0.1319,
+    "g": 0.1349,
+    "y": 0.1225,
     "b": 0.1673,
-    "w": 0.1563,
-    ".": 0.2103,
-    ",": 0.2112,
+    "w": 0.1567,
+    ".": 0.2108,
+    ",": 0.2119,
     "v": 0.1368,
-    "k": 0.1108,
-    "T": 0.1855,
-    "1": 0.1756,
-    "0": 0.1038,
-    "S": 0.198,
-    "C": 0.1949,
-    "2": 0.1807,
-    "A": 0.1868,
-    "I": 0.166,
-    "9": 0.1417,
-    "M": 0.1571,
-    "P": 0.1577,
-    "B": 0.1924,
-    "H": 0.1776,
-    "'": 0.2248,
-    ")": 0.2048,
-    "(": 0.2124,
-    "-": 0.1827,
-    "D": 0.1914,
-    "R": 0.2086,
-    "N": 0.1797,
-    "F": 0.1823,
-    "W": 0.1911,
-    "L": 0.1676,
-    "x": 0.1486,
-    "8": 0.1413,
-    "G": 0.1952,
-    "U": 0.1499,
-    "3": 0.1874,
-    "E": 0.2055,
-    "\"": 0.2128,
-    "J": 0.1443,
-    "5": 0.1507,
-    "O": 0.1359,
-    "6": 0.1665,
-    "7": 0.157,
-    "4": 0.165,
-    "q": 0.1767,
-    ":": 0.2412,
-    "z": 0.1962,
-    "j": 0.1607,
-    "K": 0.1428,
-    "V": 0.198,
-    "Y": 0.1777,
-    ";": 0.2138,
-    "Z": 0.1777,
-    "Q": 0.1777,
-    "?": 0.2138,
-    "X": 0.1777,
-    "!": 0.2386
+    "k": 0.1103,
+    "T": 0.1846,
+    "1": 0.1749,
+    "0": 0.1035,
+    "S": 0.1985,
+    "C": 0.1935,
+    "2": 0.1808,
+    "A": 0.1849,
+    "I": 0.1635,
+    "9": 0.141,
+    "M": 0.1563,
+    "P": 0.1569,
+    "B": 0.1911,
+    "H": 0.1748,
+    "'": 0.2221,
+    ")": 0.2062,
+    "(": 0.2127,
+    "-": 0.1814,
+    "D": 0.1905,
+    "R": 0.2081,
+    "N": 0.1769,
+    "F": 0.1797,
+    "W": 0.191,
+    "L": 0.1856,
+    "x": 0.1483,
+    "8": 0.1414,
+    "G": 0.2085,
+    "U": 0.1428,
+    "3": 0.1853,
+    "E": 0.2038,
+    "\"": 0.2107,
+    "J": 0.1446,
+    "5": 0.1482,
+    "O": 0.1329,
+    "6": 0.1651,
+    "7": 0.1564,
+    "4": 0.1635,
+    "q": 0.1758,
+    ":": 0.2222,
+    "z": 0.2072,
+    "j": 0.1623,
+    "K": 0.1421,
+    "V": 0.193,
+    "Y": 0.1774,
+    ";": 0.2109,
+    "Z": 0.1774,
+    "Q": 0.1774,
+    "?": 0.2109,
+    "X": 0.1774,
+    "!": 0.2313
   },
   "LETTER_SPEED_MEAN": {
-    " ": 0.2583,
-    "e": 0.2375,
-    "a": 0.2638,
-    "t": 0.3188,
-    "i": 0.2811,
-    "o": 0.2709,
-    "n": 0.2558,
-    "s": 0.2926,
-    "r": 0.2795,
-    "h": 0.2449,
-    "l": 0.2876,
-    "d": 0.3176,
-    "c": 0.3656,
-    "u": 0.3066,
-    "m": 0.3158,
-    "p": 0.3718,
-    "f": 0.3458,
-    "g": 0.3413,
-    "y": 0.3429,
-    "b": 0.426,
-    "w": 0.3798,
-    ".": 0.5688,
-    ",": 0.5538,
-    "v": 0.3695,
-    "k": 0.3153,
-    "T": 0.5904,
-    "1": 0.5571,
-    "0": 0.3141,
-    "S": 0.594,
-    "C": 0.6156,
-    "2": 0.5509,
-    "A": 0.5718,
-    "I": 0.5468,
-    "9": 0.4857,
-    "M": 0.5385,
-    "P": 0.5374,
-    "B": 0.6153,
-    "H": 0.5976,
-    "'": 0.6758,
-    ")": 0.777,
-    "(": 0.763,
-    "-": 0.6404,
-    "D": 0.6268,
-    "R": 0.6232,
-    "N": 0.5581,
-    "F": 0.6294,
-    "W": 0.6879,
-    "L": 0.5559,
-    "x": 0.4389,
-    "8": 0.536,
-    "G": 0.6657,
-    "U": 0.6,
-    "3": 0.6238,
-    "E": 0.6182,
-    "\"": 0.7915,
-    "J": 0.6235,
-    "5": 0.6017,
-    "O": 0.5573,
-    "6": 0.6419,
-    "7": 0.5548,
-    "4": 0.6123,
-    "q": 0.529,
-    ":": 0.8146,
-    "z": 0.5103,
-    "j": 0.4378,
-    "K": 0.6065,
-    "V": 0.6622,
-    "Y": 0.632,
-    ";": 0.8149,
-    "Z": 0.7795,
-    "Q": 0.7582,
-    "?": 0.7582,
-    "X": 0.7073,
-    "!": 0.7188
+    " ": 0.2574,
+    "e": 0.2368,
+    "a": 0.2631,
+    "t": 0.3178,
+    "i": 0.2802,
+    "o": 0.27,
+    "n": 0.255,
+    "s": 0.2918,
+    "r": 0.2788,
+    "h": 0.2441,
+    "l": 0.2867,
+    "d": 0.3167,
+    "c": 0.3646,
+    "u": 0.3058,
+    "m": 0.3149,
+    "p": 0.371,
+    "f": 0.3448,
+    "g": 0.3405,
+    "y": 0.3419,
+    "b": 0.4249,
+    "w": 0.3787,
+    ".": 0.5669,
+    ",": 0.5523,
+    "v": 0.3686,
+    "k": 0.3147,
+    "T": 0.5885,
+    "1": 0.5568,
+    "0": 0.3136,
+    "S": 0.5928,
+    "C": 0.6145,
+    "2": 0.5505,
+    "A": 0.5707,
+    "I": 0.5454,
+    "9": 0.4852,
+    "M": 0.537,
+    "P": 0.5361,
+    "B": 0.6147,
+    "H": 0.5965,
+    "'": 0.6744,
+    ")": 0.7765,
+    "(": 0.7623,
+    "-": 0.6402,
+    "D": 0.6258,
+    "R": 0.6227,
+    "N": 0.5571,
+    "F": 0.6277,
+    "W": 0.6863,
+    "L": 0.5545,
+    "x": 0.438,
+    "8": 0.5351,
+    "G": 0.6647,
+    "U": 0.5992,
+    "3": 0.623,
+    "E": 0.6171,
+    "\"": 0.7899,
+    "J": 0.6224,
+    "5": 0.6011,
+    "O": 0.5567,
+    "6": 0.6415,
+    "7": 0.5545,
+    "4": 0.612,
+    "q": 0.5283,
+    ":": 0.8138,
+    "z": 0.5093,
+    "j": 0.4371,
+    "K": 0.6054,
+    "V": 0.661,
+    "Y": 0.6316,
+    ";": 0.8138,
+    "Z": 0.7798,
+    "Q": 0.7572,
+    "?": 0.7572,
+    "X": 0.7076,
+    "!": 0.7194
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_M": {
-    " ": 12.3,
-    "e": 7.113,
-    "a": 2.066,
-    "t": 7.602,
-    "i": 3.003,
-    "o": 4.562,
-    "n": 6.014,
-    "s": 3.52,
-    "r": 5.188,
-    "h": 3.777,
-    "l": 10.48,
-    "d": 12.03,
-    "c": 4.666,
-    "u": 4.213,
-    "m": 6.459,
-    "p": 0.8345,
-    "f": 3.819,
+    " ": 12.81,
+    "e": 7.25,
+    "a": 2.322,
+    "t": 7.565,
+    "i": 3.948,
+    "o": 5.44,
+    "n": 5.869,
+    "s": 3.768,
+    "r": 5.538,
+    "h": 4.118,
+    "l": 10.17,
+    "d": 11.03,
+    "c": 4.55,
+    "u": 5.645,
+    "m": 6.468,
+    "p": 0.9644,
+    "f": 3.123,
     "g": 0,
-    "y": 12.04,
-    "b": 4.899,
-    "w": 2.909,
-    ".": 5.285,
-    ",": 4.316,
-    "v": 7.288,
-    "k": 7.704,
-    "T": 9.366,
+    "y": 11.49,
+    "b": 5.567,
+    "w": 2.642,
+    ".": 5.202,
+    ",": 5.115,
+    "v": 7.373,
+    "k": 7.597,
+    "T": 8.945,
     "1": 0,
     "0": 0,
-    "S": 2.549,
-    "C": 4.977,
-    "2": 7.945,
-    "A": 2.376,
-    "I": 4.576,
-    "9": 3.649,
-    "M": 1.713,
-    "P": 0.6278,
-    "B": 0.08446,
-    "H": 0.5524,
+    "S": 2.378,
+    "C": 5.919,
+    "2": 8.774,
+    "A": 4.804,
+    "I": 4.485,
+    "9": 0.8818,
+    "M": 1.607,
+    "P": 1.492,
+    "B": 0.7076,
+    "H": 0.4751,
     "'": 3.323,
     ")": 3.323,
     "(": 3.323,
-    "-": 0.6897,
-    "D": 3.541,
-    "R": 0,
+    "-": 2.328,
+    "D": 3.527,
+    "R": 1.628,
     "N": 0,
-    "F": 1.092,
+    "F": 0,
     "W": 3.323,
-    "L": 0.9401,
-    "x": 5.99,
+    "L": 0,
+    "x": 6.842,
     "8": 0,
     "G": 3.323,
-    "U": 0,
+    "U": 1.952,
     "3": 0,
-    "E": 4.806,
+    "E": 0,
     "\"": 3.323,
-    "J": 0.7756,
-    "5": 1.028,
-    "O": 4.724,
+    "J": 0.1275,
+    "5": 3.286,
+    "O": 1.746,
     "6": 0,
-    "7": 2.803,
-    "4": 5.444,
+    "7": 4.945,
+    "4": 12.07,
     "q": 0,
     ":": 3.323,
-    "z": 2.325,
-    "j": 4.628,
-    "K": 0.3297,
+    "z": 0.481,
+    "j": 4.899,
+    "K": 0,
     "V": 3.323,
     "Y": 3.323,
     ";": 3.323,
@@ -225,75 +225,75 @@ const HYPERPARAMS={
     "Q": 3.323,
     "?": 3.323,
     "X": 3.323,
-    "!": 0
+    "!": 0.4264
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_C": {
-    " ": -16.44,
-    "e": -15.44,
-    "a": -14.04,
+    " ": -16.51,
+    "e": -15.33,
+    "a": -14.12,
     "t": -15.48,
-    "i": -13.48,
-    "o": -14,
-    "n": -14.41,
-    "s": -13.92,
-    "r": -14.16,
-    "h": -13.5,
-    "l": -15.36,
-    "d": -15.8,
+    "i": -13.8,
+    "o": -14.26,
+    "n": -14.38,
+    "s": -14,
+    "r": -14.26,
+    "h": -13.54,
+    "l": -15.26,
+    "d": -15.45,
     "c": -13.79,
-    "u": -13.13,
-    "m": -13.63,
-    "p": -11.77,
-    "f": -13.54,
-    "g": -11.65,
-    "y": -15.25,
-    "b": -13.5,
-    "w": -12.44,
+    "u": -13.64,
+    "m": -13.7,
+    "p": -11.91,
+    "f": -13.21,
+    "g": -11.76,
+    "y": -15.03,
+    "b": -13.97,
+    "w": -12.36,
     ".": -13.16,
-    ",": -13.1,
-    "v": -13.45,
-    "k": -12.82,
-    "T": -14.45,
-    "1": -10.59,
-    "0": -11.19,
-    "S": -10.83,
-    "C": -12.25,
-    "2": -12.75,
-    "A": -10.68,
-    "I": -11.91,
-    "9": -10.67,
-    "M": -10.03,
-    "P": -9.266,
-    "B": -9.66,
-    "H": -9.809,
+    ",": -13.3,
+    "v": -13.5,
+    "k": -12.74,
+    "T": -14.09,
+    "1": -10.33,
+    "0": -11.09,
+    "S": -10.63,
+    "C": -12.47,
+    "2": -12.91,
+    "A": -11.98,
+    "I": -11.66,
+    "9": -10.09,
+    "M": -10.21,
+    "P": -9.479,
+    "B": -9.77,
+    "H": -9.594,
     "'": -9.255,
     ")": -9.255,
     "(": -9.255,
-    "-": -10.78,
-    "D": -10.54,
-    "R": -9.468,
-    "N": -9.108,
-    "F": -9.547,
+    "-": -11.35,
+    "D": -10.47,
+    "R": -9.453,
+    "N": -8.819,
+    "F": -9.244,
     "W": -9.255,
-    "L": -9.144,
-    "x": -11.89,
-    "8": -9.192,
+    "L": -8.756,
+    "x": -12.41,
+    "8": -9.259,
     "G": -9.255,
-    "U": -8.866,
-    "3": -9.13,
-    "E": -11.11,
+    "U": -9.971,
+    "3": -9.275,
+    "E": -9.153,
     "\"": -9.255,
-    "J": -8.575,
-    "5": -9.711,
-    "O": -11.03,
-    "6": -9.194,
-    "7": -11.04,
-    "4": -11.74,
-    "q": -8.924,
+    "J": -8.074,
+    "5": -10.23,
+    "O": -10.24,
+    "6": -9.094,
+    "7": -11.41,
+    "4": -13.98,
+    "q": -8.908,
     ":": -9.255,
-    "z": -9.595,
-    "j": -10.56,
-    "K": -8.859,
+    "z": -8.877,
+    "j": -10.63,
+    "K": -8.833,
     "V": -9.255,
     "Y": -9.255,
     ";": -9.255,
@@ -301,83 +301,83 @@ const HYPERPARAMS={
     "Q": -9.255,
     "?": -9.255,
     "X": -9.255,
-    "!": -7.637
+    "!": -7.529
   },
   "ERROR_GAP_CHANGE_PER_OCCURENCE_M": {
     " ": 0,
-    "e": 0.007052,
-    "a": 0.008142,
-    "t": 0.009784,
-    "i": 0.0138,
-    "o": 0.01074,
-    "n": 0.008361,
-    "s": 0.007684,
-    "r": 0.01113,
-    "h": 0.01226,
-    "l": 0.02235,
-    "d": 0.01768,
-    "c": 0.01861,
-    "u": 0.01376,
-    "m": 0.02088,
-    "p": 0.0263,
-    "f": 0.01541,
-    "g": 0.01691,
-    "y": 0.02172,
-    "b": 0.01644,
-    "w": 0.01635,
-    ".": 0.02058,
-    ",": 0.01601,
-    "v": 0.02019,
-    "k": 0.01964,
-    "T": 0.01972,
-    "1": 0.04725,
-    "0": 0.01983,
-    "S": 0.01986,
-    "C": 0.01992,
-    "2": 0.003669,
-    "A": 0.01995,
-    "I": 0.02002,
-    "9": 0.02533,
-    "M": 0.0201,
-    "P": 0.02011,
-    "B": 0.02015,
-    "H": 0.02016,
-    "'": 0.01603,
-    ")": 0.02018,
-    "(": 0.02018,
-    "-": 0.02192,
-    "D": 0.02021,
-    "R": 0.02023,
-    "N": 0.02024,
-    "F": 0.02024,
-    "W": 0.02024,
-    "L": 0.02025,
-    "x": 0.02453,
-    "8": 0.02406,
-    "G": 0.02028,
-    "U": 0.02028,
-    "3": 0.06339,
-    "E": 0.02029,
-    "\"": 0.02029,
-    "J": 0.02029,
-    "5": 0.07389,
-    "O": 0.02029,
-    "6": 0.004879,
-    "7": 0.01328,
-    "4": 0.0337,
-    "q": 0.02031,
-    ":": 0.02032,
-    "z": 0.02034,
-    "j": 0.02034,
-    "K": 0.02034,
-    "V": 0.02037,
-    "Y": 0.02041,
-    ";": 0.02044,
-    "Z": 0.02044,
-    "Q": 0.02044,
-    "?": 0.02044,
-    "X": 0.02044,
-    "!": 0.02045
+    "e": 0.009357,
+    "a": 0.007223,
+    "t": 0.009182,
+    "i": 0.009497,
+    "o": 0.01048,
+    "n": 0.008018,
+    "s": 0.01366,
+    "r": 0.009606,
+    "h": 0.01865,
+    "l": 0.01851,
+    "d": 0.01634,
+    "c": 0.01245,
+    "u": 0.01977,
+    "m": 0.01783,
+    "p": 0.01487,
+    "f": 0.02114,
+    "g": 0.01285,
+    "y": 0.02568,
+    "b": 0.009282,
+    "w": 0.0194,
+    ".": 0.01498,
+    ",": 0.01161,
+    "v": 0.02148,
+    "k": 0.02262,
+    "T": 0.02418,
+    "1": 0.02428,
+    "0": 0.07527,
+    "S": 0.02441,
+    "C": 0.02451,
+    "2": 0.01361,
+    "A": 0.02456,
+    "I": 0.02468,
+    "9": 0.04647,
+    "M": 0.02479,
+    "P": 0.02482,
+    "B": 0.02488,
+    "H": 0.0249,
+    "'": 0.02335,
+    ")": 0.02493,
+    "(": 0.02493,
+    "-": 0.0101,
+    "D": 0.02498,
+    "R": 0.025,
+    "N": 0.02503,
+    "F": 0.02503,
+    "W": 0.02503,
+    "L": 0.02504,
+    "x": 0.02355,
+    "8": 0.02506,
+    "G": 0.02508,
+    "U": 0.02508,
+    "3": 0.06627,
+    "E": 0.0251,
+    "\"": 0.0251,
+    "J": 0.0251,
+    "5": 0.06527,
+    "O": 0.02511,
+    "6": 0.009425,
+    "7": 0.046,
+    "4": 0.0563,
+    "q": 0.008764,
+    ":": 0.02516,
+    "z": 0.02518,
+    "j": 0.02113,
+    "K": 0.02519,
+    "V": 0.02524,
+    "Y": 0.0253,
+    ";": 0.03022,
+    "Z": 0.02535,
+    "Q": 0.02535,
+    "?": 0.02535,
+    "X": 0.02536,
+    "!": 0.02537
   },
   "LETTER_FREQUENCY": {
     " ": 0.1613,
@@ -456,44 +456,44 @@ const HYPERPARAMS={
     "!": 2.29e-05
   },
   "LOGICAL_GROUP_MEAN_RATE": {
-    "most_common": 0.03875,
-    "left_hand": 0.0418,
-    "top_row": 0.04184,
-    "right_hand": 0.04376,
-    "alternate_hand_bigrams": 0.04788,
-    "ring_pinky": 0.0421,
-    "home_row": 0.04241,
-    "left_hand_only_bigrams": 0.04465,
-    "bottom_row": 0.04779,
-    "right_hand_only_bigrams": 0.0479,
-    "difficult_to_reach_letters": 0.04458,
-    "pinky": 0.03841,
-    "same_finger_bigrams": 0.05356,
-    "caps": 0.1045,
-    "punc": 0.1556,
-    "rare_letters": 0.0842,
-    "repeat_bigrams": 0.04236,
-    "numbers": 0.06442
+    "most_common": 0.03877,
+    "left_hand": 0.04182,
+    "top_row": 0.04187,
+    "right_hand": 0.0438,
+    "alternate_hand_bigrams": 0.04785,
+    "ring_pinky": 0.04212,
+    "home_row": 0.04244,
+    "left_hand_only_bigrams": 0.0446,
+    "bottom_row": 0.04784,
+    "right_hand_only_bigrams": 0.04795,
+    "difficult_to_reach_letters": 0.04465,
+    "pinky": 0.03843,
+    "same_finger_bigrams": 0.05364,
+    "caps": 0.1043,
+    "punc": 0.1553,
+    "rare_letters": 0.08423,
+    "repeat_bigrams": 0.04228,
+    "numbers": 0.06426
   },
   "LOGICAL_GROUP_STD": {
-    "most_common": 0.01638,
-    "left_hand": 0.01859,
-    "top_row": 0.01905,
-    "right_hand": 0.0208,
-    "alternate_hand_bigrams": 0.04056,
-    "ring_pinky": 0.01833,
-    "home_row": 0.01959,
-    "left_hand_only_bigrams": 0.03855,
-    "bottom_row": 0.02691,
-    "right_hand_only_bigrams": 0.03667,
-    "difficult_to_reach_letters": 0.02328,
-    "pinky": 0.01833,
-    "same_finger_bigrams": 0.03591,
-    "caps": 0.07954,
-    "punc": 0.08181,
-    "rare_letters": 0.0554,
-    "repeat_bigrams": 0.03291,
-    "numbers": 0.05794
+    "most_common": 0.01632,
+    "left_hand": 0.01852,
+    "top_row": 0.01899,
+    "right_hand": 0.02072,
+    "alternate_hand_bigrams": 0.04012,
+    "ring_pinky": 0.01824,
+    "home_row": 0.01949,
+    "left_hand_only_bigrams": 0.03811,
+    "bottom_row": 0.02678,
+    "right_hand_only_bigrams": 0.0363,
+    "difficult_to_reach_letters": 0.02325,
+    "pinky": 0.01832,
+    "same_finger_bigrams": 0.03561,
+    "caps": 0.07868,
+    "punc": 0.0814,
+    "rare_letters": 0.05511,
+    "repeat_bigrams": 0.03258,
+    "numbers": 0.05748
   },
   "LOGICAL_GROUP_FREQUENCY": {
     "most_common": 0.4938,
@@ -670,273 +670,273 @@ const HYPERPARAMS={
   "LETTER_MEAN_RATE": {
     " ": 0.01214,
     "e": 0.03181,
-    "a": 0.03476,
-    "t": 0.03722,
-    "i": 0.04554,
-    "o": 0.04392,
-    "n": 0.03575,
-    "s": 0.04216,
-    "r": 0.04345,
-    "h": 0.03447,
-    "l": 0.03852,
-    "d": 0.05316,
-    "c": 0.04882,
-    "u": 0.05369,
-    "m": 0.04727,
-    "p": 0.04649,
-    "f": 0.04933,
-    "g": 0.05399,
-    "y": 0.06029,
-    "b": 0.06137,
-    "w": 0.05551,
-    ".": 0.1322,
-    ",": 0.1751,
-    "v": 0.07656,
-    "k": 0.06591,
-    "T": 0.09448,
-    "1": 0.04278,
+    "a": 0.03478,
+    "t": 0.03724,
+    "i": 0.04559,
+    "o": 0.04395,
+    "n": 0.03581,
+    "s": 0.0422,
+    "r": 0.04348,
+    "h": 0.03448,
+    "l": 0.03854,
+    "d": 0.05323,
+    "c": 0.04889,
+    "u": 0.05372,
+    "m": 0.04723,
+    "p": 0.04653,
+    "f": 0.04936,
+    "g": 0.05409,
+    "y": 0.06047,
+    "b": 0.06159,
+    "w": 0.05559,
+    ".": 0.1321,
+    ",": 0.1746,
+    "v": 0.07655,
+    "k": 0.06617,
+    "T": 0.09436,
+    "1": 0.04277,
     "0": 0.0413,
-    "S": 0.1027,
-    "C": 0.0961,
-    "2": 0.05168,
-    "A": 0.08712,
-    "I": 0.08257,
-    "9": 0.05091,
-    "M": 0.0845,
-    "P": 0.09938,
-    "B": 0.09082,
-    "H": 0.08274,
-    "'": 0.2001,
-    ")": 0.1382,
-    "(": 0.0882,
-    "-": 0.1847,
-    "D": 0.09446,
-    "R": 0.1,
-    "N": 0.0861,
-    "F": 0.09214,
-    "W": 0.1125,
-    "L": 0.1047,
+    "S": 0.1026,
+    "C": 0.09595,
+    "2": 0.05159,
+    "A": 0.08721,
+    "I": 0.08249,
+    "9": 0.05095,
+    "M": 0.08439,
+    "P": 0.09933,
+    "B": 0.09068,
+    "H": 0.08262,
+    "'": 0.2002,
+    ")": 0.1378,
+    "(": 0.08802,
+    "-": 0.1845,
+    "D": 0.09441,
+    "R": 0.09984,
+    "N": 0.08593,
+    "F": 0.09217,
+    "W": 0.1118,
+    "L": 0.1045,
     "x": 0.1128,
-    "8": 0.06377,
-    "G": 0.1011,
-    "U": 0.08425,
-    "3": 0.06871,
-    "E": 0.08613,
-    "\"": 0.1548,
-    "J": 0.1246,
-    "5": 0.05611,
-    "O": 0.1035,
-    "6": 0.0647,
+    "8": 0.06357,
+    "G": 0.1014,
+    "U": 0.08428,
+    "3": 0.0687,
+    "E": 0.08595,
+    "\"": 0.155,
+    "J": 0.1245,
+    "5": 0.05598,
+    "O": 0.103,
+    "6": 0.06497,
     "7": 0.05296,
-    "4": 0.06187,
-    "q": 0.06736,
-    ":": 0.2224,
-    "z": 0.1269,
-    "j": 0.09622,
-    "K": 0.1175,
-    "V": 0.1168,
-    "Y": 0.1296,
-    ";": 0.2728,
-    "Z": 0.1078,
-    "Q": 0.1011,
-    "?": 0.0618,
-    "X": 0.08757,
-    "!": 0.08591
+    "4": 0.06191,
+    "q": 0.06744,
+    ":": 0.2225,
+    "z": 0.1266,
+    "j": 0.09609,
+    "K": 0.1176,
+    "V": 0.117,
+    "Y": 0.129,
+    ";": 0.2733,
+    "Z": 0.1082,
+    "Q": 0.1018,
+    "?": 0.06164,
+    "X": 0.08815,
+    "!": 0.08512
   },
   "LETTER_STD": {
-    " ": 0.007307,
-    "e": 0.01429,
-    "a": 0.01739,
-    "t": 0.02082,
-    "i": 0.02279,
-    "o": 0.02282,
-    "n": 0.01813,
-    "s": 0.01992,
+    " ": 0.007267,
+    "e": 0.01424,
+    "a": 0.01744,
+    "t": 0.02071,
+    "i": 0.02269,
+    "o": 0.02271,
+    "n": 0.0181,
+    "s": 0.01982,
     "r": 0.02312,
-    "h": 0.0241,
-    "l": 0.02102,
-    "d": 0.03119,
-    "c": 0.02681,
-    "u": 0.03094,
-    "m": 0.03032,
-    "p": 0.03004,
-    "f": 0.036,
-    "g": 0.03551,
-    "y": 0.04035,
-    "b": 0.04079,
-    "w": 0.04303,
-    ".": 0.07946,
-    ",": 0.1067,
-    "v": 0.05233,
-    "k": 0.05258,
-    "T": 0.06657,
-    "1": 0.04683,
-    "0": 0.04547,
-    "S": 0.08001,
-    "C": 0.08146,
-    "2": 0.05671,
-    "A": 0.07081,
-    "I": 0.07848,
-    "9": 0.05808,
-    "M": 0.07138,
-    "P": 0.08017,
-    "B": 0.0777,
-    "H": 0.07234,
-    "'": 0.1471,
-    ")": 0.1102,
-    "(": 0.1012,
-    "-": 0.1165,
-    "D": 0.08065,
-    "R": 0.09368,
-    "N": 0.08021,
-    "F": 0.08111,
-    "W": 0.09751,
-    "L": 0.08669,
-    "x": 0.08606,
-    "8": 0.07195,
-    "G": 0.08686,
-    "U": 0.09017,
-    "3": 0.07344,
-    "E": 0.08503,
-    "\"": 0.1286,
-    "J": 0.1125,
-    "5": 0.06441,
-    "O": 0.08968,
-    "6": 0.08258,
-    "7": 0.07787,
-    "4": 0.07457,
-    "q": 0.069,
-    ":": 0.1798,
-    "z": 0.1053,
-    "j": 0.09542,
-    "K": 0.1239,
-    "V": 0.1278,
-    "Y": 0.1594,
-    ";": 0.2578,
+    "h": 0.02395,
+    "l": 0.02096,
+    "d": 0.03115,
+    "c": 0.02677,
+    "u": 0.03088,
+    "m": 0.03012,
+    "p": 0.02992,
+    "f": 0.03581,
+    "g": 0.03539,
+    "y": 0.0405,
+    "b": 0.04105,
+    "w": 0.0428,
+    ".": 0.07919,
+    ",": 0.1063,
+    "v": 0.0522,
+    "k": 0.05246,
+    "T": 0.06601,
+    "1": 0.04661,
+    "0": 0.04516,
+    "S": 0.07962,
+    "C": 0.08099,
+    "2": 0.05619,
+    "A": 0.0706,
+    "I": 0.07781,
+    "9": 0.05812,
+    "M": 0.07093,
+    "P": 0.07979,
+    "B": 0.07714,
+    "H": 0.07188,
+    "'": 0.1468,
+    ")": 0.1096,
+    "(": 0.1005,
+    "-": 0.1162,
+    "D": 0.08021,
+    "R": 0.09337,
+    "N": 0.07971,
+    "F": 0.08084,
+    "W": 0.09666,
+    "L": 0.08619,
+    "x": 0.08614,
+    "8": 0.07165,
+    "G": 0.08644,
+    "U": 0.08988,
+    "3": 0.07312,
+    "E": 0.08457,
+    "\"": 0.1285,
+    "J": 0.1119,
+    "5": 0.06412,
+    "O": 0.08909,
+    "6": 0.08271,
+    "7": 0.07806,
+    "4": 0.07434,
+    "q": 0.07012,
+    ":": 0.179,
+    "z": 0.1051,
+    "j": 0.09525,
+    "K": 0.1236,
+    "V": 0.1275,
+    "Y": 0.1583,
+    ";": 0.2584,
     "Z": 0.198,
-    "Q": 0.1998,
-    "?": 0.1999,
-    "X": 0.1738,
+    "Q": 0.2007,
+    "?": 0.1994,
+    "X": 0.1748,
     "!": 0.1994
   },
   "INITIAL_SEQUENCES": [
     [
       {
         "passage": "Every keystroke you make fuels Typo Dojo's adaptive engine, creating the most efficient training path for faster results.",
-        "alpha": 204.6,
-        "beta": 11.4
+        "alpha": 507.6,
+        "beta": 35.39
       },
       {
         "passage": "Personalized coaching at scale. Typo Dojo uses your mistakes as fuel to craft adaptive drills that accelerate progress.",
-        "alpha": 211.6,
-        "beta": 17.4
+        "alpha": 276.6,
+        "beta": 22.39
       },
       {
         "passage": "Practice smarter, not longer. Typo Dojo adapts training in real time so your weaknesses shrink and your speed soars.",
-        "alpha": 202.6,
-        "beta": 10.4
+        "alpha": 723.6,
+        "beta": 48.39
       },
       {
         "passage": "Stop generic practice. Typo Dojo adapts every drill to your errors, so progress in speed and accuracy becomes inevitable.",
-        "alpha": 197.6,
-        "beta": 17.4
+        "alpha": 275.6,
+        "beta": 22.39
       },
       {
         "passage": "Typo Dojo acts like your personal coach, tracking every keystroke and creating targeted drills to make progress inevitable.",
-        "alpha": 173.6,
-        "beta": 19.4
+        "alpha": 220.6,
+        "beta": 22.39
       },
       {
         "passage": "Typo Dojo evolves with you, adjusting drills as you improve so growth never stops and typing mastery becomes natural.",
-        "alpha": 180.6,
-        "beta": 17.4
+        "alpha": 255.6,
+        "beta": 22.39
       },
       {
         "passage": "Typo Dojo finds your toughest keystrokes and turns them into strengths with personalized, evolving practice sessions.",
-        "alpha": 175.6,
-        "beta": 13.4
+        "alpha": 251.6,
+        "beta": 20.39
       },
       {
         "passage": "Typo Dojo guides you step by step with adaptive coaching so you never plateau and your speed keeps climbing.",
-        "alpha": 184.6,
-        "beta": 11.4
+        "alpha": 397.6,
+        "beta": 36.39
       },
       {
         "passage": "Typo Dojo is your typing mentor. An adaptive coach that evolves with you, ensuring every session brings measurable growth.",
-        "alpha": 176.6,
-        "beta": 18.4
+        "alpha": 242.6,
+        "beta": 23.39
       },
       {
         "passage": "With Typo Dojo, practice is never wasted-each drill is tailored to your mistakes, ensuring speed and accuracy improvements.",
-        "alpha": 166.6,
-        "beta": 20.4
+        "alpha": 236.6,
+        "beta": 24.39
       },
       {
         "passage": "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
         "alpha": 344.6,
-        "beta": 101.4
+        "beta": 99.39
       }
     ],
     [
       {
         "passage": "By practicing with coherent text, Typo Dojo ensures your speed and accuracy upgrades show up where you need them most.",
         "alpha": 231.6,
-        "beta": 25.4
+        "beta": 24.39
       },
       {
         "passage": "Don't waste time on nonsense drills. Typo Dojo gives you natural, flowing text so you improve the way you actually type.",
-        "alpha": 358.6,
-        "beta": 29.4
+        "alpha": 359.6,
+        "beta": 29.39
       },
       {
         "passage": "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
-        "alpha": 521.6,
-        "beta": 36.4
+        "alpha": 528.6,
+        "beta": 36.39
       },
       {
         "passage": "Meaningful practice with Typo Dojo means faster typing that feels natural in everyday communication.",
-        "alpha": 700.6,
-        "beta": 54.4
+        "alpha": 701.6,
+        "beta": 54.39
       },
       {
         "passage": "Random drills won't prepare you for real life. Typo Dojo builds speed and accuracy with authentic, meaningful text.",
-        "alpha": 310.6,
-        "beta": 28.4
+        "alpha": 311.6,
+        "beta": 28.39
       },
       {
         "passage": "Typo Dojo builds fluency with natural sentences that feel real from the first keystroke.",
-        "alpha": 318.6,
-        "beta": 19.4
+        "alpha": 502.6,
+        "beta": 34.39
       },
       {
         "passage": "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
         "alpha": 330.6,
-        "beta": 27.4
+        "beta": 27.39
       },
       {
         "passage": "Typo Dojo makes practice real by using natural sentences, ensuring skills transfer seamlessly to daily typing tasks.",
         "alpha": 496.6,
-        "beta": 40.4
+        "beta": 39.39
       },
       {
         "passage": "Typo Dojo pulls from trusted sources to make practice authentic, so your training mirrors the way you really type.",
-        "alpha": 333.6,
-        "beta": 29.4
+        "alpha": 334.6,
+        "beta": 29.39
       },
       {
         "passage": "Typo Dojo teaches with authentic sentences, not nonsense words, so the skills you build stick in emails, reports, and work.",
         "alpha": 687.6,
-        "beta": 56.4
+        "beta": 56.39
       },
       {
         "passage": "Typo Dojo trains you on real-world language so improvements instantly show up in emails, documents, and everyday typing.",
         "alpha": 137.6,
-        "beta": 18.4
+        "beta": 18.39
       },
       {
         "passage": "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen.Type real sentences instead of random words so your speed improves where you actually write.",
-        "alpha": 225.6,
-        "beta": 23.4
+        "alpha": 308.6,
+        "beta": 33.39
       },
       {
         "passage": "Unlike other apps, Typo Dojo uses real sentences from Wikipedia and Sherlock Holmes to build skills that transfer to life.",
@@ -945,112 +945,112 @@ const HYPERPARAMS={
       },
       {
         "passage": "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
-        "alpha": 5217,
-        "beta": 466.4
+        "alpha": 5337,
+        "beta": 478.4
       }
     ],
     [
       {
         "passage": "By recording every keystroke, Typo Dojo pinpoints your weak spots and designs drills to fix them permanently.",
-        "alpha": 524.6,
-        "beta": 40.4
+        "alpha": 525.6,
+        "beta": 40.39
       },
       {
         "passage": "Don't fight the same mistakes forever-Typo Dojo predicts them, highlights them, and helps you eliminate them fast.",
-        "alpha": 62.6,
-        "beta": 9.396
+        "alpha": 63.61,
+        "beta": 9.386
       },
       {
         "passage": "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast.",
         "alpha": 1644,
-        "beta": 129.4
+        "beta": 128.4
       },
       {
         "passage": "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast.Typo Dojo helps you spot repeating mistakes and turns them into quick drills that build accuracy.",
-        "alpha": 266.6,
-        "beta": 36.4
+        "alpha": 349.6,
+        "beta": 41.39
       },
       {
         "passage": "See your weak keys and fix them fast as Typo Dojo turns each typo into a lesson.",
-        "alpha": 305.6,
-        "beta": 11.4
+        "alpha": 1889,
+        "beta": 93.39
       },
       {
         "passage": "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
-        "alpha": 3604,
-        "beta": 248.4
+        "alpha": 3656,
+        "beta": 256.4
       },
       {
         "passage": "Targeted error drills ensure Typo Dojo helps you unlearn bad habits and replace them with accuracy that lasts.",
         "alpha": 1554,
-        "beta": 98.4
+        "beta": 97.39
       },
       {
         "passage": "Typo Dojo analyzes your typo history to craft custom drills that attack your weakest patterns until they disappear.",
         "alpha": 158.6,
-        "beta": 18.4
+        "beta": 18.39
       },
       {
         "passage": "Typo Dojo anticipates where you're most likely to trip and highlights those areas so you can eliminate recurring mistakes.",
-        "alpha": 125.6,
-        "beta": 13.4
+        "alpha": 126.6,
+        "beta": 13.39
       },
       {
         "passage": "Typo Dojo doesn't just track mistakes-it predicts them, highlights them, and helps you eliminate them one by one.",
         "alpha": 151.6,
-        "beta": 19.4
+        "beta": 19.39
       },
       {
         "passage": "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
         "alpha": 811.6,
-        "beta": 59.4
+        "beta": 59.39
       },
       {
         "passage": "Typo Dojo shines a spotlight on your weak points, transforming them into strengths with targeted drills and predictions.",
         "alpha": 578.6,
-        "beta": 53.4
+        "beta": 53.39
       },
       {
         "passage": "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen.",
         "alpha": 233.6,
-        "beta": 25.4
+        "beta": 24.39
       },
       {
         "passage": "With predictive error highlighting, Typo Dojo ensures your toughest keystrokes get the focus they deserve.",
         "alpha": 545.6,
-        "beta": 44.4
+        "beta": 44.39
       },
       {
         "passage": "Your errors become the lesson plan: Typo Dojo finds, predicts, and fixes the mistakes holding you back.",
-        "alpha": 517.6,
-        "beta": 38.4
+        "alpha": 519.6,
+        "beta": 38.39
       }
     ],
     [
       {
         "passage": "Even five minutes matter when each Typo Dojo drill targets what improves your typing most.",
-        "alpha": 288.6,
-        "beta": 17.4
+        "alpha": 452.6,
+        "beta": 24.39
       },
       {
         "passage": "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
         "alpha": 178.6,
-        "beta": 22.4
+        "beta": 22.39
       },
       {
         "passage": "Faster typing saves hours every week. Typo Dojo makes every practice session count toward higher speed and accuracy.",
         "alpha": 3497,
-        "beta": 320.4
+        "beta": 319.4
       },
       {
         "passage": "In today's digital world, typing faster and more accurately is priceless. Typo Dojo helps you master both efficiently.",
         "alpha": 325.6,
-        "beta": 31.4
+        "beta": 31.39
       },
       {
         "passage": "Short sessions bring real gains as Typo Dojo keeps every minute focused on progress.",
-        "alpha": 284.6,
-        "beta": 12.4
+        "alpha": 1202,
+        "beta": 62.39
       },
       {
         "passage": "Train smarter with Typo Dojo and watch your speed rise while your mistakes fall-it's the fastest way to real progress.",
@@ -1059,201 +1059,201 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typing mastery is measurable: Typo Dojo turns minutes of practice into noticeable gains in speed and precision.",
-        "alpha": 96.6,
-        "beta": 11.4
+        "alpha": 99.61,
+        "beta": 11.39
       },
       {
         "passage": "Typo Dojo boosts your WPM and accuracy at the same time, turning practice into tangible improvements session by session.",
-        "alpha": 63.6,
-        "beta": 11.4
+        "alpha": 63.61,
+        "beta": 11.39
       },
       {
         "passage": "Typo Dojo doesn't waste time-it turns every drill into a step forward in speed and typing accuracy.",
         "alpha": 819.6,
-        "beta": 74.4
+        "beta": 74.39
       },
       {
         "passage": "Typo Dojo focuses training where it matters, giving you lasting gains in both typing speed and typing precision.",
-        "alpha": 114.6,
-        "beta": 12.4
+        "alpha": 117.6,
+        "beta": 12.39
       },
       {
         "passage": "Typo Dojo is built for measurable results-each session makes you faster, smoother, and more accurate at the keyboard.",
-        "alpha": 217.6,
-        "beta": 19.4
+        "alpha": 221.6,
+        "beta": 19.39
       },
       {
         "passage": "Typo Dojo is your fast track to faster typing-accuracy improves naturally as drills sharpen your skills.",
-        "alpha": 74.6,
-        "beta": 12.4
+        "alpha": 74.61,
+        "beta": 12.39
       },
       {
         "passage": "Your speed and accuracy grow hand in hand with Typo Dojo, making every session a leap forward in performance.",
         "alpha": 2652,
-        "beta": 164.4
+        "beta": 163.4
       }
     ],
     [
       {
         "passage": "Built for busy people, Typo Dojo skips the fluff and focuses only on what makes your typing better, faster.",
-        "alpha": 1766,
-        "beta": 134.4
+        "alpha": 1767,
+        "beta": 133.4
       },
       {
         "passage": "Busy schedule? Typo Dojo compresses training into minutes that deliver real, lasting improvements.",
         "alpha": 1169,
-        "beta": 95.4
+        "beta": 95.39
       },
       {
         "passage": "Efficiency is everything. Typo Dojo ensures that even short practice sessions turn into big typing gains.",
         "alpha": 633.6,
-        "beta": 60.4
+        "beta": 60.39
       },
       {
         "passage": "Five minutes with Typo Dojo is more effective than hours of generic drills, because every keystroke is purposeful.",
         "alpha": 437.6,
-        "beta": 35.4
+        "beta": 35.39
       },
       {
         "passage": "Focused practice beats long practice. Typo Dojo ensures the time you spend always moves you forward.",
         "alpha": 967.6,
-        "beta": 75.4
+        "beta": 74.39
       },
       {
         "passage": "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
-        "alpha": 103.6,
-        "beta": 10.4
+        "alpha": 116.6,
+        "beta": 10.39
       },
       {
         "passage": "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
-        "alpha": 92.6,
-        "beta": 10.4
+        "alpha": 98.61,
+        "beta": 10.39
       },
       {
         "passage": "Typo Dojo eliminates wasted effort-every drill is optimized to deliver maximum improvement in minimum time.",
         "alpha": 138.6,
-        "beta": 23.4
+        "beta": 23.39
       },
       {
         "passage": "Typo Dojo makes better typing achievable for anyone by squeezing maximum value out of every drill.",
         "alpha": 1242,
-        "beta": 93.4
+        "beta": 91.39
       },
       {
         "passage": "Typo Dojo turns practice into progress by focusing training on the exact areas you need most.",
         "alpha": 588.6,
-        "beta": 47.4
+        "beta": 47.39
       },
       {
         "passage": "With Typo Dojo, every keystroke counts-progress becomes a natural byproduct of efficient, focused practice.",
         "alpha": 476.6,
-        "beta": 49.4
+        "beta": 49.39
       }
     ],
     [
       {
         "passage": "Every committed learner sees results: Typo Dojo consistently delivers measurable gains in speed and accuracy.",
         "alpha": 896.6,
-        "beta": 66.4
+        "beta": 66.39
       },
       {
         "passage": "Hundreds of thousands of users trust Typo Dojo for lasting gains in speed and accuracy. Join them and see the progress for yourself.",
-        "alpha": 458.6,
-        "beta": 32.4
+        "alpha": 462.6,
+        "beta": 32.39
       },
       {
         "passage": "Join the Typo Dojo community of learners who've already unlocked faster, smoother typing through consistent practice.",
         "alpha": 133.6,
-        "beta": 15.4
+        "beta": 15.39
       },
       {
         "passage": "Proven impact at scale. Typo Dojo has transformed typing skills for thousands who dedicated just minutes each day.",
         "alpha": 740.6,
-        "beta": 64.4
+        "beta": 62.39
       },
       {
         "passage": "Real results, not empty promises-Typo Dojo has helped thousands transform typos into triumphs.",
-        "alpha": 1162,
-        "beta": 108.4
+        "alpha": 1163,
+        "beta": 107.4
       },
       {
         "passage": "Typo Dojo has a proven track record: stick with it and you'll see measurable improvements in speed and accuracy.",
         "alpha": 299.6,
-        "beta": 35.4
+        "beta": 35.39
       },
       {
         "passage": "Typo Dojo is proven to work-every learner who commits sees measurable, lasting improvements in typing performance.",
         "alpha": 110.6,
-        "beta": 12.4
+        "beta": 12.39
       },
       {
         "passage": "Typo Dojo's track record speaks for itself: consistent training leads to lasting speed and accuracy gains.",
         "alpha": 618.6,
-        "beta": 68.4
+        "beta": 68.39
       },
       {
         "passage": "With Typo Dojo, consistent practice turns into proven results you can measure in speed and accuracy.",
-        "alpha": 206.6,
-        "beta": 15.4
+        "alpha": 232.6,
+        "beta": 17.39
       }
     ],
     [
       {
         "passage": "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate.",
-        "alpha": 4799,
+        "alpha": 4837,
         "beta": 557.4
       }
     ],
     [
       {
         "passage": "No distractions and pure rhythm. Typo Dojo helps you find your flow and keep it steady.",
-        "alpha": 247.6,
-        "beta": 11.4
+        "alpha": 1041,
+        "beta": 81.39
       },
       {
         "passage": "Stay in the zone as Typo Dojo keeps you focused so each word flows faster than the last.",
-        "alpha": 254.6,
-        "beta": 14.4
+        "alpha": 512.6,
+        "beta": 24.39
       }
     ],
     [
       {
         "passage": "See problem keys before they slow you down. Typo Dojo highlights likely errors to build steady accuracy.",
-        "alpha": 282.6,
-        "beta": 11.4
+        "alpha": 1523,
+        "beta": 108.4
       },
       {
         "passage": "Stay ahead of your typos. Typo Dojo predicts which letters you may miss so you can prevent errors.",
-        "alpha": 254.6,
-        "beta": 17.4
+        "alpha": 386.6,
+        "beta": 24.39
       },
       {
         "passage": "Typo Dojo predicts tricky letters and helps you master them before they slow your typing.",
-        "alpha": 249.6,
-        "beta": 14.4
+        "alpha": 511.6,
+        "beta": 31.39
       },
       {
         "passage": "Typo Dojo predicts which letters you often mistype so you can focus and avoid repeating mistakes.",
-        "alpha": 257.6,
-        "beta": 17.4
+        "alpha": 353.6,
+        "beta": 26.39
       },
       {
         "passage": "Typo Dojo shows where you may slip so you can stay focused and turn practice into progress.",
-        "alpha": 250.6,
-        "beta": 22.4
+        "alpha": 334.6,
+        "beta": 25.39
       }
     ]
   ],
-  "TOTAL_USER_COUNT": 291480,
+  "TOTAL_USER_COUNT": 297327,
   "BEST_PASSAGES": [
     {
       "passage": "Adam is the first human created by God. Adam requests a companion from God: God approves his request then creates Eve. God appoints Adam and Eve to rule over all the creatures of the world and to reside in the Garden of Eden.",
-      "alpha": 154.8,
+      "alpha": 155.8,
       "beta": 0.25
     },
     {
       "passage": "Each rotor contains one or more notches that control rotor stepping. In the military variants, the notches are located on the alphabet ring.",
-      "alpha": 731.8,
+      "alpha": 733.8,
       "beta": 2.25
     },
     {
@@ -1268,7 +1268,7 @@ const HYPERPARAMS={
     },
     {
       "passage": "The parentheses around the vowels indicate that the vowel can be dropped when following an open vowel. For the sake of cohesiveness, the above forms are used to discuss the evidential morphemes. There are dialectal variations to the forms.",
-      "alpha": 218.8,
+      "alpha": 220.8,
       "beta": 2.25
     },
     {
@@ -1278,22 +1278,22 @@ const HYPERPARAMS={
     },
     {
       "passage": "All three elements are required. If any element ceases to exist, then the trade secret will also cease to exist.",
-      "alpha": 149.8,
+      "alpha": 154.8,
       "beta": 3.25
     },
     {
       "passage": "In computer science, finite sequences are called lists. Potentially infinite sequences are called streams. Finite sequences of characters or digits are called strings.",
-      "alpha": 132.8,
+      "alpha": 136.8,
       "beta": 3.25
     },
     {
       "passage": "Alternative methods such as Hoare logic and uniqueness have been developed to track side effects in programs. Some modern research languages use effect systems to make the presence of side effects explicit.",
-      "alpha": 119.8,
+      "alpha": 125.8,
       "beta": 3.25
     },
     {
       "passage": "Faivre identified three characteristics of theosophy. The three characteristics of theosophy are listed below.",
-      "alpha": 106.8,
+      "alpha": 112.8,
       "beta": 3.25
     },
     {
@@ -1303,47 +1303,42 @@ const HYPERPARAMS={
     },
     {
       "passage": "Data transfer rate The rate at which user data bits are transferred from or to the medium. Technically, this would more accurately be entitled the \"gross\" data transfer rate.",
-      "alpha": 124.8,
+      "alpha": 128.8,
       "beta": 4.25
     },
     {
-      "passage": "It is similar to what occurs when waves are scattered from a diffraction grating. Bragg diffraction is a consequence of interference between waves reflecting from many different crystal planes.",
-      "alpha": 122.8,
+      "passage": "Deleting records from a database is relatively easy. The index can stay the same, and the record can just be marked as deleted. The database remains in sorted order.",
+      "alpha": 125.8,
       "beta": 4.25
     },
     {
       "passage": "Secretory vesicles contain materials that are to be excreted from the cell. Cells have many reasons to excrete materials.",
-      "alpha": 151.8,
+      "alpha": 155.8,
       "beta": 5.25
     },
     {
-      "passage": "Deleting records from a database is relatively easy. The index can stay the same, and the record can just be marked as deleted. The database remains in sorted order.",
-      "alpha": 121.8,
-      "beta": 4.25
-    },
-    {
       "passage": "Finally, the server stub calls the server procedure. The reply traces the same steps in the reverse direction.",
-      "alpha": 115.8,
+      "alpha": 119.8,
       "beta": 4.25
     },
     {
       "passage": "There are several factors that could contribute to the failure of two adhered surfaces. Sunlight and heat may weaken the adhesive. Solvents can deteriorate or dissolve adhesive.",
-      "alpha": 110.8,
+      "alpha": 113.8,
       "beta": 4.25
     },
     {
-      "passage": "For dramatic effect, heel referees may assist a heel wrestler. Several common plot devices involve the heel referee assisting the heel wrestler.",
-      "alpha": 134.8,
-      "beta": 5.25
-    },
-    {
       "passage": "Files and tables are sorted using and the verb merges and sorts files. The verb provides records to sort and retrieves sorted records in order.",
-      "alpha": 157.8,
+      "alpha": 163.8,
       "beta": 6.25
     },
     {
+      "passage": "For dramatic effect, heel referees may assist a heel wrestler. Several common plot devices involve the heel referee assisting the heel wrestler.",
+      "alpha": 135.8,
+      "beta": 5.25
+    },
+    {
       "passage": "Sometimes the greenhouse effect is quantified as a temperature difference. This temperature difference is closely related to the quantities above.",
-      "alpha": 182.8,
+      "alpha": 184.8,
       "beta": 7.25
     },
     {
@@ -1353,48 +1348,53 @@ const HYPERPARAMS={
     },
     {
       "passage": "A large fire caused significant damage to new seating areas in left field and center field bleachers. These areas were reconstructed before opening day 1934.",
-      "alpha": 150.8,
+      "alpha": 153.8,
       "beta": 6.25
+    },
+    {
+      "passage": "It is similar to what occurs when waves are scattered from a diffraction grating. Bragg diffraction is a consequence of interference between waves reflecting from many different crystal planes.",
+      "alpha": 125.8,
+      "beta": 5.25
     },
     {
       "passage": "Interspersed among superclusters are large voids of space where few galaxies exist. Superclusters are frequently subdivided into groups of clusters called galaxy groups and clusters.",
-      "alpha": 144.8,
+      "alpha": 146.8,
       "beta": 6.25
     },
     {
+      "passage": "Agile software development may involve frequent software releases with relatively small changes. Defects are revealed by user feedback.",
+      "alpha": 118.8,
+      "beta": 5.25
+    },
+    {
       "passage": "Ion thrusters are categorized as either electrostatic or electromagnetic. The main difference is the method for accelerating the ions.",
-      "alpha": 183.8,
+      "alpha": 186.8,
       "beta": 8.25
     },
     {
       "passage": "A metaclass is a class where instances are classes. A metaclass describes a common structure of a collection of classes and can implement a design pattern or describe particular kinds of classes. Metaclasses are often used to describe frameworks.",
-      "alpha": 181.8,
+      "alpha": 184.8,
       "beta": 8.25
-    },
-    {
-      "passage": "Agile software development may involve frequent software releases with relatively small changes. Defects are revealed by user feedback.",
-      "alpha": 111.8,
-      "beta": 5.25
     },
     {
       "passage": "There are no known curative treatments for the majority of motor neuron disorders. Please refer to the articles on individual disorders for more details.",
-      "alpha": 132.8,
+      "alpha": 136.8,
       "beta": 6.25
+    },
+    {
+      "passage": "A tetrahedron having stiff edges is inherently rigid. For this reason it is often used to stiffen frame structures such as spaceframes.",
+      "alpha": 110.8,
+      "beta": 5.25
     },
     {
       "passage": "The country's ccTLD is .nr. Internet service in the country is provided by CenPacNet. Domains must be paid, and can be ordered from CenPacNet.",
-      "alpha": 130.8,
+      "alpha": 131.8,
       "beta": 6.25
     },
     {
-      "passage": "Rara is a festival celebrated before Easter. The festival has generated a style of Carnival music.",
-      "alpha": 166.8,
-      "beta": 8.25
-    },
-    {
-      "passage": "A set can never been considered as open by itself. This notion is relative to a containing set and a specific topology on it.",
-      "alpha": 125.8,
-      "beta": 6.25
+      "passage": "Elements of the geometric algebra that are scalar multiples of are of grade and are called scalars. Elements that are in the span of are of grade and are the ordinary vectors. Elements in the span of are of grade and are the bivectors.",
+      "alpha": 107.8,
+      "beta": 5.25
     }
   ]
 };
