@@ -377,7 +377,7 @@ class DefaultSelectionStrategy {
       highlight_error_pct: 0.1,
       userId: userId,
       selectionStratedy: null,
-      has_finished_defaults: finishedDefaultPassages == 0,
+      finishedDefaultPassages: finishedDefaultPassages,
     });
   }
 }
