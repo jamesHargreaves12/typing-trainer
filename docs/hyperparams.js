@@ -667,6 +667,23 @@ const HYPERPARAMS={
     "X": 0.1773,
     "!": 0.2002
   },
+  "SELECTION_MODE_BANDITS": [
+    {
+      "mode": "letter-error",
+      "alpha": 9,
+      "beta": 11
+    },
+    {
+      "mode": "letter-speed",
+      "alpha": 7,
+      "beta": 13
+    },
+    {
+      "mode": "error-group",
+      "alpha": 4,
+      "beta": 16
+    }
+  ],
   "INITIAL_SEQUENCES": [
     [
       {

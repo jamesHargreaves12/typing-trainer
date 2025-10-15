@@ -40,32 +40,50 @@ function betaSample(alpha, beta) {
   return x / (x + y);
 }
 
+function pickBandits(availableBandits, count = 2, deduplicate_column = null){
+  for (let i = 0; i < availableBandits.length; i++) {
+    const bandit = availableBandits[i];
+    const p = betaSample(bandit.alpha, bandit.beta);
+    bandit.weight = p;
+  }
+
+  retBandits = [];
+  retBanditsKeys = [];
+  sortedBandits = availableBandits.sort((a, b) => b.weight - a.weight);
+  for (let i = 0; i < sortedBandits.length; i++) {
+    const bandit = sortedBandits[i];
+    const key = bandit[deduplicate_column];
+    if (deduplicate_column) {
+      if (retBanditsKeys.includes(key)) {
+        continue;
+      }
+      retBanditsKeys.push(key);
+    }
+    retBandits.push(bandit);
+    if (retBandits.length >= count) {
+      break;
+    }
+  }
+  return retBandits.slice(0, count);
+}
+
 function getPassageVariants(firstRep, count = 2) {
   const seenGroups = [firstRep.group];
-  const passageWeights = [];
+  const passageAndGroup = [];
   const INITIAL_SENTENCE_VARIANTS = HYPERPARAMS.INITIAL_SEQUENCES;
   for (let i = 0; i < INITIAL_SENTENCE_VARIANTS.length; i++) { // Ignore the first group since we will always show this for now.
+    if (seenGroups.includes(i)) {
+      continue;
+    }
     for (let j = 0; j < INITIAL_SENTENCE_VARIANTS[i].length; j++) {
       const passage = INITIAL_SENTENCE_VARIANTS[i][j]["passage"];
       const alpha = INITIAL_SENTENCE_VARIANTS[i][j]["alpha"];
       const beta = INITIAL_SENTENCE_VARIANTS[i][j]["beta"];
-      const p = betaSample(alpha, beta);
-      passageWeights.push({ passage, weight: p, group: i });
+      passageAndGroup.push({ passage, group: i, alpha, beta });
     }
   }
-  const weightedPassages = passageWeights.sort((a, b) => b.weight - a.weight);
-  const retPassages = [];
-  for (let i = 0; i < weightedPassages.length; i++) {
-    if (seenGroups.includes(weightedPassages[i].group)) {
-      continue;
-    }
-    seenGroups.push(weightedPassages[i].group);
-    retPassages.push(weightedPassages[i].passage);
-    if (retPassages.length >= count) {
-      break;
-    }
-  }
-  return retPassages;
+  const weightedPassages = pickBandits(passageAndGroup, count, "group");
+  return weightedPassages.map(p => p.passage);
 }
 
 // Lanczos approximation of log-gamma function
@@ -557,6 +575,7 @@ const MAX_RECENT_PASSAGES = 70;
 let currentPassageSource = localStorage.getItem('passageSource') || 'wikipedia';
 let currentPassageSelectionStrategy = localStorage.getItem('selectionStratedy') || null;
 let passageWorker = new Worker('passageWorker.js');
+const selectionModeHistory = [];
 passageWorker.postMessage({
   type: 'sourceChange',
   source: currentPassageSource
@@ -869,19 +888,17 @@ function recordUserIntro() {
 
 
 function choseNextSelectionMode() {
-  const selectionModeOrder = [
-    "letter-error",
-    "letter-speed",
-    "error-group"
-  ];
-
   const index = parseInt(session_rep_count / REPETION_STRATEGY_HISTORY_LENGTH);
   if (index % 2 == 0) {
     return "default";
   }
-  else {
-    return selectionModeOrder[parseInt((index - 1) / 2) % selectionModeOrder.length];
-  }
+  
+  const selectionModes = HYPERPARAMS.SELECTION_MODE_BANDITS;
+  const previousTwoSelectionModes = selectionModeHistory.slice(-2);
+  const availableSelectionModes = selectionModes.filter(sm => !previousTwoSelectionModes.includes(sm.mode));
+  const selectedMode = pickBandits(availableSelectionModes, 1, "mode")[0];
+  console.log("selectedMode", selectedMode);
+  return selectedMode.mode;
 }
 
 function getPassage() {
@@ -902,6 +919,7 @@ function getPassage() {
   if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
     stats_rep_shown = true;
     currentSelectionStrategyMode = choseNextSelectionMode();
+    selectionModeHistory.push(currentSelectionStrategyMode);
     return {
       passage: suggestErrorRepetitionStrategy(strategyModeLookup[currentSelectionStrategyMode]),
       source: "stats_rep"
