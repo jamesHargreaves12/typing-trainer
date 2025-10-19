@@ -1,223 +1,223 @@
 const HYPERPARAMS={
   "LETTER_SPEED_STD": {
-    " ": 0.09928,
-    "e": 0.09214,
-    "a": 0.09934,
-    "t": 0.133,
-    "i": 0.1108,
+    " ": 0.09927,
+    "e": 0.09209,
+    "a": 0.09927,
+    "t": 0.1329,
+    "i": 0.1107,
     "o": 0.1076,
-    "n": 0.1006,
-    "s": 0.1062,
-    "r": 0.1102,
-    "h": 0.08586,
-    "l": 0.1016,
-    "d": 0.1167,
-    "c": 0.1453,
-    "u": 0.1232,
-    "m": 0.1218,
-    "p": 0.1484,
+    "n": 0.1005,
+    "s": 0.1061,
+    "r": 0.1101,
+    "h": 0.08573,
+    "l": 0.1015,
+    "d": 0.1166,
+    "c": 0.1451,
+    "u": 0.123,
+    "m": 0.1216,
+    "p": 0.148,
     "f": 0.1318,
-    "g": 0.1348,
-    "y": 0.1224,
-    "b": 0.1682,
-    "w": 0.1567,
-    ".": 0.2118,
-    ",": 0.2123,
-    "v": 0.1368,
-    "k": 0.11,
-    "T": 0.1842,
+    "g": 0.1343,
+    "y": 0.1221,
+    "b": 0.1678,
+    "w": 0.1564,
+    ".": 0.2116,
+    ",": 0.213,
+    "v": 0.1366,
+    "k": 0.1092,
+    "T": 0.1838,
     "1": 0.1749,
-    "0": 0.1043,
-    "S": 0.1977,
-    "C": 0.1932,
-    "2": 0.1804,
-    "A": 0.1837,
-    "I": 0.1648,
-    "9": 0.1402,
-    "M": 0.1556,
+    "0": 0.1047,
+    "S": 0.197,
+    "C": 0.1925,
+    "2": 0.1819,
+    "A": 0.1832,
+    "I": 0.165,
+    "9": 0.1399,
+    "M": 0.1559,
     "P": 0.1561,
-    "B": 0.1897,
-    "H": 0.1733,
-    "'": 0.2215,
-    ")": 0.2046,
-    "(": 0.2117,
-    "-": 0.1801,
-    "D": 0.1882,
-    "R": 0.2049,
-    "N": 0.1736,
-    "F": 0.1778,
-    "W": 0.1891,
-    "L": 0.1827,
-    "x": 0.1479,
-    "8": 0.1428,
-    "G": 0.2073,
-    "U": 0.1439,
-    "3": 0.1836,
-    "E": 0.2031,
-    "\"": 0.2095,
-    "J": 0.1409,
-    "5": 0.1468,
-    "O": 0.1306,
-    "6": 0.1665,
-    "7": 0.1568,
-    "4": 0.1623,
-    "q": 0.1759,
-    ":": 0.2242,
-    "z": 0.2055,
-    "j": 0.1598,
-    "K": 0.1391,
-    "V": 0.1895,
-    "Y": 0.1759,
-    ";": 0.2106,
-    "Z": 0.1759,
-    "Q": 0.1759,
-    "?": 0.2106,
-    "X": 0.1759,
-    "!": 0.2311
+    "B": 0.1881,
+    "H": 0.1714,
+    "'": 0.2222,
+    ")": 0.2049,
+    "(": 0.211,
+    "-": 0.1803,
+    "D": 0.1857,
+    "R": 0.2027,
+    "N": 0.1694,
+    "F": 0.1764,
+    "W": 0.1873,
+    "L": 0.181,
+    "x": 0.1471,
+    "8": 0.1417,
+    "G": 0.2022,
+    "U": 0.1405,
+    "3": 0.1819,
+    "E": 0.1974,
+    "\"": 0.2086,
+    "J": 0.1388,
+    "5": 0.1453,
+    "O": 0.1286,
+    "6": 0.164,
+    "7": 0.156,
+    "4": 0.1594,
+    "q": 0.1717,
+    ":": 0.2144,
+    "z": 0.2026,
+    "j": 0.1586,
+    "K": 0.1326,
+    "V": 0.1792,
+    "Y": 0.1734,
+    ";": 0.2095,
+    "Z": 0.1734,
+    "Q": 0.1734,
+    "?": 0.2095,
+    "X": 0.1734,
+    "!": 0.231
   },
   "LETTER_SPEED_MEAN": {
-    " ": 0.2569,
-    "e": 0.2364,
-    "a": 0.2627,
-    "t": 0.3173,
-    "i": 0.2797,
-    "o": 0.2696,
-    "n": 0.2545,
-    "s": 0.2914,
-    "r": 0.2783,
-    "h": 0.2437,
-    "l": 0.2862,
-    "d": 0.3161,
-    "c": 0.3641,
-    "u": 0.3053,
-    "m": 0.3144,
-    "p": 0.3705,
-    "f": 0.3443,
-    "g": 0.34,
-    "y": 0.3413,
-    "b": 0.4242,
-    "w": 0.378,
-    ".": 0.5659,
-    ",": 0.5515,
-    "v": 0.368,
-    "k": 0.3143,
-    "T": 0.5876,
-    "1": 0.5564,
-    "0": 0.3132,
-    "S": 0.5921,
-    "C": 0.6139,
-    "2": 0.5499,
-    "A": 0.5701,
-    "I": 0.5444,
-    "9": 0.4847,
-    "M": 0.5362,
-    "P": 0.5355,
-    "B": 0.6142,
-    "H": 0.5958,
-    "'": 0.6735,
-    ")": 0.7762,
-    "(": 0.7618,
-    "-": 0.6398,
-    "D": 0.6251,
-    "R": 0.6222,
-    "N": 0.5566,
-    "F": 0.6267,
-    "W": 0.6853,
-    "L": 0.5537,
-    "x": 0.4375,
-    "8": 0.5346,
-    "G": 0.6641,
-    "U": 0.5985,
-    "3": 0.6225,
-    "E": 0.6163,
-    "\"": 0.789,
-    "J": 0.622,
-    "5": 0.6006,
-    "O": 0.5561,
-    "6": 0.6412,
-    "7": 0.5542,
-    "4": 0.6118,
-    "q": 0.5279,
-    ":": 0.8134,
-    "z": 0.5089,
-    "j": 0.4366,
-    "K": 0.605,
-    "V": 0.6604,
-    "Y": 0.6313,
-    ";": 0.8132,
-    "Z": 0.7794,
-    "Q": 0.7562,
-    "?": 0.7566,
-    "X": 0.7065,
-    "!": 0.7194
+    " ": 0.2559,
+    "e": 0.2356,
+    "a": 0.2619,
+    "t": 0.3162,
+    "i": 0.2786,
+    "o": 0.2686,
+    "n": 0.2537,
+    "s": 0.2905,
+    "r": 0.2775,
+    "h": 0.2428,
+    "l": 0.2852,
+    "d": 0.315,
+    "c": 0.3631,
+    "u": 0.3043,
+    "m": 0.3135,
+    "p": 0.3694,
+    "f": 0.3432,
+    "g": 0.3391,
+    "y": 0.3401,
+    "b": 0.4228,
+    "w": 0.3766,
+    ".": 0.5636,
+    ",": 0.5496,
+    "v": 0.3668,
+    "k": 0.3135,
+    "T": 0.5856,
+    "1": 0.5557,
+    "0": 0.3124,
+    "S": 0.5905,
+    "C": 0.6127,
+    "2": 0.549,
+    "A": 0.5685,
+    "I": 0.5427,
+    "9": 0.4835,
+    "M": 0.5348,
+    "P": 0.5342,
+    "B": 0.6131,
+    "H": 0.594,
+    "'": 0.6717,
+    ")": 0.7751,
+    "(": 0.7606,
+    "-": 0.6389,
+    "D": 0.624,
+    "R": 0.6215,
+    "N": 0.5552,
+    "F": 0.6246,
+    "W": 0.6834,
+    "L": 0.5524,
+    "x": 0.4363,
+    "8": 0.5335,
+    "G": 0.6627,
+    "U": 0.5969,
+    "3": 0.6217,
+    "E": 0.6148,
+    "\"": 0.7868,
+    "J": 0.6203,
+    "5": 0.5997,
+    "O": 0.5548,
+    "6": 0.6407,
+    "7": 0.5537,
+    "4": 0.6114,
+    "q": 0.5269,
+    ":": 0.8108,
+    "z": 0.5075,
+    "j": 0.4357,
+    "K": 0.6038,
+    "V": 0.6589,
+    "Y": 0.6312,
+    ";": 0.8108,
+    "Z": 0.7772,
+    "Q": 0.7549,
+    "?": 0.754,
+    "X": 0.7064,
+    "!": 0.7199
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_M": {
-    " ": 12.22,
-    "e": 8.829,
-    "a": 3.464,
-    "t": 8.095,
-    "i": 5.78,
-    "o": 6.759,
-    "n": 6.701,
-    "s": 6.577,
-    "r": 7.28,
-    "h": 8.12,
-    "l": 11.46,
-    "d": 12.17,
-    "c": 5.486,
-    "u": 5.625,
-    "m": 5.142,
-    "p": 0.9937,
-    "f": 2.386,
+    " ": 0,
+    "e": 3.323,
+    "a": 3.323,
+    "t": 48.28,
+    "i": 0,
+    "o": 12.19,
+    "n": 0,
+    "s": 3.323,
+    "r": 3.323,
+    "h": 3.323,
+    "l": 0,
+    "d": 21.29,
+    "c": 0,
+    "u": 3.323,
+    "m": 0,
+    "p": 0,
+    "f": 0,
     "g": 0,
-    "y": 12.9,
-    "b": 4.746,
-    "w": 3.884,
-    ".": 4.861,
-    ",": 4.928,
-    "v": 7.69,
-    "k": 5.12,
-    "T": 8.974,
+    "y": 3.323,
+    "b": 3.323,
+    "w": 30.78,
+    ".": 0,
+    ",": 3.861,
+    "v": 3.323,
+    "k": 0,
+    "T": 8.309,
     "1": 0,
     "0": 0,
-    "S": 3.194,
-    "C": 4.815,
-    "2": 8.751,
-    "A": 5.002,
-    "I": 5.59,
-    "9": 0.3513,
-    "M": 2.032,
-    "P": 2.516,
-    "B": 0,
-    "H": 1.78,
+    "S": 4.485,
+    "C": 6.013,
+    "2": 0,
+    "A": 5.456,
+    "I": 6.892,
+    "9": 0,
+    "M": 3.414,
+    "P": 3.989,
+    "B": 0.1694,
+    "H": 1.259,
     "'": 3.323,
     ")": 3.323,
     "(": 3.323,
-    "-": 2.217,
-    "D": 3.481,
-    "R": 1.594,
+    "-": 4.337,
+    "D": 2.338,
+    "R": 0,
     "N": 0,
-    "F": 2.48,
+    "F": 1.771,
     "W": 3.323,
-    "L": 0.915,
-    "x": 6.032,
+    "L": 0.5033,
+    "x": 5.654,
     "8": 0,
     "G": 3.323,
-    "U": 1.853,
-    "3": 1.301,
+    "U": 0.4578,
+    "3": 0,
     "E": 0,
     "\"": 3.323,
-    "J": 2.785,
-    "5": 3.535,
-    "O": 3.006,
+    "J": 3.014,
+    "5": 3.468,
+    "O": 3.935,
     "6": 0,
-    "7": 0.008676,
-    "4": 5.983,
-    "q": 1.251,
+    "7": 3.415,
+    "4": 11.75,
+    "q": 0.6235,
     ":": 3.323,
-    "z": 0.6551,
-    "j": 4.669,
-    "K": 2.679,
+    "z": 3.637,
+    "j": 4.671,
+    "K": 0,
     "V": 3.323,
     "Y": 3.323,
     ";": 3.323,
@@ -228,72 +228,72 @@ const HYPERPARAMS={
     "!": 0
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_C": {
-    " ": -16.61,
-    "e": -15.63,
-    "a": -14.38,
-    "t": -15.63,
-    "i": -14.17,
-    "o": -14.52,
-    "n": -14.59,
-    "s": -14.68,
-    "r": -14.7,
-    "h": -14.42,
-    "l": -15.66,
-    "d": -15.78,
-    "c": -14.12,
-    "u": -13.51,
-    "m": -13.5,
-    "p": -11.94,
-    "f": -12.9,
-    "g": -11.86,
-    "y": -15.55,
-    "b": -13.41,
-    "w": -12.81,
-    ".": -13.04,
-    ",": -13.2,
-    "v": -13.47,
-    "k": -12.33,
-    "T": -14.2,
-    "1": -10.63,
-    "0": -11.25,
-    "S": -11.14,
-    "C": -12.1,
-    "2": -12.9,
-    "A": -12.09,
-    "I": -12.42,
-    "9": -10.09,
-    "M": -10.41,
-    "P": -9.955,
-    "B": -9.429,
-    "H": -10.4,
+    " ": -11.36,
+    "e": -9.255,
+    "a": -9.255,
+    "t": -25.64,
+    "i": -12.95,
+    "o": -14.08,
+    "n": -12.14,
+    "s": -9.255,
+    "r": -9.255,
+    "h": -9.255,
+    "l": -14.7,
+    "d": -18.5,
+    "c": -12.37,
+    "u": -9.255,
+    "m": -12.23,
+    "p": -9.855,
+    "f": -13.29,
+    "g": -10.66,
+    "y": -9.255,
+    "b": -9.255,
+    "w": -20.45,
+    ".": -11.03,
+    ",": -13.82,
+    "v": -9.255,
+    "k": -11.18,
+    "T": -14.35,
+    "1": -10.8,
+    "0": -10.96,
+    "S": -11.6,
+    "C": -12.97,
+    "2": -10.47,
+    "A": -12.21,
+    "I": -13.1,
+    "9": -10.07,
+    "M": -10.8,
+    "P": -10.38,
+    "B": -9.488,
+    "H": -10.16,
     "'": -9.255,
     ")": -9.255,
     "(": -9.255,
-    "-": -11.18,
-    "D": -10.5,
-    "R": -9.782,
-    "N": -8.922,
-    "F": -10.14,
+    "-": -12.22,
+    "D": -10.17,
+    "R": -9.546,
+    "N": -8.824,
+    "F": -9.749,
     "W": -9.255,
-    "L": -9.293,
-    "x": -12.02,
-    "8": -9.373,
+    "L": -9.333,
+    "x": -11.73,
+    "8": -9.219,
     "G": -9.255,
-    "U": -9.117,
-    "3": -9.581,
-    "E": -9.408,
+    "U": -9.109,
+    "3": -9.43,
+    "E": -9.265,
     "\"": -9.255,
-    "J": -9.679,
-    "5": -10.53,
-    "O": -10.66,
-    "6": -9.28,
-    "7": -9.618,
-    "4": -12.11,
-    "q": -9.576,
+    "J": -9.971,
+    "5": -10.46,
+    "O": -10.65,
+    "6": -9.179,
+    "7": -10.98,
+    "4": -14.42,
+    "q": -9.224,
     ":": -9.255,
-    "z": -9.014,
-    "j": -10.51,
-    "K": -10.3,
+    "z": -10.51,
+    "j": -10.46,
+    "K": -8.946,
     "V": -9.255,
     "Y": -9.255,
     ";": -9.255,
@@ -301,83 +301,83 @@ const HYPERPARAMS={
     "Q": -9.255,
     "?": -9.255,
     "X": -9.255,
-    "!": -7.667
+    "!": -7.69
   },
   "ERROR_GAP_CHANGE_PER_OCCURENCE_M": {
     " ": 0,
-    "e": 0.008032,
-    "a": 0.00847,
-    "t": 0.01035,
-    "i": 0.01157,
-    "o": 0.01226,
-    "n": 0.008973,
-    "s": 0.008968,
-    "r": 0.01009,
-    "h": 0.0161,
-    "l": 0.01179,
-    "d": 0.0134,
-    "c": 0.01388,
-    "u": 0.01591,
-    "m": 0.01242,
-    "p": 0.01915,
-    "f": 0.02204,
-    "g": 0.01147,
-    "y": 0.02064,
-    "b": 0.02496,
-    "w": 0.01489,
-    ".": 0.01678,
-    ",": 0.01191,
-    "v": 0.01546,
-    "k": 0.007177,
-    "T": 0.01636,
-    "1": 0.01076,
-    "0": 0.01643,
-    "S": 0.01645,
-    "C": 0.01649,
-    "2": 0.006683,
-    "A": 0.01651,
-    "I": 0.01656,
-    "9": 0.02744,
-    "M": 0.0166,
-    "P": 0.01661,
-    "B": 0.01664,
-    "H": 0.01665,
-    "'": 0.02517,
-    ")": 0.01666,
-    "(": 0.01666,
-    "-": 0.01398,
-    "D": 0.01668,
-    "R": 0.01669,
-    "N": 0.0167,
-    "F": 0.0167,
-    "W": 0.0167,
-    "L": 0.0167,
-    "x": 0.02081,
-    "8": 0.00447,
-    "G": 0.01672,
-    "U": 0.01672,
-    "3": 0.009309,
-    "E": 0.01673,
-    "\"": 0.01673,
-    "J": 0.01673,
-    "5": 0.03725,
-    "O": 0.01673,
-    "6": 0.02299,
-    "7": 0.03086,
-    "4": 0.01674,
-    "q": 0.01674,
-    ":": 0.01675,
-    "z": 0.01676,
-    "j": 0.01676,
-    "K": 0.01676,
-    "V": 0.01678,
-    "Y": 0.01681,
-    ";": 0.05484,
-    "Z": 0.01683,
-    "Q": 0.01683,
-    "?": 0.01683,
-    "X": 0.01683,
-    "!": 0.01684
+    "e": 0.007555,
+    "a": 0.01062,
+    "t": 0.009388,
+    "i": 0.01317,
+    "o": 0.009158,
+    "n": 0.01077,
+    "s": 0.01022,
+    "r": 0.007334,
+    "h": 0.0153,
+    "l": 0.01896,
+    "d": 0.01576,
+    "c": 0.01123,
+    "u": 0.01261,
+    "m": 0.01639,
+    "p": 0.02486,
+    "f": 0.01842,
+    "g": 0.01658,
+    "y": 0.02051,
+    "b": 0.01983,
+    "w": 0.01961,
+    ".": 0.01305,
+    ",": 0.01728,
+    "v": 0.01443,
+    "k": 0.05229,
+    "T": 0.02385,
+    "1": 0.02851,
+    "0": 0.05076,
+    "S": 0.02407,
+    "C": 0.02417,
+    "2": 0.04717,
+    "A": 0.02421,
+    "I": 0.02433,
+    "9": 0.01561,
+    "M": 0.02444,
+    "P": 0.02446,
+    "B": 0.02452,
+    "H": 0.02454,
+    "'": 0.01189,
+    ")": 0.02457,
+    "(": 0.02457,
+    "-": 0.01115,
+    "D": 0.02462,
+    "R": 0.02464,
+    "N": 0.02466,
+    "F": 0.02467,
+    "W": 0.02467,
+    "L": 0.02468,
+    "x": 0.04625,
+    "8": 0.02421,
+    "G": 0.02472,
+    "U": 0.02472,
+    "3": 0.02474,
+    "E": 0.02474,
+    "\"": 0.02474,
+    "J": 0.02474,
+    "5": 0.0427,
+    "O": 0.02474,
+    "6": 0.01422,
+    "7": 0.01926,
+    "4": 0.005119,
+    "q": 0.04866,
+    ":": 0.02479,
+    "z": 0.05713,
+    "j": 0.04197,
+    "K": 0.02482,
+    "V": 0.02487,
+    "Y": 0.02493,
+    ";": 0.02497,
+    "Z": 0.02497,
+    "Q": 0.02498,
+    "?": 0.02498,
+    "X": 0.02498,
+    "!": 0.025
   },
   "LETTER_FREQUENCY": {
     " ": 0.1613,
@@ -456,44 +456,44 @@ const HYPERPARAMS={
     "!": 2.29e-05
   },
   "LOGICAL_GROUP_MEAN_RATE": {
-    "most_common": 0.03883,
-    "left_hand": 0.04188,
-    "top_row": 0.04195,
-    "right_hand": 0.0439,
-    "alternate_hand_bigrams": 0.04791,
-    "ring_pinky": 0.04218,
-    "home_row": 0.0425,
-    "left_hand_only_bigrams": 0.04463,
-    "bottom_row": 0.04796,
+    "most_common": 0.03889,
+    "left_hand": 0.04196,
+    "top_row": 0.04203,
+    "right_hand": 0.04397,
+    "alternate_hand_bigrams": 0.0479,
+    "ring_pinky": 0.04225,
+    "home_row": 0.04256,
+    "left_hand_only_bigrams": 0.04462,
+    "bottom_row": 0.04801,
     "right_hand_only_bigrams": 0.04802,
-    "difficult_to_reach_letters": 0.04476,
-    "pinky": 0.03848,
-    "same_finger_bigrams": 0.05375,
-    "caps": 0.1043,
-    "punc": 0.1553,
-    "rare_letters": 0.08437,
-    "repeat_bigrams": 0.04223,
-    "numbers": 0.06447
+    "difficult_to_reach_letters": 0.04491,
+    "pinky": 0.03856,
+    "same_finger_bigrams": 0.0538,
+    "caps": 0.104,
+    "punc": 0.1554,
+    "rare_letters": 0.08442,
+    "repeat_bigrams": 0.04221,
+    "numbers": 0.06454
   },
   "LOGICAL_GROUP_STD": {
-    "most_common": 0.01634,
-    "left_hand": 0.01851,
-    "top_row": 0.01902,
-    "right_hand": 0.02082,
-    "alternate_hand_bigrams": 0.03987,
-    "ring_pinky": 0.01826,
-    "home_row": 0.01947,
-    "left_hand_only_bigrams": 0.03784,
-    "bottom_row": 0.02676,
-    "right_hand_only_bigrams": 0.0361,
-    "difficult_to_reach_letters": 0.02331,
-    "pinky": 0.01833,
-    "same_finger_bigrams": 0.03546,
-    "caps": 0.0782,
-    "punc": 0.08142,
-    "rare_letters": 0.05499,
-    "repeat_bigrams": 0.03235,
-    "numbers": 0.05759
+    "most_common": 0.01629,
+    "left_hand": 0.01846,
+    "top_row": 0.01899,
+    "right_hand": 0.02071,
+    "alternate_hand_bigrams": 0.03932,
+    "ring_pinky": 0.01817,
+    "home_row": 0.01936,
+    "left_hand_only_bigrams": 0.0373,
+    "bottom_row": 0.0265,
+    "right_hand_only_bigrams": 0.03562,
+    "difficult_to_reach_letters": 0.02326,
+    "pinky": 0.01823,
+    "same_finger_bigrams": 0.03508,
+    "caps": 0.07712,
+    "punc": 0.08115,
+    "rare_letters": 0.05453,
+    "repeat_bigrams": 0.03192,
+    "numbers": 0.05696
   },
   "LOGICAL_GROUP_FREQUENCY": {
     "most_common": 0.4938,
@@ -516,156 +516,156 @@ const HYPERPARAMS={
     "numbers": 0.0104
   },
   "LETTER_MEAN_RATE": {
-    " ": 0.01215,
-    "e": 0.03182,
-    "a": 0.03481,
-    "t": 0.03731,
-    "i": 0.04566,
-    "o": 0.04406,
-    "n": 0.0359,
-    "s": 0.04222,
-    "r": 0.04358,
-    "h": 0.0346,
-    "l": 0.03857,
-    "d": 0.05335,
-    "c": 0.04899,
-    "u": 0.05393,
-    "m": 0.04738,
-    "p": 0.04658,
-    "f": 0.04948,
-    "g": 0.0543,
-    "y": 0.06078,
-    "b": 0.06174,
-    "w": 0.05566,
+    " ": 0.01216,
+    "e": 0.03186,
+    "a": 0.03487,
+    "t": 0.03742,
+    "i": 0.04575,
+    "o": 0.04413,
+    "n": 0.03592,
+    "s": 0.04229,
+    "r": 0.04368,
+    "h": 0.03469,
+    "l": 0.03858,
+    "d": 0.05349,
+    "c": 0.04904,
+    "u": 0.05405,
+    "m": 0.0474,
+    "p": 0.04674,
+    "f": 0.04956,
+    "g": 0.05451,
+    "y": 0.06095,
+    "b": 0.06192,
+    "w": 0.0557,
     ".": 0.1322,
     ",": 0.1745,
-    "v": 0.07667,
-    "k": 0.06637,
-    "T": 0.0943,
-    "1": 0.0428,
-    "0": 0.04137,
-    "S": 0.1027,
-    "C": 0.09576,
-    "2": 0.05168,
-    "A": 0.0872,
-    "I": 0.0825,
-    "9": 0.0511,
-    "M": 0.08434,
+    "v": 0.07666,
+    "k": 0.06655,
+    "T": 0.09433,
+    "1": 0.04294,
+    "0": 0.04148,
+    "S": 0.1025,
+    "C": 0.0958,
+    "2": 0.05181,
+    "A": 0.08709,
+    "I": 0.08226,
+    "9": 0.05144,
+    "M": 0.08424,
     "P": 0.09932,
-    "B": 0.09085,
-    "H": 0.08286,
-    "'": 0.2002,
-    ")": 0.1379,
-    "(": 0.08827,
-    "-": 0.1846,
-    "D": 0.09456,
-    "R": 0.09961,
-    "N": 0.08589,
-    "F": 0.09253,
-    "W": 0.1116,
-    "L": 0.1045,
-    "x": 0.1132,
-    "8": 0.06393,
-    "G": 0.1015,
-    "U": 0.08509,
-    "3": 0.06911,
-    "E": 0.0859,
-    "\"": 0.1547,
-    "J": 0.1247,
-    "5": 0.05619,
-    "O": 0.1034,
-    "6": 0.06538,
-    "7": 0.05322,
-    "4": 0.06236,
-    "q": 0.06756,
+    "B": 0.09096,
+    "H": 0.08287,
+    "'": 0.2001,
+    ")": 0.1375,
+    "(": 0.08819,
+    "-": 0.1845,
+    "D": 0.09445,
+    "R": 0.09972,
+    "N": 0.08601,
+    "F": 0.09248,
+    "W": 0.1111,
+    "L": 0.1042,
+    "x": 0.1137,
+    "8": 0.06416,
+    "G": 0.1017,
+    "U": 0.08455,
+    "3": 0.06944,
+    "E": 0.08599,
+    "\"": 0.155,
+    "J": 0.125,
+    "5": 0.05618,
+    "O": 0.103,
+    "6": 0.066,
+    "7": 0.05357,
+    "4": 0.06246,
+    "q": 0.06831,
     ":": 0.2222,
-    "z": 0.1267,
-    "j": 0.0961,
-    "K": 0.1174,
-    "V": 0.1173,
-    "Y": 0.1285,
-    ";": 0.2733,
-    "Z": 0.1084,
-    "Q": 0.102,
-    "?": 0.06176,
-    "X": 0.08951,
-    "!": 0.08495
+    "z": 0.1271,
+    "j": 0.09614,
+    "K": 0.118,
+    "V": 0.1171,
+    "Y": 0.1276,
+    ";": 0.2725,
+    "Z": 0.1083,
+    "Q": 0.1027,
+    "?": 0.06283,
+    "X": 0.08992,
+    "!": 0.08549
   },
   "LETTER_STD": {
-    " ": 0.007274,
-    "e": 0.01422,
-    "a": 0.01749,
-    "t": 0.02071,
-    "i": 0.02278,
-    "o": 0.02282,
-    "n": 0.01818,
-    "s": 0.01979,
-    "r": 0.02307,
-    "h": 0.02393,
-    "l": 0.02095,
-    "d": 0.03118,
-    "c": 0.02676,
-    "u": 0.0312,
-    "m": 0.03023,
-    "p": 0.02991,
-    "f": 0.03576,
-    "g": 0.03566,
-    "y": 0.04093,
-    "b": 0.041,
-    "w": 0.04265,
-    ".": 0.07923,
-    ",": 0.1063,
-    "v": 0.05217,
-    "k": 0.05252,
-    "T": 0.06575,
-    "1": 0.04652,
-    "0": 0.04512,
-    "S": 0.07952,
-    "C": 0.08062,
-    "2": 0.05632,
-    "A": 0.07047,
-    "I": 0.07739,
-    "9": 0.05821,
-    "M": 0.07058,
-    "P": 0.0797,
-    "B": 0.07737,
-    "H": 0.07177,
-    "'": 0.1466,
-    ")": 0.1098,
-    "(": 0.1005,
-    "-": 0.116,
-    "D": 0.08006,
-    "R": 0.09292,
-    "N": 0.07955,
-    "F": 0.08063,
-    "W": 0.0962,
-    "L": 0.08619,
-    "x": 0.08643,
-    "8": 0.07185,
-    "G": 0.08641,
-    "U": 0.09061,
-    "3": 0.07309,
-    "E": 0.08429,
-    "\"": 0.1279,
-    "J": 0.1117,
-    "5": 0.06437,
-    "O": 0.08909,
-    "6": 0.08331,
-    "7": 0.07807,
-    "4": 0.07453,
-    "q": 0.07014,
-    ":": 0.1783,
-    "z": 0.1046,
-    "j": 0.09516,
-    "K": 0.1229,
-    "V": 0.1276,
-    "Y": 0.1577,
-    ";": 0.2577,
-    "Z": 0.1982,
+    " ": 0.007251,
+    "e": 0.01419,
+    "a": 0.01738,
+    "t": 0.02065,
+    "i": 0.02269,
+    "o": 0.02276,
+    "n": 0.01806,
+    "s": 0.01967,
+    "r": 0.02316,
+    "h": 0.02374,
+    "l": 0.02078,
+    "d": 0.0313,
+    "c": 0.02661,
+    "u": 0.03128,
+    "m": 0.02996,
+    "p": 0.0298,
+    "f": 0.0354,
+    "g": 0.03584,
+    "y": 0.04087,
+    "b": 0.04082,
+    "w": 0.04235,
+    ".": 0.07902,
+    ",": 0.1061,
+    "v": 0.05183,
+    "k": 0.05264,
+    "T": 0.06532,
+    "1": 0.0466,
+    "0": 0.04483,
+    "S": 0.07859,
+    "C": 0.08011,
+    "2": 0.05599,
+    "A": 0.06975,
+    "I": 0.0764,
+    "9": 0.05805,
+    "M": 0.06992,
+    "P": 0.07891,
+    "B": 0.07665,
+    "H": 0.07123,
+    "'": 0.1457,
+    ")": 0.1092,
+    "(": 0.1008,
+    "-": 0.1156,
+    "D": 0.07958,
+    "R": 0.09277,
+    "N": 0.07925,
+    "F": 0.07988,
+    "W": 0.09535,
+    "L": 0.08539,
+    "x": 0.08615,
+    "8": 0.07166,
+    "G": 0.08626,
+    "U": 0.08935,
+    "3": 0.07308,
+    "E": 0.08353,
+    "\"": 0.1272,
+    "J": 0.1115,
+    "5": 0.064,
+    "O": 0.08813,
+    "6": 0.084,
+    "7": 0.07833,
+    "4": 0.07431,
+    "q": 0.07063,
+    ":": 0.1786,
+    "z": 0.1054,
+    "j": 0.09488,
+    "K": 0.1233,
+    "V": 0.1272,
+    "Y": 0.1566,
+    ";": 0.2572,
+    "Z": 0.1983,
     "Q": 0.2008,
-    "?": 0.1996,
-    "X": 0.1773,
-    "!": 0.2002
+    "?": 0.2009,
+    "X": 0.177,
+    "!": 0.202
   },
   "SELECTION_MODE_BANDITS": [
     {
@@ -688,120 +688,120 @@ const HYPERPARAMS={
     [
       {
         "passage": "Every keystroke you make fuels Typo Dojo's adaptive engine, creating the most efficient training path for faster results.",
-        "alpha": 604.6,
-        "beta": 42.38
+        "alpha": 641.6,
+        "beta": 42.36
       },
       {
         "passage": "Personalized coaching at scale. Typo Dojo uses your mistakes as fuel to craft adaptive drills that accelerate progress.",
-        "alpha": 287.6,
-        "beta": 23.38
+        "alpha": 332.6,
+        "beta": 26.36
       },
       {
         "passage": "Practice smarter, not longer. Typo Dojo adapts training in real time so your weaknesses shrink and your speed soars.",
-        "alpha": 875.6,
-        "beta": 59.38
+        "alpha": 888.6,
+        "beta": 60.36
       },
       {
         "passage": "Stop generic practice. Typo Dojo adapts every drill to your errors, so progress in speed and accuracy becomes inevitable.",
-        "alpha": 288.6,
-        "beta": 26.38
+        "alpha": 300.6,
+        "beta": 25.36
       },
       {
         "passage": "Typo Dojo acts like your personal coach, tracking every keystroke and creating targeted drills to make progress inevitable.",
-        "alpha": 222.6,
-        "beta": 22.38
+        "alpha": 225.6,
+        "beta": 22.36
       },
       {
         "passage": "Typo Dojo evolves with you, adjusting drills as you improve so growth never stops and typing mastery becomes natural.",
-        "alpha": 259.6,
-        "beta": 22.38
+        "alpha": 279.6,
+        "beta": 24.36
       },
       {
         "passage": "Typo Dojo finds your toughest keystrokes and turns them into strengths with personalized, evolving practice sessions.",
-        "alpha": 274.6,
-        "beta": 21.38
+        "alpha": 336.6,
+        "beta": 26.36
       },
       {
         "passage": "Typo Dojo guides you step by step with adaptive coaching so you never plateau and your speed keeps climbing.",
-        "alpha": 453.6,
-        "beta": 38.38
+        "alpha": 455.6,
+        "beta": 38.36
       },
       {
         "passage": "Typo Dojo is your typing mentor. An adaptive coach that evolves with you, ensuring every session brings measurable growth.",
-        "alpha": 243.6,
-        "beta": 23.38
+        "alpha": 248.6,
+        "beta": 23.36
       },
       {
         "passage": "With Typo Dojo, practice is never wasted-each drill is tailored to your mistakes, ensuring speed and accuracy improvements.",
-        "alpha": 237.6,
-        "beta": 24.38
+        "alpha": 238.6,
+        "beta": 24.36
       },
       {
         "passage": "Your personal typing coach, typo dojo, identifies your performance gaps and delivers targeted drills to boost your typing skills.",
         "alpha": 344.6,
-        "beta": 98.38
+        "beta": 98.36
       }
     ],
     [
       {
         "passage": "By practicing with coherent text, Typo Dojo ensures your speed and accuracy upgrades show up where you need them most.",
-        "alpha": 233.6,
-        "beta": 24.38
+        "alpha": 236.6,
+        "beta": 25.36
       },
       {
         "passage": "Don't waste time on nonsense drills. Typo Dojo gives you natural, flowing text so you improve the way you actually type.",
-        "alpha": 365.6,
-        "beta": 30.38
+        "alpha": 378.6,
+        "beta": 31.36
       },
       {
         "passage": "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
-        "alpha": 553.6,
-        "beta": 37.38
+        "alpha": 625.6,
+        "beta": 41.36
       },
       {
         "passage": "Meaningful practice with Typo Dojo means faster typing that feels natural in everyday communication.",
-        "alpha": 705.6,
-        "beta": 54.38
+        "alpha": 706.6,
+        "beta": 55.36
       },
       {
         "passage": "Random drills won't prepare you for real life. Typo Dojo builds speed and accuracy with authentic, meaningful text.",
-        "alpha": 312.6,
-        "beta": 30.38
+        "alpha": 314.6,
+        "beta": 30.36
       },
       {
         "passage": "Typo Dojo builds fluency with natural sentences that feel real from the first keystroke.",
-        "alpha": 552.6,
-        "beta": 35.38
+        "alpha": 691.6,
+        "beta": 46.36
       },
       {
         "passage": "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
-        "alpha": 337.6,
-        "beta": 28.38
+        "alpha": 349.6,
+        "beta": 30.36
       },
       {
         "passage": "Typo Dojo makes practice real by using natural sentences, ensuring skills transfer seamlessly to daily typing tasks.",
-        "alpha": 500.6,
-        "beta": 39.38
+        "alpha": 504.6,
+        "beta": 39.36
       },
       {
         "passage": "Typo Dojo pulls from trusted sources to make practice authentic, so your training mirrors the way you really type.",
-        "alpha": 335.6,
-        "beta": 29.38
+        "alpha": 341.6,
+        "beta": 30.36
       },
       {
         "passage": "Typo Dojo teaches with authentic sentences, not nonsense words, so the skills you build stick in emails, reports, and work.",
         "alpha": 687.6,
-        "beta": 56.38
+        "beta": 55.36
       },
       {
         "passage": "Typo Dojo trains you on real-world language so improvements instantly show up in emails, documents, and everyday typing.",
-        "alpha": 137.6,
-        "beta": 18.38
+        "alpha": 138.6,
+        "beta": 19.36
       },
       {
         "passage": "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen.Type real sentences instead of random words so your speed improves where you actually write.",
         "alpha": 308.6,
-        "beta": 33.38
+        "beta": 33.36
       },
       {
         "passage": "Unlike other apps, Typo Dojo uses real sentences from Wikipedia and Sherlock Holmes to build skills that transfer to life.",
@@ -810,112 +810,112 @@ const HYPERPARAMS={
       },
       {
         "passage": "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
-        "alpha": 5401,
-        "beta": 479.4
+        "alpha": 5540,
+        "beta": 486.4
       }
     ],
     [
       {
         "passage": "By recording every keystroke, Typo Dojo pinpoints your weak spots and designs drills to fix them permanently.",
-        "alpha": 528.6,
-        "beta": 40.38
+        "alpha": 537.6,
+        "beta": 40.36
       },
       {
         "passage": "Don't fight the same mistakes forever-Typo Dojo predicts them, highlights them, and helps you eliminate them fast.",
-        "alpha": 68.62,
-        "beta": 9.376
+        "alpha": 90.64,
+        "beta": 11.36
       },
       {
         "passage": "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast.",
         "alpha": 1644,
-        "beta": 127.4
+        "beta": 126.4
       },
       {
         "passage": "Predictive error focus makes Typo Dojo a shortcut to eliminating recurring mistakes and boosting accuracy fast.Typo Dojo helps you spot repeating mistakes and turns them into quick drills that build accuracy.",
         "alpha": 349.6,
-        "beta": 41.38
+        "beta": 41.36
       },
       {
         "passage": "See your weak keys and fix them fast as Typo Dojo turns each typo into a lesson.",
-        "alpha": 2727,
-        "beta": 128.4
+        "alpha": 4522,
+        "beta": 222.4
       },
       {
         "passage": "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
-        "alpha": 3677,
-        "beta": 258.4
+        "alpha": 3731,
+        "beta": 265.4
       },
       {
         "passage": "Targeted error drills ensure Typo Dojo helps you unlearn bad habits and replace them with accuracy that lasts.",
-        "alpha": 1566,
-        "beta": 98.38
+        "alpha": 1579,
+        "beta": 101.4
       },
       {
         "passage": "Typo Dojo analyzes your typo history to craft custom drills that attack your weakest patterns until they disappear.",
-        "alpha": 158.6,
-        "beta": 18.38
+        "alpha": 160.6,
+        "beta": 18.36
       },
       {
         "passage": "Typo Dojo anticipates where you're most likely to trip and highlights those areas so you can eliminate recurring mistakes.",
-        "alpha": 132.6,
-        "beta": 15.38
+        "alpha": 138.6,
+        "beta": 16.36
       },
       {
         "passage": "Typo Dojo doesn't just track mistakes-it predicts them, highlights them, and helps you eliminate them one by one.",
         "alpha": 151.6,
-        "beta": 19.38
+        "beta": 19.36
       },
       {
         "passage": "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
-        "alpha": 814.6,
-        "beta": 58.38
+        "alpha": 819.6,
+        "beta": 58.36
       },
       {
         "passage": "Typo Dojo shines a spotlight on your weak points, transforming them into strengths with targeted drills and predictions.",
         "alpha": 578.6,
-        "beta": 52.38
+        "beta": 52.36
       },
       {
         "passage": "Typo Dojo's authentic text keeps practice fresh and realistic so improvements transfer beyond the training screen.",
-        "alpha": 233.6,
-        "beta": 24.38
+        "alpha": 234.6,
+        "beta": 24.36
       },
       {
         "passage": "With predictive error highlighting, Typo Dojo ensures your toughest keystrokes get the focus they deserve.",
-        "alpha": 545.6,
-        "beta": 44.38
+        "alpha": 546.6,
+        "beta": 44.36
       },
       {
         "passage": "Your errors become the lesson plan: Typo Dojo finds, predicts, and fixes the mistakes holding you back.",
-        "alpha": 523.6,
-        "beta": 39.38
+        "alpha": 538.6,
+        "beta": 41.36
       }
     ],
     [
       {
         "passage": "Even five minutes matter when each Typo Dojo drill targets what improves your typing most.",
-        "alpha": 805.6,
-        "beta": 32.38
+        "alpha": 3824,
+        "beta": 173.4
       },
       {
         "passage": "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
         "alpha": 178.6,
-        "beta": 22.38
+        "beta": 22.36
       },
       {
         "passage": "Faster typing saves hours every week. Typo Dojo makes every practice session count toward higher speed and accuracy.",
         "alpha": 3497,
-        "beta": 319.4
+        "beta": 318.4
       },
       {
         "passage": "In today's digital world, typing faster and more accurately is priceless. Typo Dojo helps you master both efficiently.",
-        "alpha": 326.6,
-        "beta": 31.38
+        "alpha": 327.6,
+        "beta": 29.36
       },
       {
         "passage": "Short sessions bring real gains as Typo Dojo keeps every minute focused on progress.",
-        "alpha": 1743,
-        "beta": 79.38
+        "alpha": 2950,
+        "beta": 139.4
       },
       {
         "passage": "Train smarter with Typo Dojo and watch your speed rise while your mistakes fall-it's the fastest way to real progress.",
@@ -924,117 +924,117 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typing mastery is measurable: Typo Dojo turns minutes of practice into noticeable gains in speed and precision.",
-        "alpha": 102.6,
-        "beta": 12.38
+        "alpha": 106.6,
+        "beta": 12.36
       },
       {
         "passage": "Typo Dojo boosts your WPM and accuracy at the same time, turning practice into tangible improvements session by session.",
-        "alpha": 64.62,
-        "beta": 11.38
+        "alpha": 65.64,
+        "beta": 11.36
       },
       {
         "passage": "Typo Dojo doesn't waste time-it turns every drill into a step forward in speed and typing accuracy.",
         "alpha": 819.6,
-        "beta": 73.38
+        "beta": 73.36
       },
       {
         "passage": "Typo Dojo focuses training where it matters, giving you lasting gains in both typing speed and typing precision.",
-        "alpha": 129.6,
-        "beta": 12.38
+        "alpha": 165.6,
+        "beta": 14.36
       },
       {
         "passage": "Typo Dojo is built for measurable results-each session makes you faster, smoother, and more accurate at the keyboard.",
-        "alpha": 232.6,
-        "beta": 21.38
+        "alpha": 239.6,
+        "beta": 21.36
       },
       {
         "passage": "Typo Dojo is your fast track to faster typing-accuracy improves naturally as drills sharpen your skills.",
-        "alpha": 74.62,
-        "beta": 12.38
+        "alpha": 75.64,
+        "beta": 12.36
       },
       {
         "passage": "Your speed and accuracy grow hand in hand with Typo Dojo, making every session a leap forward in performance.",
-        "alpha": 2658,
-        "beta": 163.4
+        "alpha": 2659,
+        "beta": 164.4
       }
     ],
     [
       {
         "passage": "Built for busy people, Typo Dojo skips the fluff and focuses only on what makes your typing better, faster.",
         "alpha": 1767,
-        "beta": 132.4
+        "beta": 131.4
       },
       {
         "passage": "Busy schedule? Typo Dojo compresses training into minutes that deliver real, lasting improvements.",
         "alpha": 1169,
-        "beta": 95.38
+        "beta": 95.36
       },
       {
         "passage": "Efficiency is everything. Typo Dojo ensures that even short practice sessions turn into big typing gains.",
         "alpha": 633.6,
-        "beta": 60.38
+        "beta": 60.36
       },
       {
         "passage": "Five minutes with Typo Dojo is more effective than hours of generic drills, because every keystroke is purposeful.",
-        "alpha": 437.6,
-        "beta": 35.38
+        "alpha": 443.6,
+        "beta": 36.36
       },
       {
         "passage": "Focused practice beats long practice. Typo Dojo ensures the time you spend always moves you forward.",
         "alpha": 968.6,
-        "beta": 74.38
+        "beta": 74.36
       },
       {
         "passage": "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
-        "alpha": 175.6,
-        "beta": 12.38
+        "alpha": 538.6,
+        "beta": 46.36
       },
       {
         "passage": "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
-        "alpha": 115.6,
-        "beta": 12.38
+        "alpha": 146.6,
+        "beta": 14.36
       },
       {
         "passage": "Typo Dojo eliminates wasted effort-every drill is optimized to deliver maximum improvement in minimum time.",
         "alpha": 138.6,
-        "beta": 23.38
+        "beta": 23.36
       },
       {
         "passage": "Typo Dojo makes better typing achievable for anyone by squeezing maximum value out of every drill.",
         "alpha": 1243,
-        "beta": 91.38
+        "beta": 90.36
       },
       {
         "passage": "Typo Dojo turns practice into progress by focusing training on the exact areas you need most.",
-        "alpha": 589.6,
-        "beta": 47.38
+        "alpha": 592.6,
+        "beta": 47.36
       },
       {
         "passage": "With Typo Dojo, every keystroke counts-progress becomes a natural byproduct of efficient, focused practice.",
         "alpha": 476.6,
-        "beta": 49.38
+        "beta": 48.36
       }
     ],
     [
       {
         "passage": "Every committed learner sees results: Typo Dojo consistently delivers measurable gains in speed and accuracy.",
-        "alpha": 896.6,
-        "beta": 67.38
+        "alpha": 897.6,
+        "beta": 65.36
       },
       {
         "passage": "Hundreds of thousands of users trust Typo Dojo for lasting gains in speed and accuracy. Join them and see the progress for yourself.",
-        "alpha": 483.6,
-        "beta": 34.38
+        "alpha": 528.6,
+        "beta": 38.36
       },
       {
         "passage": "Join the Typo Dojo community of learners who've already unlocked faster, smoother typing through consistent practice.",
-        "alpha": 136.6,
-        "beta": 14.38
+        "alpha": 155.6,
+        "beta": 16.36
       },
       {
         "passage": "Proven impact at scale. Typo Dojo has transformed typing skills for thousands who dedicated just minutes each day.",
         "alpha": 740.6,
-        "beta": 62.38
+        "beta": 62.36
       },
       {
         "passage": "Real results, not empty promises-Typo Dojo has helped thousands transform typos into triumphs.",
@@ -1044,182 +1044,82 @@ const HYPERPARAMS={
       {
         "passage": "Typo Dojo has a proven track record: stick with it and you'll see measurable improvements in speed and accuracy.",
         "alpha": 299.6,
-        "beta": 34.38
+        "beta": 34.36
       },
       {
         "passage": "Typo Dojo is proven to work-every learner who commits sees measurable, lasting improvements in typing performance.",
-        "alpha": 116.6,
-        "beta": 14.38
+        "alpha": 123.6,
+        "beta": 14.36
       },
       {
         "passage": "Typo Dojo's track record speaks for itself: consistent training leads to lasting speed and accuracy gains.",
         "alpha": 618.6,
-        "beta": 68.38
+        "beta": 68.36
       },
       {
         "passage": "With Typo Dojo, consistent practice turns into proven results you can measure in speed and accuracy.",
-        "alpha": 310.6,
-        "beta": 21.38
+        "alpha": 513.6,
+        "beta": 38.36
       }
     ],
     [
       {
         "passage": "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate.",
-        "alpha": 4849,
-        "beta": 562.4
+        "alpha": 4891,
+        "beta": 567.4
       }
     ],
     [
       {
         "passage": "No distractions and pure rhythm. Typo Dojo helps you find your flow and keep it steady.",
         "alpha": 1241,
-        "beta": 91.38
+        "beta": 90.36
       },
       {
         "passage": "Stay in the zone as Typo Dojo keeps you focused so each word flows faster than the last.",
-        "alpha": 1117,
-        "beta": 52.38
+        "alpha": 3063,
+        "beta": 164.4
       }
     ],
     [
       {
         "passage": "See problem keys before they slow you down. Typo Dojo highlights likely errors to build steady accuracy.",
         "alpha": 1892,
-        "beta": 130.4
+        "beta": 126.4
       },
       {
         "passage": "Stay ahead of your typos. Typo Dojo predicts which letters you may miss so you can prevent errors.",
-        "alpha": 517.6,
-        "beta": 30.38
+        "alpha": 989.6,
+        "beta": 58.36
       },
       {
         "passage": "Typo Dojo predicts tricky letters and helps you master them before they slow your typing.",
-        "alpha": 634.6,
-        "beta": 41.38
+        "alpha": 781.6,
+        "beta": 45.36
       },
       {
         "passage": "Typo Dojo predicts which letters you often mistype so you can focus and avoid repeating mistakes.",
-        "alpha": 388.6,
-        "beta": 28.38
+        "alpha": 458.6,
+        "beta": 33.36
       },
       {
         "passage": "Typo Dojo shows where you may slip so you can stay focused and turn practice into progress.",
-        "alpha": 351.6,
-        "beta": 27.38
+        "alpha": 380.6,
+        "beta": 28.36
       }
     ]
   ],
-  "TOTAL_USER_COUNT": 300339,
+  "TOTAL_USER_COUNT": 307824,
   "BEST_PASSAGES": [
     {
-      "passage": "A large fire caused significant damage to new seating areas in left field and center field bleachers. These areas were reconstructed before opening day 1934.",
-      "alpha": 161.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Seatack, Virginia is currently the oldest African American community in the United States. It survives today with a vibrant and active civic community.",
-      "alpha": 306.8,
-      "beta": 12.25
-    },
-    {
-      "passage": "Interspersed among superclusters are large voids of space where few galaxies exist. Superclusters are frequently subdivided into groups of clusters called galaxy groups and clusters.",
-      "alpha": 152.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Files and tables are sorted using and the verb merges and sorts files. The verb provides records to sort and retrieves sorted records in order.",
-      "alpha": 175.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "Secretory vesicles contain materials that are to be excreted from the cell. Cells have many reasons to excrete materials.",
-      "alpha": 167.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "A tetrahedron having stiff edges is inherently rigid. For this reason it is often used to stiffen frame structures such as spaceframes.",
-      "alpha": 120.8,
+      "passage": "Atomic semantics are very strong. An atomic register provides strong guarantees even when there is concurrency and failures.",
+      "alpha": 105.8,
       "beta": 5.25
     },
     {
-      "passage": "Ion thrusters are categorized as either electrostatic or electromagnetic. The main difference is the method for accelerating the ions.",
-      "alpha": 187.8,
-      "beta": 8.25
-    },
-    {
-      "passage": "There are no known curative treatments for the majority of motor neuron disorders. Please refer to the articles on individual disorders for more details.",
-      "alpha": 139.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Elements of the geometric algebra that are scalar multiples of are of grade and are called scalars. Elements that are in the span of are of grade and are the ordinary vectors. Elements in the span of are of grade and are the bivectors.",
-      "alpha": 114.8,
-      "beta": 5.25
-    },
-    {
-      "passage": "The country's ccTLD is .nr. Internet service in the country is provided by CenPacNet. Domains must be paid, and can be ordered from CenPacNet.",
-      "alpha": 134.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "It is similar to what occurs when waves are scattered from a diffraction grating. Bragg diffraction is a consequence of interference between waves reflecting from many different crystal planes.",
-      "alpha": 130.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Rara is a festival celebrated before Easter. The festival has generated a style of Carnival music.",
-      "alpha": 168.8,
-      "beta": 8.25
-    },
-    {
-      "passage": "There are several factors that could contribute to the failure of two adhered surfaces. Sunlight and heat may weaken the adhesive. Solvents can deteriorate or dissolve adhesive.",
-      "alpha": 126.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "A regular octahedron can be augmented into a tetrahedron by adding 4 tetrahedra on alternated faces. Adding tetrahedra to all 8 faces creates the stellated octahedron.",
-      "alpha": 125.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "A set can never been considered as open by itself. This notion is relative to a containing set and a specific topology on it.",
-      "alpha": 125.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Genetic characteristics have alternate forms, each inherited from one of two parents. Today these are called alleles.",
-      "alpha": 124.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "A regular ordinal is an ordinal that is equal to its cofinality. A singular ordinal is any ordinal that is not regular.",
-      "alpha": 144.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "A good impression can lead to a new user. New users may add more content and knowledge to Wikipedia.",
-      "alpha": 301.8,
-      "beta": 15.25
-    },
-    {
-      "passage": "Ice stalactites can also form under sea ice when saline water is introduced to ocean water. These specific stalactites are referred to as brinicles.",
-      "alpha": 122.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "For dramatic effect, heel referees may assist a heel wrestler. Several common plot devices involve the heel referee assisting the heel wrestler.",
-      "alpha": 139.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "Sometimes the greenhouse effect is quantified as a temperature difference. This temperature difference is closely related to the quantities above.",
-      "alpha": 196.8,
+      "passage": "A metaclass is a class where instances are classes. A metaclass describes a common structure of a collection of classes and can implement a design pattern or describe particular kinds of classes. Metaclasses are often used to describe frameworks.",
+      "alpha": 199.8,
       "beta": 10.25
-    },
-    {
-      "passage": "Similar gametangia that are similar are known as isogametangia. While male and female gametangia are known as heterogametangia, which occurs in the majority of fungi.",
-      "alpha": 119.8,
-      "beta": 6.25
     }
   ],
   "HARDCODED_NUMBER_PASSAGES": {
@@ -1231,12 +1131,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "A 10,000 meter race targets 70 second laps, then a 400 kick. Coaches mark 200 and 800 splits, and celebrate the 10th victory of a long 2000s career.",
-        "alpha": 28.55,
+        "alpha": 29.55,
         "beta": 2.45
       },
       {
         "passage": "A 100 point exam weights a 20 point essay and 30 short answers. Teachers post v1.0 rubrics, publish a v2.0 revision, and grade 150 papers by the 10th night.",
-        "alpha": 28.55,
+        "alpha": 29.55,
         "beta": 2.45
       },
       {
@@ -1246,8 +1146,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "A No 10 dictated tempo over 90 minutes. The 70th brought a 20 yard strike, then a 100th club goal in the 2010s as 40,000 sang in stoppage.",
-        "alpha": 38.55,
-        "beta": 0.45
+        "alpha": 53.55,
+        "beta": 1.45
       },
       {
         "passage": "A classic No 10 dictates tempo over 90 minutes. New stadiums list 40,000 seats and 20,000 season tickets while a stoppage board adds 10 more as supporters plan the 10th away day.",
@@ -1296,13 +1196,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "An API at v2.0 handles 200 requests per second and budgets 300 ms p95. The v1.0 path caches 100,000 keys and refreshes 50,000 by the 10th hour.",
-        "alpha": 34.55,
+        "alpha": 35.55,
         "beta": 2.45
       },
       {
         "passage": "An MMO launched in 2003 and grew into the 2010s. Peak nights reported 100,000 players and 50,000 in queues as a 10th anniversary expansion added 200 new quests and 0 downtime.",
-        "alpha": 26.55,
-        "beta": 1.45
+        "alpha": 32.55,
+        "beta": 2.45
       },
       {
         "passage": "Analysts track the S and P 500 and the Dow 30. A 10 year yield near 1.0 percent can reprice 200,000 mortgages as 50 basis points move monthly costs for 100,000 homeowners.",
@@ -1346,7 +1246,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Blitz often runs 3 minute 0 increment or 5 minute 0 increment. A 10th event streams 30 boards, 100 clocks, and 300,000 moves recorded by 2023 sensors.",
-        "alpha": 30.55,
+        "alpha": 31.55,
         "beta": 3.45
       },
       {
@@ -1356,7 +1256,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "By the Rule of 72 money doubling at 12 percent takes about 6 years, while 2 percent drifts toward 36. Cutting fees from 2.0 to 0.2 can save over 200,000 across decades.",
-        "alpha": 133.6,
+        "alpha": 134.6,
         "beta": 12.45
       },
       {
@@ -1376,7 +1276,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Consoles in the 2010s pushed 1080p at 60 fps. Many titles locked 30 fps to hold 120 field of view and patches trimmed 100 ms input lag on 2008 era engines.",
-        "alpha": 18.55,
+        "alpha": 19.55,
         "beta": 1.45
       },
       {
@@ -1392,11 +1292,11 @@ const HYPERPARAMS={
       {
         "passage": "ETOPS rules let 2 engine airliners fly long ocean routes. Early 120 minute limits grew to 180 and 240 in the 2000s, and 2010s approvals saw crews plan 2 hour diversions confidently.",
         "alpha": 131.6,
-        "beta": 12.45
+        "beta": 13.45
       },
       {
         "passage": "Flight history notes 1903 at Kitty Hawk. Today a 3rd runway pushes 300,000 movements yearly as towers meter 3 mile spacing and 3 minute separations with 330 degree headings in 30 knot crosswinds.",
-        "alpha": 11.55,
+        "alpha": 12.55,
         "beta": 3.45
       },
       {
@@ -1406,32 +1306,32 @@ const HYPERPARAMS={
       },
       {
         "passage": "Global CO2 passed 400 ppm in the 2010s. Many city plans target 50,000 heat pump installs and 40,000 chargers by 2025 while buildings aim for 0 on site emissions during 10 year retrofits.",
-        "alpha": 25.55,
+        "alpha": 26.55,
         "beta": 3.45
       },
       {
         "passage": "HTTP 2 and TLS 1.2 cut latency in the 2010s. Many sites moved to 2.0 style APIs with 128 bit ciphers while traffic rose past 200,000 daily sessions by 2021.",
-        "alpha": 138.6,
+        "alpha": 139.6,
         "beta": 15.45
       },
       {
         "passage": "High speed lines run 300 kmh on 25 kV, with 3,000 V on legacy trunks. A 10,000 passenger day needs 200 staff and a 10th platform to keep 0 delays.",
-        "alpha": 32.55,
+        "alpha": 33.55,
         "beta": 1.45
       },
       {
         "passage": "Hikers on the 33rd parallel cross 300 km deserts to 3,500 m passes. A 3rd camp at 13,000 ft overlooks 350 switchbacks and a 30 km ridge with 360 degree views.",
-        "alpha": 30.55,
-        "beta": 1.45
+        "alpha": 36.55,
+        "beta": 2.45
       },
       {
         "passage": "In 1903 the Wright Flyer covered 120 feet. Modern jets cruise around 30,000 feet with 500 mph groundspeeds and descend through 10,000 for checks while early aviation meets celebrated the 10th year by 1910.",
-        "alpha": 23.55,
+        "alpha": 24.55,
         "beta": 1.45
       },
       {
         "passage": "In distance running the 10,000 meters often splits 70 seconds per lap. Tactical races turn at 2,000 and then 800 before a 200 finish as the 10th coach yells go.",
-        "alpha": 25.55,
+        "alpha": 26.55,
         "beta": 1.45
       },
       {
@@ -1451,27 +1351,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 90 meets I 290 and I 390 around Chicago. Planners track 20,000 vehicles per hour, add 200 ramp meters, and open the 10th reversible lane by 2024.",
-        "alpha": 42.55,
-        "beta": 0.45
+        "alpha": 54.55,
+        "beta": 1.45
       },
       {
         "passage": "Log10 measures orders of magnitude so 100 is 2 and 1000 is 3. Scientists compare 10,000 to 1,000 for clarity and note the 10th place where 0 shifts value in base 10.",
-        "alpha": 30.55,
+        "alpha": 31.55,
         "beta": 1.45
       },
       {
         "passage": "Many airliners follow a sterile cockpit below 10,000 feet. Regulations cap 250 knots under 10,000 as departures call 400 feet for turns and crews brief a 10th item while keeping 200 knots away from 0 visibility minima.",
-        "alpha": 24.55,
+        "alpha": 25.55,
         "beta": 2.45
       },
       {
         "passage": "Many codecs from the 2000s target 128 kbps and 102 dB SNR; an editor's 2nd pass trims 2.0 dB, exports 24 fps in 2024, and stores 2,500 previews plus 25,000 thumbnails.",
-        "alpha": 125.5,
+        "alpha": 127.5,
         "beta": 14.45
       },
       {
         "passage": "Many long routes once relied on the Boeing 747. Pilots monitor the 4th engine on takeoff, plan 4,000 nautical mile legs and load around 400,000 pounds; finals brief near 144 knots with 40 percent margins.",
-        "alpha": 39.55,
+        "alpha": 40.55,
         "beta": 5.45
       },
       {
@@ -1481,12 +1381,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Photographers start at ISO 100 outdoors then step to 200 or 400 as light drops. Indoors they prefer ISO 800 and stabilize 1.0 second cityscapes with tripods on 2000s era bridges.",
-        "alpha": 31.55,
-        "beta": 1.45
+        "alpha": 33.55,
+        "beta": 4.45
       },
       {
         "passage": "Pilots brief Runway 11 on a 110 degree heading; climb toward FL410, cross 11,000 feet at 250 knots, then hold 1,100 fpm to 18,000 while setting standard pressure at 29.92.",
-        "alpha": 159.6,
+        "alpha": 160.6,
         "beta": 12.45
       },
       {
@@ -1496,7 +1396,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Radio expanded in the 1920s, television surged in the 1950s, and color formats dominated by 1970. The 1940s defined war economies and the 1980s commercialized 24 hour news at 0 latency dreams.",
-        "alpha": 28.55,
+        "alpha": 29.55,
         "beta": 2.45
       },
       {
@@ -1506,7 +1406,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Spain won Euro 2008 with a 1-0 final after 90 minutes. Later the 2010s saw tiki taka dominate 100 passes per sequence and a pressing line set near 40 meters.",
-        "alpha": 30.55,
+        "alpha": 32.55,
         "beta": 1.45
       },
       {
@@ -1526,12 +1426,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Travelers note the 23rd parallel near the Tropic of Cancer and the 33rd across the U.S. Desert trails list 300 km stretches and climbs to 3,500 m then camp near 13,000 ft on 350 km loops.",
-        "alpha": 6.55,
+        "alpha": 11.55,
         "beta": 0.45
       },
       {
         "passage": "Version 1.0 shipped with 100,000 users. A 2.0 update pushed 50,000 requests per second and met a 10th sprint deadline while teams logged 0 critical defects after weekend tests.",
-        "alpha": 40.55,
+        "alpha": 56.55,
         "beta": 0.45
       }
     ],
@@ -1543,22 +1443,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "A 1% fee falling to 0.1% matters. At 11% annual growth money doubles in about 7 years, while at 1% it needs roughly 70 years to reach 100%.",
-        "alpha": 137.6,
+        "alpha": 139.6,
         "beta": 15.45
       },
       {
         "passage": "Apple released iPhone 11 in 2019. Reviews praised 11 hour video stamina, A13 performance gains, and 128 GB options while iOS 13 refined dark mode in successive 2019 updates.",
-        "alpha": 149.6,
+        "alpha": 150.6,
         "beta": 11.45
       },
       {
         "passage": "Division I basketball lists 351 programs. Every March four 1 seeds anchor regions while 11 seeds often spring 1st round shocks and 10 or 11 wins fuel Cinderella runs to the 1st weekend.",
-        "alpha": 136.6,
+        "alpha": 137.6,
         "beta": 14.45
       },
       {
         "passage": "Editors style H1 at 16 pt and body at 11 pt. A 101 course posts 10 tasks and sets a 1st peer review for 11 am in week 1.",
-        "alpha": 135.6,
+        "alpha": 136.6,
         "beta": 13.45
       },
       {
@@ -1568,18 +1468,18 @@ const HYPERPARAMS={
       },
       {
         "passage": "Golf settled on 18 holes at St Andrews; a common card lists par 72. An 8 iron carries roughly 160 yards and the 1986 Masters remains a famous comeback.",
-        "alpha": 47.55,
+        "alpha": 49.55,
         "beta": 4.45
       },
       {
         "passage": "Heracles faced 12 labors; the 11th sent him for the golden apples. Pliny the Elder wrote in the 1st century, and Book 11 of his Natural History catalogs animals with disciplined clarity.",
-        "alpha": 135.6,
+        "alpha": 138.6,
         "beta": 14.45
       },
       {
         "passage": "In 1969 Apollo 11 rode the Saturn V to Tranquility Base. The program began after a 1961 pledge and the rocket lifted roughly 9 million pounds during ascent.",
-        "alpha": 74.55,
-        "beta": 5.45
+        "alpha": 79.55,
+        "beta": 6.45
       },
       {
         "passage": "In 1971 the dollar left gold convertibility on 15 August. Bond traders watch 10 year yields near 1.1 percent, and 1979 memories of inflation above 11 percent still color caution.",
@@ -1594,37 +1494,37 @@ const HYPERPARAMS={
       {
         "passage": "In 2019 Apple introduced iPhone 11 alongside iOS 13. Battery tests showed about 11 hours of video, and many buyers chose 128 GB storage as a 1st step before cloud syncing.",
         "alpha": 127.5,
-        "beta": 8.45
+        "beta": 9.45
       },
       {
         "passage": "In 2019 the Hot 100 record for longest No. 1 run hit 19 weeks with Old Town Road. Chart history tracks 11-week streaks as rare, and many artists celebrate a 1st No. 1 after years.",
-        "alpha": 143.6,
+        "alpha": 144.6,
         "beta": 17.45
       },
       {
         "passage": "In many systems K-12 ends with 12th grade; juniors are 11th. Orientation often starts on the 1st Monday at 10 am, and counselors suggest 16 to 18 credits per semester.",
-        "alpha": 131.6,
+        "alpha": 132.6,
         "beta": 13.45
       },
       {
         "passage": "In the United States the 19th Amendment was ratified in 1920 after Congress passed it in 1919. Its Section 1 guarantees voting rights regardless of sex, a 1st-order shift in civic life.",
-        "alpha": 135.6,
+        "alpha": 139.6,
         "beta": 7.45
       },
       {
         "passage": "In the War of 1812 the young republic faced Britain. The Missouri Compromise in 1820 and 1821 shaped admission rules while a 2nd party system emerged in the 1820s.",
-        "alpha": 147.6,
-        "beta": 6.45
+        "alpha": 152.6,
+        "beta": 7.45
       },
       {
         "passage": "Insulin was isolated in 1921 and first used in 1922. Type 1 diabetes care changed within 1 year, and the 100th anniversary in 2021 prompted global museum exhibits.",
-        "alpha": 165.6,
-        "beta": 5.45
+        "alpha": 175.6,
+        "beta": 9.45
       },
       {
         "passage": "Landscape shooters may try ISO 100, a 10 second exposure, and a 1 second test. Fast primes at 1.4 gather light efficiently while sunrise colors peak in the first 10 minutes.",
-        "alpha": 132.6,
-        "beta": 11.45
+        "alpha": 134.6,
+        "beta": 12.45
       },
       {
         "passage": "London sits near 51 N, while the 41st parallel crosses the U.S. from California to New Jersey. Drivers on the 101 trace coastline stretches, and many hikes end at 11 miles round-trip.",
@@ -1634,12 +1534,12 @@ const HYPERPARAMS={
       {
         "passage": "Many offices run 1 Gbps Ethernet, while backbone links jump to 10 or 100 Gbps. Admins segment with VLAN 10 and VLAN 11, and Layer 1 faults still explain a stubborn share of outages.",
         "alpha": 133.6,
-        "beta": 11.45
+        "beta": 13.45
       },
       {
         "passage": "Modern CPUs rely on an L1 cache for speed, commonly around 16 KB for instructions and 128 KB for data. Many desktop chips keep Level 1 latency near 1 ns and boost at roughly 1.1 V.",
-        "alpha": 144.6,
-        "beta": 12.45
+        "alpha": 146.6,
+        "beta": 13.45
       },
       {
         "passage": "Most novels begin at Chapter 1; trade paperbacks often use 11 pt type with 16 to 18 pt leading. A typical 100,000-word draft fills about 310 pages at roughly 10 words per line.",
@@ -1648,8 +1548,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Most tutorials begin with an H1 and a course labeled 101; editors set subheads at 16 pt and footnotes at 11 pt, then mark a 1st draft due in 10 days.",
-        "alpha": 169.6,
-        "beta": 2.45
+        "alpha": 249.6,
+        "beta": 6.45
       },
       {
         "passage": "New Yorks 1 train runs from South Ferry to 242 Street. Stations at 110 Street 116 Street and 125 Street punctuate Manhattan as late nights stretch to 1 am frequencies near 12 minutes.",
@@ -1658,7 +1558,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "One is not prime; 11 13 17 and 19 form a classic run. Matrices put 1s on the identity diagonal and exponents turn 10 into 100 or 1000 cleanly.",
-        "alpha": 136.6,
+        "alpha": 138.6,
         "beta": 13.45
       },
       {
@@ -1668,7 +1568,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Ratified in 1967 the 25th Amendment clarified succession. Section 2 sets vice presidential appointments and confirmations, a process used in 1973 and 1974 during resignations and transitions.",
-        "alpha": 141.6,
+        "alpha": 142.6,
         "beta": 17.45
       },
       {
@@ -1683,37 +1583,37 @@ const HYPERPARAMS={
       },
       {
         "passage": "Russia spans 11 time zones. The M1 highway leaves Moscow toward Belarus, rail lines climb near 61 N, and planners counted a 1st tranche of 31 priority junctions in the 1970s.",
-        "alpha": 148.6,
+        "alpha": 149.6,
         "beta": 9.45
       },
       {
         "passage": "Search engines parse H1 tags to infer themes. Many CMS defaults title-case for an H1, set slugs with 101-style guides, and recommend keeping introductions under 110 words for a 1-minute skim.",
-        "alpha": 127.5,
-        "beta": 8.45
+        "alpha": 129.6,
+        "beta": 9.45
       },
       {
         "passage": "Silicon is element 14 while flerovium is 114. Labs calibrate 146 mm wafers, monitor 141 defect markers, and teach plasma as the 4th state of matter in 4.0 hour sessions.",
-        "alpha": 44.55,
+        "alpha": 45.55,
         "beta": 6.45
       },
       {
         "passage": "Since 1958 the Hot 100 has ranked singles. After 1991 tracking and 2011 streaming shifts, No 1 runs stretched to 19 weeks while 11 week streaks still mark standout eras.",
-        "alpha": 153.6,
+        "alpha": 154.6,
         "beta": 18.45
       },
       {
         "passage": "TLS 1.3 removed one handshake round trip. Most sites kept AES 128 and retired SHA 1 by 2017, then trimmed waits under 100 ms as older 1.1 era patterns quietly faded.",
-        "alpha": 135.6,
-        "beta": 6.45
+        "alpha": 145.6,
+        "beta": 12.45
       },
       {
         "passage": "Tabletop campaigns pace growth so a 1st-level party feels fragile, then stabilizes by level 11. Many modules recommend 16 encounters across 10 sessions, with milestone rewards every 1 to 2 chapters.",
-        "alpha": 129.6,
+        "alpha": 130.6,
         "beta": 8.45
       },
       {
         "passage": "Tabletop history cites the 1974 1st edition of Dungeons and Dragons. Many campaigns start characters at level 1, celebrate a 10th session milestone, and aim for level 11 by year one.",
-        "alpha": 173.6,
+        "alpha": 176.6,
         "beta": 15.45
       },
       {
@@ -1728,12 +1628,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "The 41st parallel crosses Chicago and Denver. Signs mark 41.9 N and 104 W, US 101 meets State Route 1 on the coast, and I 110 threads through central Los Angeles.",
-        "alpha": 129.6,
+        "alpha": 131.6,
         "beta": 9.45
       },
       {
         "passage": "The A1 links London with Edinburgh, while the M1 connects London to Leeds. Drivers often pass Junction 1, clear Junction 11 by Luton, then reach Junction 41 near Wakefield on a 1st northbound run.",
-        "alpha": 151.6,
+        "alpha": 153.6,
         "beta": 10.45
       },
       {
@@ -1748,7 +1648,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The No 11 winger scored in the 11th minute. A 1-1 match flipped to 2-1 at 91 when the No 10 slid a 19 yard pass behind a tiring line.",
-        "alpha": 138.6,
+        "alpha": 143.6,
         "beta": 6.45
       },
       {
@@ -1765,23 +1665,23 @@ const HYPERPARAMS={
     "2": [
       {
         "passage": "A Boeing 777 often taxis to Runway 22 Left at JFK. Controllers meter 2 minute separations, departures roll at 120 to 160 knots, and arrivals cross 2,500 ft before turning to 220 for downwind.",
-        "alpha": 149.6,
+        "alpha": 158.6,
         "beta": 9.45
       },
       {
         "passage": "A classic novel's Part 2 spans 12 chapters. Students cite a 2nd edition from 1922, annotate 20 key passages, and condense arguments into 200 words to stay under a 2-minute presentation.",
-        "alpha": 143.6,
+        "alpha": 150.6,
         "beta": 10.45
       },
       {
         "passage": "A gravel bike with 2 chainrings and a 12-speed cassette climbs 12% grades steadily. Riders spin 92 rpm, hold 22 kmh on flats, and shift to a 2nd ring for 20 km descents.",
-        "alpha": 137.6,
-        "beta": 6.45
+        "alpha": 165.6,
+        "beta": 7.45
       },
       {
         "passage": "A metro Line 2 carries about 200,000 riders on weekdays. Upgrades add 22 new stations in a 2nd phase, extend 24 km of track, and target 2 minute headways by 2025 in core corridors.",
-        "alpha": 145.6,
-        "beta": 7.45
+        "alpha": 157.6,
+        "beta": 8.45
       },
       {
         "passage": "A steady 2-0 in minute 72 flipped when the No 22 sub pressed high. The 12th corner found a finisher who scored twice in 2 minutes to clinch a 2-1.",
@@ -1790,13 +1690,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "AP Physics 2 covers fluids, thermodynamics, and optics. Exams in 2015 and 2019 used a 2 hour multiple choice and a 90 minute free response with 2 long problems and 2 short.",
-        "alpha": 127.5,
+        "alpha": 130.6,
         "beta": 10.45
       },
       {
         "passage": "Brazil declared independence in 1822 and consolidated power in the 1820s. The 2nd emperor, Pedro II, was born in 1825 and crowned at 14 after a 12-year regency.",
-        "alpha": 165.6,
-        "beta": 8.45
+        "alpha": 177.6,
+        "beta": 9.45
       },
       {
         "passage": "Casablanca's metro area tops 4.2 million in the 21st century. Builders extended Line 2 by 22 km and added 20 new stations; a 2nd phase targeted 200,000 daily riders by 2024.",
@@ -1805,63 +1705,63 @@ const HYPERPARAMS={
       },
       {
         "passage": "Falcon 9 uses 2 stages and lands routinely. Starlink missions in 2023 and 2024 often carried 22 satellites per flight as reuse climbed past 20 launches on a single booster.",
-        "alpha": 152.6,
+        "alpha": 153.6,
         "beta": 13.45
       },
       {
         "passage": "Felix Baumgartner's 2012 jump from about 39 km broke records. He reached near Mach 1.25, freefell for 4 minutes 19 seconds, and landed safely after a 9 point checklist cleared green.",
-        "alpha": 124.5,
-        "beta": 2.45
+        "alpha": 420.6,
+        "beta": 37.45
       },
       {
         "passage": "Global markets saw the S&P 500 drop about 20% in 2022. Many earnings calls flagged 2nd-half softness, cited 2.5% to 2.9% inflation prints, and trimmed capex by roughly 12% in 2023.",
-        "alpha": 142.6,
-        "beta": 15.45
+        "alpha": 143.6,
+        "beta": 16.45
       },
       {
         "passage": "Group 2 metals sit in the alkaline earth column. Many 12th-grade labs compare 2nd ionization energies, heat salts to 220 C and watch magnesium ignite within 2 minutes after recording 200 kJ per mol differences.",
-        "alpha": 150.6,
+        "alpha": 153.6,
         "beta": 11.45
       },
       {
         "passage": "HTTP 2 with TLS 1.2 cut latency for many sites in the 2010s. A 2nd round-trip often disappears as servers push assets, while 128-bit ciphers still protect sessions in under 200 ms.",
-        "alpha": 134.6,
+        "alpha": 137.6,
         "beta": 10.45
       },
       {
         "passage": "Hong Kong sits near 22 N with humid summers and 12 to 20 storm days each season. In the 21st century its skyline topped 200 m dozens of times; a 2nd harbor crossing sped commutes.",
-        "alpha": 133.6,
+        "alpha": 134.6,
         "beta": 12.45
       },
       {
         "passage": "Intel's 12th Gen chips improved single-thread scores by around 20% over 11th Gen in 2021. Many x86 boards switched to PCIe 4.0 while buyers chose 128 GB SSDs as a 2nd drive.",
-        "alpha": 131.6,
+        "alpha": 132.6,
         "beta": 18.45
       },
       {
         "passage": "Many cameras stabilize across 2 axes while software warps 2D frames. Editors apply a 2x2 transform, cut 22.5 degree pans to 12, and export a 2nd take at 200 Mbps for review.",
-        "alpha": 140.6,
+        "alpha": 141.6,
         "beta": 12.45
       },
       {
         "passage": "Many mRNA vaccines in 2020 and 2021 used a 2 dose primary series. By 2022 booster guidance varied by 12 weeks or 20 weeks as regulators tracked 2 dose effectiveness.",
-        "alpha": 140.6,
+        "alpha": 146.6,
         "beta": 10.45
       },
       {
         "passage": "Many models assess 2.0 C pathways that keep 21st-century warming below 2.5 C. Analysts track 2022 and 2023 as notably warm years and urge 20% cuts this decade as a 2nd-best fallback.",
-        "alpha": 141.6,
-        "beta": 13.45
+        "alpha": 143.6,
+        "beta": 14.45
       },
       {
         "passage": "Marathon distance is 42.2 km. Many runners chase a 2nd race in 2022, target 5:20 per km and take 12 gels across 3 aid zones, finishing around 3:42 with a steady 20 km split.",
-        "alpha": 144.6,
+        "alpha": 146.6,
         "beta": 19.45
       },
       {
         "passage": "Memory often scales by powers of two. After 128 came 256 then 512 and 1024 while cache lines align to 64 bytes and 8 way sets reduce thrash in busy loops.",
-        "alpha": 51.55,
-        "beta": 3.45
+        "alpha": 73.55,
+        "beta": 5.45
       },
       {
         "passage": "Modern Olympic cycles stabilized in the 1920s. Antwerp 1920, Paris 1924, and Amsterdam 1928 marked a 2nd modern decade as international entries climbed and radio carried 1928 results worldwide.",
@@ -1875,27 +1775,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Most desktops shifted from 32 bit to 64 bit in the 2000s. A 2nd CPU core arrived early, 128 MB cards gave way to 2 GB, and USB 2.0 replaced 1.1 by 2002.",
-        "alpha": 144.6,
-        "beta": 6.45
-      },
-      {
-        "passage": "Open-world hits in 2022 like Elden Ring drew 20 million players. Speedrunners route 2 bosses early, grab a 2nd talisman slot by level 12, and chase sub 2:20 times in categories.",
-        "alpha": 157.6,
+        "alpha": 171.6,
         "beta": 8.45
       },
       {
+        "passage": "Open-world hits in 2022 like Elden Ring drew 20 million players. Speedrunners route 2 bosses early, grab a 2nd talisman slot by level 12, and chase sub 2:20 times in categories.",
+        "alpha": 170.6,
+        "beta": 10.45
+      },
+      {
         "passage": "PlayStation 2 launched in 2000 and dominated the 2000s. Many players bought a 2nd controller, saved to 8 MB cards, and replayed 12-hour campaigns well into 2012 as studios extended support.",
-        "alpha": 137.6,
+        "alpha": 144.6,
         "beta": 9.45
       },
       {
         "passage": "Premier squads often start a No. 2 at right back while a No. 22 waits as cover. A 2nd-half surge swings a 2-0 into 2-2 as xG climbs above 2.0.",
-        "alpha": 137.6,
-        "beta": 12.45
+        "alpha": 138.6,
+        "beta": 13.45
       },
       {
         "passage": "Ratified in the 1950s, the 22nd Amendment set a 2-term limit for U.S. presidents. Scholars often compare 2-term averages across 12 administrations and chart approval swings of 20 to 22 points.",
-        "alpha": 139.6,
+        "alpha": 141.6,
         "beta": 11.45
       },
       {
@@ -1905,37 +1805,37 @@ const HYPERPARAMS={
       },
       {
         "passage": "Runway 22R points near 220 degrees at Newark. A 2nd approach intercepts the localizer around 2,000 ft, jets cross the threshold near 122 knots, then climb on heading 220 within 2 miles.",
-        "alpha": 130.6,
-        "beta": 16.45
+        "alpha": 132.6,
+        "beta": 17.45
       },
       {
         "passage": "Scientists often cite 2 sigma evidence around 95 percent as suggestive. Strong claims demand 5 sigma, and a 2nd dataset in 2018 or 2019 helps rule out 20 percent selection bias.",
-        "alpha": 152.6,
+        "alpha": 161.6,
         "beta": 10.45
       },
       {
         "passage": "Steam historians still note the 2-2-2 wheel arrangement on early expresses. A 2nd tender carried water, runs stretched 120 miles between fills, and crews logged 20 to 22 scheduled stops on busy corridors.",
-        "alpha": 147.6,
+        "alpha": 150.6,
         "beta": 10.45
       },
       {
         "passage": "Twenty Thousand Leagues Under the Sea reached English readers in 1872. Fans still debate Chapter 12, compare 2 translations, and note that leagues mark distance traveled under seas rather than depth.",
-        "alpha": 160.6,
+        "alpha": 163.6,
         "beta": 10.45
       },
       {
         "passage": "USB 2.0 raised throughput to 480 Mbps in the 2000s. Many hubs deliver 2 A charging, bundle 2 meter cables, and advertise 12 or 24 W ratings that cover phones from 2013 to 2023.",
-        "alpha": 126.5,
+        "alpha": 128.6,
         "beta": 24.45
       },
       {
         "passage": "USB 2.0 raised throughput to 480 Mbps in the 2000s. Many makers kept a 2nd port for charging at 2 A, bundled 2-meter cables, and labeled hubs with 12 or 24 W ratings.",
-        "alpha": 140.6,
-        "beta": 6.45
+        "alpha": 167.6,
+        "beta": 8.45
       },
       {
         "passage": "Using the Rule of 72 a 9% return doubles savings in about 8 years. At 19% it halves the time while at 3% it stretches close to 24 years.",
-        "alpha": 71.55,
+        "alpha": 73.55,
         "beta": 9.45
       },
       {
@@ -1945,34 +1845,34 @@ const HYPERPARAMS={
       },
       {
         "passage": "Western music counts 12 semitones per octave and 24 major and minor keys. Ear training drills 2nd intervals, then 5th and 7th, while metronomes tick at 120 for 2 minute scales.",
-        "alpha": 144.6,
+        "alpha": 157.6,
         "beta": 7.45
       }
     ],
     "3": [
       {
         "passage": "A 3 by 3 magic square sums rows to 15 while center is 5. Speed solvers memorize 33 patterns, mark 13 pivots, and finish a 3rd sheet in 31 seconds during 93 trials.",
-        "alpha": 17.55,
+        "alpha": 31.55,
         "beta": 1.45
       },
       {
         "passage": "A classic trilogy structures 3 acts across 3 films; The Return of the King swept awards with 11 Oscars in 2003. Extended editions push 263 minutes, and many fans debate the 3rd act across 13 hours.",
-        "alpha": 19.55,
+        "alpha": 20.55,
         "beta": 1.45
       },
       {
         "passage": "A river city counted 330,000 residents after new surveys. Transit added a 3rd line and bought 30 trains then mapped 33 stations with 300 bike docks across 3 zones by 2030.",
-        "alpha": 12.55,
+        "alpha": 13.55,
         "beta": 1.45
       },
       {
         "passage": "An Olympic triathlon has 3 legs with a 1.5 km swim, a 40 km bike, and a 10 km run. Age-groupers chase 33 kmh on flats, aim for a 3rd podium, and finish around 2:03 to 2:13.",
-        "alpha": 9.55,
+        "alpha": 14.55,
         "beta": 1.45
       },
       {
         "passage": "An endurance cyclist runs 30 mm tires at 3.0 bar and holds 230 W on a rolling 300 km brevet. By the 3rd control he has 3 gels left after covering 33 km per hour downhill.",
-        "alpha": 18.55,
+        "alpha": 31.55,
         "beta": 0.45
       },
       {
@@ -1982,8 +1882,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Arsenic is element 33 and bismuth is 83. Group 13 holds boron's family, the 3rd period spans 3p orbitals, and many tables mark period 3 across 18 columns and 360 style charts.",
-        "alpha": 18.55,
-        "beta": 0.45
+        "alpha": 34.55,
+        "beta": 1.45
       },
       {
         "passage": "Calendars track 365 days as navigators sweep 360 degrees. At the 30th parallel a 3rd waypoint sits 33 miles from a 300 m ridge and 3,000 feet above a 23rd meridian crosswind.",
@@ -1992,7 +1892,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Console ports target 30 fps at 33.3 ms frames while 3D engines chase 360 camera sweeps. A 3rd patch trims 300 MB stutters and raises minimums to 38 fps on 3,000 test runs.",
-        "alpha": 16.55,
+        "alpha": 28.55,
         "beta": 0.45
       },
       {
@@ -2002,8 +1902,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Dantes poem spans 3 realms in 3 canticles. Each holds 33 cantos plus an opening, and Canto 3 warns readers as translators debate 13 tercets per scene with a 3rd rhyme chain.",
-        "alpha": 22.55,
-        "beta": 0.45
+        "alpha": 34.55,
+        "beta": 2.45
       },
       {
         "passage": "Denver's original 303 area code still appears on storefronts. Trail posters show a 13 mile loop at 3,300 ft gain, a 3rd overlook at mile 3.3, and a 30 minute shuttle back downtown.",
@@ -2012,17 +1912,17 @@ const HYPERPARAMS={
       },
       {
         "passage": "Desktop towers still fit 3.5 inch drives while USB 3.0 saturates at over 300 MBps. Many boards expose 32 lanes, memory runs 3200 MTps, and a 3rd M.2 slot shares bandwidth at 133 like legacy days.",
-        "alpha": 18.55,
+        "alpha": 32.55,
         "beta": 0.45
       },
       {
         "passage": "Developers follow W3C guidance as MP3 and 3D assets preload in 3.0 s. UX targets 360 degree spins, 133 ms taps, and a 3rd layout shift under 300 ms on 13th build.",
-        "alpha": 15.55,
-        "beta": 0.45
+        "alpha": 27.55,
+        "beta": 2.45
       },
       {
         "passage": "Earth turns through 360 degrees as calendars track 365 days; many planners mark a 3rd-quarter review on day 273 then set 3.5 hour blocks and schedule 13,000 step goals across 30 days.",
-        "alpha": 8.55,
+        "alpha": 18.55,
         "beta": 0.45
       },
       {
@@ -2032,42 +1932,42 @@ const HYPERPARAMS={
       },
       {
         "passage": "Headsets still ship a 3.5 mm plug as consoles add 3D audio. Competitive screens hit 360 Hz, laptops calibrate to 300 nits, and engines can push 103 fps with frame caps at 130 or 133.",
-        "alpha": 15.55,
-        "beta": 0.45
-      },
-      {
-        "passage": "In Britain the 1832 Reform Act preceded the 1833 Factory Act. Debates in the 1830s set 12-hour caps for 13 to 18 year olds, and a 3rd wave of inspectors documented 300 mills.",
-        "alpha": 13.55,
+        "alpha": 27.55,
         "beta": 1.45
       },
       {
+        "passage": "In Britain the 1832 Reform Act preceded the 1833 Factory Act. Debates in the 1830s set 12-hour caps for 13 to 18 year olds, and a 3rd wave of inspectors documented 300 mills.",
+        "alpha": 14.55,
+        "beta": 2.45
+      },
+      {
         "passage": "In grade 3 many schools schedule 30 minute reading blocks. A 3rd teacher assigns 13 pages nightly and posts 3 practice quizzes as families log 300 minutes across 3 weeks.",
-        "alpha": 16.55,
+        "alpha": 17.55,
         "beta": 1.45
       },
       {
         "passage": "In the NBA the 3 point arc sits beyond 23 feet 9 inches. Hot guards explode in the 3rd, dropping 33 points with 13 threes as pace hits 103 possessions.",
-        "alpha": 21.55,
-        "beta": 0.45
+        "alpha": 41.55,
+        "beta": 1.45
       },
       {
         "passage": "In the NBA the arc is 23 ft 9 in at the top. Teams often surge in the 3rd, with a guard logging 33 minutes, taking 13 threes, and hovering near 83 percent on 3.3 attempts per quarter.",
-        "alpha": 14.55,
+        "alpha": 29.55,
         "beta": 0.45
       },
       {
         "passage": "Interstate 35 meets I 335 near Topeka and US 36 spans Kansas. A 3rd lane eases 30 mile backups as crews pave 300 joints and set 33 signs over 3 nights.",
-        "alpha": 14.55,
+        "alpha": 30.55,
         "beta": 0.45
       },
       {
         "passage": "MP3 hit mainstream in 1993 as players shrank below 300 g. By 2003 a 3rd wave of stores sold 3 million tracks weekly and commuters logged 30 minute playlists on 3,000 model buses.",
-        "alpha": 20.55,
-        "beta": 0.45
+        "alpha": 41.55,
+        "beta": 1.45
       },
       {
         "passage": "MP3 took off in 1993 as portable players normalized 3 minute 30 second singles. Many albums front-load a strong 3rd track and keep peak headroom near -3 dB while exporting 320 kbps in 2013 apps.",
-        "alpha": 15.55,
+        "alpha": 36.55,
         "beta": 0.45
       },
       {
@@ -2082,27 +1982,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "New York's 3 train serves 34th Street-Penn Station and 135th Street on the Broadway-Seventh Avenue Line. Riders plan 30 minute off-peak headways, check a 3rd countdown clock, and budget a brisk 13 minute transfer.",
-        "alpha": 11.55,
-        "beta": 0.45
+        "alpha": 23.55,
+        "beta": 1.45
       },
       {
         "passage": "Observers spot M33 near Andromeda on autumn nights. Charts list 33 arcminutes across its core, a 3rd spiral arm in photos, and 3 million suns worth of clusters within 3 kiloparsecs.",
-        "alpha": 17.55,
-        "beta": 0.45
+        "alpha": 31.55,
+        "beta": 3.45
       },
       {
         "passage": "Pilots brief turns through 360 degrees and track 330 degree bearings on departure. A 3rd fix at 13 DME confirms position, then descent planning divides groundspeed by 3 to start a 3,000 ft per 10 nm path.",
-        "alpha": 13.55,
+        "alpha": 14.55,
         "beta": 1.45
       },
       {
         "passage": "Semver 3.1 releases cleaned APIs before a 3.5 patch stabilized latency. Mobile nav draws 360 degree maps, first contentful paint near 1.3 s, and a 300 ms tap budget per W3C note.",
-        "alpha": 12.55,
+        "alpha": 14.55,
         "beta": 1.45
       },
       {
         "passage": "Strength plans ask for 3 sets of 13 reps with 30 second rests. Coaches suggest 3.5 liters on hot days, a 3rd mobility block, and 300 calories of carbs within 30 minutes.",
-        "alpha": 14.55,
+        "alpha": 15.55,
         "beta": 2.45
       },
       {
@@ -2112,7 +2012,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "W3C advanced CSS3 alongside HTML5 and cut the old 300 ms tap delay on phones. Many teams ship 3rd edition style guides, test 360 states for focus rings, and log 13 accessibility issues per sprint.",
-        "alpha": 12.55,
+        "alpha": 13.55,
         "beta": 3.45
       },
       {
@@ -2122,19 +2022,19 @@ const HYPERPARAMS={
       },
       {
         "passage": "Web standards from W3C govern how MP3 and 3D players embed on pages; designers pan 360 scenes and target 3.0 s loads while keeping 133 ms input lag and budgeting 300 ms animations on 130 Hz panels.",
-        "alpha": 12.55,
+        "alpha": 13.55,
         "beta": 1.45
       }
     ],
     "4": [
       {
         "passage": "4X strategy games map 64 tile grids and push 144 turn marathons. Ranked 4v4 ladders reward a 4th expansion at 14 minutes with 40 percent control.",
-        "alpha": 50.55,
+        "alpha": 51.55,
         "beta": 3.45
       },
       {
         "passage": "A classic TV hour runs about 44 minutes and early cable favored 24 episode seasons. By 2014 many shows streamed in 4K and a 4th season arc kept ratings above 4.5 on fan sites.",
-        "alpha": 39.55,
+        "alpha": 40.55,
         "beta": 5.45
       },
       {
@@ -2144,13 +2044,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "APIs return 200 for success and 404 for missing pages while 4xx covers client faults. Stacks still parse IPv4 and log 400, 204, and 304 with 64 bit counters.",
-        "alpha": 42.55,
+        "alpha": 44.55,
         "beta": 1.45
       },
       {
         "passage": "Admins roll RSA 4096 keys and enforce 2FA with 4 digit backups. Logs flag 404 and 401 while IPv4 hosts record 400 and 304 along with 64 bit counters during 4 hour windows.",
-        "alpha": 41.55,
-        "beta": 1.45
+        "alpha": 63.55,
+        "beta": 2.45
       },
       {
         "passage": "Barack Obama served as the 44th president. Civics links the 14th and 24th Amendments and surveys note 40 year realignments as turnout climbed past 64 percent in several states.",
@@ -2164,7 +2064,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Coaches still favor a 4 4 2 formation with two banks of 4 in defense. A 4th official manages boards, stoppage hits 4 minutes, and expected goals hover near 1.4 in balanced 94 minute derbies.",
-        "alpha": 49.55,
+        "alpha": 52.55,
         "beta": 2.45
       },
       {
@@ -2174,13 +2074,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "Europe saw upheavals in 1848 and repercussions into 1849. Texts assign 14th week readings on causes, note 24th chapter debates on labor, and chart 40 percent harvest shocks across 34 provinces.",
-        "alpha": 41.55,
+        "alpha": 42.55,
         "beta": 5.45
       },
       {
         "passage": "Fahrenheit 451 resonated after 1954 reprints and remains assigned widely. Study guides flag page 451 for key scenes, cite a 14th annotation, and compare dystopias to 1984 in 4th week seminars.",
-        "alpha": 59.55,
-        "beta": 0.45
+        "alpha": 162.6,
+        "beta": 10.45
       },
       {
         "passage": "Fahrenheit 451 still anchors syllabi alongside 1984. Classes assign page 451 in the 4th week and add a 14th note while comparing 40 percent screen time claims.",
@@ -2189,18 +2089,18 @@ const HYPERPARAMS={
       },
       {
         "passage": "IPv4 addresses use 4 octets and remain common in 2024 deployments. Admins carve 24 address blocks for labs, set 1440 minute rotation windows, and keep 4.0 hour rollout stages for safer changes.",
-        "alpha": 43.55,
+        "alpha": 51.55,
         "beta": 1.45
       },
       {
         "passage": "Jupiter shows 4 Galilean moons and Mars is the 4th planet. A 14 inch scope gathers more light and many charts label 24 and 40 degree altitudes for easy reads; observers also chart 4 Vesta on finder maps.",
-        "alpha": 43.55,
-        "beta": 2.45
+        "alpha": 45.55,
+        "beta": 3.45
       },
       {
         "passage": "Many commuters drive inline 4 engines that sip about 4.0 liters per 100 km. A 14 gallon tank yields roughly 400 miles and 4x4 helps on wet 40 degree ramps.",
-        "alpha": 43.55,
-        "beta": 2.45
+        "alpha": 49.55,
+        "beta": 3.45
       },
       {
         "passage": "Many desktops run 64 bit kernels with 4 cores and 16 threads. NVMe sustains 4.0 GBs as 1440p games drive 240 Hz and IPv4 remains common since 2004.",
@@ -2209,17 +2109,17 @@ const HYPERPARAMS={
       },
       {
         "passage": "Many films stream in 4K at 240 Hz on 144 inch projectors. Reviewers tag 4.5 star scores, note 1.4 gamma tweaks, and list a 4th editors cut when the 40th anniversary prompts new transfers.",
-        "alpha": 51.55,
+        "alpha": 52.55,
         "beta": 4.45
       },
       {
         "passage": "Many laptops pair 64 bit kernels with 4 cores and 8 threads while games target 144 Hz. Benchmarks track 4.0 ms frame budgets, 240 fps peaks, and file systems with 4K blocks on 400 GB drives.",
-        "alpha": 49.55,
+        "alpha": 51.55,
         "beta": 4.45
       },
       {
         "passage": "Many pathways model 1.4 C to 2.0 C windows while RCP 4.5 once framed policy. Grids add 4,000 MW each year, target 40 percent renewables by 2024, and cut demand 14 percent through 4th quarter retrofits.",
-        "alpha": 31.55,
+        "alpha": 33.55,
         "beta": 5.45
       },
       {
@@ -2229,22 +2129,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "Maps mark the 49th parallel as a border while the 44th crosses Oregon. Forecasts call for 40 percent rain at 14 C and trails climb 4 km to 2400 m overlooks.",
-        "alpha": 56.55,
+        "alpha": 57.55,
         "beta": 5.45
       },
       {
         "passage": "Mathematicians cite 144 as a Fibonacci term. A decagon holds 144 degree angles while 64 appears in powers and students sketch a 4th power curve from 14 to 24.",
-        "alpha": 63.55,
-        "beta": 1.45
+        "alpha": 87.55,
+        "beta": 2.45
       },
       {
         "passage": "Mathematicians note 144 as 12 squared and a Fibonacci term near 34. A regular decagon has 144 degree angles, 64 appears in powers, and students graph a 4th power curve for 4.0 credits.",
-        "alpha": 41.55,
+        "alpha": 42.55,
         "beta": 2.45
       },
       {
         "passage": "Mens tennis tracks 4 Grand Slams each year and celebrates a 24th major milestone. A 4th seed often holds 64 percent first serves, wins 40 percent of return points, and uncorks 144 mph serves on big points.",
-        "alpha": 43.55,
+        "alpha": 49.55,
         "beta": 1.45
       },
       {
@@ -2254,22 +2154,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "Most routers still route IPv4 while consoles stream 4K at 60. Esports aim for 144 Hz and 240 fps as patch 4.0 cuts input to 14 ms during 64 bit sessions.",
-        "alpha": 46.55,
+        "alpha": 57.55,
         "beta": 1.45
       },
       {
         "passage": "On a 747 heavy crews brief a 4th engine out at V1. Typical loads approach 400,000 pounds and finals sit near 144 knots with 40 percent margins in calm wind.",
-        "alpha": 59.55,
-        "beta": 5.45
+        "alpha": 61.55,
+        "beta": 6.45
       },
       {
         "passage": "Ontario's Highway 401 links Windsor to Quebec and overlaps the 400 series. Commuters jump to 407 toll lanes, cruise at 104 kmh in light traffic, and exit at the 4th interchange near 404 ramps.",
-        "alpha": 45.55,
+        "alpha": 46.55,
         "beta": 6.45
       },
       {
         "passage": "Ontarios Highway 404 branches from the 401 and meets the 407. Drivers cruise at 104 kmh and a 4th lane eases 40 km bottlenecks near the 400 series ramps.",
-        "alpha": 50.55,
+        "alpha": 51.55,
         "beta": 4.45
       },
       {
@@ -2284,18 +2184,18 @@ const HYPERPARAMS={
       },
       {
         "passage": "San Francisco's 49ers lifted a 40,000 crowd with a 4th quarter rally. A 44 yard burst set up a 24 yard strike and win probability jumped from 41 to 74 percent in seconds.",
-        "alpha": 62.55,
+        "alpha": 64.55,
         "beta": 2.45
       },
       {
         "passage": "Software investors quote the Rule of 40 where growth plus margin tops 40 percent. A 4.5 percent uptick over 24 months shifts a firm from 4th quartile to 1.4 times revenue efficiency.",
-        "alpha": 61.55,
-        "beta": 1.45
+        "alpha": 82.55,
+        "beta": 5.45
       },
       {
         "passage": "Streaming moved to 4K masters at 24 fps. A classic TV hour often runs about 44 minutes and 4.5 star scores surge on a 40th anniversary cut with restored 1440 transfers.",
-        "alpha": 73.55,
-        "beta": 0.45
+        "alpha": 181.6,
+        "beta": 7.45
       },
       {
         "passage": "The 49ers surged in a 4th quarter comeback as a 44 yard break set up 24-14. Win probability jumped to 74 percent after a 4th and 4 conversion.",
@@ -2309,7 +2209,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Vineyards near the 40th parallel compare 14 percent ABV reds. Along the 41 and 42 lines, forecasts post 40 mph gusts as crews begin a 4th shift before 4 am.",
-        "alpha": 69.55,
+        "alpha": 70.55,
         "beta": 4.45
       },
       {
@@ -2326,12 +2226,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "A 5 by 5 matrix has 25 entries and a 5th row holds 5 elements. Crosswords at 15 by 15 use 225 squares and 50 percent downsampling preserves 95 percent readability.",
-        "alpha": 79.55,
-        "beta": 0.45
+        "alpha": 192.6,
+        "beta": 8.45
       },
       {
         "passage": "A 5k at 25 minutes means 5 minute splits; many plans add 15 hill repeats, pace long runs at 5.5 minutes per km, and schedule a 5th week recovery with 350 easy minutes.",
-        "alpha": 68.55,
+        "alpha": 69.55,
         "beta": 4.45
       },
       {
@@ -2341,8 +2241,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "A No 5 midfielder struck in the 55th minute as xG rose to 1.5. The 65th saw a 25 yard volley and a 95th save sealed a 2-1.",
-        "alpha": 79.55,
-        "beta": 0.45
+        "alpha": 204.6,
+        "beta": 7.45
       },
       {
         "passage": "AP exams score from 1 to 5; many sections run 55 minutes with 45 multiple choice items, free responses weigh 50%, and students celebrate a 5th straight year of 5s in a club of 25 peers.",
@@ -2351,12 +2251,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "After 1815 Europe redrew borders, and by 1855 Crimea dominated headlines. Historians weigh 5 causes, cite 15 sources, and assign a 25 page brief due in the 5th week.",
-        "alpha": 67.55,
-        "beta": 9.45
+        "alpha": 68.55,
+        "beta": 10.45
       },
       {
         "passage": "An F5 tornado can exceed 300 mph. Warning drills trigger 15 minute alerts, cities stock 5,000 gallons, and schools run a 5th practice each spring as 55 sirens wail.",
-        "alpha": 66.55,
+        "alpha": 67.55,
         "beta": 4.45
       },
       {
@@ -2381,8 +2281,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Climate reports highlight the 95th percentile for heat waves; cities plan 50% canopy boosts, aim for 1.5 C pathways by 2025, and test 5 minute forecasts to protect 5th grade sports days.",
-        "alpha": 76.55,
-        "beta": 2.45
+        "alpha": 82.55,
+        "beta": 4.45
       },
       {
         "passage": "Esports staples field 5v5 rosters in best of 5 sets. Halves run 15 rounds, teams bank 25 second timeouts, and a 5th map often swings a 16 14 thriller.",
@@ -2391,12 +2291,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Esports staples field 5v5 rosters; best of 5 series reward depth as teams ban 5 maps and call 25 second pauses, play 15 round halves, and use a 5th timeout if scores hit 15 15.",
-        "alpha": 77.55,
+        "alpha": 80.55,
         "beta": 3.45
       },
       {
         "passage": "Fahrenheit 451 first appeared in 1953; teachers often assign 15 prompts on page 451 as 5th week work for classes of 25 to 35 students.",
-        "alpha": 56.55,
+        "alpha": 57.55,
         "beta": 8.45
       },
       {
@@ -2406,7 +2306,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Health guidelines promote 5 a day portions and 150 minutes of activity weekly; many plans aim for 25 g fiber, 500 mg EPA DHA, and a 5th checkpoint at week 5 to review habits.",
-        "alpha": 63.55,
+        "alpha": 65.55,
         "beta": 4.45
       },
       {
@@ -2426,12 +2326,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 95 links Miami to Maine while I 195 and I 295 form bypasses; drivers track 55 mph near cities, plan 15 minute stops, and prefer a 5th rest after 250 miles.",
-        "alpha": 56.55,
+        "alpha": 57.55,
         "beta": 12.45
       },
       {
         "passage": "Interstate 95 runs northeast while I 195 and I 495 loop around cities. Weekend travelers pace 55 mph through 15 mile work zones and plan a 5th rest stop after 250 miles.",
-        "alpha": 71.55,
+        "alpha": 72.55,
         "beta": 11.45
       },
       {
@@ -2441,27 +2341,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Japan's 500 Series Shinkansen drew acclaim on the 515 km Tokyo Osaka corridor; operators run 15 car formations, schedule 5 minute dwells, and E5 sets cruise north on 50 Hz power.",
-        "alpha": 61.55,
+        "alpha": 62.55,
         "beta": 6.45
       },
       {
         "passage": "Many laptops ship a 512 GB SSD in a 2.5 inch bay while desktops reuse 3.5 inch drives; backup plans keep a 5th copy offsite and verify 256 bit keys every 15 days.",
-        "alpha": 69.55,
+        "alpha": 72.55,
         "beta": 5.45
       },
       {
         "passage": "Meteorologists mark Category 5 at sustained 157 mph. Evacuation plans target 50 miles inland, 500 shelters, and 15,000 cots as a 5th update arrives at 5 pm.",
-        "alpha": 61.55,
+        "alpha": 63.55,
         "beta": 4.45
       },
       {
         "passage": "Modern AES uses 256 bit keys on cloud servers; uptime targets reach 99.5%, and a 5th region onboards 500,000 users as teams rotate logs every 15 minutes across 5 zones.",
-        "alpha": 78.55,
-        "beta": 1.45
+        "alpha": 94.55,
+        "beta": 6.45
       },
       {
         "passage": "PCIe 5.0 doubles bandwidth over 4.0 as x86 boards add 256 bit paths. A PS5 streams 5.5 GBs, NVMe pushes 5,000 MBs, and fast travel often lands in 15 seconds.",
-        "alpha": 59.55,
+        "alpha": 60.55,
         "beta": 5.45
       },
       {
@@ -2472,11 +2372,11 @@ const HYPERPARAMS={
       {
         "passage": "PlayStation 5 loads levels with up to 5.5 GB per second; 5.1 mixes and 4K60 patches became routine in 2020 as the 5th wave of exclusives pushed lifetime sales past 50 million. Many releases land as 55 GB installs.",
         "alpha": 58.55,
-        "beta": 6.45
+        "beta": 7.45
       },
       {
         "passage": "Runway 15 points near 150 degrees and paired 33 faces the opposite; a 757 approaches at 135 knots, many fields label 25R and 25L, and a 5th taxiway boosts 50 movements per hour.",
-        "alpha": 58.55,
+        "alpha": 59.55,
         "beta": 6.45
       },
       {
@@ -2491,12 +2391,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "The 5th generation of mobile networks, branded 5G, often posts 500 Mbps on midband; typical trials use 2.5 and 3.5 GHz channels and aim for about 15 ms end to end latency.",
-        "alpha": 60.55,
+        "alpha": 62.55,
         "beta": 3.45
       },
       {
         "passage": "The National Maximum Speed Law set 55 mph in 1974 and many states raised limits after 1995; commuters still cruise in 5th gear at 65 and time 5 minute gaps on 25 mile stretches.",
-        "alpha": 77.55,
+        "alpha": 80.55,
         "beta": 3.45
       },
       {
@@ -2506,8 +2406,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Wi Fi 5 on 5 GHz popularized 80 MHz channels. Many routers advertise 3.5 Gbps peaks, 1.5 Gbps real throughput, and a 5th antenna for 4x4 plus 1 backhaul on mesh kits.",
-        "alpha": 75.55,
-        "beta": 1.45
+        "alpha": 88.55,
+        "beta": 3.45
       }
     ],
     "6": [
@@ -2518,22 +2418,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "A Boeing 767 cruises near 560 mph at 36,000 feet. On approach, crews might line up with Runway 16L, extend flaps to 26 degrees, and keep the Vref around 136 knots in a light 6 kt crosswind.",
-        "alpha": 97.55,
+        "alpha": 101.5,
         "beta": 6.45
       },
       {
         "passage": "A No 16 forward scored in the 6th minute as a 60,000 crowd roared. The match swung 2-1 to 3-2 on 26 shots and 36 tackles with a 96th minute clearance.",
-        "alpha": 98.55,
+        "alpha": 99.55,
         "beta": 9.45
       },
       {
         "passage": "A Rubiks Cube has 6 faces and rotates in 90 degree steps across 360 orientations. Solvers track 26 visible cubies, complete a 6th step set, and average 16 seconds in 2016 events.",
-        "alpha": 113.5,
-        "beta": 6.45
+        "alpha": 125.5,
+        "beta": 7.45
       },
       {
         "passage": "A chessboard has 64 squares and each side begins with 16 pieces. Many pawn storms aim for the 6th rank, top engines analyze 26 plies, and Chess960 scrambles starts while 6-man endgames remain perfectly tabled.",
-        "alpha": 88.55,
+        "alpha": 89.55,
         "beta": 15.45
       },
       {
@@ -2548,23 +2448,23 @@ const HYPERPARAMS={
       },
       {
         "passage": "At about 66.5 N the Arctic Circle begins and many towns see roughly 6 months of light and 6 months of dark. From that line the pole lies about 2600 km away, and midsummer arrives in the 6th month.",
-        "alpha": 89.55,
+        "alpha": 90.55,
         "beta": 9.45
       },
       {
         "passage": "Bees build 6 sided cells that tile at 360 degrees with no gaps. Naturalists by the 16th century sketched honeycomb geometry and measured angles at 120 and 60 across symmetric 6 fold patterns for the 6th facet.",
-        "alpha": 96.55,
+        "alpha": 97.55,
         "beta": 9.45
       },
       {
         "passage": "Budget rigs with a GTX 1660 still serve many x86 builds at 60 fps. A 256 bit bus feeds 6 GB cards, and 1.6 ms frametimes pop up during 360 degree pans on 650 scenes.",
-        "alpha": 107.5,
-        "beta": 4.45
+        "alpha": 127.5,
+        "beta": 14.45
       },
       {
         "passage": "Carriers expand IPv6, handing out 128 bit addresses with 64 bit interface IDs. Monitors sample every 60 seconds, trigger at 6 minutes, and loop 360 tests during a 6th on call week.",
-        "alpha": 109.5,
-        "beta": 5.45
+        "alpha": 120.5,
+        "beta": 6.45
       },
       {
         "passage": "Chess960 randomizes back ranks into 960 legal starts while classic chess keeps 64 squares. Pros study a 6th file breakthrough on move 26, then calculate 36 continuations at depth 16.",
@@ -2578,7 +2478,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Cook sailed in 1768 to observe Venus, and Jenner described vaccination in 1796. Navigators tracked 360 bearings, logged 26 days between ports, and copied 16th century routes on a 6th revision chart.",
-        "alpha": 104.5,
+        "alpha": 105.5,
         "beta": 10.45
       },
       {
@@ -2588,8 +2488,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "In 1768 James Cook sailed in HMS Endeavour to observe the 1769 transit of Venus. Navigators drew on 16th-century charts, noted lines near 176 E and 36 S, and measured angles with a sextant's 60 degree arc.",
-        "alpha": 90.55,
-        "beta": 7.45
+        "alpha": 93.55,
+        "beta": 8.45
       },
       {
         "passage": "In 1945-46 the 16th parallel north served as a temporary line in Vietnam. Coastal storms can reach 36 knots and drop 160 mm in 6 hours, while crews still time returns by the 6th bell.",
@@ -2598,7 +2498,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "In the 1860s the 16th U.S. president, Abraham Lincoln, issued the 1863 Emancipation Proclamation. Historians still study 1865 battlefield maps at 1:63,360 scale to trace routes taken before the 6th cannon volley.",
-        "alpha": 90.55,
+        "alpha": 91.55,
         "beta": 9.45
       },
       {
@@ -2608,27 +2508,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Many performance sedans use a V6 and hit 0-60 in about 6.0 seconds. Test drives report 650 km ranges on steady routes and manuals still praise a tall 6th gear that keeps revs near 1,600 rpm.",
-        "alpha": 109.5,
+        "alpha": 112.5,
         "beta": 7.45
       },
       {
         "passage": "Mid-sized NFL venues often list between 60,000 and 66,000 seats. On wildcard weekend the 6th seed sometimes travels 650 miles on short rest and still wins 26-16 behind a bruising 6.5 yards per carry.",
-        "alpha": 107.5,
+        "alpha": 108.5,
         "beta": 12.45
       },
       {
         "passage": "Modern Olympics began in 1896 in Athens; the marathon settled at 26.2 miles. The 16th Games were held in Melbourne, and by 2016 Rio showcased 360-degree replays in prime-time coverage.",
-        "alpha": 77.55,
-        "beta": 4.45
+        "alpha": 85.55,
+        "beta": 5.45
       },
       {
         "passage": "Most home networks now support IPv6 while desktops still run x86. AES uses 256 bits and a chessboard has 64 squares and compasses turn 360 degrees while many laptops idle near 1.6 GHz.",
         "alpha": 97.55,
-        "beta": 8.45
+        "beta": 9.45
       },
       {
         "passage": "Most routers speak IPv6 while laptops run x86. AES uses 256-bit keys, gamepads map 360 moves, and caches hit 64 bytes as phones idle at 1.6 GHz in the 6th app.",
-        "alpha": 110.5,
+        "alpha": 111.5,
         "beta": 17.45
       },
       {
@@ -2638,7 +2538,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "NVMe drives saturate about 3,600 MB per second on x16 lanes while older SATA caps near 6 Gbps. Backups rotate every 6 hours and a 6th snapshot trims 60 percent restore times.",
-        "alpha": 105.5,
+        "alpha": 110.5,
         "beta": 7.45
       },
       {
@@ -2653,7 +2553,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Retro devs compare the 68000 to x86 eras as 16 bit sprites met 64 bit textures. Pixel artists love 256 color palettes and 360 loops while celebrating a 6th remaster.",
-        "alpha": 83.55,
+        "alpha": 84.55,
         "beta": 6.45
       },
       {
@@ -2663,8 +2563,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "The 6th magnitude marks the faint limit for many dark-sky observers, often around 6.5. Star charts use 360 degrees, binoculars advertise 16x ratings, and common eyepieces come in 26 mm and 36 mm focal lengths.",
-        "alpha": 95.55,
-        "beta": 4.45
+        "alpha": 109.5,
+        "beta": 5.45
       },
       {
         "passage": "The Pacific Crest Trail spans about 2,650 miles from Mexico to Canada. Thru-hikers often plan 16-mile days early, celebrate a 6th resupply by mile 360, and carry 1.6 liters per hour across 6% grades in 106 F heat.",
@@ -2673,7 +2573,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The Protestant Bible contains 66 books. Joshua is the 6th, many English readers know the 1611 King James tradition, and modern editions often settle near 1,600 pages in compact 6 x 9 inch formats.",
-        "alpha": 92.55,
+        "alpha": 93.55,
         "beta": 8.45
       },
       {
@@ -2688,12 +2588,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Twenty20 cricket sets 6 legal balls per over, and a clean boundary earns 6 runs. Many openers accelerate by the 6th over to chase 160 with scoreboards flashing 66 and strike rates near 136.",
-        "alpha": 113.5,
+        "alpha": 114.5,
         "beta": 8.45
       },
       {
         "passage": "U.S. Route 66 was designated in 1926 and later decommissioned in 1985. Tourists still drive 650-mile stretches in V6 coupes, stop at 6th-street diners, and collect maps marking 66 classic roadside stops.",
-        "alpha": 92.55,
+        "alpha": 95.55,
         "beta": 6.45
       },
       {
@@ -2705,7 +2605,7 @@ const HYPERPARAMS={
     "7": [
       {
         "passage": "Antarctica is the 7th continent; katabatic winds often exceed 70 knots on 3,700 m domes, 1977 records noted brutal cold, and 1978 flights resupplied stations as winter sea ice covers over 7 million km2.",
-        "alpha": 80.55,
+        "alpha": 81.55,
         "beta": 18.45
       },
       {
@@ -2715,27 +2615,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Arctic maps note 77 N near Svalbard and 71 N by Nordkapp. Winter brings 24 hours dark for roughly 77 days while ships thread 70 N waters under 7 tenths ice and a 7th patrol.",
-        "alpha": 83.55,
+        "alpha": 86.55,
         "beta": 8.45
       },
       {
         "passage": "Baseball fans rise for the 7th inning stretch as 70000 cheer. Game 7 went 11 innings after a 2 1 lead vanished on a 97 mph liner in the 77th at bat.",
-        "alpha": 97.55,
+        "alpha": 112.5,
         "beta": 3.45
       },
       {
         "passage": "Baseball fans rise for the 7th-inning stretch, and postseason rounds often hinge on Game 7. A 1977 classic ended 7-6 after 17 hits as relievers faced 27 batters.",
-        "alpha": 93.55,
+        "alpha": 94.55,
         "beta": 6.45
       },
       {
         "passage": "Boeing 747 767 and 777 defined long haul; a 727 left Runway 27 with Vref near 137 knots as a 7000 mile sector closed a 7th city pair in 1977 schedules.",
-        "alpha": 90.55,
-        "beta": 3.45
+        "alpha": 108.5,
+        "beta": 4.45
       },
       {
         "passage": "Boeing 747 and 767 reshaped long-haul travel; many 747 routes topped 7,000 miles by the 1970s, and some carriers used 7th-freedom cargo rights on transoceanic links.",
-        "alpha": 86.55,
+        "alpha": 87.55,
         "beta": 9.45
       },
       {
@@ -2750,7 +2650,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Boeing's 787 family includes the 787-8 and 787-9. Typical economy seating is 9 abreast, cruise near Mach 0.85, and 1980s composites matured into 787 production with lower 80 dBA cabin noise.",
-        "alpha": 35.55,
+        "alpha": 36.55,
         "beta": 3.45
       },
       {
@@ -2760,22 +2660,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "By the Rule of 72 a 7 percent return doubles in about 10 years; at 17 percent it halves that time while a 70 30 mix suits a cautious 7th decade saver over a 47 year plan.",
-        "alpha": 88.55,
+        "alpha": 95.55,
         "beta": 4.45
       },
       {
         "passage": "Chemistry courses note nitrogen is atomic number 7 and neutral water sits near pH 7; the SI defines 7 base units, the 7th period includes actinides, and labs hold 27 C for 70 minutes.",
-        "alpha": 67.55,
+        "alpha": 69.55,
         "beta": 6.45
       },
       {
         "passage": "Chemistry marks pH 7.0 as neutral and nitrogen has atomic number 7. The SI defines 7 base units and labs hold 70 percent humidity for a 7th calibration across 17 samples at 21 C.",
-        "alpha": 93.55,
+        "alpha": 106.5,
         "beta": 3.45
       },
       {
         "passage": "Chicago lists 77 community areas and residents dial 773 or 872. The 7th Ward map sits by exhibits on the 1871 fire and a 1977 neighborhood plan that added 700 new units.",
-        "alpha": 84.55,
+        "alpha": 85.55,
         "beta": 7.45
       },
       {
@@ -2785,7 +2685,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Classroom mnemonics list 7 continents and 7 days; study halls run 24x7 before exams, the 7th grade often starts near age 12, and Room 107 schedules 70 minute labs.",
-        "alpha": 88.55,
+        "alpha": 97.55,
         "beta": 4.45
       },
       {
@@ -2800,7 +2700,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Email headers still trace 7-bit ASCII; servers return 307 redirects as clients retry within 7 seconds, while DNS caches honor 7,200 second TTLs before a 7th lookup to 127.0.0.1.",
-        "alpha": 83.55,
+        "alpha": 84.55,
         "beta": 6.45
       },
       {
@@ -2810,23 +2710,23 @@ const HYPERPARAMS={
       },
       {
         "passage": "Guidebooks still list 7 Wonders; in 1907 scouting began at Brownsea, a 2007 poll narrowed 77 nominees, and modern rankings drew over 70 million votes for 7th sunrise photo ops.",
-        "alpha": 87.55,
+        "alpha": 88.55,
         "beta": 8.45
       },
       {
         "passage": "In 1776 the Declaration announced independence; by 1788 Maryland entered as the 7th state and the text listed 27 grievances while July is the 7th month.",
-        "alpha": 94.55,
+        "alpha": 96.55,
         "beta": 5.45
       },
       {
         "passage": "In 1776 the Declaration reached the colonies; in 1788 Maryland entered as the 7th state. The text listed 27 grievances and July is the 7th month in the Gregorian calendar.",
-        "alpha": 102.5,
-        "beta": 3.45
+        "alpha": 115.5,
+        "beta": 4.45
       },
       {
         "passage": "Interstate 70 meets I 77 near Cambridge and I 71 near Columbus. Drivers plan 700 mile hauls with 27 rest areas and schedule a 7th fuel stop at 170 miles remaining.",
-        "alpha": 90.55,
-        "beta": 3.45
+        "alpha": 104.5,
+        "beta": 4.45
       },
       {
         "passage": "Interstate 70 meets I-77 in Ohio at Cambridge; eastbound I-70 reaches I-270 near Columbus, and many drivers log 700 miles across two days before a 7th rest stop.",
@@ -2835,8 +2735,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Many games mix 7.1 surround with 720p retro modes; testers chart 77 fps minimums at 7 ms input and a 70 percent GPU load before a 7th hotfix stabilizes traversal stutter.",
-        "alpha": 80.55,
-        "beta": 4.45
+        "alpha": 86.55,
+        "beta": 5.45
       },
       {
         "passage": "Many surveys use a 7 point Likert scale; classes set 70 percent thresholds and assign 17 credits with 27 problem sets and score 7 out of 7 before a 7th week checkpoint.",
@@ -2860,7 +2760,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Rome is famed for its 7 hills; construction of the Colosseum began around AD 70, guides map 76 entrances, and capacity sat near 70,000 as a 7th recommended loop runs about 7 km.",
-        "alpha": 75.55,
+        "alpha": 79.55,
         "beta": 4.45
       },
       {
@@ -2870,32 +2770,32 @@ const HYPERPARAMS={
       },
       {
         "passage": "Runway 27 aligns near 270 degrees; departures climb to FL370 with 170 knot restrictions. Arrivals brief a 7 nm fix then capture the 3 degree glide at 700 ft for the 7th marker.",
-        "alpha": 82.55,
+        "alpha": 85.55,
         "beta": 5.45
       },
       {
         "passage": "Runway 27 points near 270 degrees; large fields often publish both 27L and 27R, and a 727 on final maintains 137 knots before crossing the 7th marker.",
-        "alpha": 74.55,
+        "alpha": 75.55,
         "beta": 5.45
       },
       {
         "passage": "Teachers list 7 continents and 7 days. Cartographers mark 37 N and 77 W across Virginia; hikers track 1700 ft climbs and celebrate a 7th summit on day 17 of a 70 mile loop.",
-        "alpha": 84.55,
+        "alpha": 85.55,
         "beta": 8.45
       },
       {
         "passage": "The Boeing 787 typically seats 9 abreast in economy. The 777-9 stretches the 777 line while the 747 left many passenger schedules by 2017 after its first flight in 1969.",
-        "alpha": 76.55,
+        "alpha": 77.55,
         "beta": 7.45
       },
       {
         "passage": "Uranus is the 7th planet; it has 27 known moons and rings were first detected in 1977, its axial tilt is about 97.7 degrees and Voyager 2 flew by in 1986.",
-        "alpha": 75.55,
+        "alpha": 76.55,
         "beta": 6.45
       },
       {
         "passage": "Using the rule of 72, money doubling at 7% takes about 10 years; fee cuts from 0.7 to 0.07 percent save thousands, and 70 pct equity often defines a cautious 7th-decade plan.",
-        "alpha": 80.55,
+        "alpha": 94.55,
         "beta": 4.45
       },
       {
@@ -2910,7 +2810,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Windows 7 stabilized desktops; phones shifted to 7 nm class nodes as ARMv7 apps lingered. Home theaters mixed 7.1 tracks while legacy sets held 720p at 72 Hz for older panels.",
-        "alpha": 79.55,
+        "alpha": 84.55,
         "beta": 4.45
       }
     ],
@@ -2937,7 +2837,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Basel I in 1988 set an 8% capital adequacy ratio. Banks tracked 80 risk weights and supervisors added 1998 refinements before Basel II expanded the framework.",
-        "alpha": 44.55,
+        "alpha": 45.55,
         "beta": 2.45
       },
       {
@@ -2947,7 +2847,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Brazil consolidated independence in the 1820s under a 2nd emperor, Pedro II, born in 1825. Rail and telegraph expanded by 1872 and 1882 as reforms spread across provinces.",
-        "alpha": 113.5,
+        "alpha": 114.5,
         "beta": 15.45
       },
       {
@@ -2972,8 +2872,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Chess uses an 8 by 8 board with 64 squares; mechanical clocks appeared by 1883. Blitz often runs 3 minutes plus 2 seconds as engines analyze 8 ply in under 80 ms.",
-        "alpha": 41.55,
-        "beta": 0.45
+        "alpha": 56.55,
+        "beta": 2.45
       },
       {
         "passage": "Cinema in 1982 delivered Blade Runner, and by 1998 DVD adoption surged past 80% in some markets as 480p transfers replaced aging tapes.",
@@ -2987,7 +2887,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Euro 88 crowned the Netherlands as champions. Marco van Basten's volley sealed a 2-0 final in 1988, and No 8 midfielders became archetypes for late 1980s transitions.",
-        "alpha": 39.55,
+        "alpha": 40.55,
         "beta": 4.45
       },
       {
@@ -3008,7 +2908,7 @@ const HYPERPARAMS={
       {
         "passage": "IPv6 addresses have 8 hex groups; many reports in the 2010s showed adoption past 28 percent. Dual stack kept IPv4 stable and port 8080 remained common in staging.",
         "alpha": 45.55,
-        "beta": 4.45
+        "beta": 6.45
       },
       {
         "passage": "Interstate 88 exists in Illinois and New York. The Illinois route was designated in 1987, the New York route opened segments through 1989, and both corridors eased 80 mile rural treks.",
@@ -3017,17 +2917,17 @@ const HYPERPARAMS={
       },
       {
         "passage": "Mixed martial arts uses an octagon with 8 sides; the first UFC ran in 1993. Modern cages span 30 feet or 25 feet with 8 posts and 8 corner pads.",
-        "alpha": 49.55,
+        "alpha": 50.55,
         "beta": 2.45
       },
       {
         "passage": "Neptune, the 8th planet, was discovered in 1846 after calculations by Le Verrier and Adams. Voyager 2 passed in 1989, imaging the Great Dark Spot and high clouds at roughly 800 km scale.",
-        "alpha": 38.55,
+        "alpha": 39.55,
         "beta": 6.45
       },
       {
         "passage": "Oxygen is atomic number 8 and the octet rule highlights 8 valence electrons. Argon totals 18, and many 1988 primers drew 2-8-8 diagrams to explain stable shells in simple terms.",
-        "alpha": 46.55,
+        "alpha": 64.55,
         "beta": 0.45
       },
       {
@@ -3057,12 +2957,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "The eight queens puzzle dates to 1848. There are 92 distinct solutions on an 8 by 8 board, and 1874 papers generalized the task to n queens with elegant backtracking ideas.",
-        "alpha": 42.55,
+        "alpha": 43.55,
         "beta": 5.45
       },
       {
         "passage": "The octagon stop sign has 8 sides; the red standard arrived in 1954. By the late 1960s drivers in 48 states saw uniform designs at roughly 30 inch panels.",
-        "alpha": 59.55,
+        "alpha": 60.55,
         "beta": 2.45
       },
       {
@@ -3084,23 +2984,23 @@ const HYPERPARAMS={
       },
       {
         "passage": "A standard Sudoku has a 9 by 9 grid with 81 cells. Each row column and 3 by 3 box must use digits 1 through 9 exactly once for a valid solve.",
-        "alpha": 80.55,
+        "alpha": 92.55,
         "beta": 3.45
       },
       {
         "passage": "At 9 percent a Rule of 72 estimate doubles money in 8 years. Portfolios from 1990 to 1999 saw 19 percent swings, so a 90 10 split softened 9 of 10 down months.",
-        "alpha": 75.55,
-        "beta": 3.45
+        "alpha": 83.55,
+        "beta": 5.45
       },
       {
         "passage": "Baseball plays 9 innings with 9 players in the field and 90 feet between bases. Extra drama arrives in the 9th when a 2-1 lead can vanish after 99 pitches.",
-        "alpha": 80.55,
+        "alpha": 89.55,
         "beta": 4.45
       },
       {
         "passage": "Beethovens Symphony No 9 premiered in 1824 in Vienna. The choral finale sets Ode to Joy and orchestras programmed the Ninth for 1999 millennial events and 2019 anniversary seasons.",
-        "alpha": 84.55,
-        "beta": 4.45
+        "alpha": 89.55,
+        "beta": 5.45
       },
       {
         "passage": "Before 2006 many textbooks listed 9 planets. Discoveries in 1992 and 1993 of Kuiper Belt objects shifted models, and 1989 Voyager 2 images of Neptune wrapped a 12 year tour.",
@@ -3109,23 +3009,23 @@ const HYPERPARAMS={
       },
       {
         "passage": "California State Route 99 threads the Central Valley past SR 198 and US 199. Summer highs hit 99 F and traffic peaks near 90,000 vehicles north of Fresno at 9 each morning.",
-        "alpha": 81.55,
-        "beta": 2.45
+        "alpha": 113.5,
+        "beta": 3.45
       },
       {
         "passage": "Chicago sits near 41.9 N while the 90th meridian cuts through the Midwest. City plans in 1999 highlighted lakefront renewal as neighborhoods pushed for 9 new miles of trail.",
-        "alpha": 81.55,
+        "alpha": 84.55,
         "beta": 5.45
       },
       {
         "passage": "Cinephiles cite 1959 for Some Like It Hot and 1999 for The Matrix. The summer of 1989 brought Batman while 1979 delivered Alien and Apocalypse Now.",
-        "alpha": 76.55,
-        "beta": 4.45
+        "alpha": 95.55,
+        "beta": 5.45
       },
       {
         "passage": "Digital root checks use casting out nines. Any multiple of 9 reduces to 9 and 99 is divisible by 9 because 9 plus 9 equals 18 which reduces to 9.",
-        "alpha": 86.55,
-        "beta": 4.45
+        "alpha": 88.55,
+        "beta": 5.45
       },
       {
         "passage": "Dreamcast launched in the United States on 9-9-99. The PlayStation era from 1994 to 1999 popularized 3D worlds and set up a 2000s surge in online play.",
@@ -3134,7 +3034,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Elite sprinters chase 9.69 to 9.79 seconds for the 100 m. Workouts hit 90 percent effort with 9 by 60 m reps and 19 minute cooldowns under 29 degree heat.",
-        "alpha": 83.55,
+        "alpha": 84.55,
         "beta": 6.45
       },
       {
@@ -3144,13 +3044,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "Grade 9 often marks the start of high school. Students chase 99th percentile scores, finish 19 required credits by age 17, and target 90 minute study blocks before 9 pm lights out.",
-        "alpha": 74.55,
-        "beta": 2.45
+        "alpha": 109.5,
+        "beta": 9.45
       },
       {
         "passage": "Greek myth lists 9 Muses. 19th century encyclopedias popularized their names and schools visit galleries in groups of 9 or 19 during yearly arts programs.",
-        "alpha": 95.55,
-        "beta": 4.45
+        "alpha": 106.5,
+        "beta": 5.45
       },
       {
         "passage": "IMAPS uses port 993 while secure POP3 sits on 995. Admins still trace 9 hops with TTL 99, and schedule 90 minute windows to swap 19 failing drives at 09:00.",
@@ -3159,7 +3059,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "In 1995 and 1998 home PCs jumped online with 56 kbps modems. By 1999 MP3 catalogs grew nightly and Y2K drills ran at 9 pm with 99 backup tapes spinning.",
-        "alpha": 74.55,
+        "alpha": 75.55,
         "beta": 11.45
       },
       {
@@ -3169,13 +3069,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "Jet cruise often sits near FL390 with altimeters set to 29.92 after passing the transition altitude. Approach briefings warn of 9 gusting 19 knot crosswinds on Runway 09 during late storms.",
-        "alpha": 81.55,
-        "beta": 4.45
+        "alpha": 82.55,
+        "beta": 6.45
       },
       {
         "passage": "Prince released 1999 in 1982 and the title track became a late night anthem. By 1999 dance floors looped 99 remixes and countdowns hit 9 seconds before midnight.",
-        "alpha": 67.55,
-        "beta": 5.45
+        "alpha": 69.55,
+        "beta": 6.45
       },
       {
         "passage": "Reliability targets often cite five nines or 99.999 percent uptime. That allows about 5 minutes of downtime per year, so teams staff 24x7 coverage and rehearse 19 rollback paths with 90 second checkpoints.",
@@ -3194,27 +3094,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "Star Wars Episode I arrived in 1999 and the Skywalker saga closed with Episode IX in 2019. Fans compare 1977 pacing to 1980 texture and rank top 9 lightsaber duels each December.",
-        "alpha": 80.55,
-        "beta": 2.45
+        "alpha": 115.5,
+        "beta": 4.45
       },
       {
         "passage": "Strikers often wear the No 9 and live between the posts. The 1998 World Cup crowned France and many clubs in 1999 still trusted a classic 4-4-2 built around a predatory 9.",
-        "alpha": 85.55,
+        "alpha": 86.55,
         "beta": 9.45
       },
       {
         "passage": "Sudoku uses a 9 by 9 grid with 81 cells and 27 boxes. Each row column and box must place digits 1 through 9 exactly once, yielding 9 clean sets across 9 regions.",
         "alpha": 66.55,
-        "beta": 6.45
+        "beta": 7.45
       },
       {
         "passage": "The 1990s saw the web explode as HTML and HTTP spread from 1991 to 1993. Search rose in 1998 and MP3 sharing peaked in 1999 as dial up lines hit 56 kbps.",
-        "alpha": 75.55,
+        "alpha": 76.55,
         "beta": 7.45
       },
       {
         "passage": "The Chicago Bulls three-peated in 1991, 1992, and 1993. The 1996 to 1998 run reached 72, 69, and 62 wins, and Game 6 in 1998 featured a famous No 23 dagger with 5.2 left.",
-        "alpha": 67.55,
+        "alpha": 95.55,
         "beta": 2.45
       },
       {
@@ -3225,11 +3125,11 @@ const HYPERPARAMS={
       {
         "passage": "The UK adopted 999 for emergencies in 1937 after trials in 1935. The number predates 911 and remains active alongside 112 across mobile networks.",
         "alpha": 87.55,
-        "beta": 7.45
+        "beta": 8.45
       },
       {
         "passage": "The US Supreme Court has had 9 justices since 1869. In 1937 a court packing plan failed and modern terms still feature 5-4 splits alongside crisp 9-0 opinions.",
-        "alpha": 91.55,
+        "alpha": 92.55,
         "beta": 10.45
       },
       {
