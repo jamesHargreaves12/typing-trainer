@@ -235,7 +235,7 @@ Math.lgamma = function (z) {
 }
 
 const FEATURES_RATE = {
-  "hide-progress-bar": 0.33,
+  "hide-progress-bar": 0.5,
 };
 
 function fnv1a32(str) {
