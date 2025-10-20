@@ -1341,7 +1341,9 @@ function annotateEdits(typed, target) {
     if (
       i > 0 && j > 0 &&
       typed[i - 1] === target[j - 1] &&
-      dp[i][j] === dp[i - 1][j - 1]
+      dp[i][j] === dp[i - 1][j - 1] &&
+      target[j - 1] !== target[j - 2] && // double letter in target
+      typed[i - 1] !== target[j - 2] // user doesn't have both double
     ) {
       out.push(target[j - 1]); i--; j--;
     }
@@ -1360,7 +1362,11 @@ function annotateEdits(typed, target) {
     }
   }
 
-  return out.reverse().join("");
+  res = out.reverse().join("");
+  if (res.includes("$") || res.includes("#")) {
+    console.log("JH-ES", res, dp);
+  }
+  return res;
 }
 
 document.addEventListener('keydown', (e) => {
