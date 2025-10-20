@@ -234,6 +234,27 @@ Math.lgamma = function (z) {
   return [-tmp + Math.log(2.5066282746310005 * ser / x), 0];
 }
 
+const FEATURES_RATE = {
+  "hide-progress-bar": 0.33,
+};
+
+function fnv1a32(str) {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return h >>> 0;
+}
+
+function isFeatureOn(userID, featureName) {
+  const rate = FEATURES_RATE[featureName];
+  if (typeof rate !== 'number') return false;
+  const h = fnv1a32(`${userID}::${featureName}`);
+  const v = h / 0xffffffff;
+  return v < rate;
+}
+
 const STRATEGY_DESCRIPTIONS = {
   'most_common': 'most common letters (etaoinsr)',
   'punc': 'punctuation characters',
@@ -1045,6 +1066,9 @@ window.onload = function () {
     localStorage.setItem('userId', generateUserId());
   }
   userId = localStorage.getItem('userId');
+  if (isFeatureOn(userId, "hide-progress-bar")) {
+    document.getElementById('progress-container').style.opacity = '0';
+  }
 
   errorLog = JSON.parse(localStorage.getItem('errorLog')) || {
     'char': {},
