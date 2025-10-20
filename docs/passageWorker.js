@@ -834,21 +834,27 @@ function getScoreBySelectionStrategy(passage, selectionStratedy) {
   if (selectionStratedy == null) {
     return 0;
   }
-  if (selectionStratedy.includes("->")) {
-    const letterSuggestion = selectionStratedy.split("->")[1]
+  if (!selectionStratedy.includes("->")) {
+    console.error("Selection strategy must include ->");
+    return 0;
+  }
+  const selectionMode = selectionStratedy.split("->")[0];
+  const actualStrategy = selectionStratedy.split("->")[1];
+  if (selectionMode == "letter-error" || selectionMode == "letter-speed") {
+    const letterSuggestion = actualStrategy;
     return passage.split('').map((char, index) => letterSuggestion == char ? index : null).filter(index => index !== null).length / passage.length;
   }
 
-  if (selectionStratedy == "most_common") {
+  if (actualStrategy == "most_common") {
     return (passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["most_common"].includes(char)).length - passage.split('').filter(char => LOGICAL_LETTER_GROUPINGS["punc"].includes(char)).length) / passage.length;
   }
 
-  if (selectionStratedy in LOGICAL_LETTER_GROUPINGS) {
-    const letters = LOGICAL_LETTER_GROUPINGS[selectionStratedy];
+  if (actualStrategy in LOGICAL_LETTER_GROUPINGS) {
+    const letters = LOGICAL_LETTER_GROUPINGS[actualStrategy];
     return passage.split('').filter(char => letters.includes(char)).length / passage.length;
   }
-  if (selectionStratedy in LOGICAL_BIGRAM_GROUPINGS) {
-    const bigrams = LOGICAL_BIGRAM_GROUPINGS[selectionStratedy];
+  if (actualStrategy in LOGICAL_BIGRAM_GROUPINGS) {
+    const bigrams = LOGICAL_BIGRAM_GROUPINGS[actualStrategy];
     return passage.split('').filter((char, index) => bigrams.includes(char + getOrPad(passage, index + 1))).length / passage.length;
   }
 
@@ -975,8 +981,10 @@ const shortenPassageBasedOnStrategy = (passages, strategy) => {
     const skip_indexs = [];
     for (let j = 0; j < sentences.length; j++) {
       const sentence = sentences[j];
-      if (strategy.startsWith("letter-speed")) {
-        const letterSpeedSuggestion = strategy.split("->")[1]
+      const strategyMode = strategy.split("->")[0];
+      const actualStrategy = strategy.split("->")[1];
+      if (strategyMode == "letter-speed") {
+        const letterSpeedSuggestion = actualStrategy;
         const numberOfInstances = sentence.split('').filter((char) => letterSpeedSuggestion == char).length;
         if (numberOfInstances == 0 && sentence.length > 10) {
           skip_indexs.push(j);
@@ -1014,22 +1022,24 @@ const shortenPassageBasedOnStrategy = (passages, strategy) => {
 const add_error_highlight_from_strategy = async (passages, strategy, unigramErrorLog, unigramSeenLog) => {
   const firstPassage = passages[0].passage;
   let strategyHighlightIndecies = [];
-  if (strategy && (strategy.startsWith("letter-speed") || strategy.startsWith("letter-error"))) {
-    const letterSpeedSuggestion = strategy.split("->")[1]
+  const strategyMode = strategy.split("->")[0];
+  const actualStrategy = strategy.split("->")[1];
+  if (strategyMode == "letter-speed" || strategyMode == "letter-error") {
+    const letterSpeedSuggestion = actualStrategy;
     const letterSpeedSuggestionIdxs = firstPassage.split('').map((char, index) => letterSpeedSuggestion == char ? index : null).filter(index => index !== null);
     strategyHighlightIndecies = letterSpeedSuggestionIdxs;
   }
-  else if (strategy == "most_common") {
+  else if (actualStrategy == "most_common") {
     const mostCommonLetterIdxs = firstPassage.split('').map((char, index) => LOGICAL_LETTER_GROUPINGS["most_common"].includes(char) ? index : null).filter(index => index !== null);
     strategyHighlightIndecies = mostCommonLetterIdxs;
   }
-  else if (strategy in LOGICAL_LETTER_GROUPINGS) {
-    const letters = LOGICAL_LETTER_GROUPINGS[strategy];
+  else if (actualStrategy in LOGICAL_LETTER_GROUPINGS) {
+    const letters = LOGICAL_LETTER_GROUPINGS[actualStrategy];
     const letterIdxs = firstPassage.split('').map((char, index) => letters.includes(char) ? index : null).filter(index => index !== null);
     strategyHighlightIndecies = letterIdxs;
   }
-  else if (strategy in LOGICAL_BIGRAM_GROUPINGS) {
-    const bigrams = LOGICAL_BIGRAM_GROUPINGS[strategy];
+  else if (actualStrategy in LOGICAL_BIGRAM_GROUPINGS) {
+    const bigrams = LOGICAL_BIGRAM_GROUPINGS[actualStrategy];
     const bigramIdxs = firstPassage.split('').map((char, index) => bigrams.includes(char + getOrPad(firstPassage, index + 1)) || bigrams.includes(getOrPad(firstPassage, index) + char) ? index : null).filter(index => index !== null);
     strategyHighlightIndecies = bigramIdxs;
   }
@@ -1116,7 +1126,7 @@ const handleGetNextPassagesErrorGroup = async (
   newUpcomingPassages = topNBySelectionStrategy(newUpcomingPassages, selectionStratedy, 10);
 
   // hack in easy mode.
-  if (selectionStratedy == "most_common") {
+  if (selectionStratedy == "error-group->most_common") {
     newUpcomingPassages = newUpcomingPassages.map(makePassageEasy);
   }
 

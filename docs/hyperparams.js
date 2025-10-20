@@ -1,6 +1,6 @@
 const HYPERPARAMS={
   "LETTER_SPEED_STD": {
-    " ": 0.09927,
+    " ": 0.09928,
     "e": 0.09209,
     "a": 0.09927,
     "t": 0.1329,
@@ -14,7 +14,7 @@ const HYPERPARAMS={
     "d": 0.1166,
     "c": 0.1451,
     "u": 0.123,
-    "m": 0.1216,
+    "m": 0.1215,
     "p": 0.148,
     "f": 0.1318,
     "g": 0.1343,
@@ -38,26 +38,26 @@ const HYPERPARAMS={
     "P": 0.1561,
     "B": 0.1881,
     "H": 0.1714,
-    "'": 0.2222,
+    "'": 0.2221,
     ")": 0.2049,
     "(": 0.211,
     "-": 0.1803,
     "D": 0.1857,
     "R": 0.2027,
-    "N": 0.1694,
-    "F": 0.1764,
+    "N": 0.1693,
+    "F": 0.1763,
     "W": 0.1873,
     "L": 0.181,
     "x": 0.1471,
     "8": 0.1417,
     "G": 0.2022,
     "U": 0.1405,
-    "3": 0.1819,
+    "3": 0.1818,
     "E": 0.1974,
     "\"": 0.2086,
     "J": 0.1388,
     "5": 0.1453,
-    "O": 0.1286,
+    "O": 0.1285,
     "6": 0.164,
     "7": 0.156,
     "4": 0.1594,
@@ -65,7 +65,7 @@ const HYPERPARAMS={
     ":": 0.2144,
     "z": 0.2026,
     "j": 0.1586,
-    "K": 0.1326,
+    "K": 0.1325,
     "V": 0.1792,
     "Y": 0.1734,
     ";": 0.2095,
@@ -82,7 +82,7 @@ const HYPERPARAMS={
     "t": 0.3162,
     "i": 0.2786,
     "o": 0.2686,
-    "n": 0.2537,
+    "n": 0.2536,
     "s": 0.2905,
     "r": 0.2775,
     "h": 0.2428,
@@ -93,12 +93,12 @@ const HYPERPARAMS={
     "m": 0.3135,
     "p": 0.3694,
     "f": 0.3432,
-    "g": 0.3391,
+    "g": 0.339,
     "y": 0.3401,
     "b": 0.4228,
     "w": 0.3766,
-    ".": 0.5636,
-    ",": 0.5496,
+    ".": 0.5635,
+    ",": 0.5495,
     "v": 0.3668,
     "k": 0.3135,
     "T": 0.5856,
@@ -109,7 +109,7 @@ const HYPERPARAMS={
     "2": 0.549,
     "A": 0.5685,
     "I": 0.5427,
-    "9": 0.4835,
+    "9": 0.4836,
     "M": 0.5348,
     "P": 0.5342,
     "B": 0.6131,
@@ -127,7 +127,7 @@ const HYPERPARAMS={
     "x": 0.4363,
     "8": 0.5335,
     "G": 0.6627,
-    "U": 0.5969,
+    "U": 0.5968,
     "3": 0.6217,
     "E": 0.6148,
     "\"": 0.7868,
@@ -142,14 +142,14 @@ const HYPERPARAMS={
     "z": 0.5075,
     "j": 0.4357,
     "K": 0.6038,
-    "V": 0.6589,
+    "V": 0.6588,
     "Y": 0.6312,
-    ";": 0.8108,
-    "Z": 0.7772,
-    "Q": 0.7549,
-    "?": 0.754,
+    ";": 0.8107,
+    "Z": 0.7773,
+    "Q": 0.755,
+    "?": 0.7538,
     "X": 0.7064,
-    "!": 0.7199
+    "!": 0.7198
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_M": {
     " ": 0,
@@ -174,27 +174,27 @@ const HYPERPARAMS={
     "b": 3.323,
     "w": 30.78,
     ".": 0,
-    ",": 3.861,
+    ",": 3.842,
     "v": 3.323,
     "k": 0,
-    "T": 8.309,
+    "T": 8.38,
     "1": 0,
     "0": 0,
     "S": 4.485,
     "C": 6.013,
     "2": 0,
-    "A": 5.456,
-    "I": 6.892,
+    "A": 5.438,
+    "I": 6.842,
     "9": 0,
-    "M": 3.414,
+    "M": 3.417,
     "P": 3.989,
-    "B": 0.1694,
-    "H": 1.259,
+    "B": 0.2146,
+    "H": 1.255,
     "'": 3.323,
     ")": 3.323,
     "(": 3.323,
     "-": 4.337,
-    "D": 2.338,
+    "D": 2.348,
     "R": 0,
     "N": 0,
     "F": 1.771,
@@ -211,12 +211,12 @@ const HYPERPARAMS={
     "5": 3.468,
     "O": 3.935,
     "6": 0,
-    "7": 3.415,
+    "7": 3.389,
     "4": 11.75,
     "q": 0.6235,
     ":": 3.323,
-    "z": 3.637,
-    "j": 4.671,
+    "z": 3.635,
+    "j": 4.66,
     "K": 0,
     "V": 3.323,
     "Y": 3.323,
@@ -250,27 +250,27 @@ const HYPERPARAMS={
     "b": -9.255,
     "w": -20.45,
     ".": -11.03,
-    ",": -13.82,
+    ",": -13.81,
     "v": -9.255,
     "k": -11.18,
-    "T": -14.35,
-    "1": -10.8,
+    "T": -14.37,
+    "1": -10.79,
     "0": -10.96,
     "S": -11.6,
     "C": -12.97,
     "2": -10.47,
     "A": -12.21,
-    "I": -13.1,
+    "I": -13.09,
     "9": -10.07,
     "M": -10.8,
     "P": -10.38,
-    "B": -9.488,
+    "B": -9.504,
     "H": -10.16,
     "'": -9.255,
     ")": -9.255,
     "(": -9.255,
     "-": -12.22,
-    "D": -10.17,
+    "D": -10.18,
     "R": -9.546,
     "N": -8.824,
     "F": -9.749,
@@ -280,14 +280,14 @@ const HYPERPARAMS={
     "8": -9.219,
     "G": -9.255,
     "U": -9.109,
-    "3": -9.43,
+    "3": -9.428,
     "E": -9.265,
     "\"": -9.255,
     "J": -9.971,
     "5": -10.46,
     "O": -10.65,
     "6": -9.179,
-    "7": -10.98,
+    "7": -10.96,
     "4": -14.42,
     "q": -9.224,
     ":": -9.255,
@@ -305,79 +305,79 @@ const HYPERPARAMS={
   },
   "ERROR_GAP_CHANGE_PER_OCCURENCE_M": {
     " ": 0,
-    "e": 0.007555,
-    "a": 0.01062,
-    "t": 0.009388,
-    "i": 0.01317,
-    "o": 0.009158,
-    "n": 0.01077,
-    "s": 0.01022,
-    "r": 0.007334,
-    "h": 0.0153,
-    "l": 0.01896,
-    "d": 0.01576,
-    "c": 0.01123,
-    "u": 0.01261,
-    "m": 0.01639,
-    "p": 0.02486,
-    "f": 0.01842,
-    "g": 0.01658,
-    "y": 0.02051,
-    "b": 0.01983,
-    "w": 0.01961,
-    ".": 0.01305,
-    ",": 0.01728,
-    "v": 0.01443,
-    "k": 0.05229,
-    "T": 0.02385,
-    "1": 0.02851,
-    "0": 0.05076,
-    "S": 0.02407,
-    "C": 0.02417,
-    "2": 0.04717,
-    "A": 0.02421,
-    "I": 0.02433,
-    "9": 0.01561,
-    "M": 0.02444,
-    "P": 0.02446,
-    "B": 0.02452,
-    "H": 0.02454,
-    "'": 0.01189,
-    ")": 0.02457,
-    "(": 0.02457,
-    "-": 0.01115,
-    "D": 0.02462,
-    "R": 0.02464,
-    "N": 0.02466,
-    "F": 0.02467,
-    "W": 0.02467,
-    "L": 0.02468,
-    "x": 0.04625,
-    "8": 0.02421,
-    "G": 0.02472,
-    "U": 0.02472,
-    "3": 0.02474,
-    "E": 0.02474,
-    "\"": 0.02474,
-    "J": 0.02474,
-    "5": 0.0427,
-    "O": 0.02474,
-    "6": 0.01422,
-    "7": 0.01926,
-    "4": 0.005119,
-    "q": 0.04866,
-    ":": 0.02479,
-    "z": 0.05713,
-    "j": 0.04197,
-    "K": 0.02482,
-    "V": 0.02487,
-    "Y": 0.02493,
-    ";": 0.02497,
-    "Z": 0.02497,
-    "Q": 0.02498,
-    "?": 0.02498,
-    "X": 0.02498,
-    "!": 0.025
+    "e": 0.007536,
+    "a": 0.009415,
+    "t": 0.008078,
+    "i": 0.01092,
+    "o": 0.01049,
+    "n": 0.01162,
+    "s": 0.01078,
+    "r": 0.01235,
+    "h": 0.01655,
+    "l": 0.01409,
+    "d": 0.013,
+    "c": 0.01769,
+    "u": 0.01564,
+    "m": 0.01665,
+    "p": 0.0158,
+    "f": 0.01597,
+    "g": 0.01808,
+    "y": 0.02138,
+    "b": 0.03172,
+    "w": 0.01883,
+    ".": 0.01352,
+    ",": 0.01796,
+    "v": 0.01692,
+    "k": 0.01552,
+    "T": 0.02642,
+    "1": 0.02653,
+    "0": 0.04452,
+    "S": 0.02669,
+    "C": 0.02681,
+    "2": 0.03911,
+    "A": 0.02686,
+    "I": 0.02701,
+    "9": 0.01399,
+    "M": 0.02715,
+    "P": 0.02718,
+    "B": 0.02725,
+    "H": 0.02728,
+    "'": 0.05516,
+    ")": 0.02731,
+    "(": 0.02731,
+    "-": 0.004021,
+    "D": 0.02737,
+    "R": 0.0274,
+    "N": 0.02742,
+    "F": 0.02743,
+    "W": 0.02743,
+    "L": 0.02744,
+    "x": 0.03346,
+    "8": 0.02335,
+    "G": 0.02749,
+    "U": 0.02749,
+    "3": 0.05352,
+    "E": 0.02751,
+    "\"": 0.02751,
+    "J": 0.02752,
+    "5": 0.0195,
+    "O": 0.02752,
+    "6": 0.07097,
+    "7": 0.0629,
+    "4": 0.03869,
+    "q": 0.00965,
+    ":": 0.02758,
+    "z": 0.0006237,
+    "j": 0.02762,
+    "K": 0.02762,
+    "V": 0.02768,
+    "Y": 0.02775,
+    ";": 0.08041,
+    "Z": 0.02781,
+    "Q": 0.02781,
+    "?": 0.02781,
+    "X": 0.02782,
+    "!": 0.02784
   },
   "LETTER_FREQUENCY": {
     " ": 0.1613,
@@ -459,20 +459,20 @@ const HYPERPARAMS={
     "most_common": 0.03889,
     "left_hand": 0.04196,
     "top_row": 0.04203,
-    "right_hand": 0.04397,
-    "alternate_hand_bigrams": 0.0479,
+    "right_hand": 0.04396,
+    "alternate_hand_bigrams": 0.04789,
     "ring_pinky": 0.04225,
     "home_row": 0.04256,
     "left_hand_only_bigrams": 0.04462,
     "bottom_row": 0.04801,
-    "right_hand_only_bigrams": 0.04802,
-    "difficult_to_reach_letters": 0.04491,
+    "right_hand_only_bigrams": 0.04801,
+    "difficult_to_reach_letters": 0.0449,
     "pinky": 0.03856,
     "same_finger_bigrams": 0.0538,
     "caps": 0.104,
-    "punc": 0.1554,
-    "rare_letters": 0.08442,
-    "repeat_bigrams": 0.04221,
+    "punc": 0.1553,
+    "rare_letters": 0.0844,
+    "repeat_bigrams": 0.0422,
     "numbers": 0.06454
   },
   "LOGICAL_GROUP_STD": {
@@ -480,20 +480,20 @@ const HYPERPARAMS={
     "left_hand": 0.01846,
     "top_row": 0.01899,
     "right_hand": 0.02071,
-    "alternate_hand_bigrams": 0.03932,
+    "alternate_hand_bigrams": 0.03931,
     "ring_pinky": 0.01817,
     "home_row": 0.01936,
-    "left_hand_only_bigrams": 0.0373,
+    "left_hand_only_bigrams": 0.03729,
     "bottom_row": 0.0265,
-    "right_hand_only_bigrams": 0.03562,
+    "right_hand_only_bigrams": 0.03561,
     "difficult_to_reach_letters": 0.02326,
-    "pinky": 0.01823,
+    "pinky": 0.01824,
     "same_finger_bigrams": 0.03508,
-    "caps": 0.07712,
-    "punc": 0.08115,
+    "caps": 0.0771,
+    "punc": 0.08116,
     "rare_letters": 0.05453,
-    "repeat_bigrams": 0.03192,
-    "numbers": 0.05696
+    "repeat_bigrams": 0.03191,
+    "numbers": 0.05694
   },
   "LOGICAL_GROUP_FREQUENCY": {
     "most_common": 0.4938,
@@ -516,7 +516,7 @@ const HYPERPARAMS={
     "numbers": 0.0104
   },
   "LETTER_MEAN_RATE": {
-    " ": 0.01216,
+    " ": 0.01217,
     "e": 0.03186,
     "a": 0.03487,
     "t": 0.03742,
@@ -527,69 +527,69 @@ const HYPERPARAMS={
     "r": 0.04368,
     "h": 0.03469,
     "l": 0.03858,
-    "d": 0.05349,
+    "d": 0.0535,
     "c": 0.04904,
     "u": 0.05405,
     "m": 0.0474,
-    "p": 0.04674,
+    "p": 0.04673,
     "f": 0.04956,
-    "g": 0.05451,
-    "y": 0.06095,
-    "b": 0.06192,
-    "w": 0.0557,
+    "g": 0.05449,
+    "y": 0.06094,
+    "b": 0.06191,
+    "w": 0.05569,
     ".": 0.1322,
     ",": 0.1745,
-    "v": 0.07666,
-    "k": 0.06655,
-    "T": 0.09433,
-    "1": 0.04294,
-    "0": 0.04148,
+    "v": 0.07665,
+    "k": 0.06653,
+    "T": 0.09436,
+    "1": 0.04295,
+    "0": 0.04147,
     "S": 0.1025,
-    "C": 0.0958,
-    "2": 0.05181,
-    "A": 0.08709,
-    "I": 0.08226,
+    "C": 0.09581,
+    "2": 0.05183,
+    "A": 0.08711,
+    "I": 0.08227,
     "9": 0.05144,
     "M": 0.08424,
-    "P": 0.09932,
-    "B": 0.09096,
-    "H": 0.08287,
-    "'": 0.2001,
+    "P": 0.09931,
+    "B": 0.09095,
+    "H": 0.08293,
+    "'": 0.2,
     ")": 0.1375,
-    "(": 0.08819,
+    "(": 0.08817,
     "-": 0.1845,
-    "D": 0.09445,
-    "R": 0.09972,
-    "N": 0.08601,
-    "F": 0.09248,
-    "W": 0.1111,
-    "L": 0.1042,
-    "x": 0.1137,
-    "8": 0.06416,
+    "D": 0.09443,
+    "R": 0.0997,
+    "N": 0.08599,
+    "F": 0.09246,
+    "W": 0.1112,
+    "L": 0.1043,
+    "x": 0.1136,
+    "8": 0.06417,
     "G": 0.1017,
-    "U": 0.08455,
+    "U": 0.08454,
     "3": 0.06944,
-    "E": 0.08599,
+    "E": 0.08597,
     "\"": 0.155,
     "J": 0.125,
-    "5": 0.05618,
-    "O": 0.103,
-    "6": 0.066,
-    "7": 0.05357,
+    "5": 0.05617,
+    "O": 0.1031,
+    "6": 0.06604,
+    "7": 0.05356,
     "4": 0.06246,
     "q": 0.06831,
     ":": 0.2222,
     "z": 0.1271,
-    "j": 0.09614,
+    "j": 0.09611,
     "K": 0.118,
     "V": 0.1171,
     "Y": 0.1276,
-    ";": 0.2725,
-    "Z": 0.1083,
-    "Q": 0.1027,
-    "?": 0.06283,
-    "X": 0.08992,
-    "!": 0.08549
+    ";": 0.2724,
+    "Z": 0.1082,
+    "Q": 0.1028,
+    "?": 0.06279,
+    "X": 0.08994,
+    "!": 0.08551
   },
   "LETTER_STD": {
     " ": 0.007251,
@@ -599,69 +599,69 @@ const HYPERPARAMS={
     "i": 0.02269,
     "o": 0.02276,
     "n": 0.01806,
-    "s": 0.01967,
-    "r": 0.02316,
-    "h": 0.02374,
+    "s": 0.01968,
+    "r": 0.02317,
+    "h": 0.02373,
     "l": 0.02078,
-    "d": 0.0313,
+    "d": 0.03131,
     "c": 0.02661,
     "u": 0.03128,
-    "m": 0.02996,
-    "p": 0.0298,
-    "f": 0.0354,
-    "g": 0.03584,
-    "y": 0.04087,
+    "m": 0.02997,
+    "p": 0.02979,
+    "f": 0.03539,
+    "g": 0.03583,
+    "y": 0.04086,
     "b": 0.04082,
-    "w": 0.04235,
-    ".": 0.07902,
+    "w": 0.04234,
+    ".": 0.07903,
     ",": 0.1061,
     "v": 0.05183,
-    "k": 0.05264,
-    "T": 0.06532,
+    "k": 0.05262,
+    "T": 0.06533,
     "1": 0.0466,
-    "0": 0.04483,
-    "S": 0.07859,
+    "0": 0.04481,
+    "S": 0.07857,
     "C": 0.08011,
     "2": 0.05599,
     "A": 0.06975,
-    "I": 0.0764,
-    "9": 0.05805,
-    "M": 0.06992,
-    "P": 0.07891,
-    "B": 0.07665,
-    "H": 0.07123,
+    "I": 0.07638,
+    "9": 0.05804,
+    "M": 0.0699,
+    "P": 0.07888,
+    "B": 0.07664,
+    "H": 0.07122,
     "'": 0.1457,
-    ")": 0.1092,
+    ")": 0.1091,
     "(": 0.1008,
     "-": 0.1156,
-    "D": 0.07958,
-    "R": 0.09277,
-    "N": 0.07925,
-    "F": 0.07988,
-    "W": 0.09535,
-    "L": 0.08539,
-    "x": 0.08615,
-    "8": 0.07166,
-    "G": 0.08626,
-    "U": 0.08935,
-    "3": 0.07308,
-    "E": 0.08353,
+    "D": 0.07957,
+    "R": 0.09275,
+    "N": 0.07924,
+    "F": 0.07985,
+    "W": 0.09532,
+    "L": 0.08538,
+    "x": 0.08618,
+    "8": 0.07165,
+    "G": 0.08622,
+    "U": 0.08933,
+    "3": 0.07309,
+    "E": 0.0835,
     "\"": 0.1272,
     "J": 0.1115,
     "5": 0.064,
-    "O": 0.08813,
-    "6": 0.084,
-    "7": 0.07833,
+    "O": 0.08825,
+    "6": 0.08398,
+    "7": 0.07831,
     "4": 0.07431,
-    "q": 0.07063,
-    ":": 0.1786,
+    "q": 0.07058,
+    ":": 0.1785,
     "z": 0.1054,
     "j": 0.09488,
     "K": 0.1233,
-    "V": 0.1272,
+    "V": 0.1271,
     "Y": 0.1566,
     ";": 0.2572,
-    "Z": 0.1983,
+    "Z": 0.1982,
     "Q": 0.2008,
     "?": 0.2009,
     "X": 0.177,
@@ -669,31 +669,31 @@ const HYPERPARAMS={
   },
   "SELECTION_MODE_BANDITS": [
     {
-      "mode": "letter-error",
-      "alpha": 9,
-      "beta": 11
+      "mode": "letter-speed",
+      "alpha": 1616,
+      "beta": 712.5
     },
     {
-      "mode": "letter-speed",
-      "alpha": 7,
-      "beta": 13
+      "mode": "letter-error",
+      "alpha": 2612,
+      "beta": 1452
     },
     {
       "mode": "error-group",
-      "alpha": 4,
-      "beta": 16
+      "alpha": 308.5,
+      "beta": 91.5
     }
   ],
   "INITIAL_SEQUENCES": [
     [
       {
         "passage": "Every keystroke you make fuels Typo Dojo's adaptive engine, creating the most efficient training path for faster results.",
-        "alpha": 641.6,
+        "alpha": 642.6,
         "beta": 42.36
       },
       {
         "passage": "Personalized coaching at scale. Typo Dojo uses your mistakes as fuel to craft adaptive drills that accelerate progress.",
-        "alpha": 332.6,
+        "alpha": 333.6,
         "beta": 26.36
       },
       {
@@ -755,7 +755,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
-        "alpha": 625.6,
+        "alpha": 626.6,
         "beta": 41.36
       },
       {
@@ -770,12 +770,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo builds fluency with natural sentences that feel real from the first keystroke.",
-        "alpha": 691.6,
+        "alpha": 693.6,
         "beta": 46.36
       },
       {
         "passage": "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
-        "alpha": 349.6,
+        "alpha": 350.6,
         "beta": 30.36
       },
       {
@@ -837,7 +837,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "See your weak keys and fix them fast as Typo Dojo turns each typo into a lesson.",
-        "alpha": 4522,
+        "alpha": 4545,
         "beta": 222.4
       },
       {
@@ -867,7 +867,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
-        "alpha": 819.6,
+        "alpha": 820.6,
         "beta": 58.36
       },
       {
@@ -894,8 +894,8 @@ const HYPERPARAMS={
     [
       {
         "passage": "Even five minutes matter when each Typo Dojo drill targets what improves your typing most.",
-        "alpha": 3824,
-        "beta": 173.4
+        "alpha": 3858,
+        "beta": 176.4
       },
       {
         "passage": "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
@@ -914,7 +914,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Short sessions bring real gains as Typo Dojo keeps every minute focused on progress.",
-        "alpha": 2950,
+        "alpha": 2963,
         "beta": 139.4
       },
       {
@@ -986,13 +986,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
-        "alpha": 538.6,
+        "alpha": 539.6,
         "beta": 46.36
       },
       {
         "passage": "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
-        "alpha": 146.6,
-        "beta": 14.36
+        "alpha": 148.6,
+        "beta": 15.36
       },
       {
         "passage": "Typo Dojo eliminates wasted effort-every drill is optimized to deliver maximum improvement in minimum time.",
@@ -1077,7 +1077,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Stay in the zone as Typo Dojo keeps you focused so each word flows faster than the last.",
-        "alpha": 3063,
+        "alpha": 3074,
         "beta": 164.4
       }
     ],
@@ -1089,39 +1089,28 @@ const HYPERPARAMS={
       },
       {
         "passage": "Stay ahead of your typos. Typo Dojo predicts which letters you may miss so you can prevent errors.",
-        "alpha": 989.6,
+        "alpha": 996.6,
         "beta": 58.36
       },
       {
         "passage": "Typo Dojo predicts tricky letters and helps you master them before they slow your typing.",
-        "alpha": 781.6,
+        "alpha": 791.6,
         "beta": 45.36
       },
       {
         "passage": "Typo Dojo predicts which letters you often mistype so you can focus and avoid repeating mistakes.",
-        "alpha": 458.6,
+        "alpha": 459.6,
         "beta": 33.36
       },
       {
         "passage": "Typo Dojo shows where you may slip so you can stay focused and turn practice into progress.",
-        "alpha": 380.6,
+        "alpha": 381.6,
         "beta": 28.36
       }
     ]
   ],
-  "TOTAL_USER_COUNT": 307824,
-  "BEST_PASSAGES": [
-    {
-      "passage": "Atomic semantics are very strong. An atomic register provides strong guarantees even when there is concurrency and failures.",
-      "alpha": 105.8,
-      "beta": 5.25
-    },
-    {
-      "passage": "A metaclass is a class where instances are classes. A metaclass describes a common structure of a collection of classes and can implement a design pattern or describe particular kinds of classes. Metaclasses are often used to describe frameworks.",
-      "alpha": 199.8,
-      "beta": 10.25
-    }
-  ],
+  "TOTAL_USER_COUNT": 307903,
+  "BEST_PASSAGES": [],
   "HARDCODED_NUMBER_PASSAGES": {
     "0": [
       {
@@ -1326,7 +1315,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "In 1903 the Wright Flyer covered 120 feet. Modern jets cruise around 30,000 feet with 500 mph groundspeeds and descend through 10,000 for checks while early aviation meets celebrated the 10th year by 1910.",
-        "alpha": 24.55,
+        "alpha": 25.55,
         "beta": 1.45
       },
       {
@@ -1351,7 +1340,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 90 meets I 290 and I 390 around Chicago. Planners track 20,000 vehicles per hour, add 200 ramp meters, and open the 10th reversible lane by 2024.",
-        "alpha": 54.55,
+        "alpha": 55.55,
         "beta": 1.45
       },
       {
@@ -1432,7 +1421,7 @@ const HYPERPARAMS={
       {
         "passage": "Version 1.0 shipped with 100,000 users. A 2.0 update pushed 50,000 requests per second and met a 10th sprint deadline while teams logged 0 critical defects after weekend tests.",
         "alpha": 56.55,
-        "beta": 0.45
+        "beta": 1.45
       }
     ],
     "1": [
@@ -1710,7 +1699,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Felix Baumgartner's 2012 jump from about 39 km broke records. He reached near Mach 1.25, freefell for 4 minutes 19 seconds, and landed safely after a 9 point checklist cleared green.",
-        "alpha": 420.6,
+        "alpha": 422.6,
         "beta": 37.45
       },
       {
@@ -1830,7 +1819,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "USB 2.0 raised throughput to 480 Mbps in the 2000s. Many makers kept a 2nd port for charging at 2 A, bundled 2-meter cables, and labeled hubs with 12 or 24 W ratings.",
-        "alpha": 167.6,
+        "alpha": 168.6,
         "beta": 8.45
       },
       {
@@ -1845,7 +1834,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Western music counts 12 semitones per octave and 24 major and minor keys. Ear training drills 2nd intervals, then 5th and 7th, while metronomes tick at 120 for 2 minute scales.",
-        "alpha": 157.6,
+        "alpha": 158.6,
         "beta": 7.45
       }
     ],
@@ -1902,7 +1891,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Dantes poem spans 3 realms in 3 canticles. Each holds 33 cantos plus an opening, and Canto 3 warns readers as translators debate 13 tercets per scene with a 3rd rhyme chain.",
-        "alpha": 34.55,
+        "alpha": 35.55,
         "beta": 2.45
       },
       {
@@ -1932,7 +1921,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Headsets still ship a 3.5 mm plug as consoles add 3D audio. Competitive screens hit 360 Hz, laptops calibrate to 300 nits, and engines can push 103 fps with frame caps at 130 or 133.",
-        "alpha": 27.55,
+        "alpha": 28.55,
         "beta": 1.45
       },
       {
@@ -2079,7 +2068,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Fahrenheit 451 resonated after 1954 reprints and remains assigned widely. Study guides flag page 451 for key scenes, cite a 14th annotation, and compare dystopias to 1984 in 4th week seminars.",
-        "alpha": 162.6,
+        "alpha": 163.6,
         "beta": 10.45
       },
       {
@@ -2144,7 +2133,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Mens tennis tracks 4 Grand Slams each year and celebrates a 24th major milestone. A 4th seed often holds 64 percent first serves, wins 40 percent of return points, and uncorks 144 mph serves on big points.",
-        "alpha": 49.55,
+        "alpha": 50.55,
         "beta": 1.45
       },
       {
@@ -2194,7 +2183,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Streaming moved to 4K masters at 24 fps. A classic TV hour often runs about 44 minutes and 4.5 star scores surge on a 40th anniversary cut with restored 1440 transfers.",
-        "alpha": 181.6,
+        "alpha": 182.6,
         "beta": 7.45
       },
       {
@@ -2215,7 +2204,7 @@ const HYPERPARAMS={
       {
         "passage": "World War I began in 1914 and reshaped diplomacy. Wilsons 14th point joined 14 points in 1944 planning, while 40 percent output shifts and 24 hour production schedules defined the wartime home front.",
         "alpha": 53.55,
-        "beta": 4.45
+        "beta": 5.45
       }
     ],
     "5": [
@@ -2226,7 +2215,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "A 5 by 5 matrix has 25 entries and a 5th row holds 5 elements. Crosswords at 15 by 15 use 225 squares and 50 percent downsampling preserves 95 percent readability.",
-        "alpha": 192.6,
+        "alpha": 193.6,
         "beta": 8.45
       },
       {
@@ -2241,12 +2230,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "A No 5 midfielder struck in the 55th minute as xG rose to 1.5. The 65th saw a 25 yard volley and a 95th save sealed a 2-1.",
-        "alpha": 204.6,
+        "alpha": 206.6,
         "beta": 7.45
       },
       {
         "passage": "AP exams score from 1 to 5; many sections run 55 minutes with 45 multiple choice items, free responses weigh 50%, and students celebrate a 5th straight year of 5s in a club of 25 peers.",
-        "alpha": 62.55,
+        "alpha": 63.55,
         "beta": 4.45
       },
       {
@@ -2256,7 +2245,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "An F5 tornado can exceed 300 mph. Warning drills trigger 15 minute alerts, cities stock 5,000 gallons, and schools run a 5th practice each spring as 55 sirens wail.",
-        "alpha": 67.55,
+        "alpha": 68.55,
         "beta": 4.45
       },
       {
@@ -2281,7 +2270,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Climate reports highlight the 95th percentile for heat waves; cities plan 50% canopy boosts, aim for 1.5 C pathways by 2025, and test 5 minute forecasts to protect 5th grade sports days.",
-        "alpha": 82.55,
+        "alpha": 83.55,
         "beta": 4.45
       },
       {
@@ -2291,7 +2280,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Esports staples field 5v5 rosters; best of 5 series reward depth as teams ban 5 maps and call 25 second pauses, play 15 round halves, and use a 5th timeout if scores hit 15 15.",
-        "alpha": 80.55,
+        "alpha": 81.55,
         "beta": 3.45
       },
       {
@@ -2311,7 +2300,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "I 55 meets I 57 near Effingham and loops with I 255 around St Louis. Drivers hold 65 mph, exit every 15 miles, and schedule a 5th coffee stop at 5 past.",
-        "alpha": 78.55,
+        "alpha": 79.55,
         "beta": 6.45
       },
       {
@@ -2321,7 +2310,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Index funds tracking the S and P 500 grew after 1975. Investors target 5 percent withdrawals, hold 50 to 75 percent equities, and rebalance on a 5th Friday rule after 15 months.",
-        "alpha": 70.55,
+        "alpha": 71.55,
         "beta": 4.45
       },
       {
@@ -2336,7 +2325,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Investors watch the S and P 500 and target 15% savings rates; a 50 50 split once guided the 5th edition of many handbooks and fee cuts from 0.5% to 0.05% compound quietly.",
-        "alpha": 59.55,
+        "alpha": 60.55,
         "beta": 3.45
       },
       {
@@ -2396,7 +2385,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The National Maximum Speed Law set 55 mph in 1974 and many states raised limits after 1995; commuters still cruise in 5th gear at 65 and time 5 minute gaps on 25 mile stretches.",
-        "alpha": 80.55,
+        "alpha": 82.55,
         "beta": 3.45
       },
       {
@@ -2406,7 +2395,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Wi Fi 5 on 5 GHz popularized 80 MHz channels. Many routers advertise 3.5 Gbps peaks, 1.5 Gbps real throughput, and a 5th antenna for 4x4 plus 1 backhaul on mesh kits.",
-        "alpha": 88.55,
+        "alpha": 89.55,
         "beta": 3.45
       }
     ],
@@ -2519,7 +2508,7 @@ const HYPERPARAMS={
       {
         "passage": "Modern Olympics began in 1896 in Athens; the marathon settled at 26.2 miles. The 16th Games were held in Melbourne, and by 2016 Rio showcased 360-degree replays in prime-time coverage.",
         "alpha": 85.55,
-        "beta": 5.45
+        "beta": 6.45
       },
       {
         "passage": "Most home networks now support IPv6 while desktops still run x86. AES uses 256 bits and a chessboard has 64 squares and compasses turn 360 degrees while many laptops idle near 1.6 GHz.",
@@ -2670,7 +2659,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Chemistry marks pH 7.0 as neutral and nitrogen has atomic number 7. The SI defines 7 base units and labs hold 70 percent humidity for a 7th calibration across 17 samples at 21 C.",
-        "alpha": 106.5,
+        "alpha": 107.5,
         "beta": 3.45
       },
       {
@@ -2685,7 +2674,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Classroom mnemonics list 7 continents and 7 days; study halls run 24x7 before exams, the 7th grade often starts near age 12, and Room 107 schedules 70 minute labs.",
-        "alpha": 97.55,
+        "alpha": 98.55,
         "beta": 4.45
       },
       {
@@ -2760,7 +2749,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Rome is famed for its 7 hills; construction of the Colosseum began around AD 70, guides map 76 entrances, and capacity sat near 70,000 as a 7th recommended loop runs about 7 km.",
-        "alpha": 79.55,
+        "alpha": 80.55,
         "beta": 4.45
       },
       {
@@ -2827,7 +2816,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Arachnids are defined by 8 legs and many spiders also show 8 eyes. Grade 8 labs use an 8 point checklist to separate insects from arachnids in 180 minute sessions.",
-        "alpha": 57.55,
+        "alpha": 58.55,
         "beta": 2.45
       },
       {
@@ -2927,7 +2916,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Oxygen is atomic number 8 and the octet rule highlights 8 valence electrons. Argon totals 18, and many 1988 primers drew 2-8-8 diagrams to explain stable shells in simple terms.",
-        "alpha": 64.55,
+        "alpha": 66.55,
         "beta": 0.45
       },
       {
@@ -3044,7 +3033,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Grade 9 often marks the start of high school. Students chase 99th percentile scores, finish 19 required credits by age 17, and target 90 minute study blocks before 9 pm lights out.",
-        "alpha": 109.5,
+        "alpha": 110.5,
         "beta": 9.45
       },
       {
