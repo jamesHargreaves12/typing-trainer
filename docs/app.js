@@ -321,7 +321,7 @@ class ErrorGroupSelectionStrategy {
       user_intro_wpm,
       highlight_error_pct: 0.1,
       userId: userId,
-      selectionStratedy: this.strategy
+      selectionStratedy: `error-group->${this.strategy}`
     });
   }
 
@@ -1337,14 +1337,25 @@ function annotateEdits(typed, target) {
 
   let i = m, j = n, out = [];
   while (i > 0 || j > 0) {
-    if (i > 0 && j > 0 && typed[i - 1] === target[j - 1] && dp[i][j] === dp[i - 1][j - 1]) {
+    // If current characters match, or both characters are the same double letter (second instance)
+    if (
+      i > 0 && j > 0 &&
+      typed[i - 1] === target[j - 1] &&
+      dp[i][j] === dp[i - 1][j - 1]
+    ) {
       out.push(target[j - 1]); i--; j--;
-    } else if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + 1) {
+    }
+    // Substitution
+    else if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + 1) {
       out.push("^"); i--; j--;
-    } else if (j > 0 && dp[i][j] === dp[i][j - 1] + 1) {
+    }
+    // Insertion in target (i.e., missing in typed)
+    else if (j > 0 && dp[i][j] === dp[i][j - 1] + 1) {
       out.push("$");
       j--;
-    } else {
+    }
+    // Deletion from typed (i.e., extra in typed)
+    else {
       out.push("#"); i--;
     }
   }
@@ -1541,6 +1552,7 @@ function handleInput(e) {
         const edit_string = annotateEdits(currentWordTyped, currentWordTarget) + " ";
         if (edit_string.split('#').length + edit_string.split('$').length === 3 && edit_string.indexOf('^') === -1) {
           const beforeErrorCount = countCharErrors(inputText, targetText);
+          console.log("JH-ES", inputText.slice(inputPreviousWordStart.length), edit_string.replace(/#(.)/g, '#'))
           inputText = inputText.slice(0, inputPreviousWordStart) + edit_string.replace(/#(.)/g, '#');
           const afterErrorCount = countCharErrors(inputText, targetText);
           if (afterErrorCount > beforeErrorCount) {
