@@ -1115,6 +1115,151 @@ const HYPERPARAMS={
       "passage": "Dwarf frogs have four webbed feet. African clawed frogs have webbed hind feet while their front feet have autonomous digits.",
       "alpha": 105.8,
       "beta": 5.25
+    },
+    {
+      "passage": "There are several formats for rowing races, often called \"regattas\". The two most common are side by side and head races.",
+      "alpha": 117.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "SSRC: (32 bits) Synchronization source identifier uniquely identifies the source of a stream. The synchronization sources within the same RTP session will be unique.",
+      "alpha": 117.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "Finally, the server stub calls the server procedure. The reply traces the same steps in the reverse direction.",
+      "alpha": 206.8,
+      "beta": 11.25
+    },
+    {
+      "passage": "The factors that explain wages receive different weights than the factors that explain test scores. More than g is required to explain either.",
+      "alpha": 148.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "Certain CCP cadres have access to a special supply system for foodstuffs called tegong. CCP leadership cadres have access to a dedicated healthcare system managed by the CCP General Office.",
+      "alpha": 112.8,
+      "beta": 6.25
+    },
+    {
+      "passage": "There are now only four candidates remaining and three seats remaining open. The least popular candidate (Candidate B1) is declared defeated. The remaining three are declared elected regardless of whether they reached the quota.",
+      "alpha": 123.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Sambuca is also used in cooking, in small amounts because it has a strong flavour. It is usually used in desserts and seafood recipes.",
+      "alpha": 237.8,
+      "beta": 14.25
+    },
+    {
+      "passage": "Federal reserve accounts contain federal reserve credit, which can be converted into federal reserve notes. Private banks maintain their bank reserves in federal reserve accounts.",
+      "alpha": 118.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Other UML elements such as classes and components are first manifested into artifacts and instances of these artifacts are then deployed. Artifacts can also be composed of other artifacts.",
+      "alpha": 134.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "For any vector space, the addition acts freely and transitively on the vector space itself. Thus a Euclidean vector space can be viewed as a Euclidean space that has itself as the associated vector space.",
+      "alpha": 117.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Adherence is the adhesive strength between photoresist and substrate. If the resist comes off the substrate, some features will be missing or damaged.",
+      "alpha": 146.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "Commercial stations charge advertisers for the estimated number of listeners. The larger the audience, the higher the stations' rate card can be for commercial advertising.",
+      "alpha": 114.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Gothenburg has several parks and nature reserves ranging in size from tens of square meters to hundreds of hectares. It also has many green areas that are not designated as parks or reserves.",
+      "alpha": 129.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "The secretariat was divided into bureaus, with each being placed under the leadership of one freedman. Narcissus was the secretary of correspondence. Pallas became the secretary of the treasury.",
+      "alpha": 141.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "EMC is often understood as the control of electromagnetic interference (EMI). Electromagnetic interference divides into several categories according to the source and signal characteristics.",
+      "alpha": 125.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "Agile software development may involve frequent software releases with relatively small changes. Defects are revealed by user feedback.",
+      "alpha": 154.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "Let D(n) be the arithmetic derivative. Then the logarithmic derivative See Arithmetic derivative for details.",
+      "alpha": 137.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "Adhesive fracture (sometimes referred to as interfacial fracture) is when debonding occurs between the adhesive and the adherend. In most cases, the occurrence of adhesive fracture for a given adhesive goes along with smaller fracture toughness.",
+      "alpha": 137.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "Two formal methods are available to describe semantics. They are denotational semantics and axiomatic semantics.",
+      "alpha": 122.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "Water is used in power generation. Hydroelectricity is electricity obtained from hydropower. Hydroelectric power comes from water driving a water turbine connected to a generator.",
+      "alpha": 107.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "There are currently no named features on Nereid. When features are discovered, they are to be named after individual nereids.",
+      "alpha": 105.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "There were strong motives for conquest of Africa. Raw materials were needed for European factories. Prestige and imperial rivalries were at play.",
+      "alpha": 133.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "Ground penetrating radar pulses electromagnetic waves into the pavement and measures and graphically displays the reflected signal. This can reveal voids and other defects.",
+      "alpha": 115.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "One important role in Debian's leadership is that of a release manager. The release team sets goals for the next release, supervises the processes and decides when to release. The team is led by the next release managers and stable release managers.",
+      "alpha": 140.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "Nerve agents are generally colorless and tasteless liquids. Nerve agents evaporate at varying rates depending on the substance. None are gases in normal environments.",
+      "alpha": 140.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "Boldface indicates a player still active in La Liga. Italics indicates a player still active outside La Liga.",
+      "alpha": 126.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "The closed class of Norwegian determiners are declined in gender and number in agreement with their argument. Not all determiners are inflected.",
+      "alpha": 138.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "Currency crises were less frequent under the gold standard than in periods without the gold standard. However, banking crises were more frequent.",
+      "alpha": 111.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "GIMPshop: A fork of GIMP aiming to be more like Adobe Photoshop. The Windows version has limited MDI.",
+      "alpha": 136.8,
+      "beta": 10.25
     }
   ],
   "HARDCODED_NUMBER_PASSAGES": {
