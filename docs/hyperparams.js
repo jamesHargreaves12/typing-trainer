@@ -1,12 +1,12 @@
 const HYPERPARAMS={
   "LETTER_SPEED_STD": {
     " ": 0.09926,
-    "e": 0.09209,
-    "a": 0.09927,
+    "e": 0.09208,
+    "a": 0.09926,
     "t": 0.1329,
     "i": 0.1107,
     "o": 0.1076,
-    "n": 0.1005,
+    "n": 0.1004,
     "s": 0.1061,
     "r": 0.1101,
     "h": 0.08569,
@@ -17,137 +17,137 @@ const HYPERPARAMS={
     "m": 0.1216,
     "p": 0.148,
     "f": 0.1317,
-    "g": 0.1343,
+    "g": 0.1342,
     "y": 0.1221,
-    "b": 0.1675,
-    "w": 0.1563,
-    ".": 0.2115,
+    "b": 0.1674,
+    "w": 0.1562,
+    ".": 0.2114,
     ",": 0.2127,
-    "v": 0.1365,
-    "k": 0.1095,
-    "T": 0.1836,
+    "v": 0.1369,
+    "k": 0.1096,
+    "T": 0.1834,
     "1": 0.1754,
     "0": 0.1048,
-    "S": 0.1968,
-    "C": 0.1923,
-    "2": 0.1816,
-    "A": 0.1828,
-    "I": 0.1649,
-    "9": 0.1397,
-    "M": 0.1558,
-    "P": 0.1562,
-    "B": 0.187,
-    "H": 0.1714,
-    "'": 0.2222,
+    "S": 0.1979,
+    "C": 0.192,
+    "2": 0.1815,
+    "A": 0.182,
+    "I": 0.1643,
+    "9": 0.1394,
+    "M": 0.1555,
+    "P": 0.1561,
+    "B": 0.1861,
+    "H": 0.1713,
+    "'": 0.2221,
     ")": 0.2045,
-    "(": 0.2103,
-    "-": 0.1804,
-    "D": 0.1856,
-    "R": 0.2015,
-    "N": 0.1691,
-    "F": 0.176,
-    "W": 0.1871,
-    "L": 0.1795,
-    "x": 0.1475,
-    "8": 0.1416,
-    "G": 0.2018,
-    "U": 0.1402,
-    "3": 0.1819,
-    "E": 0.1965,
-    "\"": 0.2082,
-    "J": 0.1386,
-    "5": 0.1452,
-    "O": 0.1288,
-    "6": 0.1655,
-    "7": 0.1553,
-    "4": 0.1584,
-    "q": 0.1719,
-    ":": 0.228,
-    "z": 0.2024,
+    "(": 0.2107,
+    "-": 0.1819,
+    "D": 0.1852,
+    "R": 0.2019,
+    "N": 0.1685,
+    "F": 0.1759,
+    "W": 0.1868,
+    "L": 0.178,
+    "x": 0.1469,
+    "8": 0.1408,
+    "G": 0.2006,
+    "U": 0.1393,
+    "3": 0.1815,
+    "E": 0.1966,
+    "\"": 0.2083,
+    "J": 0.1381,
+    "5": 0.1443,
+    "O": 0.1325,
+    "6": 0.165,
+    "7": 0.1552,
+    "4": 0.1571,
+    "q": 0.171,
+    ":": 0.2259,
+    "z": 0.2023,
     "j": 0.1605,
-    "K": 0.1306,
-    "V": 0.1765,
-    "Y": 0.1728,
-    ";": 0.2107,
-    "Z": 0.1728,
-    "Q": 0.1728,
-    "?": 0.2107,
-    "X": 0.1728,
+    "K": 0.1303,
+    "V": 0.1761,
+    "Y": 0.1727,
+    ";": 0.2106,
+    "Z": 0.1727,
+    "Q": 0.1727,
+    "?": 0.2106,
+    "X": 0.1727,
     "!": 0.231
   },
   "LETTER_SPEED_MEAN": {
-    " ": 0.2556,
-    "e": 0.2353,
-    "a": 0.2617,
-    "t": 0.3159,
-    "i": 0.2783,
-    "o": 0.2683,
-    "n": 0.2534,
-    "s": 0.2903,
-    "r": 0.2772,
-    "h": 0.2426,
-    "l": 0.2849,
-    "d": 0.3147,
-    "c": 0.3628,
-    "u": 0.304,
-    "m": 0.3132,
-    "p": 0.3691,
-    "f": 0.343,
-    "g": 0.3388,
-    "y": 0.3398,
-    "b": 0.4224,
-    "w": 0.3762,
-    ".": 0.563,
-    ",": 0.5491,
-    "v": 0.3665,
-    "k": 0.3133,
-    "T": 0.5851,
-    "1": 0.5555,
-    "0": 0.3122,
-    "S": 0.59,
-    "C": 0.6124,
-    "2": 0.5487,
-    "A": 0.5681,
-    "I": 0.5421,
-    "9": 0.4832,
-    "M": 0.5344,
-    "P": 0.5339,
-    "B": 0.6128,
-    "H": 0.5936,
-    "'": 0.6712,
+    " ": 0.2554,
+    "e": 0.2352,
+    "a": 0.2615,
+    "t": 0.3157,
+    "i": 0.2781,
+    "o": 0.2681,
+    "n": 0.2532,
+    "s": 0.2901,
+    "r": 0.277,
+    "h": 0.2424,
+    "l": 0.2847,
+    "d": 0.3145,
+    "c": 0.3625,
+    "u": 0.3038,
+    "m": 0.313,
+    "p": 0.3689,
+    "f": 0.3427,
+    "g": 0.3386,
+    "y": 0.3395,
+    "b": 0.4221,
+    "w": 0.3759,
+    ".": 0.5626,
+    ",": 0.5487,
+    "v": 0.3663,
+    "k": 0.3132,
+    "T": 0.5846,
+    "1": 0.5553,
+    "0": 0.312,
+    "S": 0.5898,
+    "C": 0.6121,
+    "2": 0.5485,
+    "A": 0.5678,
+    "I": 0.5417,
+    "9": 0.483,
+    "M": 0.534,
+    "P": 0.5336,
+    "B": 0.6126,
+    "H": 0.5932,
+    "'": 0.671,
     ")": 0.7749,
     "(": 0.7603,
-    "-": 0.6387,
-    "D": 0.6236,
-    "R": 0.6211,
-    "N": 0.5549,
-    "F": 0.6241,
-    "W": 0.6829,
-    "L": 0.552,
-    "x": 0.4361,
-    "8": 0.5332,
-    "G": 0.6623,
-    "U": 0.5964,
-    "3": 0.6214,
-    "E": 0.6143,
-    "\"": 0.786,
-    "J": 0.62,
-    "5": 0.5994,
-    "O": 0.5546,
-    "6": 0.6405,
-    "7": 0.5534,
-    "4": 0.6112,
-    "q": 0.5266,
-    ":": 0.8105,
-    "z": 0.5072,
-    "j": 0.4355,
-    "K": 0.6035,
-    "V": 0.6585,
-    "Y": 0.6306,
-    ";": 0.81,
-    "Z": 0.7772,
-    "Q": 0.7546,
-    "?": 0.7524,
+    "-": 0.6384,
+    "D": 0.6234,
+    "R": 0.6208,
+    "N": 0.5545,
+    "F": 0.6236,
+    "W": 0.6825,
+    "L": 0.5518,
+    "x": 0.4359,
+    "8": 0.5331,
+    "G": 0.662,
+    "U": 0.596,
+    "3": 0.6212,
+    "E": 0.6141,
+    "\"": 0.7857,
+    "J": 0.6197,
+    "5": 0.5992,
+    "O": 0.5542,
+    "6": 0.6404,
+    "7": 0.5533,
+    "4": 0.6108,
+    "q": 0.5264,
+    ":": 0.8103,
+    "z": 0.5069,
+    "j": 0.4353,
+    "K": 0.6031,
+    "V": 0.6582,
+    "Y": 0.6304,
+    ";": 0.8095,
+    "Z": 0.7767,
+    "Q": 0.7548,
+    "?": 0.751,
     "X": 0.7066,
     "!": 0.72
   },
@@ -155,7 +155,7 @@ const HYPERPARAMS={
     " ": 0,
     "e": 3.323,
     "a": 3.323,
-    "t": 47.81,
+    "t": 48.73,
     "i": 0,
     "o": 12.19,
     "n": 0,
@@ -163,7 +163,7 @@ const HYPERPARAMS={
     "r": 3.323,
     "h": 3.323,
     "l": 0,
-    "d": 21.75,
+    "d": 19.27,
     "c": 0,
     "u": 3.323,
     "m": 0,
@@ -172,51 +172,51 @@ const HYPERPARAMS={
     "g": 0,
     "y": 3.323,
     "b": 3.323,
-    "w": 30.78,
-    ".": 0,
-    ",": 3.522,
+    "w": 30.11,
+    ".": 3.323,
+    ",": 3.457,
     "v": 3.323,
-    "k": 0,
-    "T": 8.019,
+    "k": 6.311,
+    "T": 8.849,
     "1": 0,
     "0": 0,
-    "S": 4.598,
-    "C": 5.901,
+    "S": 4.311,
+    "C": 6.173,
     "2": 0,
-    "A": 5.637,
-    "I": 5.744,
+    "A": 5.819,
+    "I": 5.905,
     "9": 0,
-    "M": 3.421,
-    "P": 3.916,
-    "B": 0.5312,
-    "H": 1.014,
+    "M": 3.419,
+    "P": 9.91,
+    "B": 0.6826,
+    "H": 0.9037,
     "'": 3.323,
     ")": 3.323,
     "(": 3.323,
-    "-": 4.306,
-    "D": 3.194,
+    "-": 3.917,
+    "D": 3.227,
     "R": 0,
     "N": 0,
-    "F": 0.1722,
+    "F": 0.1875,
     "W": 3.323,
-    "L": 1.629,
-    "x": 5.437,
+    "L": 1.326,
+    "x": 5.6,
     "8": 0,
     "G": 3.323,
     "U": 0,
     "3": 0,
     "E": 0,
     "\"": 3.323,
-    "J": 2.583,
-    "5": 3.446,
-    "O": 3.884,
+    "J": 2.619,
+    "5": 3.343,
+    "O": 4.017,
     "6": 0,
-    "7": 2.947,
-    "4": 11.64,
-    "q": 0.3411,
+    "7": 2.896,
+    "4": 2.375,
+    "q": 0.1621,
     ":": 3.323,
-    "z": 3.131,
-    "j": 4.946,
+    "z": 3.28,
+    "j": 4.788,
     "K": 0,
     "V": 3.323,
     "Y": 3.323,
@@ -228,72 +228,72 @@ const HYPERPARAMS={
     "!": 0
   },
   "LETTER_CHANGABILITY_PER_OCCURENCE_C": {
-    " ": -11.46,
+    " ": -11.52,
     "e": -9.255,
     "a": -9.255,
-    "t": -25.5,
-    "i": -12.94,
+    "t": -25.78,
+    "i": -12.95,
     "o": -14.08,
-    "n": -12.13,
+    "n": -12.18,
     "s": -9.255,
     "r": -9.255,
     "h": -9.255,
-    "l": -14.62,
-    "d": -18.62,
-    "c": -12.37,
+    "l": -14.81,
+    "d": -18.03,
+    "c": -12.46,
     "u": -9.255,
-    "m": -12.24,
-    "p": -9.855,
-    "f": -13.25,
-    "g": -10.65,
+    "m": -12.28,
+    "p": -9.856,
+    "f": -13.31,
+    "g": -10.64,
     "y": -9.255,
     "b": -9.255,
-    "w": -20.45,
-    ".": -11.06,
-    ",": -13.72,
+    "w": -20.3,
+    ".": -9.255,
+    ",": -13.71,
     "v": -9.255,
-    "k": -11.38,
-    "T": -14.31,
+    "k": -12.68,
+    "T": -14.41,
     "1": -10.82,
-    "0": -11.01,
-    "S": -11.66,
-    "C": -12.93,
-    "2": -10.37,
-    "A": -12.27,
-    "I": -12.59,
-    "9": -10.22,
-    "M": -10.83,
-    "P": -10.36,
-    "B": -9.672,
-    "H": -10.03,
+    "0": -11.04,
+    "S": -11.56,
+    "C": -12.74,
+    "2": -10.31,
+    "A": -12.23,
+    "I": -12.61,
+    "9": -10.26,
+    "M": -10.82,
+    "P": -13.32,
+    "B": -9.76,
+    "H": -9.903,
     "'": -9.255,
     ")": -9.255,
     "(": -9.255,
-    "-": -12.21,
-    "D": -10.38,
-    "R": -9.667,
-    "N": -8.857,
-    "F": -9.257,
+    "-": -12.17,
+    "D": -10.39,
+    "R": -9.515,
+    "N": -8.838,
+    "F": -9.272,
     "W": -9.255,
-    "L": -9.569,
-    "x": -11.69,
+    "L": -9.422,
+    "x": -11.75,
     "8": -9.212,
     "G": -9.255,
-    "U": -8.987,
-    "3": -9.42,
-    "E": -9.377,
+    "U": -8.984,
+    "3": -9.632,
+    "E": -9.47,
     "\"": -9.255,
-    "J": -9.584,
-    "5": -10.46,
-    "O": -10.61,
-    "6": -9.359,
-    "7": -10.77,
-    "4": -14.42,
-    "q": -9.1,
+    "J": -9.598,
+    "5": -10.41,
+    "O": -10.65,
+    "6": -9.292,
+    "7": -10.76,
+    "4": -10.76,
+    "q": -8.997,
     ":": -9.255,
-    "z": -10.35,
-    "j": -10.66,
-    "K": -9.055,
+    "z": -10.32,
+    "j": -10.53,
+    "K": -9.012,
     "V": -9.255,
     "Y": -9.255,
     ";": -9.255,
@@ -305,79 +305,79 @@ const HYPERPARAMS={
   },
   "ERROR_GAP_CHANGE_PER_OCCURENCE_M": {
     " ": 0,
-    "e": 0.008088,
-    "a": 0.0101,
-    "t": 0.01075,
-    "i": 0.01216,
-    "o": 0.007311,
-    "n": 0.01138,
-    "s": 0.009704,
-    "r": 0.0134,
-    "h": 0.01772,
-    "l": 0.01883,
-    "d": 0.01543,
-    "c": 0.0155,
-    "u": 0.01839,
-    "m": 0.02215,
-    "p": 0.01964,
-    "f": 0.01924,
-    "g": 0.01494,
-    "y": 0.01444,
-    "b": 0.01864,
-    "w": 0.02083,
-    ".": 0.01952,
-    ",": 0.009157,
-    "v": 0.02368,
-    "k": 0.0199,
-    "T": 0.02653,
-    "1": 0.01727,
-    "0": 0.02673,
-    "S": 0.02679,
-    "C": 0.02691,
-    "2": 0.02626,
-    "A": 0.02696,
-    "I": 0.0271,
-    "9": 0.01691,
-    "M": 0.02724,
-    "P": 0.02726,
-    "B": 0.02734,
-    "H": 0.02736,
-    "'": 0.02398,
-    ")": 0.02739,
-    "(": 0.02739,
-    "-": 0.00705,
-    "D": 0.02745,
-    "R": 0.02748,
-    "N": 0.02751,
-    "F": 0.02751,
-    "W": 0.02751,
-    "L": 0.02753,
-    "x": 0.0177,
-    "8": 0.02754,
-    "G": 0.02757,
-    "U": 0.02757,
-    "3": 0.07795,
-    "E": 0.02759,
-    "\"": 0.02759,
-    "J": 0.02759,
-    "5": 0.0628,
-    "O": 0.0276,
-    "6": 0.01081,
-    "7": 0.05063,
-    "4": 0.04735,
-    "q": 0.006075,
-    ":": 0.02766,
-    "z": 0.02769,
-    "j": 0.02769,
-    "K": 0.0277,
-    "V": 0.02776,
-    "Y": 0.02783,
-    ";": 0.04517,
-    "Z": 0.02788,
-    "Q": 0.02789,
-    "?": 0.02789,
-    "X": 0.02789,
-    "!": 0.02791
+    "e": 0.007026,
+    "a": 0.006373,
+    "t": 0.009538,
+    "i": 0.00793,
+    "o": 0.008619,
+    "n": 0.009417,
+    "s": 0.01161,
+    "r": 0.01024,
+    "h": 0.01799,
+    "l": 0.01609,
+    "d": 0.01642,
+    "c": 0.01427,
+    "u": 0.01485,
+    "m": 0.02105,
+    "p": 0.01763,
+    "f": 0.01793,
+    "g": 0.01749,
+    "y": 0.02035,
+    "b": 0.01929,
+    "w": 0.01147,
+    ".": 0.01381,
+    ",": 0.008818,
+    "v": 0.02309,
+    "k": 0.04312,
+    "T": 0.02576,
+    "1": 0.0138,
+    "0": 0.02597,
+    "S": 0.02603,
+    "C": 0.02615,
+    "2": 0.03484,
+    "A": 0.0262,
+    "I": 0.02635,
+    "9": 0.02152,
+    "M": 0.02649,
+    "P": 0.02652,
+    "B": 0.0266,
+    "H": 0.02662,
+    "'": 0.0462,
+    ")": 0.02665,
+    "(": 0.02665,
+    "-": 0.02374,
+    "D": 0.02671,
+    "R": 0.02674,
+    "N": 0.02677,
+    "F": 0.02677,
+    "W": 0.02677,
+    "L": 0.02679,
+    "x": 0.009172,
+    "8": 0.04343,
+    "G": 0.02684,
+    "U": 0.02684,
+    "3": 0.02686,
+    "E": 0.02686,
+    "\"": 0.02686,
+    "J": 0.02686,
+    "5": 0.02623,
+    "O": 0.02687,
+    "6": 0.03917,
+    "7": 0.06403,
+    "4": 0.03141,
+    "q": 0.01173,
+    ":": 0.02693,
+    "z": 0.02695,
+    "j": 0.0527,
+    "K": 0.02696,
+    "V": 0.02703,
+    "Y": 0.0271,
+    ";": 0.02715,
+    "Z": 0.02715,
+    "Q": 0.02716,
+    "?": 0.02716,
+    "X": 0.02717,
+    "!": 0.02718
   },
   "LETTER_FREQUENCY": {
     " ": 0.1613,
@@ -456,44 +456,44 @@ const HYPERPARAMS={
     "!": 2.29e-05
   },
   "LOGICAL_GROUP_MEAN_RATE": {
-    "most_common": 0.03891,
+    "most_common": 0.03889,
     "left_hand": 0.04197,
-    "top_row": 0.04205,
-    "right_hand": 0.04399,
-    "alternate_hand_bigrams": 0.04789,
-    "ring_pinky": 0.04228,
+    "top_row": 0.04203,
+    "right_hand": 0.04397,
+    "alternate_hand_bigrams": 0.04785,
+    "ring_pinky": 0.04227,
     "home_row": 0.04258,
-    "left_hand_only_bigrams": 0.04462,
+    "left_hand_only_bigrams": 0.04459,
     "bottom_row": 0.04803,
-    "right_hand_only_bigrams": 0.04803,
-    "difficult_to_reach_letters": 0.04491,
-    "pinky": 0.0386,
-    "same_finger_bigrams": 0.05382,
-    "caps": 0.1041,
+    "right_hand_only_bigrams": 0.04802,
+    "difficult_to_reach_letters": 0.04488,
+    "pinky": 0.03861,
+    "same_finger_bigrams": 0.0538,
+    "caps": 0.104,
     "punc": 0.1555,
-    "rare_letters": 0.08444,
-    "repeat_bigrams": 0.04222,
-    "numbers": 0.0645
+    "rare_letters": 0.08445,
+    "repeat_bigrams": 0.04217,
+    "numbers": 0.06451
   },
   "LOGICAL_GROUP_STD": {
-    "most_common": 0.01629,
-    "left_hand": 0.01845,
-    "top_row": 0.01899,
-    "right_hand": 0.02072,
-    "alternate_hand_bigrams": 0.03919,
-    "ring_pinky": 0.01818,
-    "home_row": 0.01936,
-    "left_hand_only_bigrams": 0.03717,
-    "bottom_row": 0.02646,
-    "right_hand_only_bigrams": 0.03552,
-    "difficult_to_reach_letters": 0.02322,
+    "most_common": 0.01628,
+    "left_hand": 0.01843,
+    "top_row": 0.01896,
+    "right_hand": 0.02068,
+    "alternate_hand_bigrams": 0.03906,
+    "ring_pinky": 0.01816,
+    "home_row": 0.01933,
+    "left_hand_only_bigrams": 0.03706,
+    "bottom_row": 0.02641,
+    "right_hand_only_bigrams": 0.03542,
+    "difficult_to_reach_letters": 0.02316,
     "pinky": 0.01824,
-    "same_finger_bigrams": 0.03501,
-    "caps": 0.07688,
-    "punc": 0.08116,
-    "rare_letters": 0.05447,
-    "repeat_bigrams": 0.03182,
-    "numbers": 0.05681
+    "same_finger_bigrams": 0.0349,
+    "caps": 0.07674,
+    "punc": 0.08119,
+    "rare_letters": 0.05441,
+    "repeat_bigrams": 0.03172,
+    "numbers": 0.0567
   },
   "LOGICAL_GROUP_FREQUENCY": {
     "most_common": 0.4938,
@@ -516,224 +516,224 @@ const HYPERPARAMS={
     "numbers": 0.0104
   },
   "LETTER_MEAN_RATE": {
-    " ": 0.01217,
+    " ": 0.01216,
     "e": 0.03188,
-    "a": 0.03491,
-    "t": 0.03741,
-    "i": 0.04579,
-    "o": 0.04415,
-    "n": 0.03595,
-    "s": 0.04232,
-    "r": 0.0437,
-    "h": 0.0347,
-    "l": 0.03858,
-    "d": 0.0535,
-    "c": 0.04904,
-    "u": 0.05413,
-    "m": 0.04738,
+    "a": 0.03492,
+    "t": 0.03738,
+    "i": 0.04577,
+    "o": 0.04412,
+    "n": 0.03593,
+    "s": 0.04231,
+    "r": 0.04367,
+    "h": 0.03465,
+    "l": 0.03857,
+    "d": 0.05349,
+    "c": 0.04905,
+    "u": 0.05408,
+    "m": 0.04741,
     "p": 0.04676,
-    "f": 0.04959,
-    "g": 0.05448,
-    "y": 0.06096,
-    "b": 0.06195,
-    "w": 0.05573,
+    "f": 0.0496,
+    "g": 0.05452,
+    "y": 0.06095,
+    "b": 0.06193,
+    "w": 0.05571,
     ".": 0.1323,
-    ",": 0.1746,
-    "v": 0.07666,
-    "k": 0.06658,
+    ",": 0.1747,
+    "v": 0.07665,
+    "k": 0.06659,
     "T": 0.09446,
-    "1": 0.04302,
-    "0": 0.0414,
-    "S": 0.1025,
-    "C": 0.09585,
-    "2": 0.05183,
-    "A": 0.08717,
-    "I": 0.08239,
-    "9": 0.0514,
-    "M": 0.0843,
-    "P": 0.09936,
-    "B": 0.091,
-    "H": 0.08315,
-    "'": 0.2002,
-    ")": 0.1373,
-    "(": 0.08827,
-    "-": 0.1846,
-    "D": 0.09452,
-    "R": 0.09979,
-    "N": 0.08613,
+    "1": 0.04314,
+    "0": 0.04143,
+    "S": 0.1024,
+    "C": 0.09582,
+    "2": 0.0518,
+    "A": 0.08728,
+    "I": 0.08228,
+    "9": 0.05134,
+    "M": 0.08419,
+    "P": 0.09943,
+    "B": 0.0911,
+    "H": 0.0832,
+    "'": 0.2,
+    ")": 0.1369,
+    "(": 0.08821,
+    "-": 0.1848,
+    "D": 0.09451,
+    "R": 0.09961,
+    "N": 0.08601,
     "F": 0.09252,
     "W": 0.1111,
     "L": 0.1042,
-    "x": 0.1138,
-    "8": 0.06427,
+    "x": 0.114,
+    "8": 0.0643,
     "G": 0.1018,
-    "U": 0.08472,
-    "3": 0.06951,
-    "E": 0.0859,
+    "U": 0.08477,
+    "3": 0.06949,
+    "E": 0.08585,
     "\"": 0.1552,
     "J": 0.125,
-    "5": 0.05615,
+    "5": 0.05612,
     "O": 0.1032,
-    "6": 0.0659,
-    "7": 0.05364,
-    "4": 0.06253,
-    "q": 0.0683,
-    ":": 0.2223,
-    "z": 0.1272,
-    "j": 0.09613,
-    "K": 0.1181,
-    "V": 0.1171,
+    "6": 0.06598,
+    "7": 0.05354,
+    "4": 0.06243,
+    "q": 0.06847,
+    ":": 0.2221,
+    "z": 0.1271,
+    "j": 0.09604,
+    "K": 0.118,
+    "V": 0.1175,
     "Y": 0.1273,
     ";": 0.2724,
-    "Z": 0.1082,
-    "Q": 0.1024,
-    "?": 0.06254,
-    "X": 0.09008,
-    "!": 0.0855
+    "Z": 0.1092,
+    "Q": 0.1018,
+    "?": 0.0626,
+    "X": 0.09058,
+    "!": 0.08542
   },
   "LETTER_STD": {
-    " ": 0.007246,
-    "e": 0.01418,
-    "a": 0.0174,
-    "t": 0.02062,
-    "i": 0.02272,
-    "o": 0.02277,
-    "n": 0.01807,
-    "s": 0.01972,
-    "r": 0.02316,
-    "h": 0.02369,
-    "l": 0.02076,
-    "d": 0.03129,
-    "c": 0.02657,
-    "u": 0.03166,
-    "m": 0.02989,
-    "p": 0.02975,
-    "f": 0.03534,
-    "g": 0.03579,
-    "y": 0.04084,
-    "b": 0.04082,
-    "w": 0.04228,
-    ".": 0.07903,
-    ",": 0.106,
-    "v": 0.05178,
-    "k": 0.05258,
-    "T": 0.06525,
-    "1": 0.04654,
-    "0": 0.04465,
-    "S": 0.07834,
-    "C": 0.07999,
-    "2": 0.05588,
-    "A": 0.06971,
-    "I": 0.07627,
-    "9": 0.05796,
-    "M": 0.06976,
-    "P": 0.07877,
-    "B": 0.07665,
-    "H": 0.07141,
-    "'": 0.1457,
-    ")": 0.1092,
+    " ": 0.007218,
+    "e": 0.0142,
+    "a": 0.01741,
+    "t": 0.02056,
+    "i": 0.02269,
+    "o": 0.02273,
+    "n": 0.01804,
+    "s": 0.0197,
+    "r": 0.02311,
+    "h": 0.02364,
+    "l": 0.02072,
+    "d": 0.03121,
+    "c": 0.02651,
+    "u": 0.03161,
+    "m": 0.02991,
+    "p": 0.02973,
+    "f": 0.03537,
+    "g": 0.03571,
+    "y": 0.04077,
+    "b": 0.0407,
+    "w": 0.04227,
+    ".": 0.07915,
+    ",": 0.1061,
+    "v": 0.05176,
+    "k": 0.05251,
+    "T": 0.06527,
+    "1": 0.04677,
+    "0": 0.04468,
+    "S": 0.07822,
+    "C": 0.07989,
+    "2": 0.05583,
+    "A": 0.0698,
+    "I": 0.07604,
+    "9": 0.05787,
+    "M": 0.06972,
+    "P": 0.07878,
+    "B": 0.07696,
+    "H": 0.0715,
+    "'": 0.1453,
+    ")": 0.1091,
     "(": 0.1013,
-    "-": 0.1158,
-    "D": 0.07941,
-    "R": 0.0925,
-    "N": 0.07934,
-    "F": 0.07982,
-    "W": 0.0952,
-    "L": 0.08514,
-    "x": 0.08631,
-    "8": 0.07206,
-    "G": 0.08608,
-    "U": 0.08936,
-    "3": 0.07295,
-    "E": 0.08329,
-    "\"": 0.1279,
-    "J": 0.1114,
-    "5": 0.06397,
-    "O": 0.0881,
-    "6": 0.08396,
-    "7": 0.07842,
-    "4": 0.07436,
-    "q": 0.07039,
-    ":": 0.1786,
-    "z": 0.1051,
-    "j": 0.09485,
-    "K": 0.123,
-    "V": 0.127,
-    "Y": 0.1562,
+    "-": 0.1159,
+    "D": 0.07936,
+    "R": 0.09244,
+    "N": 0.07923,
+    "F": 0.07978,
+    "W": 0.09512,
+    "L": 0.0852,
+    "x": 0.08641,
+    "8": 0.07201,
+    "G": 0.08619,
+    "U": 0.08919,
+    "3": 0.07278,
+    "E": 0.08319,
+    "\"": 0.1277,
+    "J": 0.1116,
+    "5": 0.06391,
+    "O": 0.08794,
+    "6": 0.08398,
+    "7": 0.07822,
+    "4": 0.07427,
+    "q": 0.07045,
+    ":": 0.1782,
+    "z": 0.1049,
+    "j": 0.09464,
+    "K": 0.1228,
+    "V": 0.1281,
+    "Y": 0.1561,
     ";": 0.2571,
-    "Z": 0.1981,
-    "Q": 0.2003,
-    "?": 0.2007,
+    "Z": 0.2003,
+    "Q": 0.1996,
+    "?": 0.2006,
     "X": 0.1773,
-    "!": 0.2023
+    "!": 0.2026
   },
   "SELECTION_MODE_BANDITS": [
     {
       "mode": "letter-speed",
-      "alpha": 2268,
-      "beta": 928.5
+      "alpha": 2834,
+      "beta": 1062
     },
     {
       "mode": "letter-error",
-      "alpha": 3574,
-      "beta": 1894
+      "alpha": 3788,
+      "beta": 1812
     },
     {
       "mode": "error-group",
-      "alpha": 478.5,
-      "beta": 143.5
+      "alpha": 1570,
+      "beta": 737.5
     }
   ],
   "INITIAL_SEQUENCES": [
     [
       {
         "passage": "Every keystroke you make fuels Typo Dojo's adaptive engine, creating the most efficient training path for faster results.",
-        "alpha": 668.6,
-        "beta": 43.36
+        "alpha": 705.6,
+        "beta": 49.36
       },
       {
         "passage": "Personalized coaching at scale. Typo Dojo uses your mistakes as fuel to craft adaptive drills that accelerate progress.",
-        "alpha": 343.6,
-        "beta": 27.36
+        "alpha": 362.6,
+        "beta": 28.36
       },
       {
         "passage": "Practice smarter, not longer. Typo Dojo adapts training in real time so your weaknesses shrink and your speed soars.",
-        "alpha": 896.6,
+        "alpha": 907.6,
         "beta": 61.36
       },
       {
         "passage": "Stop generic practice. Typo Dojo adapts every drill to your errors, so progress in speed and accuracy becomes inevitable.",
-        "alpha": 304.6,
+        "alpha": 313.6,
         "beta": 26.36
       },
       {
         "passage": "Typo Dojo acts like your personal coach, tracking every keystroke and creating targeted drills to make progress inevitable.",
-        "alpha": 228.6,
+        "alpha": 230.6,
         "beta": 22.36
       },
       {
         "passage": "Typo Dojo evolves with you, adjusting drills as you improve so growth never stops and typing mastery becomes natural.",
-        "alpha": 287.6,
+        "alpha": 289.6,
         "beta": 26.36
       },
       {
         "passage": "Typo Dojo finds your toughest keystrokes and turns them into strengths with personalized, evolving practice sessions.",
-        "alpha": 350.6,
-        "beta": 27.36
+        "alpha": 365.6,
+        "beta": 28.36
       },
       {
         "passage": "Typo Dojo guides you step by step with adaptive coaching so you never plateau and your speed keeps climbing.",
-        "alpha": 458.6,
+        "alpha": 459.6,
         "beta": 38.36
       },
       {
         "passage": "Typo Dojo is your typing mentor. An adaptive coach that evolves with you, ensuring every session brings measurable growth.",
-        "alpha": 251.6,
+        "alpha": 253.6,
         "beta": 23.36
       },
       {
         "passage": "With Typo Dojo, practice is never wasted-each drill is tailored to your mistakes, ensuring speed and accuracy improvements.",
-        "alpha": 239.6,
+        "alpha": 241.6,
         "beta": 24.36
       },
       {
@@ -750,12 +750,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Don't waste time on nonsense drills. Typo Dojo gives you natural, flowing text so you improve the way you actually type.",
-        "alpha": 383.6,
-        "beta": 31.36
+        "alpha": 386.6,
+        "beta": 32.36
       },
       {
         "passage": "Forget random word drills-Typo Dojo immerses you in real language so your typing improves exactly where it matters most.",
-        "alpha": 652.6,
+        "alpha": 677.6,
         "beta": 45.36
       },
       {
@@ -770,22 +770,22 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo builds fluency with natural sentences that feel real from the first keystroke.",
-        "alpha": 709.6,
-        "beta": 48.36
+        "alpha": 727.6,
+        "beta": 53.36
       },
       {
         "passage": "Typo Dojo keeps training practical by using meaningful sentences that transfer directly into your daily writing flow.",
-        "alpha": 354.6,
-        "beta": 30.36
+        "alpha": 357.6,
+        "beta": 31.36
       },
       {
         "passage": "Typo Dojo makes practice real by using natural sentences, ensuring skills transfer seamlessly to daily typing tasks.",
-        "alpha": 505.6,
+        "alpha": 509.6,
         "beta": 39.36
       },
       {
         "passage": "Typo Dojo pulls from trusted sources to make practice authentic, so your training mirrors the way you really type.",
-        "alpha": 341.6,
+        "alpha": 343.6,
         "beta": 30.36
       },
       {
@@ -810,19 +810,19 @@ const HYPERPARAMS={
       },
       {
         "passage": "While other apps force you to type random sequences of words, typo dojo immerses you in the authentic flow of language using sentences from trusted sources like Wikipedia.",
-        "alpha": 5571,
-        "beta": 491.4
+        "alpha": 5714,
+        "beta": 509.4
       }
     ],
     [
       {
         "passage": "By recording every keystroke, Typo Dojo pinpoints your weak spots and designs drills to fix them permanently.",
-        "alpha": 543.6,
+        "alpha": 546.6,
         "beta": 40.36
       },
       {
         "passage": "Don't fight the same mistakes forever-Typo Dojo predicts them, highlights them, and helps you eliminate them fast.",
-        "alpha": 92.64,
+        "alpha": 94.64,
         "beta": 12.36
       },
       {
@@ -837,27 +837,27 @@ const HYPERPARAMS={
       },
       {
         "passage": "See your weak keys and fix them fast as Typo Dojo turns each typo into a lesson.",
-        "alpha": 5059,
-        "beta": 239.4
+        "alpha": 5559,
+        "beta": 257.4
       },
       {
         "passage": "Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.",
-        "alpha": 3736,
-        "beta": 265.4
+        "alpha": 3769,
+        "beta": 276.4
       },
       {
         "passage": "Targeted error drills ensure Typo Dojo helps you unlearn bad habits and replace them with accuracy that lasts.",
-        "alpha": 1584,
+        "alpha": 1592,
         "beta": 101.4
       },
       {
         "passage": "Typo Dojo analyzes your typo history to craft custom drills that attack your weakest patterns until they disappear.",
-        "alpha": 160.6,
+        "alpha": 161.6,
         "beta": 18.36
       },
       {
         "passage": "Typo Dojo anticipates where you're most likely to trip and highlights those areas so you can eliminate recurring mistakes.",
-        "alpha": 138.6,
+        "alpha": 139.6,
         "beta": 16.36
       },
       {
@@ -867,7 +867,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo identifies your personal error patterns, and gives you drills that make them vanish.",
-        "alpha": 825.6,
+        "alpha": 828.6,
         "beta": 58.36
       },
       {
@@ -882,20 +882,20 @@ const HYPERPARAMS={
       },
       {
         "passage": "With predictive error highlighting, Typo Dojo ensures your toughest keystrokes get the focus they deserve.",
-        "alpha": 548.6,
+        "alpha": 549.6,
         "beta": 44.36
       },
       {
         "passage": "Your errors become the lesson plan: Typo Dojo finds, predicts, and fixes the mistakes holding you back.",
-        "alpha": 541.6,
+        "alpha": 544.6,
         "beta": 41.36
       }
     ],
     [
       {
         "passage": "Even five minutes matter when each Typo Dojo drill targets what improves your typing most.",
-        "alpha": 4474,
-        "beta": 212.4
+        "alpha": 4973,
+        "beta": 238.4
       },
       {
         "passage": "Every minute spent with Typo Dojo makes you a faster, more accurate typist. Efficiency in the digital age is a superpower.",
@@ -914,8 +914,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Short sessions bring real gains as Typo Dojo keeps every minute focused on progress.",
-        "alpha": 3265,
-        "beta": 149.4
+        "alpha": 3654,
+        "beta": 170.4
       },
       {
         "passage": "Train smarter with Typo Dojo and watch your speed rise while your mistakes fall-it's the fastest way to real progress.",
@@ -924,7 +924,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typing mastery is measurable: Typo Dojo turns minutes of practice into noticeable gains in speed and precision.",
-        "alpha": 107.6,
+        "alpha": 109.6,
         "beta": 12.36
       },
       {
@@ -939,12 +939,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo focuses training where it matters, giving you lasting gains in both typing speed and typing precision.",
-        "alpha": 183.6,
-        "beta": 14.36
+        "alpha": 195.6,
+        "beta": 15.36
       },
       {
         "passage": "Typo Dojo is built for measurable results-each session makes you faster, smoother, and more accurate at the keyboard.",
-        "alpha": 241.6,
+        "alpha": 245.6,
         "beta": 21.36
       },
       {
@@ -976,7 +976,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Five minutes with Typo Dojo is more effective than hours of generic drills, because every keystroke is purposeful.",
-        "alpha": 445.6,
+        "alpha": 446.6,
         "beta": 38.36
       },
       {
@@ -986,12 +986,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Practice less, achieve more. Typo Dojo's efficiency makes typing mastery possible even in just minutes a day.",
-        "alpha": 539.6,
+        "alpha": 540.6,
         "beta": 46.36
       },
       {
         "passage": "Typo Dojo delivers efficient, data-driven practice that ensures every session brings noticeable improvements.",
-        "alpha": 160.6,
+        "alpha": 168.6,
         "beta": 15.36
       },
       {
@@ -1006,7 +1006,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo turns practice into progress by focusing training on the exact areas you need most.",
-        "alpha": 592.6,
+        "alpha": 594.6,
         "beta": 48.36
       },
       {
@@ -1018,17 +1018,17 @@ const HYPERPARAMS={
     [
       {
         "passage": "Every committed learner sees results: Typo Dojo consistently delivers measurable gains in speed and accuracy.",
-        "alpha": 900.6,
+        "alpha": 902.6,
         "beta": 66.36
       },
       {
         "passage": "Hundreds of thousands of users trust Typo Dojo for lasting gains in speed and accuracy. Join them and see the progress for yourself.",
-        "alpha": 541.6,
+        "alpha": 550.6,
         "beta": 37.36
       },
       {
         "passage": "Join the Typo Dojo community of learners who've already unlocked faster, smoother typing through consistent practice.",
-        "alpha": 156.6,
+        "alpha": 158.6,
         "beta": 16.36
       },
       {
@@ -1048,7 +1048,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Typo Dojo is proven to work-every learner who commits sees measurable, lasting improvements in typing performance.",
-        "alpha": 123.6,
+        "alpha": 126.6,
         "beta": 14.36
       },
       {
@@ -1058,15 +1058,15 @@ const HYPERPARAMS={
       },
       {
         "passage": "With Typo Dojo, consistent practice turns into proven results you can measure in speed and accuracy.",
-        "alpha": 523.6,
+        "alpha": 535.6,
         "beta": 38.36
       }
     ],
     [
       {
         "passage": "In today's digital age, exceptional touch typing is a game-changer. Every minute spent training with typo dojo makes you faster and more accurate.",
-        "alpha": 4899,
-        "beta": 568.4
+        "alpha": 4912,
+        "beta": 569.4
       }
     ],
     [
@@ -1077,188 +1077,188 @@ const HYPERPARAMS={
       },
       {
         "passage": "Stay in the zone as Typo Dojo keeps you focused so each word flows faster than the last.",
-        "alpha": 3187,
-        "beta": 169.4
+        "alpha": 3311,
+        "beta": 173.4
       }
     ],
     [
       {
         "passage": "See problem keys before they slow you down. Typo Dojo highlights likely errors to build steady accuracy.",
-        "alpha": 1893,
+        "alpha": 1894,
         "beta": 126.4
       },
       {
         "passage": "Stay ahead of your typos. Typo Dojo predicts which letters you may miss so you can prevent errors.",
-        "alpha": 1060,
-        "beta": 62.36
+        "alpha": 1119,
+        "beta": 66.36
       },
       {
         "passage": "Typo Dojo predicts tricky letters and helps you master them before they slow your typing.",
-        "alpha": 920.6,
-        "beta": 52.36
+        "alpha": 1054,
+        "beta": 58.36
       },
       {
         "passage": "Typo Dojo predicts which letters you often mistype so you can focus and avoid repeating mistakes.",
-        "alpha": 470.6,
+        "alpha": 484.6,
         "beta": 33.36
       },
       {
         "passage": "Typo Dojo shows where you may slip so you can stay focused and turn practice into progress.",
-        "alpha": 408.6,
-        "beta": 29.36
+        "alpha": 428.6,
+        "beta": 30.36
       }
     ]
   ],
-  "TOTAL_USER_COUNT": 309435,
+  "TOTAL_USER_COUNT": 310916,
   "BEST_PASSAGES": [
     {
-      "passage": "Dwarf frogs have four webbed feet. African clawed frogs have webbed hind feet while their front feet have autonomous digits.",
-      "alpha": 105.8,
-      "beta": 5.25
-    },
-    {
       "passage": "There are several formats for rowing races, often called \"regattas\". The two most common are side by side and head races.",
-      "alpha": 117.8,
+      "alpha": 135.8,
       "beta": 6.25
-    },
-    {
-      "passage": "SSRC: (32 bits) Synchronization source identifier uniquely identifies the source of a stream. The synchronization sources within the same RTP session will be unique.",
-      "alpha": 117.8,
-      "beta": 6.25
-    },
-    {
-      "passage": "Finally, the server stub calls the server procedure. The reply traces the same steps in the reverse direction.",
-      "alpha": 206.8,
-      "beta": 11.25
     },
     {
       "passage": "The factors that explain wages receive different weights than the factors that explain test scores. More than g is required to explain either.",
-      "alpha": 148.8,
+      "alpha": 168.8,
       "beta": 8.25
     },
     {
-      "passage": "Certain CCP cadres have access to a special supply system for foodstuffs called tegong. CCP leadership cadres have access to a dedicated healthcare system managed by the CCP General Office.",
-      "alpha": 112.8,
-      "beta": 6.25
+      "passage": "Finally, the server stub calls the server procedure. The reply traces the same steps in the reverse direction.",
+      "alpha": 209.8,
+      "beta": 11.25
     },
     {
-      "passage": "There are now only four candidates remaining and three seats remaining open. The least popular candidate (Candidate B1) is declared defeated. The remaining three are declared elected regardless of whether they reached the quota.",
-      "alpha": 123.8,
+      "passage": "For any vector space, the addition acts freely and transitively on the vector space itself. Thus a Euclidean vector space can be viewed as a Euclidean space that has itself as the associated vector space.",
+      "alpha": 133.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Federal reserve accounts contain federal reserve credit, which can be converted into federal reserve notes. Private banks maintain their bank reserves in federal reserve accounts.",
+      "alpha": 125.8,
       "beta": 7.25
     },
     {
       "passage": "Sambuca is also used in cooking, in small amounts because it has a strong flavour. It is usually used in desserts and seafood recipes.",
-      "alpha": 237.8,
+      "alpha": 239.8,
       "beta": 14.25
     },
     {
-      "passage": "Federal reserve accounts contain federal reserve credit, which can be converted into federal reserve notes. Private banks maintain their bank reserves in federal reserve accounts.",
-      "alpha": 118.8,
+      "passage": "Certain CCP cadres have access to a special supply system for foodstuffs called tegong. CCP leadership cadres have access to a dedicated healthcare system managed by the CCP General Office.",
+      "alpha": 119.8,
       "beta": 7.25
-    },
-    {
-      "passage": "Other UML elements such as classes and components are first manifested into artifacts and instances of these artifacts are then deployed. Artifacts can also be composed of other artifacts.",
-      "alpha": 134.8,
-      "beta": 8.25
-    },
-    {
-      "passage": "For any vector space, the addition acts freely and transitively on the vector space itself. Thus a Euclidean vector space can be viewed as a Euclidean space that has itself as the associated vector space.",
-      "alpha": 117.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "Adherence is the adhesive strength between photoresist and substrate. If the resist comes off the substrate, some features will be missing or damaged.",
-      "alpha": 146.8,
-      "beta": 9.25
-    },
-    {
-      "passage": "Commercial stations charge advertisers for the estimated number of listeners. The larger the audience, the higher the stations' rate card can be for commercial advertising.",
-      "alpha": 114.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "Gothenburg has several parks and nature reserves ranging in size from tens of square meters to hundreds of hectares. It also has many green areas that are not designated as parks or reserves.",
-      "alpha": 129.8,
-      "beta": 8.25
     },
     {
       "passage": "The secretariat was divided into bureaus, with each being placed under the leadership of one freedman. Narcissus was the secretary of correspondence. Pallas became the secretary of the treasury.",
-      "alpha": 141.8,
+      "alpha": 149.8,
       "beta": 9.25
     },
     {
       "passage": "EMC is often understood as the control of electromagnetic interference (EMI). Electromagnetic interference divides into several categories according to the source and signal characteristics.",
-      "alpha": 125.8,
+      "alpha": 132.8,
       "beta": 8.25
     },
     {
       "passage": "Agile software development may involve frequent software releases with relatively small changes. Defects are revealed by user feedback.",
-      "alpha": 154.8,
+      "alpha": 160.8,
       "beta": 10.25
     },
     {
-      "passage": "Let D(n) be the arithmetic derivative. Then the logarithmic derivative See Arithmetic derivative for details.",
-      "alpha": 137.8,
-      "beta": 9.25
-    },
-    {
       "passage": "Adhesive fracture (sometimes referred to as interfacial fracture) is when debonding occurs between the adhesive and the adherend. In most cases, the occurrence of adhesive fracture for a given adhesive goes along with smaller fracture toughness.",
-      "alpha": 137.8,
+      "alpha": 143.8,
       "beta": 9.25
     },
     {
-      "passage": "Two formal methods are available to describe semantics. They are denotational semantics and axiomatic semantics.",
-      "alpha": 122.8,
-      "beta": 8.25
+      "passage": "Gothenburg has several parks and nature reserves ranging in size from tens of square meters to hundreds of hectares. It also has many green areas that are not designated as parks or reserves.",
+      "alpha": 140.8,
+      "beta": 9.25
     },
     {
-      "passage": "Water is used in power generation. Hydroelectricity is electricity obtained from hydropower. Hydroelectric power comes from water driving a water turbine connected to a generator.",
-      "alpha": 107.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "There are currently no named features on Nereid. When features are discovered, they are to be named after individual nereids.",
-      "alpha": 105.8,
-      "beta": 7.25
-    },
-    {
-      "passage": "There were strong motives for conquest of Africa. Raw materials were needed for European factories. Prestige and imperial rivalries were at play.",
-      "alpha": 133.8,
+      "passage": "Let D(n) be the arithmetic derivative. Then the logarithmic derivative See Arithmetic derivative for details.",
+      "alpha": 140.8,
       "beta": 9.25
     },
     {
       "passage": "Ground penetrating radar pulses electromagnetic waves into the pavement and measures and graphically displays the reflected signal. This can reveal voids and other defects.",
-      "alpha": 115.8,
+      "alpha": 124.8,
       "beta": 8.25
     },
     {
-      "passage": "One important role in Debian's leadership is that of a release manager. The release team sets goals for the next release, supervises the processes and decides when to release. The team is led by the next release managers and stable release managers.",
-      "alpha": 140.8,
+      "passage": "SSRC: (32 bits) Synchronization source identifier uniquely identifies the source of a stream. The synchronization sources within the same RTP session will be unique.",
+      "alpha": 122.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "Commercial stations charge advertisers for the estimated number of listeners. The larger the audience, the higher the stations' rate card can be for commercial advertising.",
+      "alpha": 122.8,
+      "beta": 8.25
+    },
+    {
+      "passage": "There are currently no named features on Nereid. When features are discovered, they are to be named after individual nereids.",
+      "alpha": 107.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "The server receives the username and symmetric cipher and compares it with the data from the database. Login was a success if the cipher matches the cipher that is stored for the user.",
+      "alpha": 107.8,
+      "beta": 7.25
+    },
+    {
+      "passage": "Adherence is the adhesive strength between photoresist and substrate. If the resist comes off the substrate, some features will be missing or damaged.",
+      "alpha": 151.8,
       "beta": 10.25
     },
     {
+      "passage": "Dwarf frogs have four webbed feet. African clawed frogs have webbed hind feet while their front feet have autonomous digits.",
+      "alpha": 121.8,
+      "beta": 8.25
+    },
+    {
       "passage": "Nerve agents are generally colorless and tasteless liquids. Nerve agents evaporate at varying rates depending on the substance. None are gases in normal environments.",
-      "alpha": 140.8,
+      "alpha": 146.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "There are now only four candidates remaining and three seats remaining open. The least popular candidate (Candidate B1) is declared defeated. The remaining three are declared elected regardless of whether they reached the quota.",
+      "alpha": 130.8,
+      "beta": 9.25
+    },
+    {
+      "passage": "Other UML elements such as classes and components are first manifested into artifacts and instances of these artifacts are then deployed. Artifacts can also be composed of other artifacts.",
+      "alpha": 143.8,
       "beta": 10.25
     },
     {
       "passage": "Boldface indicates a player still active in La Liga. Italics indicates a player still active outside La Liga.",
-      "alpha": 126.8,
+      "alpha": 129.8,
       "beta": 9.25
     },
     {
-      "passage": "The closed class of Norwegian determiners are declined in gender and number in agreement with their argument. Not all determiners are inflected.",
-      "alpha": 138.8,
-      "beta": 10.25
-    },
-    {
       "passage": "Currency crises were less frequent under the gold standard than in periods without the gold standard. However, banking crises were more frequent.",
-      "alpha": 111.8,
+      "alpha": 115.8,
       "beta": 8.25
     },
     {
+      "passage": "The closed class of Norwegian determiners are declined in gender and number in agreement with their argument. Not all determiners are inflected.",
+      "alpha": 140.8,
+      "beta": 10.25
+    },
+    {
+      "passage": "Passive sonar detects the target's radiated noise characteristics. The radiated spectrum comprises a continuous spectrum of noise with peaks at certain frequencies which can be used for classification.",
+      "alpha": 219.8,
+      "beta": 16.25
+    },
+    {
+      "passage": "Reverse causation or reverse causality or wrong direction is an informal fallacy of questionable cause where cause and effect are reversed. The cause is said to be the effect and vice versa.",
+      "alpha": 151.8,
+      "beta": 11.25
+    },
+    {
+      "passage": "Two formal methods are available to describe semantics. They are denotational semantics and axiomatic semantics.",
+      "alpha": 124.8,
+      "beta": 9.25
+    },
+    {
       "passage": "GIMPshop: A fork of GIMP aiming to be more like Adobe Photoshop. The Windows version has limited MDI.",
-      "alpha": 136.8,
+      "alpha": 137.8,
       "beta": 10.25
     }
   ],
@@ -1286,7 +1286,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "A No 10 dictated tempo over 90 minutes. The 70th brought a 20 yard strike, then a 100th club goal in the 2010s as 40,000 sang in stoppage.",
-        "alpha": 54.55,
+        "alpha": 55.55,
         "beta": 1.45
       },
       {
@@ -1316,12 +1316,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "A startup shipped 1.0, jumped to 2.0 in the 2000s; telemetry crossed 100,000 events with 40,000 users by the 10th sprint.",
-        "alpha": 28.55,
+        "alpha": 29.55,
         "beta": 1.45
       },
       {
         "passage": "A v1.0 dashboard charted 100,000 users and 50,000 sessions. The v2.0 rollout cut p95 to 300 ms as 10th percentile latencies fell under 200.",
-        "alpha": 24.55,
+        "alpha": 25.55,
         "beta": 1.45
       },
       {
@@ -1407,7 +1407,7 @@ const HYPERPARAMS={
       {
         "passage": "City plans model 1.6 C limits and target 60 percent clean power. Retrofits add 600,000 heat pumps by 2016 as crews finish a 6th district hub with 16 km of upgraded mains.",
         "alpha": 107.5,
-        "beta": 10.45
+        "beta": 11.45
       },
       {
         "passage": "Climbers pursuing the 7 Summits train on 7,000 m routes; Denali's high camp sits near 17,200 ft, Everest traffic spiked after 2017, and many teams plan a 7th-day rotation around 7,200 m.",
@@ -1416,7 +1416,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Consoles in the 2010s pushed 1080p at 60 fps. Many titles locked 30 fps to hold 120 field of view and patches trimmed 100 ms input lag on 2008 era engines.",
-        "alpha": 19.55,
+        "alpha": 20.55,
         "beta": 1.45
       },
       {
@@ -1456,7 +1456,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "High speed lines run 300 kmh on 25 kV, with 3,000 V on legacy trunks. A 10,000 passenger day needs 200 staff and a 10th platform to keep 0 delays.",
-        "alpha": 33.55,
+        "alpha": 34.55,
         "beta": 1.45
       },
       {
@@ -1491,7 +1491,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 90 meets I 290 and I 390 around Chicago. Planners track 20,000 vehicles per hour, add 200 ramp meters, and open the 10th reversible lane by 2024.",
-        "alpha": 56.55,
+        "alpha": 57.55,
         "beta": 2.45
       },
       {
@@ -1526,7 +1526,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Pilots brief Runway 11 on a 110 degree heading; climb toward FL410, cross 11,000 feet at 250 knots, then hold 1,100 fpm to 18,000 while setting standard pressure at 29.92.",
-        "alpha": 160.6,
+        "alpha": 161.6,
         "beta": 12.45
       },
       {
@@ -1566,12 +1566,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Travelers note the 23rd parallel near the Tropic of Cancer and the 33rd across the U.S. Desert trails list 300 km stretches and climbs to 3,500 m then camp near 13,000 ft on 350 km loops.",
-        "alpha": 15.55,
+        "alpha": 16.55,
         "beta": 0.45
       },
       {
         "passage": "Version 1.0 shipped with 100,000 users. A 2.0 update pushed 50,000 requests per second and met a 10th sprint deadline while teams logged 0 critical defects after weekend tests.",
-        "alpha": 69.55,
+        "alpha": 71.55,
         "beta": 4.45
       }
     ],
@@ -1608,7 +1608,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Golf settled on 18 holes at St Andrews; a common card lists par 72. An 8 iron carries roughly 160 yards and the 1986 Masters remains a famous comeback.",
-        "alpha": 50.55,
+        "alpha": 51.55,
         "beta": 4.45
       },
       {
@@ -1633,7 +1633,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "In 2019 Apple introduced iPhone 11 alongside iOS 13. Battery tests showed about 11 hours of video, and many buyers chose 128 GB storage as a 1st step before cloud syncing.",
-        "alpha": 127.5,
+        "alpha": 128.6,
         "beta": 9.45
       },
       {
@@ -1658,7 +1658,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Insulin was isolated in 1921 and first used in 1922. Type 1 diabetes care changed within 1 year, and the 100th anniversary in 2021 prompted global museum exhibits.",
-        "alpha": 177.6,
+        "alpha": 178.6,
         "beta": 9.45
       },
       {
@@ -1688,7 +1688,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Most tutorials begin with an H1 and a course labeled 101; editors set subheads at 16 pt and footnotes at 11 pt, then mark a 1st draft due in 10 days.",
-        "alpha": 265.6,
+        "alpha": 271.6,
         "beta": 6.45
       },
       {
@@ -1788,7 +1788,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The No 11 winger scored in the 11th minute. A 1-1 match flipped to 2-1 at 91 when the No 10 slid a 19 yard pass behind a tiring line.",
-        "alpha": 148.6,
+        "alpha": 149.6,
         "beta": 6.45
       },
       {
@@ -1805,7 +1805,7 @@ const HYPERPARAMS={
     "2": [
       {
         "passage": "A Boeing 777 often taxis to Runway 22 Left at JFK. Controllers meter 2 minute separations, departures roll at 120 to 160 knots, and arrivals cross 2,500 ft before turning to 220 for downwind.",
-        "alpha": 161.6,
+        "alpha": 162.6,
         "beta": 9.45
       },
       {
@@ -1820,7 +1820,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "A metro Line 2 carries about 200,000 riders on weekdays. Upgrades add 22 new stations in a 2nd phase, extend 24 km of track, and target 2 minute headways by 2025 in core corridors.",
-        "alpha": 161.6,
+        "alpha": 163.6,
         "beta": 8.45
       },
       {
@@ -1850,7 +1850,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Felix Baumgartner's 2012 jump from about 39 km broke records. He reached near Mach 1.25, freefell for 4 minutes 19 seconds, and landed safely after a 9 point checklist cleared green.",
-        "alpha": 430.6,
+        "alpha": 432.6,
         "beta": 40.45
       },
       {
@@ -1860,7 +1860,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Group 2 metals sit in the alkaline earth column. Many 12th-grade labs compare 2nd ionization energies, heat salts to 220 C and watch magnesium ignite within 2 minutes after recording 200 kJ per mol differences.",
-        "alpha": 154.6,
+        "alpha": 156.6,
         "beta": 11.45
       },
       {
@@ -1900,7 +1900,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Memory often scales by powers of two. After 128 came 256 then 512 and 1024 while cache lines align to 64 bytes and 8 way sets reduce thrash in busy loops.",
-        "alpha": 74.55,
+        "alpha": 75.55,
         "beta": 5.45
       },
       {
@@ -1915,7 +1915,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Most desktops shifted from 32 bit to 64 bit in the 2000s. A 2nd CPU core arrived early, 128 MB cards gave way to 2 GB, and USB 2.0 replaced 1.1 by 2002.",
-        "alpha": 178.6,
+        "alpha": 180.6,
         "beta": 8.45
       },
       {
@@ -1985,7 +1985,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Western music counts 12 semitones per octave and 24 major and minor keys. Ear training drills 2nd intervals, then 5th and 7th, while metronomes tick at 120 for 2 minute scales.",
-        "alpha": 168.6,
+        "alpha": 171.6,
         "beta": 7.45
       }
     ],
@@ -2057,7 +2057,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Developers follow W3C guidance as MP3 and 3D assets preload in 3.0 s. UX targets 360 degree spins, 133 ms taps, and a 3rd layout shift under 300 ms on 13th build.",
-        "alpha": 27.55,
+        "alpha": 28.55,
         "beta": 2.45
       },
       {
@@ -2092,12 +2092,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "In the NBA the arc is 23 ft 9 in at the top. Teams often surge in the 3rd, with a guard logging 33 minutes, taking 13 threes, and hovering near 83 percent on 3.3 attempts per quarter.",
-        "alpha": 29.55,
+        "alpha": 30.55,
         "beta": 0.45
       },
       {
         "passage": "Interstate 35 meets I 335 near Topeka and US 36 spans Kansas. A 3rd lane eases 30 mile backups as crews pave 300 joints and set 33 signs over 3 nights.",
-        "alpha": 32.55,
+        "alpha": 33.55,
         "beta": 1.45
       },
       {
@@ -2107,7 +2107,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "MP3 took off in 1993 as portable players normalized 3 minute 30 second singles. Many albums front-load a strong 3rd track and keep peak headroom near -3 dB while exporting 320 kbps in 2013 apps.",
-        "alpha": 37.55,
+        "alpha": 38.55,
         "beta": 0.45
       },
       {
@@ -2127,7 +2127,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Observers spot M33 near Andromeda on autumn nights. Charts list 33 arcminutes across its core, a 3rd spiral arm in photos, and 3 million suns worth of clusters within 3 kiloparsecs.",
-        "alpha": 31.55,
+        "alpha": 32.55,
         "beta": 3.45
       },
       {
@@ -2169,7 +2169,7 @@ const HYPERPARAMS={
     "4": [
       {
         "passage": "4X strategy games map 64 tile grids and push 144 turn marathons. Ranked 4v4 ladders reward a 4th expansion at 14 minutes with 40 percent control.",
-        "alpha": 52.55,
+        "alpha": 53.55,
         "beta": 3.45
       },
       {
@@ -2184,13 +2184,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "APIs return 200 for success and 404 for missing pages while 4xx covers client faults. Stacks still parse IPv4 and log 400, 204, and 304 with 64 bit counters.",
-        "alpha": 55.55,
+        "alpha": 61.55,
         "beta": 1.45
       },
       {
         "passage": "Admins roll RSA 4096 keys and enforce 2FA with 4 digit backups. Logs flag 404 and 401 while IPv4 hosts record 400 and 304 along with 64 bit counters during 4 hour windows.",
-        "alpha": 69.55,
-        "beta": 3.45
+        "alpha": 70.55,
+        "beta": 4.45
       },
       {
         "passage": "Barack Obama served as the 44th president. Civics links the 14th and 24th Amendments and surveys note 40 year realignments as turnout climbed past 64 percent in several states.",
@@ -2199,12 +2199,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Business magazines publish 40 Under 40 each year. Programs expect a 4.0 GPA, 120 to 140 credits, a 4th year internship of 24 weeks, and roughly 1400 on the SAT.",
-        "alpha": 53.55,
+        "alpha": 56.55,
         "beta": 2.45
       },
       {
         "passage": "Coaches still favor a 4 4 2 formation with two banks of 4 in defense. A 4th official manages boards, stoppage hits 4 minutes, and expected goals hover near 1.4 in balanced 94 minute derbies.",
-        "alpha": 54.55,
+        "alpha": 57.55,
         "beta": 2.45
       },
       {
@@ -2214,13 +2214,13 @@ const HYPERPARAMS={
       },
       {
         "passage": "Europe saw upheavals in 1848 and repercussions into 1849. Texts assign 14th week readings on causes, note 24th chapter debates on labor, and chart 40 percent harvest shocks across 34 provinces.",
-        "alpha": 42.55,
+        "alpha": 43.55,
         "beta": 5.45
       },
       {
         "passage": "Fahrenheit 451 resonated after 1954 reprints and remains assigned widely. Study guides flag page 451 for key scenes, cite a 14th annotation, and compare dystopias to 1984 in 4th week seminars.",
         "alpha": 165.6,
-        "beta": 10.45
+        "beta": 11.45
       },
       {
         "passage": "Fahrenheit 451 still anchors syllabi alongside 1984. Classes assign page 451 in the 4th week and add a 14th note while comparing 40 percent screen time claims.",
@@ -2229,7 +2229,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "IPv4 addresses use 4 octets and remain common in 2024 deployments. Admins carve 24 address blocks for labs, set 1440 minute rotation windows, and keep 4.0 hour rollout stages for safer changes.",
-        "alpha": 61.55,
+        "alpha": 75.55,
         "beta": 2.45
       },
       {
@@ -2244,7 +2244,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Many desktops run 64 bit kernels with 4 cores and 16 threads. NVMe sustains 4.0 GBs as 1440p games drive 240 Hz and IPv4 remains common since 2004.",
-        "alpha": 44.55,
+        "alpha": 45.55,
         "beta": 2.45
       },
       {
@@ -2274,28 +2274,28 @@ const HYPERPARAMS={
       },
       {
         "passage": "Mathematicians cite 144 as a Fibonacci term. A decagon holds 144 degree angles while 64 appears in powers and students sketch a 4th power curve from 14 to 24.",
-        "alpha": 96.55,
+        "alpha": 101.5,
         "beta": 3.45
       },
       {
         "passage": "Mathematicians note 144 as 12 squared and a Fibonacci term near 34. A regular decagon has 144 degree angles, 64 appears in powers, and students graph a 4th power curve for 4.0 credits.",
-        "alpha": 43.55,
+        "alpha": 45.55,
         "beta": 2.45
       },
       {
         "passage": "Mens tennis tracks 4 Grand Slams each year and celebrates a 24th major milestone. A 4th seed often holds 64 percent first serves, wins 40 percent of return points, and uncorks 144 mph serves on big points.",
-        "alpha": 58.55,
-        "beta": 1.45
+        "alpha": 70.55,
+        "beta": 3.45
       },
       {
         "passage": "Most home routers still speak IPv4 while streamers output 4K at 60 Hz. Creators cut 4.0 minute clips, export at 144 Mbps, and keep peak loudness near -14 LUFS for 4.5 dB headroom.",
-        "alpha": 55.55,
+        "alpha": 57.55,
         "beta": 2.45
       },
       {
         "passage": "Most routers still route IPv4 while consoles stream 4K at 60. Esports aim for 144 Hz and 240 fps as patch 4.0 cuts input to 14 ms during 64 bit sessions.",
-        "alpha": 73.55,
-        "beta": 1.45
+        "alpha": 87.55,
+        "beta": 2.45
       },
       {
         "passage": "On a 747 heavy crews brief a 4th engine out at V1. Typical loads approach 400,000 pounds and finals sit near 144 knots with 40 percent margins in calm wind.",
@@ -2314,7 +2314,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Operators cite the Rule of 40 where growth plus margin tops 40. A 4.0 multiple follows at 14 percent with 26 percent growth and shifts firms from 4th quartile to median in 24 months.",
-        "alpha": 60.55,
+        "alpha": 61.55,
         "beta": 4.45
       },
       {
@@ -2329,7 +2329,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Software investors quote the Rule of 40 where growth plus margin tops 40 percent. A 4.5 percent uptick over 24 months shifts a firm from 4th quartile to 1.4 times revenue efficiency.",
-        "alpha": 82.55,
+        "alpha": 83.55,
         "beta": 5.45
       },
       {
@@ -2339,7 +2339,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The 49ers surged in a 4th quarter comeback as a 44 yard break set up 24-14. Win probability jumped to 74 percent after a 4th and 4 conversion.",
-        "alpha": 49.55,
+        "alpha": 51.55,
         "beta": 2.45
       },
       {
@@ -2366,7 +2366,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "A 5 by 5 matrix has 25 entries and a 5th row holds 5 elements. Crosswords at 15 by 15 use 225 squares and 50 percent downsampling preserves 95 percent readability.",
-        "alpha": 195.6,
+        "alpha": 197.6,
         "beta": 8.45
       },
       {
@@ -2381,12 +2381,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "A No 5 midfielder struck in the 55th minute as xG rose to 1.5. The 65th saw a 25 yard volley and a 95th save sealed a 2-1.",
-        "alpha": 212.6,
+        "alpha": 216.6,
         "beta": 7.45
       },
       {
         "passage": "AP exams score from 1 to 5; many sections run 55 minutes with 45 multiple choice items, free responses weigh 50%, and students celebrate a 5th straight year of 5s in a club of 25 peers.",
-        "alpha": 64.55,
+        "alpha": 65.55,
         "beta": 4.45
       },
       {
@@ -2422,7 +2422,7 @@ const HYPERPARAMS={
       {
         "passage": "Climate reports highlight the 95th percentile for heat waves; cities plan 50% canopy boosts, aim for 1.5 C pathways by 2025, and test 5 minute forecasts to protect 5th grade sports days.",
         "alpha": 85.55,
-        "beta": 4.45
+        "beta": 5.45
       },
       {
         "passage": "Esports staples field 5v5 rosters in best of 5 sets. Halves run 15 rounds, teams bank 25 second timeouts, and a 5th map often swings a 16 14 thriller.",
@@ -2431,7 +2431,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Esports staples field 5v5 rosters; best of 5 series reward depth as teams ban 5 maps and call 25 second pauses, play 15 round halves, and use a 5th timeout if scores hit 15 15.",
-        "alpha": 85.55,
+        "alpha": 87.55,
         "beta": 3.45
       },
       {
@@ -2446,7 +2446,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Health guidelines promote 5 a day portions and 150 minutes of activity weekly; many plans aim for 25 g fiber, 500 mg EPA DHA, and a 5th checkpoint at week 5 to review habits.",
-        "alpha": 65.55,
+        "alpha": 66.55,
         "beta": 4.45
       },
       {
@@ -2476,7 +2476,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Investors watch the S and P 500 and target 15% savings rates; a 50 50 split once guided the 5th edition of many handbooks and fee cuts from 0.5% to 0.05% compound quietly.",
-        "alpha": 66.55,
+        "alpha": 67.55,
         "beta": 4.45
       },
       {
@@ -2486,7 +2486,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Many laptops ship a 512 GB SSD in a 2.5 inch bay while desktops reuse 3.5 inch drives; backup plans keep a 5th copy offsite and verify 256 bit keys every 15 days.",
-        "alpha": 75.55,
+        "alpha": 76.55,
         "beta": 5.45
       },
       {
@@ -2496,12 +2496,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Modern AES uses 256 bit keys on cloud servers; uptime targets reach 99.5%, and a 5th region onboards 500,000 users as teams rotate logs every 15 minutes across 5 zones.",
-        "alpha": 94.55,
+        "alpha": 95.55,
         "beta": 6.45
       },
       {
         "passage": "PCIe 5.0 doubles bandwidth over 4.0 as x86 boards add 256 bit paths. A PS5 streams 5.5 GBs, NVMe pushes 5,000 MBs, and fast travel often lands in 15 seconds.",
-        "alpha": 60.55,
+        "alpha": 61.55,
         "beta": 5.45
       },
       {
@@ -2531,12 +2531,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "The 5th generation of mobile networks, branded 5G, often posts 500 Mbps on midband; typical trials use 2.5 and 3.5 GHz channels and aim for about 15 ms end to end latency.",
-        "alpha": 64.55,
+        "alpha": 65.55,
         "beta": 4.45
       },
       {
         "passage": "The National Maximum Speed Law set 55 mph in 1974 and many states raised limits after 1995; commuters still cruise in 5th gear at 65 and time 5 minute gaps on 25 mile stretches.",
-        "alpha": 84.55,
+        "alpha": 86.55,
         "beta": 3.45
       },
       {
@@ -2546,7 +2546,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Wi Fi 5 on 5 GHz popularized 80 MHz channels. Many routers advertise 3.5 Gbps peaks, 1.5 Gbps real throughput, and a 5th antenna for 4x4 plus 1 backhaul on mesh kits.",
-        "alpha": 90.55,
+        "alpha": 94.55,
         "beta": 3.45
       }
     ],
@@ -2603,7 +2603,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Carriers expand IPv6, handing out 128 bit addresses with 64 bit interface IDs. Monitors sample every 60 seconds, trigger at 6 minutes, and loop 360 tests during a 6th on call week.",
-        "alpha": 121.5,
+        "alpha": 122.5,
         "beta": 6.45
       },
       {
@@ -2658,7 +2658,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Modern Olympics began in 1896 in Athens; the marathon settled at 26.2 miles. The 16th Games were held in Melbourne, and by 2016 Rio showcased 360-degree replays in prime-time coverage.",
-        "alpha": 88.55,
+        "alpha": 90.55,
         "beta": 6.45
       },
       {
@@ -2678,12 +2678,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "NVMe drives saturate about 3,600 MB per second on x16 lanes while older SATA caps near 6 Gbps. Backups rotate every 6 hours and a 6th snapshot trims 60 percent restore times.",
-        "alpha": 110.5,
+        "alpha": 111.5,
         "beta": 7.45
       },
       {
         "passage": "Nintendo 64 arrived in 1996 and pushed smooth 360 camera control. Speedrunners route a 16 star path, clear Bowser in the 6th minute, and celebrate a 1.6 second gold split on 64 tracks.",
-        "alpha": 97.55,
+        "alpha": 98.55,
         "beta": 11.45
       },
       {
@@ -2713,7 +2713,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The Protestant Bible contains 66 books. Joshua is the 6th, many English readers know the 1611 King James tradition, and modern editions often settle near 1,600 pages in compact 6 x 9 inch formats.",
-        "alpha": 93.55,
+        "alpha": 95.55,
         "beta": 8.45
       },
       {
@@ -2728,7 +2728,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Twenty20 cricket sets 6 legal balls per over, and a clean boundary earns 6 runs. Many openers accelerate by the 6th over to chase 160 with scoreboards flashing 66 and strike rates near 136.",
-        "alpha": 114.5,
+        "alpha": 115.5,
         "beta": 8.45
       },
       {
@@ -2755,12 +2755,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Arctic maps note 77 N near Svalbard and 71 N by Nordkapp. Winter brings 24 hours dark for roughly 77 days while ships thread 70 N waters under 7 tenths ice and a 7th patrol.",
-        "alpha": 86.55,
+        "alpha": 87.55,
         "beta": 8.45
       },
       {
         "passage": "Baseball fans rise for the 7th inning stretch as 70000 cheer. Game 7 went 11 innings after a 2 1 lead vanished on a 97 mph liner in the 77th at bat.",
-        "alpha": 113.5,
+        "alpha": 115.5,
         "beta": 3.45
       },
       {
@@ -2770,8 +2770,8 @@ const HYPERPARAMS={
       },
       {
         "passage": "Boeing 747 767 and 777 defined long haul; a 727 left Runway 27 with Vref near 137 knots as a 7000 mile sector closed a 7th city pair in 1977 schedules.",
-        "alpha": 113.5,
-        "beta": 4.45
+        "alpha": 116.5,
+        "beta": 5.45
       },
       {
         "passage": "Boeing 747 and 767 reshaped long-haul travel; many 747 routes topped 7,000 miles by the 1970s, and some carriers used 7th-freedom cargo rights on transoceanic links.",
@@ -2810,12 +2810,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Chemistry marks pH 7.0 as neutral and nitrogen has atomic number 7. The SI defines 7 base units and labs hold 70 percent humidity for a 7th calibration across 17 samples at 21 C.",
-        "alpha": 109.5,
+        "alpha": 112.5,
         "beta": 3.45
       },
       {
         "passage": "Chicago lists 77 community areas and residents dial 773 or 872. The 7th Ward map sits by exhibits on the 1871 fire and a 1977 neighborhood plan that added 700 new units.",
-        "alpha": 85.55,
+        "alpha": 86.55,
         "beta": 7.45
       },
       {
@@ -2825,7 +2825,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Classroom mnemonics list 7 continents and 7 days; study halls run 24x7 before exams, the 7th grade often starts near age 12, and Room 107 schedules 70 minute labs.",
-        "alpha": 99.55,
+        "alpha": 100.5,
         "beta": 4.45
       },
       {
@@ -2865,12 +2865,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 70 meets I 77 near Cambridge and I 71 near Columbus. Drivers plan 700 mile hauls with 27 rest areas and schedule a 7th fuel stop at 170 miles remaining.",
-        "alpha": 105.5,
+        "alpha": 106.5,
         "beta": 4.45
       },
       {
         "passage": "Interstate 70 meets I-77 in Ohio at Cambridge; eastbound I-70 reaches I-270 near Columbus, and many drivers log 700 miles across two days before a 7th rest stop.",
-        "alpha": 74.55,
+        "alpha": 75.55,
         "beta": 11.45
       },
       {
@@ -2935,7 +2935,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Using the rule of 72, money doubling at 7% takes about 10 years; fee cuts from 0.7 to 0.07 percent save thousands, and 70 pct equity often defines a cautious 7th-decade plan.",
-        "alpha": 95.55,
+        "alpha": 97.55,
         "beta": 4.45
       },
       {
@@ -2950,7 +2950,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Windows 7 stabilized desktops; phones shifted to 7 nm class nodes as ARMv7 apps lingered. Home theaters mixed 7.1 tracks while legacy sets held 720p at 72 Hz for older panels.",
-        "alpha": 85.55,
+        "alpha": 86.55,
         "beta": 4.45
       }
     ],
@@ -3007,12 +3007,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Chess uses an 8 by 8 board with 64 squares. Competitive play adopted mechanical clocks in 1883, and modern events use 90 minutes with 30 second increments while blitz often runs 3 minutes with 2 seconds.",
-        "alpha": 50.55,
+        "alpha": 51.55,
         "beta": 3.45
       },
       {
         "passage": "Chess uses an 8 by 8 board with 64 squares; mechanical clocks appeared by 1883. Blitz often runs 3 minutes plus 2 seconds as engines analyze 8 ply in under 80 ms.",
-        "alpha": 58.55,
+        "alpha": 60.55,
         "beta": 2.45
       },
       {
@@ -3052,12 +3052,12 @@ const HYPERPARAMS={
       },
       {
         "passage": "Interstate 88 exists in Illinois and New York. The Illinois route was designated in 1987, the New York route opened segments through 1989, and both corridors eased 80 mile rural treks.",
-        "alpha": 38.55,
+        "alpha": 39.55,
         "beta": 2.45
       },
       {
         "passage": "Mixed martial arts uses an octagon with 8 sides; the first UFC ran in 1993. Modern cages span 30 feet or 25 feet with 8 posts and 8 corner pads.",
-        "alpha": 51.55,
+        "alpha": 52.55,
         "beta": 2.45
       },
       {
@@ -3067,7 +3067,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Oxygen is atomic number 8 and the octet rule highlights 8 valence electrons. Argon totals 18, and many 1988 primers drew 2-8-8 diagrams to explain stable shells in simple terms.",
-        "alpha": 71.55,
+        "alpha": 74.55,
         "beta": 0.45
       },
       {
@@ -3124,7 +3124,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "A standard Sudoku has a 9 by 9 grid with 81 cells. Each row column and 3 by 3 box must use digits 1 through 9 exactly once for a valid solve.",
-        "alpha": 94.55,
+        "alpha": 95.55,
         "beta": 3.45
       },
       {
@@ -3134,7 +3134,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Baseball plays 9 innings with 9 players in the field and 90 feet between bases. Extra drama arrives in the 9th when a 2-1 lead can vanish after 99 pitches.",
-        "alpha": 89.55,
+        "alpha": 90.55,
         "beta": 4.45
       },
       {
@@ -3149,7 +3149,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "California State Route 99 threads the Central Valley past SR 198 and US 199. Summer highs hit 99 F and traffic peaks near 90,000 vehicles north of Fresno at 9 each morning.",
-        "alpha": 116.5,
+        "alpha": 117.5,
         "beta": 3.45
       },
       {
@@ -3159,7 +3159,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Cinephiles cite 1959 for Some Like It Hot and 1999 for The Matrix. The summer of 1989 brought Batman while 1979 delivered Alien and Apocalypse Now.",
-        "alpha": 95.55,
+        "alpha": 96.55,
         "beta": 5.45
       },
       {
@@ -3174,7 +3174,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "Elite sprinters chase 9.69 to 9.79 seconds for the 100 m. Workouts hit 90 percent effort with 9 by 60 m reps and 19 minute cooldowns under 29 degree heat.",
-        "alpha": 84.55,
+        "alpha": 85.55,
         "beta": 6.45
       },
       {
@@ -3254,7 +3254,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The Chicago Bulls three-peated in 1991, 1992, and 1993. The 1996 to 1998 run reached 72, 69, and 62 wins, and Game 6 in 1998 featured a famous No 23 dagger with 5.2 left.",
-        "alpha": 99.55,
+        "alpha": 101.5,
         "beta": 2.45
       },
       {
@@ -3269,7 +3269,7 @@ const HYPERPARAMS={
       },
       {
         "passage": "The US Supreme Court has had 9 justices since 1869. In 1937 a court packing plan failed and modern terms still feature 5-4 splits alongside crisp 9-0 opinions.",
-        "alpha": 92.55,
+        "alpha": 93.55,
         "beta": 10.45
       },
       {
