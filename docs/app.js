@@ -68,9 +68,13 @@ function pickBandits(availableBandits, count = 2, deduplicate_column = null) {
 }
 
 function getPassageVariants(firstRep, count = 2) {
+  if (count != 2) {
+    throw new Error("count must be 2");
+  }
   const seenGroups = [firstRep.group];
   const passageAndGroup = [];
   const INITIAL_SENTENCE_VARIANTS = HYPERPARAMS.INITIAL_SEQUENCES;
+  const INITIAL_SENTENCE_VARIANTS_CONDITIONAL = HYPERPARAMS.INITIAL_SEQUENCES_CONDITIONAL;
   for (let i = 0; i < INITIAL_SENTENCE_VARIANTS.length; i++) { // Ignore the first group since we will always show this for now.
     if (seenGroups.includes(i)) {
       continue;
@@ -82,8 +86,16 @@ function getPassageVariants(firstRep, count = 2) {
       passageAndGroup.push({ passage, group: i, alpha, beta });
     }
   }
-  const weightedPassages = pickBandits(passageAndGroup, count, "group");
-  return weightedPassages.map(p => p.passage);
+  const firstPassage = pickBandits(passageAndGroup, 1, "group");
+  const conditionalAlphaBeta = INITIAL_SENTENCE_VARIANTS_CONDITIONAL[firstPassage[0].passage];
+  const passagesInConditional = conditionalAlphaBeta.map(p => p.passage);
+  const updatePassageAndGroup = passageAndGroup
+    .filter(p => !passagesInConditional.includes(p.passage) && p.group != firstPassage[0].group)
+    .concat(conditionalAlphaBeta.map(p => ({ passage: p.passage, group: -1, alpha: p.alpha, beta: p.beta })));
+
+  const updatePassages = pickBandits(updatePassageAndGroup, 1, "group");
+
+  return [firstPassage[0].passage, updatePassages[0].passage];
 }
 
 // Lanczos approximation of log-gamma function
