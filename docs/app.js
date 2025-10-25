@@ -40,7 +40,7 @@ function betaSample(alpha, beta) {
   return x / (x + y);
 }
 
-function pickBandits(availableBandits, count = 2, deduplicate_column = null){
+function pickBandits(availableBandits, count = 2, deduplicate_column = null) {
   for (let i = 0; i < availableBandits.length; i++) {
     const bandit = availableBandits[i];
     const p = betaSample(bandit.alpha, bandit.beta);
@@ -609,7 +609,7 @@ const strategyModeLookup = {
 }
 
 // Someone remind me why JS is a terrible programming language again...?
-const manyRepStrategies = Object.keys(strategyModeLookup).filter(x=>strategyModeLookup[x].constructor.changesEveryRep == false);
+const manyRepStrategies = Object.keys(strategyModeLookup).filter(x => strategyModeLookup[x].constructor.changesEveryRep == false);
 
 function getFocusText(passageStrategy) {
   if (!passageStrategy) {
@@ -1100,7 +1100,7 @@ function choseNextSelectionMode() {
   const selectionModes = HYPERPARAMS.SELECTION_MODE_BANDITS;
   const defualtMean = 0.55;
   const priorStrength = 5;
-  const extraSelectionModes = Object.keys(strategyModeLookup).filter(key => !selectionModes.some(sm => sm.mode == key) && key != "default").map(key => ({mode: key, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength}));
+  const extraSelectionModes = Object.keys(strategyModeLookup).filter(key => !selectionModes.some(sm => sm.mode == key) && key != "default").map(key => ({ mode: key, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength }));
   const previousTwoSelectionModes = selectionModeHistory.slice(-2);
   const availableSelectionModes = [...selectionModes, ...extraSelectionModes].filter(sm => !previousTwoSelectionModes.includes(sm.mode));
   console.log("availableSelectionModes", availableSelectionModes);
@@ -1226,13 +1226,13 @@ passageWorker.onmessage = function (e) {
       return;
     }
     if (e.data.type == 'get-next-passages') {
-        upcomingPassages = e.data.res || FALLBACK_PASSAGES;
-        if (upcomingPassages.length == 0) {
-          upcomingPassages = FALLBACK_PASSAGES;
-        }
-        // refilter here because of race conditions
-        upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
-        localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+      upcomingPassages = e.data.res || FALLBACK_PASSAGES;
+      if (upcomingPassages.length == 0) {
+        upcomingPassages = FALLBACK_PASSAGES;
+      }
+      // refilter here because of race conditions
+      upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
+      localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
     }
 
   } catch (error) {

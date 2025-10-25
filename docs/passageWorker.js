@@ -278,11 +278,11 @@ function samplePassages(alreadySeenPassages, passagesWithHp, count = 2) {
   const seenPassages = alreadySeenPassages;
   const passageWeights = [];
   for (let j = 0; j < passagesWithHp.length; j++) {
-      const passage = passagesWithHp[j]["passage"];
-      const alpha = passagesWithHp[j]["alpha"];
-      const beta = passagesWithHp[j]["beta"];
-      const p = betaSample(alpha, beta);
-      passageWeights.push({ passage, weight: p });
+    const passage = passagesWithHp[j]["passage"];
+    const alpha = passagesWithHp[j]["alpha"];
+    const beta = passagesWithHp[j]["beta"];
+    const p = betaSample(alpha, beta);
+    passageWeights.push({ passage, weight: p });
   }
   const weightedPassages = passageWeights.sort((a, b) => b.weight - a.weight);
   const retPassages = [];
@@ -531,7 +531,7 @@ const getLetterErrorSuggestionFromErrorLog = (charErrorLog, charSeenLog, previou
   const wasLastNumber = errorSelectionStrategies.length == 0 ? false : isStringNumber(errorSelectionStrategies[0]);
   const topCharacters = Object.entries(valuePerRep).filter(([letter, value]) => !errorSelectionStrategies.slice(0, 7).includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]);
   const topLetters = topCharacters.filter(([letter, value]) => isLowercaseLetter(letter));
-  return [pickTopLetter(topCharacters.slice(0, 12)), pickTopLetter(topLetters.slice(0,12))];
+  return [pickTopLetter(topCharacters.slice(0, 12)), pickTopLetter(topLetters.slice(0, 12))];
 }
 
 const isStringNumber = (str) => {
@@ -545,7 +545,7 @@ const getLetterSpeedSuggestionFromSpeedLog = (speedLog, previousRepSelectionStra
   const wasLastNumber = speedSelectionStrategies.length == 0 ? false : isStringNumber(speedSelectionStrategies[0]);
   const topCharacters = Object.entries(valuePerRep).filter(([letter, value]) => !speedSelectionStrategies.includes(letter) && !(wasLastNumber && isStringNumber(letter)) && letter != " ").sort((a, b) => b[1] - a[1]);
   const topLetters = topCharacters.filter(([letter, value]) => isLowercaseLetter(letter));
-  return [pickTopLetter(topCharacters.slice(0, 12)), pickTopLetter(topLetters.slice(0,12))];
+  return [pickTopLetter(topCharacters.slice(0, 12)), pickTopLetter(topLetters.slice(0, 12))];
 }
 
 const suggestErrorGroupStrategyFromInterstingErrors = (interestingErrorLog, seenLog, previousRepSelectionStrategies) => {
@@ -674,7 +674,7 @@ function findUnigramErrorRates(charErrorLog, charSeenLog) {
   return best_error_rates;
 }
 // TODO move to hyperparams.
-const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596 *2, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
+const [CNN_WEIGHT, UNIGRAM_WEIGHT, BIAS] = [0.6850118774971654 * 3, 0.645296487587596 * 2, -0.014092068726190543 * 0] // * are basic fudge factors from me. TODO come up with a better method e.g.  it should be waited by reps complete
 
 const add_error_highlight_indecies = async (passages, highlight_error_pct, unigramErrorLog, unigramSeenLog) => {
   // For performance reasons only do it for the top passage
@@ -1100,7 +1100,7 @@ const create_passage_from_words = async (len_passage, letter, count_passages) =>
         const [word, weight] = remaining_words[i];
         agg_weight += weight;
         if (agg_weight >= random_word_weight) {
-          agg += word+" ";
+          agg += word + " ";
           remaining_words.splice(i, 1);
           break;
         }
@@ -1306,17 +1306,17 @@ self.onmessage = async function (e) {
       console.log("suggestStrategy message received", e.data.strategyMode);
       if (e.data.strategyMode == "error-group") {
         const strategy = suggestErrorGroupStrategyFromInterstingErrors(e.data.interestingErrorLog, e.data.seenLog, e.data.previousRepSelectionStrategies)
-        self.postMessage({ type: 'suggestStrategy', strategyMode: "error-group" ,strategy: strategy });
+        self.postMessage({ type: 'suggestStrategy', strategyMode: "error-group", strategy: strategy });
         return;
       }
-      if (["words-speed", "many-rep-words-speed","many-rep-letter-speed","letter-speed"].includes(e.data.strategyMode)) {
+      if (["words-speed", "many-rep-words-speed", "many-rep-letter-speed", "letter-speed"].includes(e.data.strategyMode)) {
         const [strategyChar, strategyLetter] = getLetterSpeedSuggestionFromSpeedLog(e.data.speedLog, e.data.previousRepSelectionStrategies, e.data.strategyMode);
-        self.postMessage({ type: 'suggestStrategy', strategyMode: e.data.strategyMode ,strategyChar: strategyChar, strategyLetter: strategyLetter });
+        self.postMessage({ type: 'suggestStrategy', strategyMode: e.data.strategyMode, strategyChar: strategyChar, strategyLetter: strategyLetter });
         return;
       }
-      if (["words-error", "many-rep-words-error","many-rep-letter-error","letter-error"].includes(e.data.strategyMode)) {
+      if (["words-error", "many-rep-words-error", "many-rep-letter-error", "letter-error"].includes(e.data.strategyMode)) {
         const [strategyChar, strategyLetter] = getLetterErrorSuggestionFromErrorLog(e.data.interestingErrorLog["char"], e.data.seenLog["char"], e.data.previousRepSelectionStrategies, e.data.strategyMode);
-        self.postMessage({ type: 'suggestStrategy', strategyMode: e.data.strategyMode ,strategyChar: strategyChar, strategyLetter: strategyLetter });
+        self.postMessage({ type: 'suggestStrategy', strategyMode: e.data.strategyMode, strategyChar: strategyChar, strategyLetter: strategyLetter });
         return;
       }
       return;
@@ -1340,31 +1340,31 @@ self.onmessage = async function (e) {
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "letter-error" });
         return;
       }
-      
+
       if (e.data.selectionMode == "many-rep-letter-error") {
         const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "many-rep-letter-error" });
         return;
       }
-      
+
       if (e.data.selectionMode == "error-group") {
         const res = await handleGetNextPassagesErrorGroup(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "error-group" });
         return;
       }
-      
+
       if (e.data.selectionMode == "default") {
         const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.finishedDefaultPassages);
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "default" });
         return;
       }
-      
+
       if (["words-speed", "words-error", "many-rep-words-speed", "many-rep-words-error"].includes(e.data.selectionMode)) {
         const res = await handleGetNextPassagesWords(e.data.errorLog, e.data.seenLog, e.data.selectionStratedy);
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "words" });
         return;
       }
-      
+
       if (e.data.selectionMode == "many-rep-letter-speed") {
         const res = await handleGetNextPassagesLetterFocused(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.selectionStratedy);
         self.postMessage({ res, type: 'get-next-passages', selectionMode: "many-rep-letter-speed" });
