@@ -320,7 +320,10 @@ const STRATEGY_DESCRIPTIONS_SHORTEST = {
   'same_finger_bigrams': 'same finger',
 }
 
+// TODO may aswell also add simplify in a similar way??
 class ErrorGroupSelectionStrategy {
+  static changesEveryRep = false;
+  static prefix = "error-group";
   constructor(strategy) {
     this.strategy = strategy;
   }
@@ -332,7 +335,8 @@ class ErrorGroupSelectionStrategy {
   }
   sendGetNextPassagesMessage() {
     passageWorker.postMessage({
-      type: 'get-next-passages:error-group',
+      type: 'get-next-passages',
+      selectionMode: ErrorGroupSelectionStrategy.prefix,
       upcomingPassages,
       recentPassages,
       errorLog,
@@ -342,13 +346,15 @@ class ErrorGroupSelectionStrategy {
       user_intro_wpm,
       highlight_error_pct: 0.1,
       userId: userId,
-      selectionStratedy: `error-group->${this.strategy}`
+      selectionStratedy: `${ErrorGroupSelectionStrategy.prefix}->${this.strategy}`
     });
   }
 
 }
 
 class LetterErrorSelectionStrategy {
+  static changesEveryRep = true;
+  static prefix = "letter-error";
   constructor(strategy) {
     this.strategy = strategy;
   }
@@ -357,7 +363,8 @@ class LetterErrorSelectionStrategy {
   }
   sendGetNextPassagesMessage() {
     passageWorker.postMessage({
-      type: 'get-next-passages:letter-error',
+      type: 'get-next-passages',
+      selectionMode: LetterErrorSelectionStrategy.prefix,
       upcomingPassages,
       recentPassages,
       errorLog,
@@ -367,12 +374,69 @@ class LetterErrorSelectionStrategy {
       user_intro_wpm,
       highlight_error_pct: 0.1,
       userId: userId,
-      selectionStratedy: `letter-error->${this.strategy}`
+      selectionStratedy: `${LetterErrorSelectionStrategy.prefix}->${this.strategy}`
+    });
+  }
+}
+
+class ManyRepLetterErrorSelectionStrategy {
+  static changesEveryRep = false;
+  static prefix = "many-rep-letter-error";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letter ${this.strategy} as this will have the biggest impact on your accuracy.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: ManyRepLetterErrorSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${ManyRepLetterErrorSelectionStrategy.prefix}->${this.strategy}`
+    });
+  }
+}
+
+
+class ManyRepLetterSpeedSelectionStrategy {
+  static changesEveryRep = false;
+  static prefix = "many-rep-letter-speed";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the letter ${this.strategy}, as this is having the biggest impact on your speed.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: ManyRepLetterSpeedSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${ManyRepLetterSpeedSelectionStrategy.prefix}->${this.strategy}`
     });
   }
 }
 
 class SpeedSelectionStrategy {
+  static changesEveryRep = true;
+  static prefix = "letter-speed";
   constructor(strategy) {
     this.strategy = strategy;
   }
@@ -382,7 +446,8 @@ class SpeedSelectionStrategy {
 
   sendGetNextPassagesMessage() {
     passageWorker.postMessage({
-      type: 'get-next-passages:letter-speed',
+      type: 'get-next-passages',
+      selectionMode: SpeedSelectionStrategy.prefix,
       upcomingPassages,
       recentPassages,
       errorLog,
@@ -392,11 +457,119 @@ class SpeedSelectionStrategy {
       user_intro_wpm,
       highlight_error_pct: 0.1,
       userId: userId,
-      selectionStratedy: `letter-speed->${this.strategy}`
+      selectionStratedy: `${SpeedSelectionStrategy.prefix}->${this.strategy}`
+    });
+  }
+}
+class WordsErrorSelectionStrategy {
+  static changesEveryRep = true;
+  static prefix = "words-error";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on words containing the letters that are having the biggest impact on your accuracy.`;
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: WordsErrorSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${WordsErrorSelectionStrategy.prefix}->${this.strategy}`,
+    });
+  }
+}
+class WordsSpeedSelectionStrategy {
+  static changesEveryRep = true;
+  static prefix = "words-speed";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on the words containing the letters that have the biggest impact on your speed.`;
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: WordsErrorSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${WordsErrorSelectionStrategy.prefix}->${this.strategy}`,
+    });
+  }
+}
+
+class ManyRepWordsErrorSelectionStrategy {
+  static changesEveryRep = false;
+  static prefix = "many-rep-words-error";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on words containing the letter ${this.strategy} as this is having the biggest impact on your accuracy.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: ManyRepWordsErrorSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${ManyRepWordsErrorSelectionStrategy.prefix}->${this.strategy}`,
+    });
+  }
+}
+class ManyRepWordsSpeedSelectionStrategy {
+  static changesEveryRep = false;
+  static prefix = "many-rep-words-speed";
+  constructor(strategy) {
+    this.strategy = strategy;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, typo dojo will focus on words containing the letter ${this.strategy} as this is having the biggest impact on your speed.`;
+  }
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: ManyRepWordsSpeedSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      selectionStratedy: `${ManyRepWordsSpeedSelectionStrategy.prefix}->${this.strategy}`,
     });
   }
 }
 class DefaultSelectionStrategy {
+  static changesEveryRep = true;
   constructor() {
   }
   getStatsRepFooter() {
@@ -405,7 +578,8 @@ class DefaultSelectionStrategy {
 
   sendGetNextPassagesMessage() {
     passageWorker.postMessage({
-      type: 'get-next-passages:default',
+      type: 'get-next-passages',
+      selectionMode: "default",
       upcomingPassages,
       recentPassages,
       errorLog,
@@ -422,11 +596,20 @@ class DefaultSelectionStrategy {
 }
 
 const strategyModeLookup = {
-  "letter-error": new LetterErrorSelectionStrategy("w"),
-  "letter-speed": new SpeedSelectionStrategy("1"),
-  "error-group": new ErrorGroupSelectionStrategy("most_common"),
+  [LetterErrorSelectionStrategy.prefix]: new LetterErrorSelectionStrategy("w"),
+  [SpeedSelectionStrategy.prefix]: new SpeedSelectionStrategy("1"),
+  [ErrorGroupSelectionStrategy.prefix]: new ErrorGroupSelectionStrategy("most_common"),
+  [ManyRepLetterErrorSelectionStrategy.prefix]: new ManyRepLetterErrorSelectionStrategy("w"),
+  [ManyRepLetterSpeedSelectionStrategy.prefix]: new ManyRepLetterSpeedSelectionStrategy("e"),
+  [WordsErrorSelectionStrategy.prefix]: new WordsErrorSelectionStrategy("w"),
+  [WordsSpeedSelectionStrategy.prefix]: new WordsSpeedSelectionStrategy("e"),
+  [ManyRepWordsErrorSelectionStrategy.prefix]: new ManyRepWordsErrorSelectionStrategy("w"),
+  [ManyRepWordsSpeedSelectionStrategy.prefix]: new ManyRepWordsSpeedSelectionStrategy("e"),
   "default": new DefaultSelectionStrategy(),
 }
+
+// Someone remind me why JS is a terrible programming language again...?
+const manyRepStrategies = Object.keys(strategyModeLookup).filter(x=>strategyModeLookup[x].constructor.changesEveryRep == false);
 
 function getFocusText(passageStrategy) {
   if (!passageStrategy) {
@@ -609,7 +792,7 @@ let cursorTimeoutId = null;
 let targetText = 'Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.';
 const textDisplay = document.getElementById('textDisplay');
 const inputArea = document.getElementById('inputArea');
-// TODO bin the progress bar 
+// TODO bin the progress bar
 const progressBar = document.getElementById('progressBar');
 let currentSelectionStrategyMode = "default";
 let previousRepSelectionStrategies = [];
@@ -913,10 +1096,14 @@ function choseNextSelectionMode() {
   if (index % 2 == 0) {
     return "default";
   }
-  
+
   const selectionModes = HYPERPARAMS.SELECTION_MODE_BANDITS;
+  const defualtMean = 0.55;
+  const priorStrength = 5;
+  const extraSelectionModes = Object.keys(strategyModeLookup).filter(key => !selectionModes.some(sm => sm.mode == key) && key != "default").map(key => ({mode: key, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength}));
   const previousTwoSelectionModes = selectionModeHistory.slice(-2);
-  const availableSelectionModes = selectionModes.filter(sm => !previousTwoSelectionModes.includes(sm.mode));
+  const availableSelectionModes = [...selectionModes, ...extraSelectionModes].filter(sm => !previousTwoSelectionModes.includes(sm.mode));
+  console.log("availableSelectionModes", availableSelectionModes);
   const selectedMode = pickBandits(availableSelectionModes, 1, "mode")[0];
   console.log("selectedMode", selectedMode);
   return selectedMode.mode;
@@ -983,49 +1170,69 @@ passageWorker.onmessage = function (e) {
       console.error(e.data.error);
       return;
     }
-    if (e.data.type == 'suggestStrategyFromSpeedLog') {
-      strategyModeLookup['letter-speed'] = new SpeedSelectionStrategy(e.data.strategy);
+    if (e.data.type == 'suggestStrategy') {
 
-      passageWorker.postMessage({
-        type: 'suggestErrorLetterStrategyFromInterestingErrors',
-        interestingErrorLog: interestingErrorLog,
-        seenLog: seenLog,
-        previousRepSelectionStrategies: previousRepSelectionStrategies
-      });
-
-      return;
-    }
-    else if (e.data.type == 'suggestErrorLetterStrategyFromInterestingErrors') {
-      strategyModeLookup['letter-error'] = new LetterErrorSelectionStrategy(e.data.strategy);
-      // For this one we do the full set of reps on a single stratedgy. - you want to use over all selectino startegy soon.
-      if (!currentPassageSelectionStrategy?.startsWith("error-group")) {
+      // TODO some more thought needed around the ones that can only except lowercase letters as this are not being updated frequently enough.
+      if (e.data.strategyMode == SpeedSelectionStrategy.prefix) {
+        strategyModeLookup[SpeedSelectionStrategy.prefix] = new SpeedSelectionStrategy(e.data.strategyChar);
+        strategyModeLookup[WordsSpeedSelectionStrategy.prefix] = new WordsSpeedSelectionStrategy(e.data.strategyLetter);
+        if (currentSelectionStrategyMode != ManyRepLetterSpeedSelectionStrategy.prefix) {
+          strategyModeLookup[ManyRepLetterSpeedSelectionStrategy.prefix] = new ManyRepLetterSpeedSelectionStrategy(e.data.strategyChar);
+        }
+        if (currentSelectionStrategyMode != ManyRepWordsSpeedSelectionStrategy.prefix) {
+          strategyModeLookup[ManyRepWordsSpeedSelectionStrategy.prefix] = new ManyRepWordsSpeedSelectionStrategy(e.data.strategyLetter);
+        }
         passageWorker.postMessage({
-          type: 'suggestErrorGroupStrategyFromInterstingErrors',
+          type: 'suggestStrategy',
+          strategyMode: LetterErrorSelectionStrategy.prefix,
           interestingErrorLog: interestingErrorLog,
           seenLog: seenLog,
+          speedLog: speedLog,
           previousRepSelectionStrategies: previousRepSelectionStrategies
         });
+        return;
+      }
+      if (e.data.strategyMode == LetterErrorSelectionStrategy.prefix) {
+        strategyModeLookup[LetterErrorSelectionStrategy.prefix] = new LetterErrorSelectionStrategy(e.data.strategyChar);
+        strategyModeLookup[WordsErrorSelectionStrategy.prefix] = new WordsErrorSelectionStrategy(e.data.strategyLetter);
+        if (currentSelectionStrategyMode != ManyRepLetterErrorSelectionStrategy.prefix) {
+          strategyModeLookup[ManyRepLetterErrorSelectionStrategy.prefix] = new ManyRepLetterErrorSelectionStrategy(e.data.strategyChar);
+        }
+        if (currentSelectionStrategyMode != ManyRepWordsErrorSelectionStrategy.prefix) {
+          strategyModeLookup[ManyRepWordsErrorSelectionStrategy.prefix] = new ManyRepWordsErrorSelectionStrategy(e.data.strategyLetter);
+        }
+        if (currentSelectionStrategyMode != ErrorGroupSelectionStrategy.prefix) {
+          passageWorker.postMessage({
+            type: 'suggestStrategy',
+            strategyMode: ErrorGroupSelectionStrategy.prefix,
+            interestingErrorLog: interestingErrorLog,
+            seenLog: seenLog,
+            previousRepSelectionStrategies: previousRepSelectionStrategies
+          });
+        }
+        return;
+      }
+      if (e.data.strategyMode == ErrorGroupSelectionStrategy.prefix) {
+        if (currentSelectionStrategyMode != ErrorGroupSelectionStrategy.prefix) {
+          strategyModeLookup[ErrorGroupSelectionStrategy.prefix] = new ErrorGroupSelectionStrategy(e.data.strategy);
+        }
+        return;
       }
 
-      return;
-    }
-    else if (e.data.type == 'suggestErrorGroupStrategyFromInterstingErrors') {
-      strategyModeLookup['error-group'] = new ErrorGroupSelectionStrategy(e.data.strategy);
-      return;
     }
 
     if (!e.data) {
       console.error("e.data is null");
       return;
     }
-    if (e.data.type == 'get-next-passages:default' || e.data.type == 'get-next-passages:letter-error' || e.data.type == 'get-next-passages:letter-speed' || e.data.type == 'get-next-passages:error-group') {
-      upcomingPassages = e.data.res || FALLBACK_PASSAGES;
-      if (upcomingPassages.length == 0) {
-        upcomingPassages = FALLBACK_PASSAGES;
-      }
-      // refilter here because of race conditions
-      upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
-      localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
+    if (e.data.type == 'get-next-passages') {
+        upcomingPassages = e.data.res || FALLBACK_PASSAGES;
+        if (upcomingPassages.length == 0) {
+          upcomingPassages = FALLBACK_PASSAGES;
+        }
+        // refilter here because of race conditions
+        upcomingPassages = upcomingPassages.filter(passage => !recentPassages.includes(passage.passage));
+        localStorage.setItem('upcomingPassages', JSON.stringify(upcomingPassages));
     }
 
   } catch (error) {
@@ -1758,7 +1965,8 @@ function resetSession() {
   inputArea.value = "";
   progressBar.style.width = "0%";
   passageWorker.postMessage({
-    type: 'suggestStrategyFromSpeedLog',
+    type: 'suggestStrategy',
+    strategyMode: SpeedSelectionStrategy.prefix,
     speedLog: speedLog,
     previousRepSelectionStrategies: previousRepSelectionStrategies
   });
