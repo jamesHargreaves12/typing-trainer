@@ -151,6 +151,17 @@ const HYPERPARAMS={
     "X": 0.7059,
     "!": 0.7204
   },
+  "ERROR_RATE_DISTRIBUTION_PARAMS": {
+    "a": 1.7202,
+    "b": 14.9972,
+    "loc": 0.0000,
+    "scale": 1.0000
+  },
+  "WPM_DISTRIBUTION_PARAMS": {
+    "a": 8.1095,
+    "loc": -9.3006,
+    "scale": 5.3861
+  },
   "LETTER_CHANGABILITY_PER_OCCURENCE_M": {
     " ": 0,
     "e": 3.323,
