@@ -1885,8 +1885,8 @@ function calculateMetrics() {
   let rawWpm = lettersTyped / charsPerWord / timeElapsedMins;
   let wpm = Math.round(rawWpm);
   const rawErrRate = charErrorCount / charTotalCount;
-  const errRate_percentile = betaCDF(rawErrRate, ERROR_RATE_DISTRIBUTION_PARAMS.a, ERROR_RATE_DISTRIBUTION_PARAMS.b, ERROR_RATE_DISTRIBUTION_PARAMS.loc, ERROR_RATE_DISTRIBUTION_PARAMS.scale);
-  const wpm_percentile = gammaCDF(rawWpm, WPM_DISTRIBUTION_PARAMS.a, WPM_DISTRIBUTION_PARAMS.loc, WPM_DISTRIBUTION_PARAMS.scale);
+  const errRate_percentile = betaCDF(rawErrRate, HYPERPARAMS.ERROR_RATE_DISTRIBUTION_PARAMS.a, HYPERPARAMS.ERROR_RATE_DISTRIBUTION_PARAMS.b, HYPERPARAMS.ERROR_RATE_DISTRIBUTION_PARAMS.loc, HYPERPARAMS.ERROR_RATE_DISTRIBUTION_PARAMS.scale);
+  const wpm_percentile = gammaCDF(rawWpm, HYPERPARAMS.WPM_DISTRIBUTION_PARAMS.a, HYPERPARAMS.WPM_DISTRIBUTION_PARAMS.loc, HYPERPARAMS.WPM_DISTRIBUTION_PARAMS.scale);
   let accuracy = Math.round((1 - rawErrRate) * 100);
   wpm = isNaN(wpm) || !isFinite(wpm) ? 0 : wpm;
   accuracy = isNaN(accuracy) || !isFinite(accuracy) ? 100 : accuracy;
@@ -1942,7 +1942,7 @@ function resetSession() {
       accuracyElement.className = accuracy > avgAccuracy ? 'flash-good' : 'flash-bad';
       setTimeout(() => accuracyElement.className = '', 1000);
 
-      runHistory.unshift({ wpm, accuracy, startTime });
+      runHistory.unshift({ wpm, accuracy, startTime, duration: new Date() - startTime });
       // runHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
       localStorage.setItem('runHistory', JSON.stringify(runHistory));
       updateHistoryDisplay();
