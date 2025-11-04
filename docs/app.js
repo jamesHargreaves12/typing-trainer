@@ -1020,7 +1020,15 @@ function updateHistoryDisplay() {
     content = `
       <div style="display: flex; gap: 20px;">
         <div>
-          <div class="history-sub-title" style="text-align: center; margin-bottom: 5px;">WPM</div>
+          <div class="history-sub-title" style="text-align: center; margin-bottom: 5px;">
+            WPM 
+            <span style="font-size: 10px; color: var(--text-muted);">
+              (<span style="font-weight: bold;color:#4A90E2;">-</span>passage difficulty adjusted<span class="info-icon">
+                i
+                <span class="info-tooltip">Some passages are more difficult than others. Analyzing every letter individually gives a better estimate of your true WPM.</span>
+              </span>)
+            </span>
+          </div>
           <svg width="${width}" height="${height}">
             <g transform="translate(${margin.left},${margin.top})">
               <!-- Y axis -->
@@ -1035,13 +1043,48 @@ function updateHistoryDisplay() {
               ${[...filteredRunHistory].reverse().map((run, i) => {
       const x = (width - 15 - margin.left - margin.right) * (i / Math.max(filteredRunHistory.length - 1, 1));
       const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM) / (maxYaxisWPM - minYaxisWPM));
-      return `
-                  <circle cx="${x + 15}" cy="${yWPM}" r="3" fill="#666666" 
-                    onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
-                    onmouseout="hideTooltip()"
-                  />
-                `;
-    }).join('')}
+      // We'll generate the actual user WPM points and the estimated WPM line path.
+
+      // Gather X/Y coords for the estimated WPM line
+      const estWpmCoords = [...filteredRunHistory].reverse().map((run, i) => {
+        const x = (width - 15 - margin.left - margin.right) * (i / Math.max(filteredRunHistory.length - 1, 1));
+        const yCorrectedWPM = (height - margin.top - margin.bottom) * (1 - (run.estimatedWpm - minYaxisWPM) / (maxYaxisWPM - minYaxisWPM));
+        return { x: x + 15, y: yCorrectedWPM, est: run.estimatedWpm };
+      });
+
+      const userPointSvg = [...filteredRunHistory].reverse().map((run, i) => {
+        const x = (width - 15 - margin.left - margin.right) * (i / Math.max(filteredRunHistory.length - 1, 1));
+        const yWPM = (height - margin.top - margin.bottom) * (1 - (run.wpm - minYaxisWPM) / (maxYaxisWPM - minYaxisWPM));
+        return `
+          <circle cx="${x + 15}" cy="${yWPM}" r="3" fill="#666666" 
+            onmouseover="showTooltip(event, 'WPM: ${run.wpm}')"
+            onmouseout="hideTooltip()"
+          />
+        `;
+      }).join('');
+
+      // Make the estimated WPM line (as an SVG path)
+      const validCoords = estWpmCoords.filter(coord => !isNaN(coord.y));
+      let estWpmLine = '';
+      if (validCoords.length >= 2) {
+        estWpmLine = `<path d="` + validCoords.map((p, idx) =>
+          (idx === 0 ? 'M' : 'L') + ` ${p.x} ${p.y}`
+        ).join(' ') + `" 
+          fill="none" stroke="#4A90E2" stroke-width="2" opacity="0.9"
+        />`;
+      }
+
+      // Optionally add small dots for hover tooltips on estimated line
+      const estWpmHoverPoints = validCoords.map(
+        (p) => `
+          <circle cx="${p.x}" cy="${p.y}" r="2.5" fill="#4A90E2" opacity="0.0"
+          onmouseover="showTooltip(event, 'Estimated True WPM: ${Math.round(p.est*100)/100}')"
+            onmouseout="hideTooltip()"
+          />
+        `
+      ).join('');
+
+      return userPointSvg + estWpmLine + estWpmHoverPoints;
               }).join('')}
             </g>
           </svg>
@@ -1340,6 +1383,7 @@ window.onload = function () {
   setupTopErrorsBox();
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
+  ewm_wpm = runHistory[0]?.ewm_wpm;
   updateHistoryDisplay();
 
   setTimeout(() => {
@@ -1876,6 +1920,12 @@ inputArea.addEventListener('select', function (e) {
   this.setSelectionRange(end, end);
 });
 
+let ewm_wpm = undefined;
+
+function wpm_to_letter_time_model(wpm, a, b, c, k) {
+  return a / ((wpm + c) ** k) + b
+}
+
 function calculateMetrics() {
   // const timeElapsedMins = (new Date() - startTime) / 60000; // minutes
   const cappedPassageLetterTimes = currentPassageLetterTimesSec.map(t => Math.max(0, Math.min(t, 2))); // cap the time for a letter at 2 seconds ~ 6wpm
@@ -1890,7 +1940,7 @@ function calculateMetrics() {
   let accuracy = Math.round((1 - rawErrRate) * 100);
   wpm = isNaN(wpm) || !isFinite(wpm) ? 0 : wpm;
   accuracy = isNaN(accuracy) || !isFinite(accuracy) ? 100 : accuracy;
-  return { wpm, accuracy, errRate_percentile, wpm_percentile };
+  return { wpm, accuracy, errRate_percentile, wpm_percentile, rawWpm };
 }
 
 const liveMetricsWpm = document.getElementById('wpm');
@@ -1917,6 +1967,49 @@ function saveErrorData() {
   localStorage.setItem('interestingErrorLog', JSON.stringify(interestingErrorLog));
 }
 
+function getEstimatedWpm(wpm, charSpeedLog, letterFrequency) {
+  const com = 9;
+  const alpha = 1 / (1 + com);
+  let accum_weighted_mean_char_time = 0;
+  let accum_priors = 0;
+  let accum_means = 0;
+  let sum_char_frequency = 0;
+  let prior_char_times = {}
+  let total_prior = 0;
+  for (const char in letterFrequency) {
+    const modelParams = HYPERPARAMS.WPM_TO_TYPE_TIME[char];
+    prior_char_times[char] = wpm_to_letter_time_model(wpm, modelParams.a, modelParams.b, modelParams.c, modelParams.k);
+    total_prior += letterFrequency[char] * prior_char_times[char];
+  }
+  const wpm_pred = 60 / total_prior / 5;
+  // For extreme outliers this prior can be a bit off and so we just adjust it to make it more accurate.
+  const adjustment = wpm / wpm_pred;
+  for (const char in letterFrequency) {
+    let charMeasurements = charSpeedLog[char] || [];
+    charMeasurements = charMeasurements.map(x => Math.max(0, Math.min(x, 2))).filter(x => x > 0 && x < 2);
+    const charFrequency = letterFrequency[char];
+    const priorCharTime = prior_char_times[char] * adjustment;
+    let posteriorCharTime = priorCharTime;
+    // console.log("char", char, priorCharTime, charMeasurements.reduce((a, b) => a + b, 0) / charMeasurements.length);
+    for (const charMeasurement of charMeasurements) {
+      posteriorCharTime = alpha * charMeasurement + (1 - alpha) * posteriorCharTime;
+    }
+    accum_weighted_mean_char_time += charFrequency * posteriorCharTime;
+    accum_priors += charFrequency * priorCharTime;
+    if (charMeasurements.length > 0) {
+      accum_means += charFrequency * charMeasurements.reduce((a, b) => a + b, 0) / charMeasurements.length;
+    }
+    else {
+      accum_means += charFrequency * priorCharTime;
+    }
+    sum_char_frequency += charFrequency;
+  }
+  const weighted_mean_char_time = accum_weighted_mean_char_time / sum_char_frequency;
+  console.log("accum_priors", 60 / (accum_priors/sum_char_frequency)/5, 60/5/(accum_means/sum_char_frequency), 60/5/(weighted_mean_char_time));
+  const estimated_cps = 1 / weighted_mean_char_time;
+  return 60 * estimated_cps / 5;
+}
+
 function resetSession() {
   document.getElementById('socialProof').style.display = 'none';
   if (startTime) {
@@ -1941,12 +2034,21 @@ function resetSession() {
       const accuracyElement = document.getElementById('accuracy');
       accuracyElement.className = accuracy > avgAccuracy ? 'flash-good' : 'flash-bad';
       setTimeout(() => accuracyElement.className = '', 1000);
+      if (ewm_wpm === undefined) {
+        ewm_wpm = metrics.rawWpm;
+      }
+      else {
+        const com = 5
+        const alpha = 1 / (1 + com)
+        ewm_wpm = alpha * metrics.rawWpm + (1 - alpha) * ewm_wpm
+      }
+    
+      const estimatedWpm = getEstimatedWpm(ewm_wpm, speedLog['char'], HYPERPARAMS.LETTER_FREQUENCY);
 
-      runHistory.unshift({ wpm, accuracy, startTime, duration: new Date() - startTime });
-      // runHistory = runHistory.slice(0, MAX_HISTORY_DISPLAYED);
-      localStorage.setItem('runHistory', JSON.stringify(runHistory));
-      updateHistoryDisplay();
+      runHistory.unshift({ wpm, accuracy, startTime, duration: new Date() - startTime, ewm_wpm, estimatedWpm });
     }
+    localStorage.setItem('runHistory', JSON.stringify(runHistory));
+    updateHistoryDisplay();
   }
 
   // Reset state for a new session
