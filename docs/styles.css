@@ -365,6 +365,50 @@ circle, rect {
 circle:hover, rect:hover {
   fill: #333333;
 }
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  font-size: 9px;
+  /* font-weight: 600; */
+  cursor: help;
+  margin-left: 2px;
+  position: relative;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.info-icon:hover {
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+.info-tooltip {
+  position: absolute;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 0.9em 0.5em; /* More horizontal padding */
+  font-size: 0.9em; /* Smaller text size */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  z-index: 1100;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+  width: 200px;
+  line-height: 1;
+  text-align: left;
+  opacity: 0;
+  bottom: calc(100% + 8px);
+}
+
+.info-icon:hover .info-tooltip {
+  opacity: 1;
+}
 
 /* Add these styles for custom tooltips */
 .tooltip {
