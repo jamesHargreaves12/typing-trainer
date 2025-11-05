@@ -1023,7 +1023,7 @@ function updateHistoryDisplay() {
           <div class="history-sub-title" style="text-align: center; margin-bottom: 5px;">
             WPM 
             <span style="font-size: 10px; color: var(--text-muted);">
-              (<span style="font-weight: bold;color:#4A90E2;">-</span>passage difficulty adjusted<span class="info-icon">
+              (<span style="font-weight: bold;font-size: 18px; color:#4A90E2;">—</span>passage difficulty adjusted<span class="info-icon">
                 i
                 <span class="info-tooltip">Some passages are more difficult than others. Analyzing every letter individually gives a better estimate of your true WPM.</span>
               </span>)
