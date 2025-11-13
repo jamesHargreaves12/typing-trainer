@@ -221,7 +221,7 @@ async function setup_pyodide() {
   const micropip = pyodide.pyimport("micropip");
   const [x, lgbm_response, error_model_response] = await Promise.all([
     micropip.install(['lightgbm', 'numpy']),
-    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_v2/lgbm_model.txt'),
+    fetch('https://jameshargreaves12.github.io/reference_data/lgbm_v3/lgbm_model.txt'),
     fetch('https://jameshargreaves12.github.io/reference_data/error_model_weights.npz')
   ]);
   // await micropip.install('numpy');
@@ -306,6 +306,8 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
   const features = {
     "user_intro_acc": user_intro_acc,
     "user_intro_wpm": user_intro_wpm,
+    "time_hour": new Date().getUTCHours(),
+    "day_of_week": new Date().getUTCDay(),
   };
 
   // features["passage_many_to_end_count"] = passage_feats[passage]
@@ -351,6 +353,14 @@ const get_features = (passage, user_intro_acc, user_intro_wpm) => {
   features["period_len"] = letterCounts["."] || 0;
   features["exclamation_mark_len"] = letterCounts["!"] || 0;
   features["passage_len"] = passage.length;
+  features["open_paren_len"] = letterCounts["("] || 0;
+  features["close_paren_len"] = letterCounts[")"] || 0;
+  features["question_len"] = letterCounts["?"] || 0;
+  features["colon_len"] = letterCounts[":"] || 0;
+  features["dash_len"] = letterCounts["-"] || 0;
+  "abcdefghijklmnopqrstuvwxyz0123456789".split("").forEach(letter => {
+    features[letter + "_len"] = letterCounts[letter] || 0;
+  });
 
   features["punc_len"] = "()\"',.?!-:".split("").reduce((acc, letter) => acc + get_or_zero(letterCounts, letter), 0);
   features["caps_len"] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").reduce((acc, letter) => acc + get_or_zero(letterCounts, letter), 0);
@@ -698,7 +708,7 @@ const compute_error_highlight_indecies = async (passage, highlight_error_pct, un
 }
 
 const load_lgbm_feat_files = async () => {
-  const c = fetch(`https://jameshargreaves12.github.io/reference_data/lgbm_v2/word_feats.json`)
+  const c = fetch(`https://jameshargreaves12.github.io/reference_data/lgbm_v3/word_feats.json`)
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
