@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>Typo Dojo - Your Statistics</title>
+  <meta name="description" content="View your typing progress, WPM, accuracy, and per-letter statistics.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    .stats-page {
+      max-width: 2000px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .stats-page h1 {
+      font-size: 2rem;
+      margin-bottom: 3rem;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .chart-section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .chart-title {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      margin-bottom: 1rem;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-color {
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .letter-graph-section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      font-weight: 600;
+    }
+
+    .letter-chart-container {
+      position: relative;
+      width: 100%;
+      height: 450px;
+      margin-top: 2rem;
+    }
+
+    .letter-bar {
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .letter-bar:hover {
+      opacity: 0.8;
+    }
+
+    .letter-bar-user {
+      fill: var(--text-color);
+    }
+
+    .expected-line {
+      stroke: #ff9f43;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .expected-point {
+      fill: #ff9f43;
+      cursor: pointer;
+    }
+
+    .bar-chart-legend {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .bar-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .bar-legend-color {
+      width: 20px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .percentile-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background-color: var(--progress-fill);
+      color: white;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .grid-line {
+      stroke: var(--border-color);
+      stroke-width: 1;
+      stroke-dasharray: 4, 4;
+    }
+
+    .axis-label {
+      fill: var(--text-muted);
+      font-size: 11px;
+      font-family: "Roboto Mono", monospace;
+    }
+
+    .x-axis-label {
+      fill: var(--text-muted);
+      font-size: 8px;
+      font-family: "Roboto Mono", monospace;
+      transition: font-size 0.1s ease, fill 0.1s ease;
+    }
+
+    .chart-line-measured {
+      stroke: #4a9eff;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-line-estimate {
+      stroke: #ff9f43;
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 8, 4;
+    }
+
+    .chart-point {
+      cursor: pointer;
+      transition: r 0.2s;
+    }
+
+    .chart-point:hover {
+      r: 7;
+    }
+
+    .tooltip {
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 1000;
+      white-space: nowrap;
+    }
+
+    .tooltip.visible {
+      opacity: 1;
+    }
+
+    .info-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--text-muted);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: help;
+      margin-left: 4px;
+      position: relative;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .info-icon:hover {
+      border-color: var(--text-color);
+      color: var(--text-color);
+    }
+
+    .info-tooltip {
+      position: absolute;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 1000;
+      white-space: normal;
+      max-width: 400px;
+      line-height: 1.4;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(100% + 8px);
+    }
+
+    .info-icon:hover .info-tooltip {
+      opacity: 1;
+    }
+
+    .legend-item-with-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .summary-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .summary-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .toggle-view-btn {
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-left: auto;
+    }
+
+    .toggle-view-btn:hover {
+      background-color: var(--button-hover);
+    }
+
+    .keyboard-container {
+      display: none;
+      padding: 2rem;
+    }
+
+    .keyboard-container.active {
+      display: block;
+    }
+
+    .chart-container.active {
+      display: block;
+    }
+
+    .keyboard-row {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .keyboard-key {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 2px solid var(--border-color);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .keyboard-key:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .keyboard-key .key-label {
+      font-size: 1rem;
+      color: var(--text-color);
+      margin-bottom: 2px;
+    }
+
+    .keyboard-key .key-accuracy {
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .keyboard-key-spacebar {
+      width: 300px;
+    }
+
+    .bigram-errors-section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .bigram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .bigram-item {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .bigram-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .bigram-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
+      font-family: "Roboto Mono", monospace;
+    }
+
+    .bigram-errors {
+      font-size: 0.9rem;
+      color: var(--error-color);
+      font-weight: 500;
+    }
+
+    .bigram-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+    }
+  </style>
+  
+  <!-- Load stats generation script -->
+  <script src="hyperparams.js"></script>
+  <script src="stats.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="header-left">
+        <a href="index.html" class="app-title">Typo Dojo</a>
+        <span class="separator">|</span>
+        <a href="https://github.com/jamesHargreaves12" class="feedback-tab">Team</a>
+        <span class="separator">|</span>
+        <a href="/faq.html" class="feedback-tab">FAQ</a>
+        <span class="separator">|</span>
+        <a href="/stats.html" class="feedback-tab" style="color: var(--text-color);">Stats (beta)</a>
+      </div>
+      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+        <span class="light-icon">☀️</span>
+        <span class="dark-icon">🌙</span>
+      </button>
+    </div>
+
+    <div class="main-container">
+      <div class="stats-page">
+        <h1>Performance Statistics (beta)</h1>
+        
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+          <div class="summary-card">
+            <div class="summary-value" id="total-sessions">142</div>
+            <div class="summary-label">Practice Sessions</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value" id="total-time">4.2h</div>
+            <div class="summary-label">Total Practice Time</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value" id="current-streak">7 days</div>
+            <div class="summary-label">Current Streak</div>
+          </div>
+        </div>
+        
+        <!-- WPM Over Time Chart -->
+        <div class="chart-section">
+          <div class="chart-title">
+            Words Per Minute Over Time
+            <span class="percentile-badge" id="wpm-percentile">75th Percentile</span>
+          </div>
+          <div class="chart-container" id="wpm-chart-container">
+            <svg class="chart-svg" id="wpm-chart"></svg>
+            <div class="tooltip" id="wpm-tooltip"></div>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: #4a9eff;"></div>
+              <span>Your Performance</span>
+            </div>
+            <div id="overtime-wpm-estimate-legend" class="legend-item legend-item-with-info">
+              <div class="legend-color" style="background-color: #ff9f43; opacity: 0.8;"></div>
+              <span>Typo Dojo Estimate</span>
+              <span class="info-icon">
+                i
+                <span class="info-tooltip">Corrects for the fact that some passages can be easier or harder.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accuracy Over Time Chart -->
+        <div class="chart-section">
+          <div class="chart-title">
+            Accuracy Over Time
+            <span class="percentile-badge" id="accuracy-percentile">82nd Percentile</span>
+          </div>
+          <div class="chart-container" id="accuracy-chart-container">
+            <svg class="chart-svg" id="accuracy-chart"></svg>
+            <div class="tooltip" id="accuracy-tooltip"></div>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background-color: #4a9eff;"></div>
+              <span>Your Performance</span>
+            </div>
+            <div id="overtime-accuracy-estimate-legend" class="legend-item legend-item-with-info">
+              <div class="legend-color" style="background-color: #ff9f43; opacity: 0.8;"></div>
+              <span>Typo Dojo Estimate</span>
+              <span class="info-icon">
+                i
+                <span class="info-tooltip">Corrects for the fact that some passages can be easier or harder.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Speed Per Letter -->
+        <div class="letter-graph-section">
+          <div class="section-title" style="display: flex; align-items: center;">
+            Speed Per Letter (Characters Per Minute)
+            <button class="toggle-view-btn" id="toggle-speed-view">Show Keyboard</button>
+          </div>
+          <div class="letter-chart-container chart-container active" id="speed-chart-view">
+            <svg class="chart-svg" id="speed-bar-chart"></svg>
+            <div class="tooltip" id="speed-bar-tooltip"></div>
+          </div>
+          <div class="keyboard-container" id="speed-keyboard-view"></div>
+          <div class="bar-chart-legend">
+            <div class="bar-legend-item">
+              <div class="bar-legend-color" style="background-color: var(--text-color);"></div>
+              <span>Your Speed</span>
+            </div>
+            <div id="expected-average-speed-legend" class="bar-legend-item">
+              <div class="bar-legend-color" style="background-color: #ff9f43;"></div>
+              <span>Expected Speed (based on your overall WPM)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accuracy Per Letter -->
+        <div class="letter-graph-section">
+          <div class="section-title" style="display: flex; align-items: center;">
+            Accuracy Per Letter (%)
+            <button class="toggle-view-btn" id="toggle-accuracy-view">Show Keyboard</button>
+          </div>
+          <div class="letter-chart-container chart-container active" id="accuracy-chart-view">
+            <svg class="chart-svg" id="accuracy-bar-chart"></svg>
+            <div class="tooltip" id="accuracy-bar-tooltip"></div>
+          </div>
+          <div class="keyboard-container" id="accuracy-keyboard-view"></div>
+          <div class="bar-chart-legend">
+            <div class="bar-legend-item">
+              <div class="bar-legend-color" style="background-color: var(--text-color);"></div>
+              <span>Your Accuracy</span>
+            </div>
+            <div id="expected-average-accuracy-legend" class="legend-item legend-item-with-info">
+              <div class="bar-legend-color" style="background-color: #ff9f43;"></div>
+              <span>Expected Average</span>
+              <span class="info-icon">
+                i
+                <span class="info-tooltip">Corrects for the fact that some passages can be easier or harder.</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Bigram Errors -->
+        <div class="bigram-errors-section">
+          <div class="section-title">Most Common Error Patterns</div>
+          <div class="bigram-grid" id="bigram-grid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize the stats page when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeStatsPage);
+    } else {
+      initializeStatsPage();
+    }
+  </script>
+</body>
+</html>
