@@ -671,7 +671,6 @@ function _suggestRepetitionStrategy(wpm, accuracy, wpm_percentile, accuracy_perc
     const footer = strategy.getStatsRepFooter();
     header = `${header} ${footer}`.trim();
   }
-
   return header;
 }
 function sampleOne(list) {
@@ -717,6 +716,7 @@ let upcomingPassages = upcomingDefaultPassages;
 let currentPassageErrors = [];
 let currentPassageErrorActualChar = [];
 let currentPassageLetterTimesSec = [];
+let skippedStatsRep = false;
 let user_intro_acc = Math.random() * (0.1 - 0.05) + 0.05;
 let user_intro_wpm = Math.floor(Math.random() * (70 - 29 + 1)) + 29;
 const REPETION_STRATEGY_HISTORY_LENGTH = 5;
@@ -1179,7 +1179,7 @@ function getPassage() {
       return nextPassage;
     }
   }
-  if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0)) {
+  if (session_rep_count == REPETION_STRATEGY_HISTORY_LENGTH && stats_rep_shown == false || (showStatsEvery5thRepetition && session_rep_count % REPETION_STRATEGY_HISTORY_LENGTH == 0 && session_rep_count != 0) && !skippedStatsRep) {
     stats_rep_shown = true;
     currentSelectionStrategyMode = choseNextSelectionMode();
     selectionModeHistory.push(currentSelectionStrategyMode);
@@ -1695,7 +1695,10 @@ function handleInput(e) {
   }
 
   if (e.data == ">" && targetText[i] != ".") {
-    resetSession();
+    if (currentPassageSource == "stats_rep") {
+      skippedStatsRep = true;
+    }
+    skipPassage();
     return;
   }
 
@@ -1887,6 +1890,7 @@ function handleInput(e) {
       settingTargetTextRef.value = false;
       session_rep_count++;
       updateLiveMetrics();
+      skippedStatsRep = false;
       resetSession();
     }, 500); // brief pause before resetting
     trackRepetitionCompletion();
@@ -2008,6 +2012,12 @@ function getEstimatedWpm(wpm, charSpeedLog, letterFrequency) {
   console.log("accum_priors", 60 / (accum_priors/sum_char_frequency)/5, 60/5/(accum_means/sum_char_frequency), 60/5/(weighted_mean_char_time));
   const estimated_cps = 1 / weighted_mean_char_time;
   return 60 * estimated_cps / 5;
+}
+function skipPassage() {
+  if (currentPassageSource == "stats_rep") {
+    skippedStatsRep = true;
+  }
+  resetSession();
 }
 
 function resetSession() {
