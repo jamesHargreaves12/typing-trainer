@@ -580,8 +580,66 @@ class ManyRepWordsSpeedSelectionStrategy {
     });
   }
 }
+class DefaultWithSpeedCursorFastSelectionStrategy {
+  static prefix = "default-with-speed-cursor-fast";
+  static changesEveryRep = false;
+  constructor(wpm_adjustment) {
+    this.wpm_adjustment = wpm_adjustment;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, Typo Dojo will add a ghost cursor that is faster than you at typing. Aim to keep up with it if you can even if it reduces your accuracy.`;
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: DefaultWithSpeedCursorFastSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      finishedDefaultPassages: finishedDefaultPassages,
+      selectionStratedy: `${DefaultWithSpeedCursorFastSelectionStrategy.prefix}->${this.wpm_adjustment}`,
+    });
+  }
+}
+class DefaultWithSpeedCursorSlowSelectionStrategy {
+  static prefix = "default-with-speed-cursor-slow";
+  static changesEveryRep = false;
+  constructor(wpm_adjustment) {
+    this.wpm_adjustment = wpm_adjustment;
+  }
+  getStatsRepFooter() {
+    return `For the next ${REPETION_STRATEGY_HISTORY_LENGTH_STR} reps, Typo Dojo will add a ghost cursor that is slower than you at typing. Aim to keep up with it and use the extra time to focus on your accuracy.`;
+  }
+
+  sendGetNextPassagesMessage() {
+    passageWorker.postMessage({
+      type: 'get-next-passages',
+      selectionMode: DefaultWithSpeedCursorSlowSelectionStrategy.prefix,
+      upcomingPassages,
+      recentPassages,
+      errorLog,
+      seenLog,
+      errorCount,
+      user_intro_acc,
+      user_intro_wpm,
+      highlight_error_pct: 0.1,
+      userId: userId,
+      finishedDefaultPassages: finishedDefaultPassages,
+      selectionStratedy: `${DefaultWithSpeedCursorSlowSelectionStrategy.prefix}->${this.wpm_adjustment}`,
+    });
+  }
+}
+
 class DefaultSelectionStrategy {
-  static changesEveryRep = true;
+  static changesEveryRep = false;
+  static prefix = "default";
   constructor() {
   }
   getStatsRepFooter() {
@@ -591,7 +649,7 @@ class DefaultSelectionStrategy {
   sendGetNextPassagesMessage() {
     passageWorker.postMessage({
       type: 'get-next-passages',
-      selectionMode: "default",
+      selectionMode: DefaultSelectionStrategy.prefix,
       upcomingPassages,
       recentPassages,
       errorLog,
@@ -606,18 +664,25 @@ class DefaultSelectionStrategy {
     });
   }
 }
+Array.prototype.random = function () {
+  return this[Math.floor((Math.random()*this.length))];
+}
+const fastCursorSpeed = [1.02, 1.04, 1.03, 1.05, 1.06, 1.07].random();
+const slowCursorSpeed = [0.65, 0.7, 0.75, 0.8, 0.85, 0.9].random();
 
 const strategyModeLookup = {
-  [LetterErrorSelectionStrategy.prefix]: new LetterErrorSelectionStrategy("w"),
-  [SpeedSelectionStrategy.prefix]: new SpeedSelectionStrategy("1"),
-  [ErrorGroupSelectionStrategy.prefix]: new ErrorGroupSelectionStrategy("most_common"),
-  [ManyRepLetterErrorSelectionStrategy.prefix]: new ManyRepLetterErrorSelectionStrategy("w"),
-  [ManyRepLetterSpeedSelectionStrategy.prefix]: new ManyRepLetterSpeedSelectionStrategy("e"),
-  [WordsErrorSelectionStrategy.prefix]: new WordsErrorSelectionStrategy("w"),
-  [WordsSpeedSelectionStrategy.prefix]: new WordsSpeedSelectionStrategy("e"),
-  [ManyRepWordsErrorSelectionStrategy.prefix]: new ManyRepWordsErrorSelectionStrategy("w"),
-  [ManyRepWordsSpeedSelectionStrategy.prefix]: new ManyRepWordsSpeedSelectionStrategy("e"),
-  "default": new DefaultSelectionStrategy(),
+  // [LetterErrorSelectionStrategy.prefix]: new LetterErrorSelectionStrategy("w"),
+  // [SpeedSelectionStrategy.prefix]: new SpeedSelectionStrategy("1"),
+  // [ErrorGroupSelectionStrategy.prefix]: new ErrorGroupSelectionStrategy("most_common"),
+  // [ManyRepLetterErrorSelectionStrategy.prefix]: new ManyRepLetterErrorSelectionStrategy("w"),
+  // [ManyRepLetterSpeedSelectionStrategy.prefix]: new ManyRepLetterSpeedSelectionStrategy("e"),
+  // [WordsErrorSelectionStrategy.prefix]: new WordsErrorSelectionStrategy("w"),
+  // [WordsSpeedSelectionStrategy.prefix]: new WordsSpeedSelectionStrategy("e"),
+  // [ManyRepWordsErrorSelectionStrategy.prefix]: new ManyRepWordsErrorSelectionStrategy("w"),
+  // [ManyRepWordsSpeedSelectionStrategy.prefix]: new ManyRepWordsSpeedSelectionStrategy("e"),
+  [DefaultSelectionStrategy.prefix]: new DefaultSelectionStrategy(),
+  [DefaultWithSpeedCursorFastSelectionStrategy.prefix]: new DefaultWithSpeedCursorFastSelectionStrategy(fastCursorSpeed),
+  [DefaultWithSpeedCursorSlowSelectionStrategy.prefix]: new DefaultWithSpeedCursorSlowSelectionStrategy(slowCursorSpeed),
 }
 
 // Someone remind me why JS is a terrible programming language again...?
@@ -631,6 +696,12 @@ function getFocusText(passageStrategy) {
     return `Focus: ${STRATEGY_DESCRIPTIONS_SHORTEST[passageStrategy]}`;
   }
   if (passageStrategy.includes("->")) {
+    if (passageStrategy.split("->")[0] == DefaultWithSpeedCursorFastSelectionStrategy.prefix) {
+      return `Focus: Speed`;
+    }
+    else if (passageStrategy.split("->")[0] == DefaultWithSpeedCursorSlowSelectionStrategy.prefix) {
+      return `Focus: Accuracy`;
+    }
     return `Focus: ${passageStrategy.split("->")[1]}`;
   }
   return null;
@@ -803,13 +874,23 @@ let prevCharTime = null;
 let cursorTimeoutId = null;
 let targetText = 'Stop repeating the same typos. Typo Dojo identifies patterns in your errors and builds drills to break them for good.';
 const textDisplay = document.getElementById('textDisplay');
+const textDisplayContainer = document.querySelector(".text-display");
 const inputArea = document.getElementById('inputArea');
 // TODO bin the progress bar
 const progressBar = document.getElementById('progressBar');
 let currentSelectionStrategyMode = "default";
 let previousRepSelectionStrategies = [];
 let stats_rep_common_strings = {};
+let currentPassageTimePerLetter = [];
 
+let autoCursorIntervalId = null;
+let autoCursorPosition = 0;
+let autoCursorStarted = false;
+let pausedCursor = false;
+const SELECTION_STRATEGIES_WITH_CURSOR = [
+  DefaultWithSpeedCursorFastSelectionStrategy.prefix,
+  DefaultWithSpeedCursorSlowSelectionStrategy.prefix,
+];
 function updateSocialProof() {
   const socialProofElement = document.getElementById('socialProof');
   if (socialProofElement) {
@@ -1152,10 +1233,13 @@ function choseNextSelectionMode() {
     return "default";
   }
 
-  const selectionModes = HYPERPARAMS.SELECTION_MODE_BANDITS;
-  const defualtMean = 0.55;
+  const selectionModes = HYPERPARAMS.SELECTION_MODE_BANDITS.filter(sm => strategyModeLookup[sm.mode]);
+  const defualtMean = 0.45;
   const priorStrength = 5;
-  const extraSelectionModes = Object.keys(strategyModeLookup).filter(key => !selectionModes.some(sm => sm.mode == key) && key != "default").map(key => ({ mode: key, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength }));
+  const extraSelectionModes = [
+    { mode: DefaultWithSpeedCursorFastSelectionStrategy.prefix, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength },
+    { mode: DefaultWithSpeedCursorSlowSelectionStrategy.prefix, alpha: defualtMean * priorStrength, beta: (1 - defualtMean) * priorStrength },
+  ];
   const previousTwoSelectionModes = selectionModeHistory.slice(-2);
   const availableSelectionModes = [...selectionModes, ...extraSelectionModes].filter(sm => !previousTwoSelectionModes.includes(sm.mode));
   console.log("availableSelectionModes", availableSelectionModes);
@@ -1226,7 +1310,6 @@ passageWorker.onmessage = function (e) {
       return;
     }
     if (e.data.type == 'suggestStrategy') {
-
       // TODO some more thought needed around the ones that can only except lowercase letters as this are not being updated frequently enough.
       if (e.data.strategyMode == SpeedSelectionStrategy.prefix) {
         strategyModeLookup[SpeedSelectionStrategy.prefix] = new SpeedSelectionStrategy(e.data.strategyChar);
@@ -1372,6 +1455,12 @@ window.onload = function () {
   }
   const p = getPassage();
   const { passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy } = p;
+  ewm_wpm = runHistory[0]?.ewm_wpm;
+  if (SELECTION_STRATEGIES_WITH_CURSOR.includes(currentPassageSelectionStratedy?.split("->")[0])) {
+    const adjust = parseFloat(currentPassageSelectionStratedy?.split("->")[1]) || 1;
+    const wpm_for_typing = (ewm_wpm || user_intro_wpm || 40) * adjust;
+    currentPassageTimePerLetter = getTimePerLetter(wpm_for_typing, passage);  
+  }
   previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
@@ -1383,7 +1472,6 @@ window.onload = function () {
   setupTopErrorsBox();
 
   runHistory = JSON.parse(localStorage.getItem('runHistory')) || [];
-  ewm_wpm = runHistory[0]?.ewm_wpm;
   updateHistoryDisplay();
 
   setTimeout(() => {
@@ -1657,7 +1745,7 @@ function annotateEdits(typed, target) {
 }
 
 document.addEventListener('keydown', (e) => {
-  if (e.target.id == "feedbackMessage") {
+  if (e.target.id == "feedbackMessage" || e.target.id == "feedbackEmail") {
     return;
   }
   inputArea.focus();
@@ -1693,6 +1781,13 @@ function handleInput(e) {
     prevInputText = inputText;
     return;
   }
+
+
+  if (!autoCursorStarted && e["inputType"] != "deleteContentBackward" && SELECTION_STRATEGIES_WITH_CURSOR.includes(currentPassageSelectionStrategy?.split("->")[0])) {
+    autoCursorStarted = true;
+    startAutoCursor();
+  }
+
 
   if (e.data == ">" && targetText[i] != ".") {
     if (currentPassageSource == "stats_rep") {
@@ -1733,6 +1828,10 @@ function handleInput(e) {
   // Process all characters that are new since last input (handles rapid typing, paste, etc.)
   const startIndex = Math.max(0, prevInputText.length);
   const endIndex = Math.min(inputText.length, targetText.length);
+  if (pausedCursor && autoCursorPosition == inputText.length) {
+    pausedCursor = false;
+    moveCursor();
+  }
 
   for (let charIndex = startIndex; charIndex < endIndex; charIndex++) {
     const currentTypedChar = inputText[charIndex];
@@ -1971,7 +2070,8 @@ function saveErrorData() {
   localStorage.setItem('interestingErrorLog', JSON.stringify(interestingErrorLog));
 }
 
-function getEstimatedWpm(wpm, charSpeedLog, letterFrequency) {
+function getEstimatedWpm(wpm, charSpeedLog) {
+  const letterFrequency = HYPERPARAMS.LETTER_FREQUENCY;
   const com = 9;
   const alpha = 1 / (1 + com);
   let accum_weighted_mean_char_time = 0;
@@ -2013,6 +2113,38 @@ function getEstimatedWpm(wpm, charSpeedLog, letterFrequency) {
   const estimated_cps = 1 / weighted_mean_char_time;
   return 60 * estimated_cps / 5;
 }
+
+function getTimePerLetter(wpm, passage){
+  const letterFrequency = HYPERPARAMS.LETTER_FREQUENCY;
+  let total_frequency = 0;
+  let weighted_mean_char_time = 0;
+  const letterTimeLookup = {};
+  for (const char in letterFrequency) {
+    total_frequency += letterFrequency[char];
+    const modelParams = HYPERPARAMS.WPM_TO_TYPE_TIME[char];
+    letterTimeLookup[char] = wpm_to_letter_time_model(wpm, modelParams.a, modelParams.b, modelParams.c, modelParams.k);
+    weighted_mean_char_time += letterFrequency[char] * letterTimeLookup[char];
+  }
+  weighted_mean_char_time /= total_frequency;
+  const estimated_wpm = 60 / weighted_mean_char_time / 5;
+  const adjustment = wpm / estimated_wpm;
+  const timePerLetter = [];
+  for (let i = 0; i < passage.length; i++) {
+    const letter = passage[i];
+    let time = 0;
+    if (!letterTimeLookup[letter]) {
+      time = Math.max(Object.values(letterTimeLookup)) * adjustment;
+    }
+    else {
+      time = letterTimeLookup[letter] * adjustment;
+    }
+    timePerLetter.push(time);
+  }
+  console.log("timePerLetter", timePerLetter);
+  console.log("wpm", wpm);
+  return timePerLetter;
+}
+
 function skipPassage() {
   if (currentPassageSource == "stats_rep") {
     skippedStatsRep = true;
@@ -2020,8 +2152,169 @@ function skipPassage() {
   resetSession();
 }
 
+function stopAutoCursor() {
+  if (autoCursorIntervalId !== null) {
+    clearTimeout(autoCursorIntervalId);
+    autoCursorIntervalId = null;
+  }
+  autoCursorPosition = 0;
+  autoCursorStarted = false;
+  
+  // Remove all auto cursor elements
+  const autoCursors = document.querySelectorAll('[data-auto-cursor="true"]');
+  autoCursors.forEach(el => el.remove());
+  
+  // Also remove from class names as backup
+  for (let i = 0; i < targetText.length; i++) {
+    const charSpan = document.getElementById(`char-${i}`);
+    if (charSpan) {
+      charSpan.className = charSpan.className.replace(' auto-cursor', '');
+    }
+  }
+}
+
+let autoCursorBar = document.querySelector('[data-auto-cursor="true"]');
+
+function moveCursor() {
+  if (pausedCursor) {
+    return;
+  }
+  const letterTimes = currentPassageTimePerLetter;
+  let inputText = inputArea.value;
+
+  if (autoCursorPosition >= inputText.length + 10) {
+    pausedCursor = true;
+  }
+
+  if (autoCursorPosition <= inputText.length - 15) {
+    pausedCursor = true;
+    autoCursorPosition = Math.min(inputText.length + 10, targetText.length - 1);
+  }
+
+  // Position the auto cursor at the current character
+  if (autoCursorPosition < targetText.length) {
+    // Get the time for the current character (where we're moving to)
+    const currentCharIndex = autoCursorPosition;
+    const currentChar = document.getElementById(`char-${currentCharIndex}`);
+    
+    if (currentChar && currentCharIndex >= 0 && currentCharIndex < letterTimes.length) {
+      const charRect = currentChar.getBoundingClientRect();
+      const containerRect = textDisplayContainer.getBoundingClientRect();
+      
+      // Calculate position relative to the text display container
+      const left = charRect.left - containerRect.left;
+      const top = charRect.top - containerRect.top;
+      
+      // Set transition duration to match the time for moving to this character
+      const transitionDuration = letterTimes[currentCharIndex] + 's';
+      
+      // Check if we're moving to a different line by comparing Y values
+      const currentTop = parseFloat(autoCursorBar.style.top);
+      const currentLeft = parseFloat(autoCursorBar.style.left);
+      const yValueChanged = !isNaN(currentTop) && Math.abs(top - currentTop) > 0.5;
+      const movingLeft = !isNaN(currentLeft) && left < currentLeft;
+      
+      // If moving from right to left (end of line to start of next line), don't animate
+      if (movingLeft && yValueChanged) {
+        // Line wrap - jump instantly without transition
+        autoCursorBar.style.transition = 'none';
+        autoCursorBar.style.left = left + 'px';
+        autoCursorBar.style.top = top + 'px';
+        // Force a reflow
+        autoCursorBar.offsetHeight;
+      } else {
+        // Use smooth easing for line changes, linear for same line
+        if (yValueChanged) {
+          // Line change (but not wrapping) - use ease-out for smoother vertical movement
+          autoCursorBar.style.transition = `left ${transitionDuration} ease-out, top ${transitionDuration} ease-out`;
+        } else {
+          // Same line - use linear for consistent horizontal movement
+          autoCursorBar.style.transition = `left ${transitionDuration} linear, top ${transitionDuration} linear`;
+        }
+        
+        // Force a reflow to ensure transition is applied
+        autoCursorBar.offsetHeight;
+        
+        // Use requestAnimationFrame to ensure smooth transition
+        requestAnimationFrame(() => {
+          autoCursorBar.style.left = left + 'px';
+          autoCursorBar.style.top = top + 'px';
+        });
+      }
+    }
+    
+    // Schedule next move - use the same duration as the transition
+    const delayMs = letterTimes[currentCharIndex] * 1000;
+    autoCursorPosition++;
+    
+    if (autoCursorPosition < targetText.length) {
+      autoCursorIntervalId = setTimeout(moveCursor, delayMs);
+    } else {
+      // Hide cursor when it reaches the end after transition completes
+      const finalDelay = letterTimes[currentCharIndex] * 1000;
+      setTimeout(() => {
+        if (autoCursorBar) {
+          autoCursorBar.style.display = 'none';
+        }
+      }, finalDelay);
+    }
+  }
+}
+
+function startAutoCursor() {
+  autoCursorPosition = 0;
+  
+  // If the passage length doesn't match, create a default list
+  if (currentPassageTimePerLetter.length !== targetText.length) {
+    currentPassageTimePerLetter = currentPassageTimePerLetter
+      .slice(0, targetText.length)
+      .concat(Array(targetText.length - currentPassageTimePerLetter.length).fill(currentPassageTimePerLetter[currentPassageTimePerLetter.length - 1]));
+  }
+
+  if (!autoCursorBar && textDisplayContainer) {
+    autoCursorBar = document.createElement('span');
+    autoCursorBar.className = 'auto-cursor';
+    autoCursorBar.setAttribute('data-auto-cursor', 'true');
+    textDisplayContainer.appendChild(autoCursorBar);
+  }
+  
+  if (!autoCursorBar || !textDisplayContainer) {
+    return;
+  }
+  
+  // Make sure it's visible
+  autoCursorBar.style.display = 'block';
+  
+  // Set initial position without transition
+  const firstChar = document.getElementById(`char-0`);
+  if (firstChar) {
+    const charRect = firstChar.getBoundingClientRect();
+    const containerRect = textDisplayContainer.getBoundingClientRect();
+    const left = charRect.left - containerRect.left;
+    const top = charRect.top - containerRect.top;
+    autoCursorBar.style.transition = 'none';
+    autoCursorBar.style.left = left + 'px';
+    autoCursorBar.style.top = top + 'px';
+  }  
+  // Start the cursor movement after initial position is set
+  if (targetText.length > 1) {
+    // Move to second character to start animation
+    autoCursorPosition = 1;
+    moveCursor();
+  }
+}
+
 function resetSession() {
   document.getElementById('socialProof').style.display = 'none';
+
+  if (autoCursorStarted || autoCursorBar) {
+    pausedCursor = false;
+    autoCursorStarted = false;
+    autoCursorBar.remove();
+    autoCursorBar = null;
+  }
+  
+
   if (startTime) {
     const metrics = calculateMetrics();
     const wpm = metrics.wpm;
@@ -2053,13 +2346,16 @@ function resetSession() {
         ewm_wpm = alpha * metrics.rawWpm + (1 - alpha) * ewm_wpm
       }
     
-      const estimatedWpm = getEstimatedWpm(ewm_wpm, speedLog['char'], HYPERPARAMS.LETTER_FREQUENCY);
+      const estimatedWpm = getEstimatedWpm(ewm_wpm, speedLog['char']);
 
       runHistory.unshift({ wpm, accuracy, startTime, duration: new Date() - startTime, ewm_wpm, estimatedWpm });
     }
     localStorage.setItem('runHistory', JSON.stringify(runHistory));
     updateHistoryDisplay();
   }
+
+  // Stop auto cursor if running
+  stopAutoCursor();
 
   // Reset state for a new session
   prevInputText = "";
@@ -2078,6 +2374,16 @@ function resetSession() {
   }
 
   const { passage, source, highlightIndecies, selectionStratedy: currentPassageSelectionStratedy } = getPassage();
+  let wpm_for_typing;
+  if (SELECTION_STRATEGIES_WITH_CURSOR.includes(currentPassageSelectionStratedy?.split("->")[0])) {
+    const adjust = parseFloat(currentPassageSelectionStratedy?.split("->")[1]) || 1;
+    wpm_for_typing = (ewm_wpm || user_intro_wpm || 40) * adjust;
+    currentPassageTimePerLetter = getTimePerLetter(wpm_for_typing, passage);
+  }
+  else {
+    currentPassageTimePerLetter = Array(passage.length).fill(0);
+  }
+
   previousRepSelectionStrategies.unshift(currentPassageSelectionStratedy);
   setFocusText(currentPassageSelectionStratedy);
   targetText = passage;
@@ -2088,6 +2394,10 @@ function resetSession() {
   colorText("");
   inputArea.value = "";
   progressBar.style.width = "0%";
+  
+  // Reset auto cursor state - it will start when user types
+  autoCursorStarted = false;
+  
   passageWorker.postMessage({
     type: 'suggestStrategy',
     strategyMode: SpeedSelectionStrategy.prefix,

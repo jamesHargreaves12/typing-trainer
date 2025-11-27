@@ -1272,6 +1272,7 @@ const handleGetNextPassagesDefault = async (
   user_intro_wpm,
   highlight_error_pct,
   finishedDefaultPassages,
+  selectionStratedy
 ) => {
   let correctSourceUpcomingPassages = [];
   if (upcomingPassages) {
@@ -1293,7 +1294,7 @@ const handleGetNextPassagesDefault = async (
   else {
     newUpcomingPassages = randomlySelectExtraPassages(100, newUpcomingPassages, recentPassages);
   }
-  const result = await orderPassages(newUpcomingPassages, null, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
+  const result = await orderPassages(newUpcomingPassages, selectionStratedy, user_intro_acc, user_intro_wpm, errorCount, highlight_error_pct, seenLog, errorLog);
 
 
   let result_with_error_highlight_indecies = result.slice(0, 10);
@@ -1363,9 +1364,9 @@ self.onmessage = async function (e) {
         return;
       }
 
-      if (e.data.selectionMode == "default") {
-        const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.finishedDefaultPassages);
-        self.postMessage({ res, type: 'get-next-passages', selectionMode: "default" });
+      if (["default", "default-with-speed-cursor-fast", "default-with-speed-cursor-slow"].includes(e.data.selectionMode)) {
+        const res = await handleGetNextPassagesDefault(e.data.upcomingPassages, e.data.recentPassages, e.data.errorLog, e.data.seenLog, e.data.errorCount, e.data.user_intro_acc, e.data.user_intro_wpm, e.data.highlight_error_pct, e.data.finishedDefaultPassages, e.data.selectionStratedy);
+        self.postMessage({ res, type: 'get-next-passages', selectionMode: e.data.selectionMode });
         return;
       }
 
