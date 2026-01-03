@@ -70,6 +70,10 @@
   display: block;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,Vazirmatn, monospace;
   margin: 0;
@@ -79,6 +83,7 @@ body {
   font-variant-ligatures: no-common-ligatures;
   font-size-adjust: from-font;   /* reduces size jump on swap */
   font-synthesis-weight: none;   /* avoids faux-bold jitter */
+  overflow-x: hidden;
 }
 
 #app {
@@ -88,6 +93,7 @@ body {
   margin: 0;
   padding-left: 2rem;
   padding-right: 2rem;
+  box-sizing: border-box;
 }
 
 .main-container {
