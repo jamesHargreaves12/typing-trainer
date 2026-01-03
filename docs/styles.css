@@ -70,11 +70,6 @@
   display: block;
 }
 
-html {
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
 body {
   font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,Vazirmatn, monospace;
   margin: 0;
