@@ -82,12 +82,12 @@ body {
 }
 
 #app {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   max-width: none;  /* Remove max-width from app container */
   margin: 0;
-  padding: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .main-container {
