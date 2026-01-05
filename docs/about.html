@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta name="google-adsense-account" content="ca-pub-3451385009115335">
+  <meta charset="UTF-8">
+  <title>About Us - Typo Dojo | Typing Training</title>
+  <meta name="description" content="Learn about Typo Dojo - a free, personalized typing training tool that adapts to your mistakes and helps improve your typing speed and accuracy.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <div class="header-left">
+        <a href="index.html" class="app-title">Typo Dojo</a>
+        <span class="separator">|</span>
+        <a href="https://github.com/jamesHargreaves12" class="feedback-tab">Team</a>
+        <span class="separator">|</span>
+        <a href="/about.html" class="feedback-tab" style="color: var(--text-color);">About</a>
+        <span class="separator">|</span>
+        <a href="/faq.html" class="feedback-tab">FAQ</a>
+        <span class="separator">|</span>
+        <a href="/stats.html" class="feedback-tab">Stats (beta)</a>
+      </div>
+      <button id="darkModeToggle" class="theme-toggle" title="Toggle dark mode">
+        <span class="light-icon">☀️</span>
+        <span class="dark-icon">🌙</span>
+      </button>
+    </div>
+
+    <div class="main-container">
+      <div class="faq-section">
+        <h1>About Typo Dojo</h1>
+        
+        <div class="faq-item">
+          <h2>Our Mission</h2>
+          <p>Typo Dojo was created to make typing practice more effective and personalized. We believe that everyone can improve their typing skills with the right approach—one that focuses on your specific weaknesses rather than generic exercises.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>How It Works</h2>
+          <p>Typo Dojo uses advanced pattern recognition to identify the specific characters, character pairs, and sequences where you make mistakes. Instead of practicing random text, you'll focus on passages that contain more of the patterns you struggle with, helping you break bad habits faster.</p>
+          <p>Our algorithm tracks errors at multiple levels—from individual characters to quadgrams—ensuring comprehensive coverage of your typing patterns. This data-driven approach means every practice session is tailored to help you improve where it matters most.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>Why Typo Dojo?</h2>
+          <p>Traditional typing tutors often use the same exercises for everyone, regardless of skill level or specific challenges. Typo Dojo adapts to you:</p>
+          <ul style="line-height: 1.8; color: var(--text-secondary); margin-left: 1.5rem;">
+            <li><strong style="color: var(--text-color);">Personalized Practice:</strong> Exercises are generated based on your actual typing patterns</li>
+            <li><strong style="color: var(--text-color);">Real-time Feedback:</strong> See your progress with detailed statistics and metrics</li>
+            <li><strong style="color: var(--text-color);">Privacy-First:</strong> All data is stored locally in your browser</li>
+            <li><strong style="color: var(--text-color);">Free Forever:</strong> No subscriptions, no paywalls, just effective typing practice</li>
+          </ul>
+        </div>
+
+        <div class="faq-item">
+          <h2>Our Story</h2>
+          <p>Typo Dojo was born from frustration with existing typing practice tools. We wanted something that would actually learn from our mistakes and help us improve efficiently. After building it for ourselves, we realized others might benefit too—so we made it free and open to everyone.</p>
+          <p>Today, Typo Dojo helps over 280,000 people improve their typing skills. We're constantly working to make it better, adding new features and refining our algorithms based on user feedback.</p>
+        </div>
+
+        <div class="faq-item">
+          <h2>Get Involved</h2>
+          <p>Typo Dojo is an open-source project. If you're interested in contributing, have suggestions, or want to report issues, check out our <a href="https://github.com/jamesHargreaves12" style="color: var(--button-bg); text-decoration: none;">GitHub repository</a>.</p>
+          <p>We'd love to hear from you! Use the feedback button on the main page to share your thoughts, report bugs, or suggest new features.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dark mode handling
+    let darkMode = localStorage.getItem('darkMode') !== 'false';
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    else {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    
+    document.getElementById('darkModeToggle').addEventListener('click', () => {
+      darkMode = !darkMode;
+      document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+      localStorage.setItem('darkMode', darkMode);
+    });
+  </script>
+</body>
+</html>
+
