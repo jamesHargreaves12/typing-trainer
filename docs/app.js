@@ -91,7 +91,7 @@ function getPassageVariants(firstRep, count = 2) {
   const passagesInConditional = conditionalAlphaBeta.map(p => p.passage);
   const updatePassageAndGroup = passageAndGroup
     .filter(p => !passagesInConditional.includes(p.passage) && p.group != firstPassage[0].group)
-    .concat(conditionalAlphaBeta.map(p => ({ passage: p.passage, group: -1, alpha: p.alpha, beta: p.beta })));
+    .concat(conditionalAlphaBeta?.length > 0 ? conditionalAlphaBeta.map(p => ({ passage: p.passage, group: -1, alpha: p.alpha, beta: p.beta })) : []);
 
   const updatePassages = pickBandits(updatePassageAndGroup, 1, "group");
 
